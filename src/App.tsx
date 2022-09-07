@@ -1,11 +1,7 @@
 import { AppRoutes } from '@navigation';
 
 const App = () => {
-  return (
-    <div className='App'>
-      <AppRoutes />
-    </div>
-  );
+  return <AppRoutes />;
 };
 
 export default App;

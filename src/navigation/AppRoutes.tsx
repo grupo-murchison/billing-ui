@@ -1,12 +1,12 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import { PageExample } from '@pages';
+import PrivateRoutes from '@navigation/PrivateRoutes';
 
 const AppRoutes = () => {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='example' element={<PageExample />} />
+        <Route path='/*' element={<PrivateRoutes />} />
       </Routes>
     </BrowserRouter>
   );

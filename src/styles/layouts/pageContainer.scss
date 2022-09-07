@@ -1,0 +1,14 @@
+.app-main {
+  display: flex;
+  width: 100%;
+  padding: 0px 20px;
+  margin-top: 88px;
+
+  .main__container {
+    width: 100%;
+    min-height: calc(100vh - 88px);
+    background-color: rgb(227, 242, 253);
+    border-radius: 8px 8px 0px 0px;
+    padding: 20px;
+  }
+}
