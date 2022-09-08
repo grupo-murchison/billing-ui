@@ -11,6 +11,7 @@ specifiers:
   '@typescript-eslint/eslint-plugin': 5.31.0
   '@typescript-eslint/parser': 5.31.0
   '@vitejs/plugin-react': 2.1.0
+  clsx: 1.2.1
   eslint: 8.20.0
   eslint-plugin-react: 7.30.1
   react: 18.2.0
@@ -27,6 +28,7 @@ dependencies:
   '@emotion/styled': 11.10.4_tkmuf4wvlgatnwbnmxjyzfxsny
   '@mui/icons-material': 5.10.3_dtruv572645qlhu5xokhjjhjka
   '@mui/material': 5.10.4_vbxcdxy3bftsefaguotlgalomu
+  clsx: 1.2.1
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y

@@ -1,13 +1,29 @@
+import { useCallback } from 'react';
+
 import { Menu as MenuIcon, SettingsOutlined as SettingsOutlinedIcon } from '@mui/icons-material';
 
 const Navbar = () => {
+  const handleTogglerClick = useCallback(() => {
+    const bodyNode = document.getElementById('app-body');
+
+    const isMenuOpen = bodyNode?.classList.contains('menu-open');
+
+    if (isMenuOpen) {
+      bodyNode?.classList.remove('menu-open');
+      bodyNode?.classList.add('menu-closed');
+    } else {
+      bodyNode?.classList.add('menu-open');
+      bodyNode?.classList.remove('menu-closed');
+    }
+  }, []);
+
   return (
     <header className='app-header'>
       <div className='header__navbar'>
         <div className='navbar__logo'>
           <img src='./logo/logo-placeholder.png' alt='LOGO' />
         </div>
-        <div className='navbar__menu-toggler'>
+        <div className='navbar__menu-toggler' onClick={handleTogglerClick}>
           <MenuIcon />
         </div>
         <div className='navbar__toolbar'>
