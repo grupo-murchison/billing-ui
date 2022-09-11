@@ -1,4 +1,4 @@
-import SetttingsIcon from '@mui/icons-material/Settings';
+import { SetttingsIcon } from '@design-system/icons';
 
 export const MENU_DASHBOARD_ITEMS = {
   title: 'Dashboard',

@@ -1,14 +1,11 @@
 import { Fragment, useCallback, useState } from 'react';
 import type { ReactNode, MouseEvent } from 'react';
 
-import clsx from 'clsx';
-
-import {
-  KeyboardArrowDown as KeyboardArrowDownIcon,
-  KeyboardArrowUp as KeyboardArrowUpIcon,
-} from '@mui/icons-material';
+import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@design-system/icons';
 
 import MenuItem from '@layouts/Sidebar/Section/Item';
+
+import { ClassNameHandlerLib } from '@libs';
 
 const SectionSubMenu = ({ data }: SectionSubMenuProps) => {
   const [isSubMenuCollapsed, setIsMenuCollapsed] = useState(true);
@@ -25,7 +22,7 @@ const SectionSubMenu = ({ data }: SectionSubMenuProps) => {
 
   return (
     <li
-      className={clsx('section__item section__item--submenu', {
+      className={ClassNameHandlerLib.merge('section__item section__item--submenu', {
         'is-collapsed': isSubMenuCollapsed,
       })}
     >

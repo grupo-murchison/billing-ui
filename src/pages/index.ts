@@ -1,1 +1,1 @@
-export { default as PageExample } from '@pages/PageExample/PageExample';
+export { default as PageExample } from './PageExample';

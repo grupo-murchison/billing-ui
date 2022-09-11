@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { Menu as MenuIcon, SettingsOutlined as SettingsOutlinedIcon } from '@mui/icons-material';
+import { MenuIcon, SettingsOutlinedIcon } from '@design-system/icons';
 
 const Navbar = () => {
   const handleTogglerClick = useCallback(() => {

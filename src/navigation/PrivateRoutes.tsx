@@ -1,6 +1,8 @@
 import { Routes, Route } from 'react-router-dom';
 
-import { Navbar, PageContainer, Sidebar } from '@layouts';
+import { PageContainer } from '@components';
+
+import { Navbar, Sidebar } from '@features';
 
 import { PageExample } from '@pages';
 

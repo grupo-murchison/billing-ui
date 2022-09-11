@@ -1,1 +1,1 @@
-export {};
+export * as ClassNameHandlerLib from './classNameHandler';
