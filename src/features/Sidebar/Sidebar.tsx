@@ -1,6 +1,6 @@
-import { MENU_ITEMS } from '@layouts/Sidebar/_constants';
+import { MENU_ITEMS } from '@features/Sidebar/_constants';
 
-import MenuSection from '@layouts/Sidebar/Section';
+import MenuSection from '@features/Sidebar/Section';
 
 const Sidebar = () => {
   return (

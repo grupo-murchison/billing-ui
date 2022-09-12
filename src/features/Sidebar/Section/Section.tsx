@@ -1,8 +1,8 @@
 import { Fragment } from 'react';
 import type { ReactNode } from 'react';
 
-import MenuItem from '@layouts/Sidebar/Section/Item';
-import SubMenu from '@layouts/Sidebar/Section/SubMenu';
+import MenuItem from '@features/Sidebar/Section/Item';
+import SubMenu from '@features/Sidebar/Section/SubMenu';
 
 const Section = ({ item }: SectionProps) => {
   return (

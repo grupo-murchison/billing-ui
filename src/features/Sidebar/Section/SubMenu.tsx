@@ -3,7 +3,7 @@ import type { ReactNode, MouseEvent } from 'react';
 
 import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@design-system/icons';
 
-import MenuItem from '@layouts/Sidebar/Section/Item';
+import MenuItem from '@features/Sidebar/Section/Item';
 
 import { ClassNameHandlerLib } from '@libs';
 

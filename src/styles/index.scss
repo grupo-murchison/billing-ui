@@ -1,6 +1,8 @@
 @use './global';
 
-// Layouts
-@use './layouts/navbar.scss';
-@use './layouts/pageContainer.scss';
-@use './layouts/sidebar.scss';
+// Components
+@use './components/pageContainer.scss';
+
+// Features
+@use './features/navbar.scss';
+@use './features/sidebar.scss';
