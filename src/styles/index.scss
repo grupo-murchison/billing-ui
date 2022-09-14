@@ -1,8 +1,12 @@
 @use './global';
 
 // Components
-@use './components/pageContainer.scss';
+@use './components/pageContainer.scss' as PageContainerComponent;
 
 // Features
-@use './features/navbar.scss';
-@use './features/sidebar.scss';
+@use './features/login.scss' as LoginFeature;
+@use './features/navbar.scss' as NavbarFeature;
+@use './features/sidebar.scss' as SidebarFeature;
+
+// Pages
+@use './pages/auth/login.scss' as LoginAuthPage;
