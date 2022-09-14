@@ -19,10 +19,8 @@ specifiers:
   react-dom: 18.2.0
   react-hook-form: 7.34.2
   react-router-dom: 6.3.0
-  reflect-metadata: 0.1.12
   rxjs: 7.5.6
   sass: 1.54.8
-  tsyringe: 4.7.0
   typescript: 4.6.4
   vite: 3.1.0
   vite-plugin-eslint: 1.7.0
@@ -40,9 +38,7 @@ dependencies:
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.34.2_react@18.2.0
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
-  reflect-metadata: 0.1.12
   rxjs: 7.5.6
-  tsyringe: 4.7.0
   zod: 3.18.0
 
 devDependencies:
@@ -2454,10 +2450,6 @@ packages:
       tslib: 1.14.1
     dev: true
 
-  /reflect-metadata/0.1.12:
-    resolution: {integrity: sha512-n+IyV+nGz3+0q3/Yf1ra12KpCyi001bi4XFxSjbiWWjfqb52iTTtpGXmCCAOWWIAn9KEuFZKGqBERHmrtScZ3A==}
-    dev: false
-
   /regenerator-runtime/0.13.9:
     resolution: {integrity: sha512-p3VT+cOEgxFsRRA9X4lkI1E+k2/CtnKtU4gcxyaCUreilL/vqI6CdZ3wxVUx3UOUg+gnUOQQcRI7BmSI656MYA==}
     dev: false
@@ -2696,6 +2688,7 @@ packages:
 
   /tslib/1.14.1:
     resolution: {integrity: sha512-Xni35NKzjgMrwevysHTCArtLDpPvye8zV/0E4EyYn43P7/7qvQwPh9BGkHewbMulVntbigmcT7rdX3BNo9wRJg==}
+    dev: true
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
@@ -2710,13 +2703,6 @@ packages:
       tslib: 1.14.1
       typescript: 4.6.4
     dev: true
-
-  /tsyringe/4.7.0:
-    resolution: {integrity: sha512-ncFDM1jTLsok4ejMvSW5jN1VGPQD48y2tfAR0pdptWRKYX4bkbqPt92k7KJ5RFJ1KV36JEs/+TMh7I6OUgj74g==}
-    engines: {node: '>= 6.0.0'}
-    dependencies:
-      tslib: 1.14.1
-    dev: false
 
   /type-check/0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
