@@ -7,6 +7,7 @@
 @use './features/login.scss' as LoginFeature;
 @use './features/navbar.scss' as NavbarFeature;
 @use './features/sidebar.scss' as SidebarFeature;
+@use './features//productoSoftland.scss' as ProductoSoftland;
 
 // Pages
 @use './pages/auth/login.scss' as LoginAuthPage;

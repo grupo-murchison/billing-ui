@@ -6,7 +6,7 @@ import { PageContainer } from '@components';
 
 import { AuthContext } from '@contexts';
 
-import { Navbar, Sidebar } from '@features';
+import { Navbar, ProductoSoftland, Sidebar } from '@features';
 
 import { PageExample } from '@pages';
 
@@ -24,6 +24,7 @@ const PrivateRoutes = () => {
       <PageContainer>
         <Routes>
           <Route path='/' element={<PageExample />} />
+          <Route path='/productosoftland' element={<ProductoSoftland />} />
         </Routes>
       </PageContainer>
     </>

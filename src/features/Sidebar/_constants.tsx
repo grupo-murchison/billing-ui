@@ -9,9 +9,9 @@ export const MENU_DASHBOARD_ITEMS = {
       path: '/',
     },
     {
-      label: 'Analytics',
+      label: 'Producto Softland',
       icon: <SetttingsIcon />,
-      path: '/example',
+      path: '/productosoftland',
     },
   ],
 };
