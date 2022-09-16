@@ -24,10 +24,6 @@ import {
 } from '@design-system/grid';
 import { DeleteIcon, EditIcon, AddIcon, FilterListIcon } from '@design-system/icons';
 
-// import { BarChart, DispersionChart, PieChart } from './Charts';
-
-import './styles.scss';
-
 function descendingComparator<T>(a: T, b: T, orderBy: keyof T) {
   if (b[orderBy] < a[orderBy]) {
     return -1;
@@ -186,13 +182,11 @@ const TableToolbar = (props: TableToolbarProps) => {
         </>
       ) : (
         <>
-          <IconButton>
-            <Link to={`/productosoftland`} style={{ textDecoration: 'none' }}>
-              <Button variant='contained'>
-                {` Agregar Nuevo `} <AddIcon style={{ paddingLeft: '7' }} />
-              </Button>
-            </Link>
-          </IconButton>
+          <Link to={`/productosoftland`} style={{ textDecoration: 'none' }}>
+            <Button variant='contained' endIcon={<AddIcon />} style={{ minWidth: 'max-content' }}>
+              Agregar Nuevo
+            </Button>
+          </Link>
           <Tooltip title='Filtros'>
             <IconButton>
               <FilterListIcon />
@@ -372,11 +366,6 @@ const DataTable = (props: DataTableProps) => {
           El registro ha sido eliminado
         </Alert>
       </Snackbar>
-      {/* <div className='Graph'>
-        <BarChart datos={rows} />
-        <PieChart datos={rows} />
-        <DispersionChart datos={rows} />
-      </div> */}
     </Box>
   );
 };
