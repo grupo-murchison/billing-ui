@@ -135,7 +135,7 @@ const ProductoSoftland = () => {
               />
             </Grid>
             <Grid item xs={6}>
-              <LocalizationProvider dateAdapter={AdapterDayjs}>
+              {/* <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DesktopDatePicker
                   inputFormat='DD/MM/YYYY'
                   value={value}
@@ -153,7 +153,18 @@ const ProductoSoftland = () => {
                     />
                   )}
                 />
-              </LocalizationProvider>
+              </LocalizationProvider> */}
+              <TextField
+                id='fechaEstado'
+                label='Fecha'
+                type='date'
+                {...register('fechaEstado')}
+                InputLabelProps={{
+                  shrink: true,
+                }}
+                fullWidth
+                variant='outlined'
+              />
             </Grid>
             <Grid item xs={6}>
               <TextField id='tipo estado' select fullWidth label='Estado' {...register('estado')}>
