@@ -10,7 +10,7 @@ import dayjs, { Dayjs } from 'dayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers';
 
 const ProductoSoftlandSchema = z.object({
-  idProductoSoftland: z.string(),
+  // idProductoSoftland: z.string(),
   agrupacionProducto: z.string().max(50, { message: 'Ha superado el límite de caracteres' }),
   codigoProducto: z.string().max(50, { message: 'Ha superado el límite de caracteres' }),
   descripcion: z.string().max(250, { message: 'Ha superado el límite de caracteres' }),
@@ -38,7 +38,7 @@ const ProductoSoftland = () => {
     formState: { errors },
   } = useForm<ProductoSoftlandSchemaType>({
     defaultValues: {
-      idProductoSoftland: undefined,
+      // idProductoSoftland: undefined,
       agrupacionProducto: '',
       codigoProducto: '',
       descripcion: '',
@@ -79,7 +79,7 @@ const ProductoSoftland = () => {
         <Tipography className='login__title'>Producto Softland</Tipography>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2} direction='row-reverse'>
-            <Grid item xs={12}>
+            {/* <Grid item xs={12}>
               <Autocomplete
                 options={tiposID}
                 id='customerEmail'
@@ -98,7 +98,7 @@ const ProductoSoftland = () => {
                 error={!!errors.idProductoSoftland}
                 helperText={errors?.idProductoSoftland?.message}
               />
-            </Grid>
+            </Grid> */}
             <Grid item xs={6}>
               <TextField
                 className='login__input'
