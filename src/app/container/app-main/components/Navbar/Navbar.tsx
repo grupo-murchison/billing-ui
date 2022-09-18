@@ -1,6 +1,6 @@
 import { useCallback } from 'react';
 
-import { MenuIcon, SettingsOutlinedIcon } from '@app/design-system/icons';
+import { MenuIcon, SettingsOutlinedIcon } from '@assets/icons';
 
 import './Navbar.scss';
 

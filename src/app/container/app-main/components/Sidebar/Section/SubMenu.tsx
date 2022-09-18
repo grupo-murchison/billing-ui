@@ -1,7 +1,7 @@
 import { Fragment, useCallback, useState } from 'react';
 import type { ReactNode, MouseEvent } from 'react';
 
-import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@app/design-system/icons';
+import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@assets/icons';
 
 import MenuItem from '@app/container/app-main/components/Sidebar/Section/Item';
 

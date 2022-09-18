@@ -1,4 +1,4 @@
-import { Container, Tipography, TextField, Button, Grid } from '@app/design-system/material-ui';
+import { Container, Typography, TextField, Button, Grid } from '@mui/material';
 import { z } from 'zod';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -68,7 +68,7 @@ const ProductoSoftland = () => {
   return (
     <>
       <Container className='login-container'>
-        <Tipography className='login__title'>Producto Softland</Tipography>
+        <Typography className='login__title'>Producto Softland</Typography>
         <form noValidate onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2} direction='row-reverse'>
             {/* <Grid item xs={12}>

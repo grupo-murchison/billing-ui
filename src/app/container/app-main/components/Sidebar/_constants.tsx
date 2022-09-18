@@ -1,4 +1,4 @@
-import { SetttingsIcon } from '@app/design-system/icons';
+import { SetttingsIcon } from '@assets/icons';
 
 export const MENU_MAIN_ITEMS = {
   title: 'Principal',
