@@ -1,0 +1,95 @@
+@use 'src/assets/scss/breakpoints' as BP;
+
+.app-header {
+  position: fixed;
+  width: 100%;
+  top: 0px;
+  left: 0px;
+
+  .header__navbar {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 16px;
+    min-height: 48px;
+
+    @include BP.sm {
+      padding-left: 24px;
+      padding-right: 24px;
+    }
+
+    .navbar__logo {
+      width: 220px;
+      text-align: left;
+      display: none;
+
+      img {
+        max-width: 100%;
+        max-height: 48px;
+      }
+
+      @include BP.md {
+        display: flex;
+      }
+    }
+
+    .navbar__menu-toggler {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      border-radius: 8px;
+      width: 34px;
+      height: 34px;
+      transition: all 0.2s ease-in-out 0s;
+      background: rgb(237, 231, 246);
+      color: rgb(94, 53, 177);
+
+      &:hover {
+        background: rgb(94, 53, 177);
+        color: rgb(237, 231, 246);
+      }
+    }
+
+    .navbar__toolbar {
+      display: flex;
+      margin-left: auto;
+
+      .toolbar__profile {
+        display: flex;
+        align-items: center;
+        background-color: rgb(227, 242, 253);
+        cursor: pointer;
+        transition: all 0.2s ease-in-out 0s;
+        color: rgb(33, 150, 243);
+        padding: 9px;
+        border-radius: 27px;
+        border: none;
+
+        .toolbar__profile--user-thumbnail {
+          overflow: hidden;
+          border-radius: 50%;
+          width: 30px;
+          height: 30px;
+
+          img {
+            height: 100%;
+            width: auto;
+          }
+        }
+
+        .toolbar__profile--wheel {
+          padding-left: 15px;
+          padding-right: 5px;
+          padding-top: 2px;
+        }
+
+        &:hover {
+          color: rgb(227, 242, 253);
+          background: rgb(33, 150, 243);
+        }
+      }
+    }
+  }
+}
