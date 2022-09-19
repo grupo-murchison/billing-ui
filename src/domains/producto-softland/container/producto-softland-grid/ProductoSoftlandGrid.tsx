@@ -1,6 +1,9 @@
 import { DataGrid } from '@app/components';
 
+import { withBreadcrumb } from '@app/hocs';
+
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
+import { ProductoSoflandGridBreadcrumb } from '@domains/producto-softland/constants';
 
 const ProductoSoftlandGrid = () => {
   return (
@@ -30,4 +33,4 @@ const ProductoSoftlandGrid = () => {
   );
 };
 
-export default ProductoSoftlandGrid;
+export default withBreadcrumb(ProductoSoftlandGrid, ProductoSoflandGridBreadcrumb);
