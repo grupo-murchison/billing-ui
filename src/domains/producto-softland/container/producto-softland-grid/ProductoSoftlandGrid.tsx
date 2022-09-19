@@ -1,15 +1,33 @@
-import { useEffect } from 'react';
+import { DataGrid } from '@app/components';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 
 const ProductoSoftlandGrid = () => {
-  useEffect(() => {
-    ProductoSoftlandRepository.getAllProductoSoftlandPaginated().then(data => {
-      console.log(data);
-    });
-  }, []);
-
-  return <>Hola</>;
+  return (
+    <>
+      <DataGrid
+        columnHeads={[
+          { label: 'AGRUPACIÓN' },
+          { label: 'CÓDIGO' },
+          { label: 'DESCRIPCIÓN' },
+          { label: 'ACTIVO' },
+          { label: 'FECHA ACTIVO' },
+          { label: '' },
+        ]}
+        repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
+        rowTemplate={row => (
+          <>
+            <DataGrid.TableCell>{row.agrupacion}</DataGrid.TableCell>
+            <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
+            <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
+            <DataGrid.TableCell>{row.activo ? 'SI' : 'NO'}</DataGrid.TableCell>
+            <DataGrid.TableCell>{row.fechaCambioEstado}</DataGrid.TableCell>
+            <DataGrid.TableCell>{'--'}</DataGrid.TableCell>
+          </>
+        )}
+      />
+    </>
+  );
 };
 
 export default ProductoSoftlandGrid;
