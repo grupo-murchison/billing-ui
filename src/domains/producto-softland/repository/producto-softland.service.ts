@@ -12,9 +12,33 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
+  static getById = async (id: string): Promise<HandlePromise<AnyValue>> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`api/v1/productos-softland/${id}`),
+    );
+
+    return [response, error];
+  };
+
   static post = async (productoSoftland: AnyValue): Promise<HandlePromise<AnyValue>> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.post<AnyValue>('api/v1/productos-softland/crud', productoSoftland),
+    );
+
+    return [response, error];
+  };
+
+  static patch = async (productoSoftland: AnyValue): Promise<HandlePromise<AnyValue>> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.patch<AnyValue>('api/v1/productos-softland/crud', productoSoftland),
+    );
+
+    return [response, error];
+  };
+
+  static deleteById = async (id: string): Promise<HandlePromise<AnyValue>> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.delete<AnyValue>(`api/v1/productos-softland/crud/${id}`),
     );
 
     return [response, error];
