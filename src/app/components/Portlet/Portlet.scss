@@ -1,0 +1,8 @@
+@use 'src/assets/scss/variables' as VARS;
+
+.portlet {
+  background-color: VARS.$color-white;
+  padding: 1rem;
+  margin-bottom: .5rem;
+  border-radius: .5rem;
+}

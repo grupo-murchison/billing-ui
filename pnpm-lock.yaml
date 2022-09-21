@@ -4,7 +4,7 @@ specifiers:
   '@babel/core': 7.0.0
   '@emotion/react': 11.10.4
   '@emotion/styled': 11.10.4
-  '@hookform/resolvers': 2.9.7
+  '@hookform/resolvers': 2.9.8
   '@mui/icons-material': 5.10.3
   '@mui/material': 5.10.4
   '@mui/system': 5.4.1
@@ -17,7 +17,7 @@ specifiers:
   '@vitejs/plugin-react': 2.1.0
   axios: 0.27.2
   clsx: 1.2.1
-  dayjs: 1.11.5
+  date-fns: 2.29.3
   eslint: 8.20.0
   eslint-plugin-react: 7.30.1
   react: 18.2.0
@@ -28,7 +28,6 @@ specifiers:
   sass: 1.54.8
   typescript: 4.6.4
   uuid: 9.0.0
-  victory: 36.6.6
   vite: 3.1.0
   vite-plugin-eslint: 1.7.0
   vite-tsconfig-paths: 3.5.0
@@ -37,21 +36,20 @@ specifiers:
 dependencies:
   '@emotion/react': 11.10.4_hqr7hwprczx2giuytu72imwieu
   '@emotion/styled': 11.10.4_tkmuf4wvlgatnwbnmxjyzfxsny
-  '@hookform/resolvers': 2.9.7_react-hook-form@7.34.2
+  '@hookform/resolvers': 2.9.8_react-hook-form@7.34.2
   '@mui/icons-material': 5.10.3_dtruv572645qlhu5xokhjjhjka
   '@mui/material': 5.10.4_vbxcdxy3bftsefaguotlgalomu
   '@mui/system': 5.4.1_wpm2ckkcb3o6jfqp3h4kjrjece
-  '@mui/x-date-pickers': 5.0.1_gsptxstnhlm2337fjbvxg2545i
+  '@mui/x-date-pickers': 5.0.1_cnarvtruuwwjlazp76aij6xc6y
   axios: 0.27.2
   clsx: 1.2.1
-  dayjs: 1.11.5
+  date-fns: 2.29.3
   react: 18.2.0
   react-dom: 18.2.0_react@18.2.0
   react-hook-form: 7.34.2_react@18.2.0
   react-router-dom: 6.3.0_biqbaboplfbrettd7655fr4n2y
   rxjs: 7.5.6
   uuid: 9.0.0
-  victory: 36.6.6_react@18.2.0
   zod: 3.18.0
 
 devDependencies:
@@ -369,7 +367,7 @@ packages:
     resolution: {integrity: sha512-3CRvQUEK7aF87NUOwcTtmJ2Rc1kN0D4jFQUfRoanuAnE4o5HzHx4E2YenjaKjSPWeZYiWG6ZhDomx5hp1AaCJA==}
     dev: false
 
-  /@date-io/date-fns/2.15.0:
+  /@date-io/date-fns/2.15.0_date-fns@2.29.3:
     resolution: {integrity: sha512-hkVeLm0jijHS2F9YVQcf0LSlD55w9xPvvIfuxDE0XWNXOTcRAAhqw2aqOxyeGbmHxc5U4HqyPZaqs9tfeTsomQ==}
     peerDependencies:
       date-fns: ^2.0.0
@@ -378,9 +376,10 @@ packages:
         optional: true
     dependencies:
       '@date-io/core': 2.15.0
+      date-fns: 2.29.3
     dev: false
 
-  /@date-io/dayjs/2.15.0_dayjs@1.11.5:
+  /@date-io/dayjs/2.15.0:
     resolution: {integrity: sha512-wgYzwaXr9KxkHNYxrOb1t8fYLfAdjIf0Q86qdVCwANObcvyGcPBm0uFtpPK7ApeE4DJUlbuG0IX75TtO+uITwQ==}
     peerDependencies:
       dayjs: ^1.8.17
@@ -389,7 +388,6 @@ packages:
         optional: true
     dependencies:
       '@date-io/core': 2.15.0
-      dayjs: 1.11.5
     dev: false
 
   /@date-io/luxon/2.15.0:
@@ -568,8 +566,8 @@ packages:
       - supports-color
     dev: true
 
-  /@hookform/resolvers/2.9.7_react-hook-form@7.34.2:
-    resolution: {integrity: sha512-BloehX3MOLwuFEwT4yZnmolPjVmqyn8VsSuodLfazbCIqxBHsQ4qUZsi+bvNNCduRli1AGWFrkDLGD5QoNzsoA==}
+  /@hookform/resolvers/2.9.8_react-hook-form@7.34.2:
+    resolution: {integrity: sha512-iVVjH0USq+1TqDdGkWe2M1x7Wn5OFPgVRo7CbWFsXTqqXqCaZtZcnzJu+UhljCWbthFWxWGXKLGYUDPZ04oVvQ==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
@@ -829,7 +827,7 @@ packages:
       react-is: 18.2.0
     dev: false
 
-  /@mui/x-date-pickers/5.0.1_gsptxstnhlm2337fjbvxg2545i:
+  /@mui/x-date-pickers/5.0.1_cnarvtruuwwjlazp76aij6xc6y:
     resolution: {integrity: sha512-S+qUdhs3M/awoON9tfcoCtjBqn7tyfmU9gQUG1WwdGj6jySpze2bIjS7v7uhwydjddk7AlJGyrLOIc17F6ZVIA==}
     engines: {node: '>=12.0.0'}
     peerDependencies:
@@ -859,8 +857,8 @@ packages:
     dependencies:
       '@babel/runtime': 7.19.0
       '@date-io/core': 2.15.0
-      '@date-io/date-fns': 2.15.0
-      '@date-io/dayjs': 2.15.0_dayjs@1.11.5
+      '@date-io/date-fns': 2.15.0_date-fns@2.29.3
+      '@date-io/dayjs': 2.15.0
       '@date-io/luxon': 2.15.0
       '@date-io/moment': 2.15.0
       '@emotion/react': 11.10.4_hqr7hwprczx2giuytu72imwieu
@@ -870,7 +868,7 @@ packages:
       '@mui/utils': 5.10.3_react@18.2.0
       '@types/react-transition-group': 4.4.5
       clsx: 1.2.1
-      dayjs: 1.11.5
+      date-fns: 2.29.3
       prop-types: 15.8.1
       react: 18.2.0
       react-dom: 18.2.0_react@18.2.0
@@ -910,48 +908,6 @@ packages:
       estree-walker: 2.0.2
       picomatch: 2.3.1
     dev: true
-
-  /@types/d3-array/3.0.3:
-    resolution: {integrity: sha512-Reoy+pKnvsksN0lQUlcH6dOGjRZ/3WRwXR//m+/8lt1BXeI4xyaUZoqULNjyXXRuh0Mj4LNpkCvhUpQlY3X5xQ==}
-    dev: false
-
-  /@types/d3-color/3.1.0:
-    resolution: {integrity: sha512-HKuicPHJuvPgCD+np6Se9MQvS6OCbJmOjGvylzMJRlDwUXjKTTXs6Pwgk79O09Vj/ho3u1ofXnhFOaEWWPrlwA==}
-    dev: false
-
-  /@types/d3-ease/3.0.0:
-    resolution: {integrity: sha512-aMo4eaAOijJjA6uU+GIeW018dvy9+oH5Y2VPPzjjfxevvGQ/oRDs+tfYC9b50Q4BygRR8yE2QCLsrT0WtAVseA==}
-    dev: false
-
-  /@types/d3-interpolate/3.0.1:
-    resolution: {integrity: sha512-jx5leotSeac3jr0RePOH1KdR9rISG91QIE4Q2PYTu4OymLTZfA3SrnURSLzKH48HmXVUru50b8nje4E79oQSQw==}
-    dependencies:
-      '@types/d3-color': 3.1.0
-    dev: false
-
-  /@types/d3-path/3.0.0:
-    resolution: {integrity: sha512-0g/A+mZXgFkQxN3HniRDbXMN79K3CdTpLsevj+PXiTcb2hVyvkZUBg37StmgCQkaD84cUJ4uaDAWq7UJOQy2Tg==}
-    dev: false
-
-  /@types/d3-scale/4.0.2:
-    resolution: {integrity: sha512-Yk4htunhPAwN0XGlIwArRomOjdoBFXC3+kCxK2Ubg7I9shQlVSJy/pG/Ht5ASN+gdMIalpk8TJ5xV74jFsetLA==}
-    dependencies:
-      '@types/d3-time': 3.0.0
-    dev: false
-
-  /@types/d3-shape/3.1.0:
-    resolution: {integrity: sha512-jYIYxFFA9vrJ8Hd4Se83YI6XF+gzDL1aC5DCsldai4XYYiVNdhtpGbA/GM6iyQ8ayhSp3a148LY34hy7A4TxZA==}
-    dependencies:
-      '@types/d3-path': 3.0.0
-    dev: false
-
-  /@types/d3-time/3.0.0:
-    resolution: {integrity: sha512-sZLCdHvBUcNby1cB6Fd3ZBrABbjz3v1Vm90nysCQ6Vt7vd6e/h9Lt7SiJUoEX0l4Dzc7P5llKyhqSi1ycSf1Hg==}
-    dev: false
-
-  /@types/d3-timer/3.0.0:
-    resolution: {integrity: sha512-HNB/9GHqu7Fo8AQiugyJbv6ZxYz58wef0esl4Mv828w1ZKpAshw/uFWVDUcIB9KKFeFKoxS3cHY07FFgtTRZ1g==}
-    dev: false
 
   /@types/eslint/8.4.6:
     resolution: {integrity: sha512-/fqTbjxyFUaYNO7VcW5g+4npmqVACz1bB7RTHYuLj+PRjw9hrCwrUXVQFpChUS0JsyEFvMZ7U/PfmvWgxJhI9g==}
@@ -1395,83 +1351,9 @@ packages:
   /csstype/3.1.0:
     resolution: {integrity: sha512-uX1KG+x9h5hIJsaKR9xHUeUraxf8IODOwq9JLNPq6BwB04a/xgpq3rcx47l5BZu5zBPlgD342tdke3Hom/nJRA==}
 
-  /d3-array/3.2.0:
-    resolution: {integrity: sha512-3yXFQo0oG3QCxbF06rMPFyGRMGJNS7NvsV1+2joOjbBE+9xvWQ8+GcMJAjRCzw06zQ3/arXeJgbPYcjUCuC+3g==}
-    engines: {node: '>=12'}
-    dependencies:
-      internmap: 2.0.3
-    dev: false
-
-  /d3-color/3.1.0:
-    resolution: {integrity: sha512-zg/chbXyeBtMQ1LbD/WSoW2DpC3I0mpmPdW+ynRTj/x2DAWYrIY7qeZIHidozwV24m4iavr15lNwIwLxRmOxhA==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /d3-ease/3.0.1:
-    resolution: {integrity: sha512-wR/XK3D3XcLIZwpbvQwQ5fK+8Ykds1ip7A2Txe0yxncXSdq1L9skcG7blcedkOX+ZcgxGAmLX1FrRGbADwzi0w==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /d3-format/3.1.0:
-    resolution: {integrity: sha512-YyUI6AEuY/Wpt8KWLgZHsIU86atmikuoOmCfommt0LYHiQSPjvX2AcFc38PX0CBpr2RCyZhjex+NS/LPOv6YqA==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /d3-interpolate/3.0.1:
-    resolution: {integrity: sha512-3bYs1rOD33uo8aqJfKP3JWPAibgw8Zm2+L9vBKEHJ2Rg+viTR7o5Mmv5mZcieN+FRYaAOWX5SJATX6k1PWz72g==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-color: 3.1.0
-    dev: false
-
-  /d3-path/3.0.1:
-    resolution: {integrity: sha512-gq6gZom9AFZby0YLduxT1qmrp4xpBA1YZr19OI717WIdKE2OM5ETq5qrHLb301IgxhLwcuxvGZVLeeWc/k1I6w==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /d3-scale/4.0.2:
-    resolution: {integrity: sha512-GZW464g1SH7ag3Y7hXjf8RoUuAFIqklOAq3MRl4OaWabTFJY9PN/E1YklhXLh+OQ3fM9yS2nOkCoS+WLZ6kvxQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 3.2.0
-      d3-format: 3.1.0
-      d3-interpolate: 3.0.1
-      d3-time: 3.0.0
-      d3-time-format: 4.1.0
-    dev: false
-
-  /d3-shape/3.1.0:
-    resolution: {integrity: sha512-tGDh1Muf8kWjEDT/LswZJ8WF85yDZLvVJpYU9Nq+8+yW1Z5enxrmXOhTArlkaElU+CTn0OTVNli+/i+HP45QEQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-path: 3.0.1
-    dev: false
-
-  /d3-time-format/4.1.0:
-    resolution: {integrity: sha512-dJxPBlzC7NugB2PDLwo9Q8JiTR3M3e4/XANkreKSUxF8vvXKqm1Yfq4Q5dl8budlunRVlUUaDUgFt7eA8D6NLg==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-time: 3.0.0
-    dev: false
-
-  /d3-time/3.0.0:
-    resolution: {integrity: sha512-zmV3lRnlaLI08y9IMRXSDshQb5Nj77smnfpnd2LrBa/2K281Jijactokeak14QacHs/kKq0AQ121nidNYlarbQ==}
-    engines: {node: '>=12'}
-    dependencies:
-      d3-array: 3.2.0
-    dev: false
-
-  /d3-timer/3.0.1:
-    resolution: {integrity: sha512-ndfJ/JxxMd3nw31uyKoY2naivF+r29V+Lc0svZxe1JvvIRmi8hUsrMvdOwgS1o6uBHmiz91geQ0ylPP0aj1VUA==}
-    engines: {node: '>=12'}
-    dev: false
-
-  /d3-voronoi/1.1.4:
-    resolution: {integrity: sha512-dArJ32hchFsrQ8uMiTBLq256MpnZjeuBtdHpaDlYuQyjU0CVzCJl/BVW+SkszaAeH95D/8gxqAhgx0ouAWAfRg==}
-    dev: false
-
-  /dayjs/1.11.5:
-    resolution: {integrity: sha512-CAdX5Q3YW3Gclyo5Vpqkgpj8fSdLQcRuzfX6mC6Phy0nfJ0eGYOeS7m4mt2plDWLAtA4TqTakvbboHvUxfe4iA==}
+  /date-fns/2.29.3:
+    resolution: {integrity: sha512-dDCnyH2WnnKusqvZZ6+jA1O51Ibt8ZMRNkDZdyAyK4YfbDwa/cEmuztzG5pk6hqlp9aSBPYcjOlktquahGwGeA==}
+    engines: {node: '>=0.11'}
     dev: false
 
   /debug/3.2.7:
@@ -1506,16 +1388,6 @@ packages:
       has-property-descriptors: 1.0.0
       object-keys: 1.1.1
     dev: true
-
-  /delaunator/4.0.1:
-    resolution: {integrity: sha512-WNPWi1IRKZfCt/qIDMfERkDp93+iZEmOxN2yy4Jg+Xhv8SLk2UTqqbe1sfiipn0and9QrE914/ihdx82Y/Giag==}
-    dev: false
-
-  /delaunay-find/0.0.6:
-    resolution: {integrity: sha512-1+almjfrnR7ZamBk0q3Nhg6lqSe6Le4vL0WJDSMx4IDbQwTpUTXPjxC00lqLBT8MYsJpPCbI16sIkw9cPsbi7Q==}
-    dependencies:
-      delaunator: 4.0.1
-    dev: false
 
   /delayed-stream/1.0.0:
     resolution: {integrity: sha512-ZySD7Nf91aLB0RxL4KGrKHBXl7Eds1DAmEdcoVawXnLD7SDhpNgtuII2aAkg7a7QS41jxPSZ17p4VdGnMHk3MQ==}
@@ -2249,11 +2121,6 @@ packages:
       side-channel: 1.0.4
     dev: true
 
-  /internmap/2.0.3:
-    resolution: {integrity: sha512-5Hh7Y1wQbvY5ooGgPbDaL5iYLAPzMTUrjMulskHLH6wnv/A+1q5rgEaiuqEjB+oxGXIVZs1FF+R/KPN3ZSQYYg==}
-    engines: {node: '>=12'}
-    dev: false
-
   /is-arrayish/0.2.1:
     resolution: {integrity: sha512-zz06S8t0ozoDXMG+ube26zeCTNXcKIPJZJi8hBrF4idCLms4CG9QtK7qBl1boi5ODzFpjswb5JPmHCbMpjaYzg==}
     dev: false
@@ -2389,10 +2256,6 @@ packages:
   /json-stable-stringify-without-jsonify/1.0.1:
     resolution: {integrity: sha512-Bdboy+l7tA3OGW6FjyFHWkP5LuByj1Tk33Ljyq0axyzdk9//JSi2u3fP1QSmd1KNwq6VOKYGlAu87CisVir6Pw==}
     dev: true
-
-  /json-stringify-safe/5.0.1:
-    resolution: {integrity: sha512-ZClg6AaYvamvYEE82d3Iyd3vSSIjQ+odgjaTzRuO3s7toCdFKczob2i0zCh7JE8kWn17yvAWhUVxvqGwUalsRA==}
-    dev: false
 
   /json5/0.5.1:
     resolution: {integrity: sha512-4xrs1aW+6N5DalkqSVA8fxh458CXvR99WU8WLKmq4v8eWAL86Xo3BVqyd3SkA9wEVjCMqyvvRRkshAdOnBp5rw==}
@@ -2663,10 +2526,6 @@ packages:
       loose-envify: 1.4.0
       react: 18.2.0
       scheduler: 0.23.0
-    dev: false
-
-  /react-fast-compare/3.2.0:
-    resolution: {integrity: sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA==}
     dev: false
 
   /react-hook-form/7.34.2_react@18.2.0:
@@ -3062,387 +2921,6 @@ packages:
   /v8-compile-cache/2.3.0:
     resolution: {integrity: sha512-l8lCEmLcLYZh4nbunNZvQCJc5pv7+RCwa8q/LdUx8u7lsWvPDKmpodJAJNwkAhJC//dFY48KuIEmjtd4RViDrA==}
     dev: true
-
-  /victory-area/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-bZhd0G1pgE2GaWwP8+w+714LF6pJU0z4VMVXCyapGLLfWep+jAXwAGt59F5ubwmqiw+9k0Q9exbwtr6iFGpzDg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-axis/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-bgsqSmt8ihiFHIhwg9EgNKZFP7yfAOxcyBYIvguh3lCv4Ulm5jyoyONgHo7vvs0iBe0aeGKeF7EOSLopUxwPpg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-bar/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-XNqjGCaxSHl59d4ko4Fnxaml+UUef9NxO7093pJpE0dnUPSYURmuup5/z2jYbU49AvPFcnAByMwsb0OoIoVbGg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-box-plot/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-95EPvDJktvGlT0zLfZFOMgeF8EfatUEcN0LbaX63tXRMDV0F3zlspWluwaVCLcvFDxec6PsPuzRfMyqKGNlUzg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-brush-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-/D5nfsIxn2LZf4v72Maeu8BA2zNW8QB5w1NWMYfOmwnDACcuSVmKcP5G/I/CD5lyjaaRCzk/db2OzTsQILLgfw==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-brush-line/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-R7EzHpPpq4mIUZ5vGTYqid+zL4EwyXD5JbKX7ibvS1xuUzUNafSZJuLrst26Kdv4iYunjkRu6uDe+3x8K24ExQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-candlestick/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-yJyEocSMCbRgOadI58fnAwcIjb6BfyjKxoCR/3UcD95+PFyBbLnPX0ewNVFEX4hnYzNhMDjCPR9VPHthWRUjVA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-canvas/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-KDwj2dem8zuz24Cy67Un2mTh1n83g17t8ZkrXAuW913neOS6ycdrxnhf/MvenBWdcDXyKN0HHf/vXaBh1+bVvQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-bar: 36.6.6_react@18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-chart/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-PA36OBj5121gYDjD3MnGoKPoI9cW2+I+cUTVPh53eCOXKQs2ifoOSswqdeV+Tf2HwAWQh1dODzCchhsulgKmvA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-axis: 36.6.6_react@18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-polar-axis: 36.6.6_react@18.2.0
-      victory-shared-events: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-core/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-PmQ+7QNlZ1CiPc/2OXMN76UAu9y8gTZXrwh8ZxM+k8G+6qIkWRMIcI8NCrOutDlfvi04HbOLNupzmTazqo61Jw==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-create-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-ZW4P0M0UjboWl7+qD/rCTVfZnG8yPO50mudjEPF6Exf6hTE34MoVwbjm7Hf4DS7ulJC0w+B+oqJOxQB+tP5jTw==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      react: 18.2.0
-      victory-brush-container: 36.6.6_react@18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-cursor-container: 36.6.6_react@18.2.0
-      victory-selection-container: 36.6.6_react@18.2.0
-      victory-voronoi-container: 36.6.6_react@18.2.0
-      victory-zoom-container: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-cursor-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-Duw30mFKRoSb2hUJvtnK4iSAob8mdTqY4jczjY4Ny/nwkeIj/oZ8UoF8rZPpqyEitWCo/ZiAkUhjgj6Uju413Q==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-errorbar/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-2mg1f3YvCwenzhzLzxJduKxJGC6fDi+b76twXAr+2gzdmbtcnaOXClV0PAerxQC5hvemuUKs1gF/PjixbWWK9w==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-group/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-iG1urrXh11DvVpZcdDDJjBnNHzGwjdbwDJmQ0IeANHfRgsUvEu4N/jLZ14pF3wt5t0LQ4ee/a4KyYOw58aevEw==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-shared-events: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-histogram/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-+bIGTCyGYK4diSkG5JLNxN0r5FhE1mNGQNJpBzToXObmYtmeANeJrrlu5i3Ude4fBy3EhkyQV9Z2B8ZZBZ3DoQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-bar: 36.6.6_react@18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-legend/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-ts6ndtX6qvi0E34Bhv5YEYruz5Bf6nqq1m72cqc5trbEG+Ee3HAYlfV6A3mCQHzwvLtWjEMLwWS3kBbmJqUhQA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-line/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-HPeFt7CtQEKy6xv4ArAXSJpre2mYqAOzkHi6NYnIjjT6tzWv4mHi0orKRAxTHT0U8oYWmdrCGtfImTL8QlYgYA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-pie/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-5m0nXg8WUyK0123U0PicfjfMNvPnPy5RS4rtLge3cqkOU++8F1C2VyhYrf5bdRlk4XRwRaE9E+aW5xSVLcYrAQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-vendor: 36.6.6
-    dev: false
-
-  /victory-polar-axis/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-L+K/1D3VMrPy2QQDnYy+wrfJza95JVSh4OpVGpdqKgw6TwVo7GpaD6BLXqCjHuOT9IXitcUj4tC48EOT8RlRgg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-scatter/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-YyXJsWrqCN7OYrafyh70tW8BC26EUUVybtRGkNHd1IYcwUGwNO1hscsODvdmtqkfMwmGToMvpWNqAt8uEAioVQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-selection-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-BJBo5I+iXXUxOZ9elwQ1BMktQdKLetACaS83mi30NyMp65vFdd/BUokfGfBARoAKYSnrZ364uYhMpWA90KF70A==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-shared-events/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-z+th6I03/LTI+RfenixfSbaioDIgVUxS1kyTCEejpRhf8vSt+MyEHKzAieSwwDBwLWiUf3Uf3n4UMsoFpVsNIQ==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      json-stringify-safe: 5.0.1
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-stack/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-HNt3zU7EDbNVkTeNp+LtAC82bmVXTah/mDLxcY8oi6wBrPkq/slUsqwZ2ubA81zX41oW4Z1jb544/JSkPIiaYw==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-shared-events: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-tooltip/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-tdTlISKNKX7BVh2e/aRZx073dST7xS6qY+s0g9OpLUxZzEZsPwm8d4S7zgug4jw3EmL2/1DGE2FaFI7VIR5hgA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-vendor/36.6.6:
-    resolution: {integrity: sha512-4qTXOWB0GiBpLFKt3+Ac+WaNeA4zBYJQpy2gqEvf0GcwYGQfAULo5X1Gia51ugnmZHI0uMOBTZRW5DyKp+N3NA==}
-    dependencies:
-      '@types/d3-array': 3.0.3
-      '@types/d3-ease': 3.0.0
-      '@types/d3-interpolate': 3.0.1
-      '@types/d3-scale': 4.0.2
-      '@types/d3-shape': 3.1.0
-      '@types/d3-time': 3.0.0
-      '@types/d3-timer': 3.0.0
-      d3-array: 3.2.0
-      d3-ease: 3.0.1
-      d3-interpolate: 3.0.1
-      d3-scale: 4.0.2
-      d3-shape: 3.1.0
-      d3-time: 3.0.0
-      d3-timer: 3.0.1
-    dev: false
-
-  /victory-voronoi-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-XsXWFhXvYW0hbZZukybY6/VTNvkIxDJIJDkkY+uS0tn+4XisXRhkT23oSxQ8Xk+w+9tlfTjt/tXr4Yy7dcUKJg==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      delaunay-find: 0.0.6
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      react-fast-compare: 3.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-tooltip: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-voronoi/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-48nAkoRF4ghiXJK/C3WG4a0oO/b44JdczEIcyt4vMzrFaEU7YxXCcJ3ivZP/S3+vq7FBcjqDoR3EjG85oLMWyA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      d3-voronoi: 1.1.4
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory-zoom-container/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-EeXg+kqWpiopNtoY24gAXNexXlDq4FUxg7fgzSZyMY0kuZyyUuOeGisXyHtxRvrsQMj5ZN/Fbc6e5q575mbw7w==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      lodash: 4.17.21
-      prop-types: 15.8.1
-      react: 18.2.0
-      victory-core: 36.6.6_react@18.2.0
-    dev: false
-
-  /victory/36.6.6_react@18.2.0:
-    resolution: {integrity: sha512-aMlQ/8Gvd+C49ZGHV49pMy2r1TP+3AF0Vv5Cm6X8jf4AZ9ynGyOy1nNzjkvWfgFhEcruo/T22NMAEQXRO2rEXA==}
-    peerDependencies:
-      react: '>=16.6.0'
-    dependencies:
-      react: 18.2.0
-      victory-area: 36.6.6_react@18.2.0
-      victory-axis: 36.6.6_react@18.2.0
-      victory-bar: 36.6.6_react@18.2.0
-      victory-box-plot: 36.6.6_react@18.2.0
-      victory-brush-container: 36.6.6_react@18.2.0
-      victory-brush-line: 36.6.6_react@18.2.0
-      victory-candlestick: 36.6.6_react@18.2.0
-      victory-canvas: 36.6.6_react@18.2.0
-      victory-chart: 36.6.6_react@18.2.0
-      victory-core: 36.6.6_react@18.2.0
-      victory-create-container: 36.6.6_react@18.2.0
-      victory-cursor-container: 36.6.6_react@18.2.0
-      victory-errorbar: 36.6.6_react@18.2.0
-      victory-group: 36.6.6_react@18.2.0
-      victory-histogram: 36.6.6_react@18.2.0
-      victory-legend: 36.6.6_react@18.2.0
-      victory-line: 36.6.6_react@18.2.0
-      victory-pie: 36.6.6_react@18.2.0
-      victory-polar-axis: 36.6.6_react@18.2.0
-      victory-scatter: 36.6.6_react@18.2.0
-      victory-selection-container: 36.6.6_react@18.2.0
-      victory-shared-events: 36.6.6_react@18.2.0
-      victory-stack: 36.6.6_react@18.2.0
-      victory-tooltip: 36.6.6_react@18.2.0
-      victory-voronoi: 36.6.6_react@18.2.0
-      victory-voronoi-container: 36.6.6_react@18.2.0
-      victory-zoom-container: 36.6.6_react@18.2.0
-    dev: false
 
   /vite-plugin-eslint/1.7.0_eslint@8.20.0+vite@3.1.0:
     resolution: {integrity: sha512-Kz2HwBeAArmsE0QmWSm+e7CaEQrfMkEZpFw4hngoy6JmERjw7WUH8HLbG1OkreOKX4iIUReOss9N1Mkw4wEk8g==}

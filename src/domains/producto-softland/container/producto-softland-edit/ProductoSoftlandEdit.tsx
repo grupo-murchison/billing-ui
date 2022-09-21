@@ -1,16 +1,16 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Portlet, Row, Col } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 
-import { ProductoSoflandCreateBreadcrumb } from '@domains/producto-softland/constants';
+import { ProductoSoflandEditBreadcrumb } from '@domains/producto-softland/constants';
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
-import { ProductoSoftlandCreateSchema } from '@domains/producto-softland/container/producto-softland-create/schemas';
-import type { ProductoSoftlandCreateSchemaType } from '@domains/producto-softland/container/producto-softland-create/schemas';
+import { ProductoSoftlandEditSchema } from '@domains/producto-softland/container/producto-softland-edit/schemas';
+import type { ProductoSoftlandEditSchemaType } from '@domains/producto-softland/container/producto-softland-edit/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -19,16 +19,20 @@ import { DateLib } from '@libs';
 import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
-const ProductoSoftlandCreate = () => {
+const ProductoSoftlandEdit = () => {
+  const { id } = useParams();
   const _navigate = useNavigate();
+
+  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit: rhfHandleSubmit,
     watch,
     setValue,
+    reset,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<ProductoSoftlandCreateSchemaType>({
+  } = useForm<ProductoSoftlandEditSchemaType>({
     defaultValues: {
       activo: false,
       agrupacion: '',
@@ -36,19 +40,33 @@ const ProductoSoftlandCreate = () => {
       descripcion: '',
       fechaCambioEstado: null,
     },
-    resolver: zodResolver(ProductoSoftlandCreateSchema),
+    resolver: zodResolver(ProductoSoftlandEditSchema),
   });
 
-  const handleSubmit = useCallback(async (data: ProductoSoftlandCreateSchemaType) => {
+  const handleSubmit = useCallback(async (data: ProductoSoftlandEditSchemaType) => {
     const submitData = {
       ...data,
       fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
     };
 
-    await ProductoSoftlandRepository.createProductoSoftland(submitData);
+    await ProductoSoftlandRepository.updateProductoSoftland(submitData);
 
     _navigate('/producto-softland');
   }, []);
+
+  useEffect(() => {
+    ProductoSoftlandRepository.getProductoSoftlandById(id || '').then(({ data }) => {
+      reset({
+        ...data,
+        fechaCambioEstado: DateLib.parseFromDBString(data.fechaCambioEstado),
+      });
+      setIsDataFetched(true);
+    });
+  }, [id, reset]);
+
+  if (!isDataFetched) {
+    return <></>;
+  }
 
   return (
     <Portlet>
@@ -111,7 +129,7 @@ const ProductoSoftlandCreate = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Producto
+              Actualizar Producto
             </Button>
           </Col>
         </Row>
@@ -120,4 +138,4 @@ const ProductoSoftlandCreate = () => {
   );
 };
 
-export default withBreadcrumb(ProductoSoftlandCreate, ProductoSoflandCreateBreadcrumb);
+export default withBreadcrumb(ProductoSoftlandEdit, ProductoSoflandEditBreadcrumb);

@@ -2,9 +2,10 @@ import type { ComponentType } from 'react';
 
 import { Link } from 'react-router-dom';
 
+import { Portlet } from '@app/components';
 import type { BreadcrumbItem } from '@app/utils/types/breadcrumb.type';
 
-import { Breadcrumbs, Box, Typography } from '@mui/material';
+import { Breadcrumbs, Typography } from '@mui/material';
 
 const withBreadcrumb = <TProps,>(
   Component: ComponentType<TProps & JSX.IntrinsicAttributes>,
@@ -13,7 +14,7 @@ const withBreadcrumb = <TProps,>(
   return (props: TProps & JSX.IntrinsicAttributes) => {
     return (
       <>
-        <Box component='div' sx={{ p: 2, backgroundColor: '#fff', marginBottom: '1rem' }}>
+        <Portlet>
           <Breadcrumbs aria-label='breadcrumb'>
             <Link to='/'>Inicio</Link>
             {breadcrumb.map((x, k) => {
@@ -28,7 +29,7 @@ const withBreadcrumb = <TProps,>(
               );
             })}
           </Breadcrumbs>
-        </Box>
+        </Portlet>
 
         <Component {...props} />
       </>

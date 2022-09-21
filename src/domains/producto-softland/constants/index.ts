@@ -6,7 +6,7 @@ export const ProductoSoflandGridBreadcrumb: BreadcrumbItem[] = [
 
 export const ProductoSoflandCreateBreadcrumb: BreadcrumbItem[] = [
   ...ProductoSoflandGridBreadcrumb,
-  { label: 'Crear', path: '/producto-softland/create' },
+  { label: 'Nuevo', path: '/producto-softland/create' },
 ];
 
 export const ProductoSoflandEditBreadcrumb: BreadcrumbItem[] = [

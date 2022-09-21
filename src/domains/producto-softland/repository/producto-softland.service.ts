@@ -36,7 +36,7 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
-  static deleteById = async (id: string): Promise<HandlePromise<AnyValue>> => {
+  static deleteById = async (id: number): Promise<HandlePromise<AnyValue>> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.delete<AnyValue>(`api/v1/productos-softland/crud/${id}`),
     );

@@ -29,7 +29,7 @@ class ProductoSoftlandRepository {
     return response;
   };
 
-  static deleteProductoSoftlandById = async (id: string) => {
+  static deleteProductoSoftlandById = async (id: number) => {
     const response$ = from(ProductoSoftlandService.deleteById(id)).pipe(map(RepositoryUtils.getResponse));
     const response = await lastValueFrom(response$);
     return response;
