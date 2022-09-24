@@ -3,7 +3,6 @@ import { useContext, useMemo } from 'react';
 import MUITableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
 import TableRow from '@mui/material/TableRow';
-// import Checkbox from '@mui/material/Checkbox';
 
 import { DataGridContext } from '@app/components/DataGrid/contexts';
 
@@ -20,17 +19,7 @@ const TableBody = () => {
     <MUITableBody>
       {rows.map(row => {
         return (
-          <TableRow
-            hover
-            role='checkbox'
-            // aria-checked={isItemSelected}
-            tabIndex={-1}
-            key={UuidLib.newUuid()}
-            // selected={isItemSelected}
-          >
-            {/* <TableCell padding='checkbox'>
-              <Checkbox color='primary' checked={isItemSelected} />
-            </TableCell> */}
+          <TableRow hover tabIndex={-1} key={UuidLib.newUuid()}>
             {rowTemplate(row)}
           </TableRow>
         );

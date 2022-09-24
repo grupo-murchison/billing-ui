@@ -1,1 +1,3 @@
-export {};
+import z from 'zod';
+
+export default z;

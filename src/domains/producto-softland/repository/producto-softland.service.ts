@@ -4,7 +4,7 @@ import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 
 class ProductoSoftlandService {
-  static getAllPaginated = async (): Promise<HandlePromise<AnyValue>> => {
+  static getAllPaginated = async (): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>('api/v1/productos-softland/all/pagination'),
     );
@@ -12,7 +12,7 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
-  static getById = async (id: string): Promise<HandlePromise<AnyValue>> => {
+  static getById = async (id: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`api/v1/productos-softland/${id}`),
     );
@@ -20,7 +20,7 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
-  static post = async (productoSoftland: AnyValue): Promise<HandlePromise<AnyValue>> => {
+  static post = async (productoSoftland: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.post<AnyValue>('api/v1/productos-softland/crud', productoSoftland),
     );
@@ -28,7 +28,7 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
-  static patch = async (productoSoftland: AnyValue): Promise<HandlePromise<AnyValue>> => {
+  static patch = async (productoSoftland: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.patch<AnyValue>('api/v1/productos-softland/crud', productoSoftland),
     );
@@ -36,7 +36,7 @@ class ProductoSoftlandService {
     return [response, error];
   };
 
-  static deleteById = async (id: number): Promise<HandlePromise<AnyValue>> => {
+  static deleteById = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.delete<AnyValue>(`api/v1/productos-softland/crud/${id}`),
     );
