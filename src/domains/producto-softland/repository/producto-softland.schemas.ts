@@ -1,16 +1,14 @@
-import { ValidationLib } from '@libs';
+import z from 'zod';
 
-export const getAllProductoSoftlandPaginatedSchema = ValidationLib.array(
-  ValidationLib.object({
-    id: ValidationLib.number(),
-    agrupacion: ValidationLib.string(),
-    codigo: ValidationLib.string(),
-    descripcion: ValidationLib.string(),
-    activo: ValidationLib.boolean(),
-    fechaCambioEstado: ValidationLib.string(),
+import { ZodUtils } from '@app/utils';
+
+export const getAllProductoSoftlandPaginatedSchema = ZodUtils.withPagination(
+  z.object({
+    id: z.number(),
+    agrupacion: z.string(),
+    codigo: z.string(),
+    descripcion: z.string(),
+    activo: z.boolean(),
+    fechaCambioEstado: z.string(),
   }),
 );
-
-export type GetAllProductoSoftlandPaginatedSchemaType = ValidationLib.infer<
-  typeof getAllProductoSoftlandPaginatedSchema
->;

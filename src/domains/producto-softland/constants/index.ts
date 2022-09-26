@@ -1,4 +1,4 @@
-import { BreadcrumbItem } from '@app/utils/types/breadcrumb.type';
+import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 export const ProductoSoflandGridBreadcrumb: BreadcrumbItem[] = [
   { label: 'Producto Sofland', path: '/producto-softland' },

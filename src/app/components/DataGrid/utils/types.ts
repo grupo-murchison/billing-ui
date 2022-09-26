@@ -7,9 +7,26 @@ export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T
 export type DataGridProps<T> = {
   columnHeads: DataGridColumnHeadProps[];
   rowTemplate: (row: T) => ReactNode;
-  repositoryFunc: () => Promise<AxiosResponse<T[]>>;
+  repositoryFunc: (params: DataGridRepositoryFuncParams) => Promise<
+    AxiosResponse<{
+      data: T[];
+      meta: {
+        page: number;
+        itemCount: number;
+        pageCount: number;
+        hasPreviousPage: boolean;
+        hasNextPage: boolean;
+      };
+    }>
+  >;
 };
 
 export type DataGridColumnHeadProps = {
   label: string;
+};
+
+export type DataGridRepositoryFuncParams = {
+  take: number;
+  page: number;
+  filters?: Record<string, string>;
 };

@@ -17,14 +17,10 @@ const AuthLogin = () => {
 
   const { register, handleSubmit: rhfHandleSubmit } = useForm();
 
-  const handleSubmit = useCallback(
-    (data: AnyValue) => {
-      console.log({ data });
-      allowAccess();
-      _navigate('/');
-    },
-    [allowAccess, _navigate],
-  );
+  const handleSubmit = useCallback(() => {
+    allowAccess();
+    _navigate('/');
+  }, [allowAccess, _navigate]);
 
   return (
     <div className='auth-login'>

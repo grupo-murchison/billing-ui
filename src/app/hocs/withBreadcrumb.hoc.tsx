@@ -3,7 +3,7 @@ import type { ComponentType } from 'react';
 import { Link } from 'react-router-dom';
 
 import { Portlet } from '@app/components';
-import type { BreadcrumbItem } from '@app/utils/types/breadcrumb.type';
+import type { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 import { Breadcrumbs, Typography } from '@mui/material';
 

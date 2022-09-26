@@ -1,1 +1,1 @@
-export { default } from './Portlet';
+export { default as Portlet } from './Portlet';

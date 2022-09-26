@@ -1,13 +1,15 @@
 import { from, lastValueFrom } from 'rxjs';
 
+import type { DataGridRepositoryFuncParams } from '@app/components';
+
 import { RepositoryUtils } from '@app/utils';
 
 import { ProductoSoftlandService } from '@domains/producto-softland/repository/producto-softland.service';
 import { getAllProductoSoftlandPaginatedSchema } from '@domains/producto-softland/repository/producto-softland.schemas';
 
 class ProductoSoftlandRepository {
-  static getAllProductoSoftlandPaginated = async () => {
-    const response$ = from(ProductoSoftlandService.getAllPaginated()).pipe(
+  static getAllProductoSoftlandPaginated = async (params: DataGridRepositoryFuncParams) => {
+    const response$ = from(ProductoSoftlandService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandPaginatedSchema),
     );
