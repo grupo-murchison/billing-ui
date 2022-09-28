@@ -11,11 +11,7 @@ export type DataGridProps<T> = {
     AxiosResponse<{
       data: T[];
       meta: {
-        page: number;
         itemCount: number;
-        pageCount: number;
-        hasPreviousPage: boolean;
-        hasNextPage: boolean;
       };
     }>
   >;
