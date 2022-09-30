@@ -8,6 +8,11 @@ export const MENU_MAIN_ITEMS = {
       icon: <SetttingsIcon />,
       path: '/producto-softland',
     },
+    {
+      label: 'ProcedimientoPS',
+      icon: <SetttingsIcon />,
+      path: '/procedimiento-ps',
+    },
   ],
 };
 

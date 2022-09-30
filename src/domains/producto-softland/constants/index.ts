@@ -1,15 +1,15 @@
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
-export const ProductoSoflandGridBreadcrumb: BreadcrumbItem[] = [
+export const ProductoSoflandDataGridBreadcrumb: BreadcrumbItem[] = [
   { label: 'Producto Sofland', path: '/producto-softland' },
 ];
 
 export const ProductoSoflandCreateBreadcrumb: BreadcrumbItem[] = [
-  ...ProductoSoflandGridBreadcrumb,
+  ...ProductoSoflandDataGridBreadcrumb,
   { label: 'Nuevo', path: '/producto-softland/create' },
 ];
 
 export const ProductoSoflandEditBreadcrumb: BreadcrumbItem[] = [
-  ...ProductoSoflandGridBreadcrumb,
+  ...ProductoSoflandDataGridBreadcrumb,
   { label: 'Editar', path: '' },
 ];
