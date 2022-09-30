@@ -26,7 +26,7 @@ const ProductoSoftlandDataGrid = () => {
 
   const { dialog, openDialog, closeDialog } = useConfirmDialog();
 
-  const handleNewProductClick = useCallback(() => {
+  const handleClickCreate = useCallback(() => {
     _navigate('/producto-softland/create');
   }, [_navigate]);
 
@@ -63,7 +63,7 @@ const ProductoSoftlandDataGrid = () => {
     <Portlet>
       <Row>
         <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleNewProductClick}>
+          <Button variant='outlined' onClick={handleClickCreate}>
             Nuevo Producto
           </Button>
         </Col>
