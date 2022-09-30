@@ -1,6 +1,6 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Outlet } from 'react-router-dom';
 
 import { DataGrid, Portlet, Col, Row } from '@app/components';
 
@@ -11,6 +11,7 @@ import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoflandDataGridBreadcrumb } from '@domains/producto-softland/constants';
+import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib, UuidLib } from '@libs';
 
@@ -18,6 +19,8 @@ import { Button, IconButton } from '@mui/material';
 
 const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
+
+  const { tempRef } = useContext(ProductoSoftlandContext);
 
   const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
 
@@ -47,6 +50,14 @@ const ProductoSoftlandDataGrid = () => {
     },
     [openDialog, closeDialog],
   );
+
+  useEffect(() => {
+    tempRef.current = {
+      reloadTable() {
+        setKeyDataGrid(UuidLib.newUuid());
+      },
+    };
+  }, []);
 
   return (
     <Portlet>
@@ -90,6 +101,7 @@ const ProductoSoftlandDataGrid = () => {
           />
         </Col>
       </Row>
+      <Outlet />
       {dialog}
     </Portlet>
   );
