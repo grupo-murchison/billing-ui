@@ -16,7 +16,7 @@ import { DateLib, UuidLib } from '@libs';
 
 import { Button, IconButton } from '@mui/material';
 
-const ProductoSoftlandGrid = () => {
+const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
 
   const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
@@ -95,4 +95,4 @@ const ProductoSoftlandGrid = () => {
   );
 };
 
-export default withBreadcrumb(ProductoSoftlandGrid, ProductoSoflandGridBreadcrumb);
+export default withBreadcrumb(ProductoSoftlandDataGrid, ProductoSoflandGridBreadcrumb);
