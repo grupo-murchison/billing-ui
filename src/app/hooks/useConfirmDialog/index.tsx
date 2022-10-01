@@ -1,18 +1,18 @@
-import { useCallback, useState } from 'react';
-import type { ReactNode } from 'react';
+import { useCallback, useContext } from 'react';
 
 import { ConfirmDialog } from '@app/components';
+import { ThemeContext } from '@app/contexts';
 
 const useConfirmDialog = () => {
-  const [dialog, setDialog] = useState<ReactNode>();
+  const { setDialogNode } = useContext(ThemeContext);
 
   const destroyDialog = useCallback(() => {
-    setDialog(undefined);
+    setDialogNode(undefined);
   }, []);
 
   const openDialog: OpenDialog = useCallback(
     ({ message, onClickNot, onClickYes }) => {
-      setDialog(
+      setDialogNode(
         <ConfirmDialog
           message={message}
           onClickYes={onClickYes}
@@ -24,7 +24,7 @@ const useConfirmDialog = () => {
     [destroyDialog],
   );
 
-  return { dialog, openDialog, closeDialog: destroyDialog };
+  return { open: openDialog, close: destroyDialog };
 };
 
 type OpenDialog = (params: { message: string; onClickYes: () => void; onClickNot?: () => void }) => void;

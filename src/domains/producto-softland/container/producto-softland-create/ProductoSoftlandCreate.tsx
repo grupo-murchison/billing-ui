@@ -21,7 +21,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers';
 const ProductoSoftlandCreate = () => {
   const _navigate = useNavigate();
 
-  const { tempRef } = useContext(ProductoSoftlandContext);
+  const { mainDataGrid } = useContext(ProductoSoftlandContext);
 
   const {
     register,
@@ -49,10 +49,10 @@ const ProductoSoftlandCreate = () => {
 
       await ProductoSoftlandRepository.createProductoSoftland(submitData);
 
-      tempRef.current.reloadTable();
+      mainDataGrid.reload();
       _navigate('/producto-softland');
     },
-    [_navigate],
+    [_navigate, mainDataGrid],
   );
 
   const handleClose = useCallback(() => {

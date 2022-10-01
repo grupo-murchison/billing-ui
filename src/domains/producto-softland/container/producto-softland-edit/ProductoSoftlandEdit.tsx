@@ -22,7 +22,7 @@ const ProductoSoftlandEdit = () => {
   const { id } = useParams();
   const _navigate = useNavigate();
 
-  const { tempRef } = useContext(ProductoSoftlandContext);
+  const { mainDataGrid } = useContext(ProductoSoftlandContext);
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
@@ -44,17 +44,20 @@ const ProductoSoftlandEdit = () => {
     resolver: zodResolver(ProductoSoftlandEditSchema),
   });
 
-  const handleSubmit = useCallback(async (data: ProductoSoftlandEditSchemaType) => {
-    const submitData = {
-      ...data,
-      fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
-    };
+  const handleSubmit = useCallback(
+    async (data: ProductoSoftlandEditSchemaType) => {
+      const submitData = {
+        ...data,
+        fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
+      };
 
-    await ProductoSoftlandRepository.updateProductoSoftland(submitData);
+      await ProductoSoftlandRepository.updateProductoSoftland(submitData);
 
-    tempRef.current.reloadTable();
-    _navigate('/producto-softland');
-  }, []);
+      mainDataGrid.reload();
+      _navigate('/producto-softland');
+    },
+    [_navigate, mainDataGrid],
+  );
 
   const handleClose = useCallback(() => {
     _navigate('/producto-softland');

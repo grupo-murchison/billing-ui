@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 
 import { DataGrid, Col, Row } from '@app/components';
 
-import { useConfirmDialog } from '@app/hooks';
+import { useConfirmDialog, useDataGrid } from '@app/hooks';
 
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
@@ -19,7 +19,8 @@ const ProcedimientoPSDataGrid = () => {
 
   const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
 
-  const { dialog, openDialog, closeDialog } = useConfirmDialog();
+  const confirmDialog = useConfirmDialog();
+  const mainDataGrid = useDataGrid();
 
   const handleClickCreate = useCallback(() => {
     _navigate('/procedimiento-ps-intervalo/create');
@@ -34,16 +35,16 @@ const ProcedimientoPSDataGrid = () => {
 
   const handleClickDelete = useCallback(
     (id: number) => {
-      openDialog({
+      confirmDialog.open({
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(id);
-          closeDialog();
+          confirmDialog.close();
           setKeyDataGrid(UuidLib.newUuid());
         },
       });
     },
-    [openDialog, closeDialog],
+    [confirmDialog],
   );
 
   return (
@@ -58,6 +59,7 @@ const ProcedimientoPSDataGrid = () => {
       <Row>
         <Col md={12}>
           <DataGrid
+            hookRef={mainDataGrid.ref}
             key={__keyDataGrid}
             columnHeads={[{ label: 'INTERVALO' }, { label: 'VALOR INICIAL' }, { label: 'VALOR FINAL' }, { label: '' }]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
@@ -79,7 +81,6 @@ const ProcedimientoPSDataGrid = () => {
           />
         </Col>
       </Row>
-      {dialog}
     </>
   );
 };

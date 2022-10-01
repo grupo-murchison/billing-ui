@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import { AuthContext } from '@app/contexts';
+import { AuthContext, ThemeProvider } from '@app/contexts';
 
 import { Navbar, PageContainer, Sidebar } from '@app/container/app-main/components';
 
@@ -17,14 +17,14 @@ const PrivateRoutes = () => {
   }
 
   return (
-    <>
+    <ThemeProvider>
       <Navbar />
       <Sidebar />
       <PageContainer>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
       </PageContainer>
-    </>
+    </ThemeProvider>
   );
 };
 

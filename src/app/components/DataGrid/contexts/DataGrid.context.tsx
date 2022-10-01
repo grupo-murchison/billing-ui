@@ -25,7 +25,13 @@ const initialContext: InitialContext = {
 
 const DataGridContext = createContext(initialContext);
 
-const DataGridProvider = <T,>({ columnHeads, rowTemplate, repositoryFunc, children }: DataGridProviderProps<T>) => {
+const DataGridProvider = <T,>({
+  hookRef,
+  columnHeads,
+  rowTemplate,
+  repositoryFunc,
+  children,
+}: DataGridProviderProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(initialContext.currentPage);
   const [rowsPerPage, setRowsPerPage] = useState<number>(initialContext.rowsPerPage);
   const [rowsTotalCount, setRowsTotalCount] = useState<number>(initialContext.rowsTotalCount);
@@ -72,7 +78,10 @@ const DataGridProvider = <T,>({ columnHeads, rowTemplate, repositoryFunc, childr
   }, []);
 
   useEffect(() => {
-    makeRequest();
+    hookRef.current = {
+      load: makeRequest,
+      reload: makeRequest,
+    };
   }, [makeRequest]);
 
   return (

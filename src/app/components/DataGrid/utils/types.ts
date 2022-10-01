@@ -5,6 +5,10 @@ import type { AxiosResponse } from 'axios';
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 
 export type DataGridProps<T> = {
+  hookRef: React.MutableRefObject<{
+    load: () => void;
+    reload: () => void;
+  }>;
   columnHeads: DataGridColumnHeadProps[];
   rowTemplate: (row: T) => ReactNode;
   repositoryFunc: (params: DataGridRepositoryFuncParams) => Promise<

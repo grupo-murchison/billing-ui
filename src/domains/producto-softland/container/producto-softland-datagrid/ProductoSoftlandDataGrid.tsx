@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
@@ -13,18 +13,16 @@ import { ProductoSoftlandRepository } from '@domains/producto-softland/repositor
 import { ProductoSoflandDataGridBreadcrumb } from '@domains/producto-softland/constants';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
-import { DateLib, UuidLib } from '@libs';
+import { DateLib } from '@libs';
 
 import { Button, IconButton } from '@mui/material';
 
 const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
 
-  const { tempRef } = useContext(ProductoSoftlandContext);
+  const { mainDataGrid } = useContext(ProductoSoftlandContext);
 
-  const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
-
-  const { dialog, openDialog, closeDialog } = useConfirmDialog();
+  const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
     _navigate('/producto-softland/create');
@@ -39,25 +37,21 @@ const ProductoSoftlandDataGrid = () => {
 
   const handleClickDelete = useCallback(
     (id: number) => {
-      openDialog({
+      confirmDialog.open({
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProductoSoftlandRepository.deleteProductoSoftlandById(id);
-          closeDialog();
-          setKeyDataGrid(UuidLib.newUuid());
+          confirmDialog.close();
+          mainDataGrid.reload();
         },
       });
     },
-    [openDialog, closeDialog],
+    [confirmDialog, mainDataGrid],
   );
 
   useEffect(() => {
-    tempRef.current = {
-      reloadTable() {
-        setKeyDataGrid(UuidLib.newUuid());
-      },
-    };
-  }, []);
+    mainDataGrid.load();
+  }, [mainDataGrid]);
 
   return (
     <Portlet>
@@ -71,7 +65,7 @@ const ProductoSoftlandDataGrid = () => {
       <Row>
         <Col md={12}>
           <DataGrid
-            key={__keyDataGrid}
+            hookRef={mainDataGrid.ref}
             columnHeads={[
               { label: 'AGRUPACIÓN' },
               { label: 'CÓDIGO' },
@@ -102,7 +96,6 @@ const ProductoSoftlandDataGrid = () => {
         </Col>
       </Row>
       <Outlet />
-      {dialog}
     </Portlet>
   );
 };

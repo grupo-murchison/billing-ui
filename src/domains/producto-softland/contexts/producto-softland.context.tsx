@@ -1,22 +1,18 @@
-import { createContext, useRef } from 'react';
+import { createContext } from 'react';
 import type { ReactNode } from 'react';
 
+import { useDataGrid } from '@app/hooks';
+
 const initialContext: InitialContext = {
-  tempRef: {
-    current: {
-      reloadTable() {
-        return;
-      },
-    },
-  },
+  mainDataGrid: useDataGrid.initialValues,
 };
 
 const ProductoSoftlandContext = createContext(initialContext);
 
 const ProductoSoftlandProvider = ({ children }: ProductoSoftlandProviderProps) => {
-  const tempRef = useRef(initialContext.tempRef.current);
+  const mainDataGrid = useDataGrid();
 
-  return <ProductoSoftlandContext.Provider value={{ tempRef }}>{children}</ProductoSoftlandContext.Provider>;
+  return <ProductoSoftlandContext.Provider value={{ mainDataGrid }}>{children}</ProductoSoftlandContext.Provider>;
 };
 
 type ProductoSoftlandProviderProps = {
@@ -24,9 +20,7 @@ type ProductoSoftlandProviderProps = {
 };
 
 type InitialContext = {
-  tempRef: React.MutableRefObject<{
-    reloadTable: () => void;
-  }>;
+  mainDataGrid: typeof useDataGrid.initialValues;
 };
 
 export { ProductoSoftlandContext, ProductoSoftlandProvider };
