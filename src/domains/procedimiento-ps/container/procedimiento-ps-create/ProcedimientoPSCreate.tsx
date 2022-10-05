@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Portlet, Row, Col } from '@app/components';
+import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 import { ProcedimientoPSCreateSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
@@ -13,7 +13,7 @@ import type { ProcedimientoPSCreateSchemaType } from '@domains/procedimiento-ps/
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Divider, TextField, Modal } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const ProcedimientoPSCreate = () => {
   const _navigate = useNavigate();
@@ -48,42 +48,38 @@ const ProcedimientoPSCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal open onClose={handleClose}>
-      <Portlet>
-        <h1>Nuevo Procedimiento PS</h1>
-        <Divider style={{ marginBottom: '1rem' }} />
-        <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
-          <Row>
-            <Col md={6}>
-              <TextField
-                id='codigo'
-                label='Código'
-                {...register('codigo')}
-                error={!!formErrors.codigo}
-                helperText={formErrors?.codigo?.message}
-                disabled={isSubmitting}
-              />
-            </Col>
-            <Col md={6}>
-              <TextField
-                id='denominacion'
-                label='Denominación'
-                {...register('denominacion')}
-                error={!!formErrors.denominacion}
-                helperText={formErrors?.denominacion?.message}
-                disabled={isSubmitting}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col md={12} textAlign='right'>
-              <Button variant='contained' type='submit' disabled={isSubmitting}>
-                Crear Procedimiento
-              </Button>
-            </Col>
-          </Row>
-        </form>
-      </Portlet>
+    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento PS'>
+      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+        <Row>
+          <Col md={6}>
+            <TextField
+              id='codigo'
+              label='Código'
+              {...register('codigo')}
+              error={!!formErrors.codigo}
+              helperText={formErrors?.codigo?.message}
+              disabled={isSubmitting}
+            />
+          </Col>
+          <Col md={6}>
+            <TextField
+              id='denominacion'
+              label='Denominación'
+              {...register('denominacion')}
+              error={!!formErrors.denominacion}
+              helperText={formErrors?.denominacion?.message}
+              disabled={isSubmitting}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12} textAlign='right'>
+            <Button variant='contained' type='submit' disabled={isSubmitting}>
+              Crear Procedimiento
+            </Button>
+          </Col>
+        </Row>
+      </form>
     </Modal>
   );
 };

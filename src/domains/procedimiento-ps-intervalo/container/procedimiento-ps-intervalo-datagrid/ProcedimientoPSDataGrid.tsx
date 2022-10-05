@@ -22,7 +22,7 @@ const ProcedimientoPSIntervaloDataGrid = () => {
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/create`);
+    _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/create`);
   }, [_navigate, procedimientoPSId]);
 
   const handleClickEdit = useCallback(

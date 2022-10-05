@@ -17,7 +17,7 @@ const ProcedimientoPSRoutes = () => {
         }
       >
         <Route path='/procedimiento-ps/create' element={<ProcedimientoPSCreate />} />
-        <Route path='/procedimiento-ps/:procedimientoPSId/edit' element={<ProcedimientoPSEdit />} />
+        <Route path='/procedimiento-ps/:procedimientoPSId/edit/*' element={<ProcedimientoPSEdit />} />
       </Route>
       <Route path='/procedimiento-ps/*' element={<Navigate to='/' replace />} />
     </Routes>
