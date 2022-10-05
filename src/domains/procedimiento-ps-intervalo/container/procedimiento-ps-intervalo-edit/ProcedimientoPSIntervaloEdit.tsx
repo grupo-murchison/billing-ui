@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
-import { ProcedimientoPSIntervaloCreateSchema } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
+import { ProcedimientoPSIntervaloEditSchema } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-edit/schemas';
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
-import type { ProcedimientoPSIntervaloCreateSchemaType } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
+import type { ProcedimientoPSIntervaloEditSchemaType } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-edit/schemas';
 
 import { ProductoSoftlandDropdown } from '@domains/producto-softland/container/producto-softland-dropdown';
 
@@ -17,27 +17,27 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, TextField } from '@mui/material';
 
-const ProcedimientoPSIntervaloCreate = () => {
+const ProcedimientoPSIntervaloEdit = () => {
   const _navigate = useNavigate();
-  const { procedimientoPSId } = useParams();
+  const { procedimientoPSId, procedimientoPSIntervaloId } = useParams();
 
   const { mainDataGrid } = useContext(ProcedimientoPSIntervaloContext);
+
+  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
     register,
     handleSubmit: rhfHandleSubmit,
+    reset,
     watch,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<ProcedimientoPSIntervaloCreateSchemaType>({
-    defaultValues: {
-      procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
-    },
-    resolver: zodResolver(ProcedimientoPSIntervaloCreateSchema),
+  } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
+    resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),
   });
 
   const handleSubmit = useCallback(
-    async (data: ProcedimientoPSIntervaloCreateSchemaType) => {
-      await ProcedimientoPSIntervaloRepository.createProcedimientoPSIntervalo(data);
+    async (data: ProcedimientoPSIntervaloEditSchemaType) => {
+      await ProcedimientoPSIntervaloRepository.updateProcedimientoPSIntervalo(data);
 
       mainDataGrid.reload();
 
@@ -50,8 +50,21 @@ const ProcedimientoPSIntervaloCreate = () => {
     _navigate(`/procedimiento-ps/${procedimientoPSId}/edit`);
   }, [_navigate, procedimientoPSId]);
 
+  useEffect(() => {
+    ProcedimientoPSIntervaloRepository.getProcedimientoPSIntervaloById(procedimientoPSIntervaloId || '').then(
+      ({ data }) => {
+        reset(data);
+        setIsDataFetched(true);
+      },
+    );
+  }, [procedimientoPSIntervaloId, reset]);
+
+  if (!isDataFetched) {
+    return <></>;
+  }
+
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento PS'>
+    <Modal isOpen onClose={handleClose} title='Editar Procedimiento PS'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
@@ -112,7 +125,7 @@ const ProcedimientoPSIntervaloCreate = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Intervalo
+              Actualizar Intervalo
             </Button>
           </Col>
         </Row>
@@ -121,4 +134,4 @@ const ProcedimientoPSIntervaloCreate = () => {
   );
 };
 
-export default ProcedimientoPSIntervaloCreate;
+export default ProcedimientoPSIntervaloEdit;

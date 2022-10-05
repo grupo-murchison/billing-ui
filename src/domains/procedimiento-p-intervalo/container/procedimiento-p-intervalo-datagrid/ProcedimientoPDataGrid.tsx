@@ -8,28 +8,28 @@ import { useConfirmDialog } from '@app/hooks';
 
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
-import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
-import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
+import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
+import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
 
 import { Button, IconButton } from '@mui/material';
 
-const ProcedimientoPSIntervaloDataGrid = () => {
+const ProcedimientoPIntervaloDataGrid = () => {
   const _navigate = useNavigate();
-  const { procedimientoPSId } = useParams();
+  const { procedimientoPId } = useParams();
 
-  const { mainDataGrid } = useContext(ProcedimientoPSIntervaloContext);
+  const { mainDataGrid } = useContext(ProcedimientoPIntervaloContext);
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/create`);
-  }, [_navigate, procedimientoPSId]);
+    _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/create`);
+  }, [_navigate, procedimientoPId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/${id}/edit`);
+      _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/${id}/edit`);
     },
-    [_navigate, procedimientoPSId],
+    [_navigate, procedimientoPId],
   );
 
   const handleClickDelete = useCallback(
@@ -37,7 +37,7 @@ const ProcedimientoPSIntervaloDataGrid = () => {
       confirmDialog.open({
         message: 'Desea eliminar el registro?',
         async onClickYes() {
-          await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(id);
+          await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -49,10 +49,10 @@ const ProcedimientoPSIntervaloDataGrid = () => {
   useEffect(() => {
     mainDataGrid.load({
       fixedFilters: {
-        idProcedimientoPS: procedimientoPSId,
+        idProcedimientoP: procedimientoPId,
       },
     });
-  }, [mainDataGrid, procedimientoPSId]);
+  }, [mainDataGrid, procedimientoPId]);
 
   return (
     <>
@@ -68,19 +68,19 @@ const ProcedimientoPSIntervaloDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'PRODUCTO SOFTLAND' },
               { label: 'INTERVALO' },
               { label: 'VALOR INICIAL' },
               { label: 'VALOR FINAL' },
+              { label: 'PRECIO' },
               { label: '' },
             ]}
-            repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
+            repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.productoSoftland}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.intervalo}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.valorInicial}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.valorFinal}</DataGrid.TableCell>
+                <DataGrid.TableCell>{row.precio}</DataGrid.TableCell>
                 <DataGrid.TableCell>
                   <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
                     <EditOutlinedIcon />
@@ -99,4 +99,4 @@ const ProcedimientoPSIntervaloDataGrid = () => {
   );
 };
 
-export default ProcedimientoPSIntervaloDataGrid;
+export default ProcedimientoPIntervaloDataGrid;

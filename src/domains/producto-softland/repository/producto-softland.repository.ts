@@ -7,7 +7,7 @@ import { RepositoryUtils } from '@app/utils';
 import { ProductoSoftlandService } from '@domains/producto-softland/repository/producto-softland.service';
 import {
   getAllProductoSoftlandPaginatedSchema,
-  getAllProductoSoftlandAsDropdown,
+  getAllProductoSoftlandAsDropdownSchema,
 } from '@domains/producto-softland/repository/producto-softland.schemas';
 
 class ProductoSoftlandRepository {
@@ -23,7 +23,7 @@ class ProductoSoftlandRepository {
   static getAllProductoSoftlandAsDropdown = async () => {
     const response$ = from(ProductoSoftlandService.getAllAsDropdown()).pipe(
       RepositoryUtils.PIPES.getResponse(),
-      RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandAsDropdown),
+      RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandAsDropdownSchema),
     );
     const response = await lastValueFrom(response$);
     return response;

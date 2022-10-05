@@ -15,3 +15,5 @@ export const DROPDOWN_SCHEMA = z.array(
     label: z.string(),
   }),
 );
+
+export type DropdownSchemaType = z.infer<typeof DROPDOWN_SCHEMA>;

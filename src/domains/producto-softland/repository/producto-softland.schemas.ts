@@ -13,4 +13,4 @@ export const getAllProductoSoftlandPaginatedSchema = ZodUtils.withPagination(
   }),
 );
 
-export const getAllProductoSoftlandAsDropdown = ZodUtils.DROPDOWN_SCHEMA;
+export const getAllProductoSoftlandAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;

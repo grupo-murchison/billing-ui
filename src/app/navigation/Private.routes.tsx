@@ -8,6 +8,7 @@ import { Navbar, PageContainer, Sidebar } from '@app/container/app-main/componen
 
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';
+import { ProcedimientoPRoutes } from '@domains/procedimiento-p/navigation';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -23,6 +24,7 @@ const PrivateRoutes = () => {
       <PageContainer>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
+        <ProcedimientoPRoutes />
       </PageContainer>
     </ThemeProvider>
   );
