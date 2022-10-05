@@ -12,3 +12,5 @@ export const getAllProductoSoftlandPaginatedSchema = ZodUtils.withPagination(
     fechaCambioEstado: z.string(),
   }),
 );
+
+export const getAllProductoSoftlandAsDropdown = ZodUtils.DROPDOWN_SCHEMA;

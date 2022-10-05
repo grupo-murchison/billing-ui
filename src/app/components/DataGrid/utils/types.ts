@@ -6,7 +6,7 @@ export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T
 
 export type DataGridProps<T> = {
   hookRef: React.MutableRefObject<{
-    load: () => void;
+    load: (config?: { fixedFilters?: Record<string, AnyValue>; filters?: Record<string, AnyValue> }) => void;
     reload: () => void;
   }>;
   columnHeads: DataGridColumnHeadProps[];

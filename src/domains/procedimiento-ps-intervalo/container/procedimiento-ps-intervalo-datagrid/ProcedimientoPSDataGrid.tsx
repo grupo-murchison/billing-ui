@@ -1,36 +1,35 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
 import { DataGrid, Col, Row } from '@app/components';
 
-import { useConfirmDialog, useDataGrid } from '@app/hooks';
+import { useConfirmDialog } from '@app/hooks';
 
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
+import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
-
-import { UuidLib } from '@libs';
 
 import { Button, IconButton } from '@mui/material';
 
-const ProcedimientoPSDataGrid = () => {
+const ProcedimientoPSIntervaloDataGrid = () => {
   const _navigate = useNavigate();
+  const { procedimientoPSId } = useParams();
 
-  const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
+  const { mainDataGrid } = useContext(ProcedimientoPSIntervaloContext);
 
   const confirmDialog = useConfirmDialog();
-  const mainDataGrid = useDataGrid();
 
   const handleClickCreate = useCallback(() => {
-    _navigate('/procedimiento-ps-intervalo/create');
-  }, [_navigate]);
+    _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/create`);
+  }, [_navigate, procedimientoPSId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-ps-intervalo/${id}/edit`);
+      _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/${id}/edit`);
     },
-    [_navigate],
+    [_navigate, procedimientoPSId],
   );
 
   const handleClickDelete = useCallback(
@@ -40,12 +39,20 @@ const ProcedimientoPSDataGrid = () => {
         async onClickYes() {
           await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(id);
           confirmDialog.close();
-          setKeyDataGrid(UuidLib.newUuid());
+          // setKeyDataGrid(UuidLib.newUuid());
         },
       });
     },
     [confirmDialog],
   );
+
+  useEffect(() => {
+    mainDataGrid.load({
+      fixedFilters: {
+        idProcedimientoPS: procedimientoPSId,
+      },
+    });
+  }, [mainDataGrid, procedimientoPSId]);
 
   return (
     <>
@@ -60,7 +67,6 @@ const ProcedimientoPSDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            key={__keyDataGrid}
             columnHeads={[{ label: 'INTERVALO' }, { label: 'VALOR INICIAL' }, { label: 'VALOR FINAL' }, { label: '' }]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
             rowTemplate={row => (
@@ -81,8 +87,9 @@ const ProcedimientoPSDataGrid = () => {
           />
         </Col>
       </Row>
+      <Outlet />
     </>
   );
 };
 
-export default ProcedimientoPSDataGrid;
+export default ProcedimientoPSIntervaloDataGrid;

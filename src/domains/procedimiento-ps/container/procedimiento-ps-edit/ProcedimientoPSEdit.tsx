@@ -10,14 +10,14 @@ import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository'
 import { ProcedimientoPSEditSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
 import type { ProcedimientoPSEditSchemaType } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
 
-import { ProcedimientoPSDataGrid } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-datagrid';
+import { ProcedimientoPSIntervaloWithinProcedimientoPSRoutes } from '@domains/procedimiento-ps-intervalo/navigation';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Divider, Modal, TextField } from '@mui/material';
 
 const ProcedimientoPSEdit = () => {
-  const { id } = useParams();
+  const { procedimientoPSId } = useParams();
   const _navigate = useNavigate();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
@@ -39,11 +39,11 @@ const ProcedimientoPSEdit = () => {
   }, [_navigate]);
 
   useEffect(() => {
-    ProcedimientoPSRepository.getProcedimientoPSById(id || '').then(({ data }) => {
+    ProcedimientoPSRepository.getProcedimientoPSById(procedimientoPSId || '').then(({ data }) => {
       reset(data);
       setIsDataFetched(true);
     });
-  }, [id, reset]);
+  }, [procedimientoPSId, reset]);
 
   if (!isDataFetched) {
     return <></>;
@@ -79,7 +79,7 @@ const ProcedimientoPSEdit = () => {
           </Row>
         </form>
         <Divider style={{ marginBottom: '1rem' }} />
-        <ProcedimientoPSDataGrid />
+        <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes />
       </Portlet>
     </Modal>
   );

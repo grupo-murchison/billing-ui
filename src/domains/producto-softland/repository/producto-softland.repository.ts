@@ -5,13 +5,25 @@ import type { DataGridRepositoryFuncParams } from '@app/components';
 import { RepositoryUtils } from '@app/utils';
 
 import { ProductoSoftlandService } from '@domains/producto-softland/repository/producto-softland.service';
-import { getAllProductoSoftlandPaginatedSchema } from '@domains/producto-softland/repository/producto-softland.schemas';
+import {
+  getAllProductoSoftlandPaginatedSchema,
+  getAllProductoSoftlandAsDropdown,
+} from '@domains/producto-softland/repository/producto-softland.schemas';
 
 class ProductoSoftlandRepository {
   static getAllProductoSoftlandPaginated = async (params: DataGridRepositoryFuncParams) => {
     const response$ = from(ProductoSoftlandService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandPaginatedSchema),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllProductoSoftlandAsDropdown = async () => {
+    const response$ = from(ProductoSoftlandService.getAllAsDropdown()).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandAsDropdown),
     );
     const response = await lastValueFrom(response$);
     return response;

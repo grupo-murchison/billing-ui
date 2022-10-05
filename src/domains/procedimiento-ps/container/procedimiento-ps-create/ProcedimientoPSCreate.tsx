@@ -18,7 +18,7 @@ import { Button, Divider, TextField, Modal } from '@mui/material';
 const ProcedimientoPSCreate = () => {
   const _navigate = useNavigate();
 
-  const { tempRef } = useContext(ProcedimientoPSContext);
+  const { mainDataGrid } = useContext(ProcedimientoPSContext);
 
   const {
     register,
@@ -36,10 +36,11 @@ const ProcedimientoPSCreate = () => {
     async (data: ProcedimientoPSCreateSchemaType) => {
       await ProcedimientoPSRepository.createProcedimientoPS(data);
 
-      tempRef.current.reloadTable();
+      mainDataGrid.reload();
+
       _navigate('/procedimiento-ps');
     },
-    [_navigate],
+    [_navigate, mainDataGrid],
   );
 
   const handleClose = useCallback(() => {

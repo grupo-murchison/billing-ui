@@ -1,22 +1,18 @@
-import { createContext, useRef } from 'react';
+import { createContext } from 'react';
 import type { ReactNode } from 'react';
 
+import { useDataGrid } from '@app/hooks';
+
 const initialContext: InitialContext = {
-  tempRef: {
-    current: {
-      reloadTable() {
-        return;
-      },
-    },
-  },
+  mainDataGrid: useDataGrid.initialValues,
 };
 
 const ProcedimientoPSContext = createContext(initialContext);
 
 const ProcedimientoPSProvider = ({ children }: ProcedimientoPSProviderProps) => {
-  const tempRef = useRef(initialContext.tempRef.current);
+  const mainDataGrid = useDataGrid();
 
-  return <ProcedimientoPSContext.Provider value={{ tempRef }}>{children}</ProcedimientoPSContext.Provider>;
+  return <ProcedimientoPSContext.Provider value={{ mainDataGrid }}>{children}</ProcedimientoPSContext.Provider>;
 };
 
 type ProcedimientoPSProviderProps = {
@@ -24,9 +20,7 @@ type ProcedimientoPSProviderProps = {
 };
 
 type InitialContext = {
-  tempRef: React.MutableRefObject<{
-    reloadTable: () => void;
-  }>;
+  mainDataGrid: typeof useDataGrid.initialValues;
 };
 
 export { ProcedimientoPSContext, ProcedimientoPSProvider };

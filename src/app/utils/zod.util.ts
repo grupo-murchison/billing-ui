@@ -8,3 +8,10 @@ export const withPagination = <T>(schema: z.ZodType<T>) => {
     }),
   });
 };
+
+export const DROPDOWN_SCHEMA = z.array(
+  z.object({
+    value: z.string().or(z.number()),
+    label: z.string(),
+  }),
+);

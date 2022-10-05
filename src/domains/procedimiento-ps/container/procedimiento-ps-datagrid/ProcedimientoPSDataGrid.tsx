@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
 import { DataGrid, Portlet, Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
-import { useConfirmDialog, useDataGrid } from '@app/hooks';
+import { useConfirmDialog } from '@app/hooks';
 
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
@@ -13,19 +13,14 @@ import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository'
 import { ProcedimientoPSDataGridBreadcrumb } from '@domains/procedimiento-ps/constants';
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 
-import { UuidLib } from '@libs';
-
 import { Button, IconButton } from '@mui/material';
 
 const ProcedimientoPSDataGrid = () => {
   const _navigate = useNavigate();
 
-  const { tempRef } = useContext(ProcedimientoPSContext);
-
-  const [__keyDataGrid, setKeyDataGrid] = useState<string>(UuidLib.newUuid());
+  const { mainDataGrid } = useContext(ProcedimientoPSContext);
 
   const confirmDialog = useConfirmDialog();
-  const mainDataGrid = useDataGrid();
 
   const handleClickCreate = useCallback(() => {
     _navigate('/procedimiento-ps/create');
@@ -45,7 +40,7 @@ const ProcedimientoPSDataGrid = () => {
         async onClickYes() {
           await ProcedimientoPSRepository.deleteProcedimientoPSById(id);
           confirmDialog.close();
-          setKeyDataGrid(UuidLib.newUuid());
+          mainDataGrid.reload();
         },
       });
     },
@@ -53,12 +48,8 @@ const ProcedimientoPSDataGrid = () => {
   );
 
   useEffect(() => {
-    tempRef.current = {
-      reloadTable() {
-        setKeyDataGrid(UuidLib.newUuid());
-      },
-    };
-  }, []);
+    mainDataGrid.load();
+  }, [mainDataGrid]);
 
   return (
     <Portlet>
@@ -73,7 +64,6 @@ const ProcedimientoPSDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            key={__keyDataGrid}
             columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }]}
             repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
             rowTemplate={row => (

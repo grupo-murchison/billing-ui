@@ -40,14 +40,19 @@ const DataGridProvider = <T,>({
   const repositoryFuncParamsRef = useRef<DataGridRepositoryFuncParams>({
     page: initialContext.currentPage + 1,
     take: initialContext.rowsPerPage,
+    filters: {},
   });
 
   const rowsCount = useMemo(() => {
     return rows.length;
   }, [rows]);
 
-  const makeRequest = useCallback(() => {
-    repositoryFunc(repositoryFuncParamsRef.current).then(response => {
+  const makeRequest = useCallback((config?: { filters?: Record<string, AnyValue> }) => {
+    repositoryFunc({
+      ...repositoryFuncParamsRef.current,
+      ...repositoryFuncParamsRef.current.filters,
+      ...config?.filters,
+    }).then(response => {
       if (response.data) {
         setRows(response.data.data);
         setRowsTotalCount(response.data.meta.itemCount);
@@ -79,7 +84,10 @@ const DataGridProvider = <T,>({
 
   useEffect(() => {
     hookRef.current = {
-      load: makeRequest,
+      load: config => {
+        repositoryFuncParamsRef.current.filters = config?.fixedFilters;
+        makeRequest();
+      },
       reload: makeRequest,
     };
   }, [makeRequest]);
