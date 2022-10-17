@@ -14,6 +14,14 @@ class ProcedimientoPSService {
     return [response, error];
   };
 
+  static getAllAsDropdown = async (): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>('api/v1/procedimiento-ps/all/dropdown'),
+    );
+
+    return [response, error];
+  };
+
   static getById = async (id: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`api/v1/procedimiento-ps/${id}`),

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { MonedaRepository } from '@domains/moneda/repository';
+import { TipoServicioRepository } from '@domains/tipo-servicio/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
@@ -18,7 +18,7 @@ const TipoServicioDropdown = ({
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    MonedaRepository.getAllMonedaAsDropdown()
+    TipoServicioRepository.getAllTiposServicioAsDropdown()
       .then(({ data }) => {
         setItems(data);
       })

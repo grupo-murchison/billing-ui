@@ -10,7 +10,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
-import { ProductoSoflandDataGridBreadcrumb } from '@domains/producto-softland/constants';
+import { ProductoSoftlandDataGridBreadcrumb } from '@domains/producto-softland/constants';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib } from '@libs';
@@ -100,4 +100,4 @@ const ProductoSoftlandDataGrid = () => {
   );
 };
 
-export default withBreadcrumb(ProductoSoftlandDataGrid, ProductoSoflandDataGridBreadcrumb);
+export default withBreadcrumb(ProductoSoftlandDataGrid, ProductoSoftlandDataGridBreadcrumb);

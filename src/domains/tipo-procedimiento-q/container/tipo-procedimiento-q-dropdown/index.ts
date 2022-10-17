@@ -1,1 +1,1 @@
-export { default as MonedaDropdown } from './MonedaDropdown';
+export { default as TipoProcedimientoQDropdown } from './TipoProcedimientoQDropdown';

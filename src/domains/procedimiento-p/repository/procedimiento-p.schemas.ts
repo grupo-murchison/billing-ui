@@ -10,3 +10,5 @@ export const getAllProcedimientoPPaginatedSchema = ZodUtils.withPagination(
     moneda: z.string(),
   }),
 );
+
+export const getAllProcedimientoPAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;

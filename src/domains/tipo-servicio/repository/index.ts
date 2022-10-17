@@ -1,1 +1,1 @@
-export { default as TipoServicioRepository } from './tipoServicio.repository';
+export { default as TipoServicioRepository } from './tipo-servicio.repository';

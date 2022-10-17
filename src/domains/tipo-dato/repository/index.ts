@@ -1,1 +1,1 @@
-export { default as MonedaRepository } from './moneda.repository';
+export { default as TipoDatoRepository } from './tipo-dato.repository';

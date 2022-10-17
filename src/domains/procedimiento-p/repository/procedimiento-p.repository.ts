@@ -5,13 +5,25 @@ import type { DataGridRepositoryFuncParams } from '@app/components';
 import { RepositoryUtils } from '@app/utils';
 
 import { ProcedimientoPService } from '@domains/procedimiento-p/repository/procedimiento-p.service';
-import { getAllProcedimientoPPaginatedSchema } from '@domains/procedimiento-p/repository/procedimiento-p.schemas';
+import {
+  getAllProcedimientoPPaginatedSchema,
+  getAllProcedimientoPAsDropdownSchema,
+} from '@domains/procedimiento-p/repository/procedimiento-p.schemas';
 
 class ProcedimientoPRepository {
   static getAllProcedimientoPPaginated = async (params: DataGridRepositoryFuncParams) => {
     const response$ = from(ProcedimientoPService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProcedimientoPPaginatedSchema),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllProcedimientoPAsDropdown = async () => {
+    const response$ = from(ProcedimientoPService.getAllAsDropdown()).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllProcedimientoPAsDropdownSchema),
     );
     const response = await lastValueFrom(response$);
     return response;
