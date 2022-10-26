@@ -2,15 +2,23 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { MonedaRepository } from '@domains/moneda/repository';
+import { TipoProcedimientoQRepository } from '@domains/tipo-procedimiento-q/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-const MonedaDropdown = ({ id, label, disabled, error, helperText, value, ...props }: MonedaDropdownProps) => {
+const TipoProcedimientoQDropdown = ({
+  id,
+  label,
+  disabled,
+  error,
+  helperText,
+  value,
+  ...props
+}: TipoProcedimientoQDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    MonedaRepository.getAllMonedaAsDropdown()
+    TipoProcedimientoQRepository.getAllTipoProcedimientoQAsDropdown()
       .then(({ data }) => {
         setItems(data);
       })
@@ -34,7 +42,7 @@ const MonedaDropdown = ({ id, label, disabled, error, helperText, value, ...prop
   );
 };
 
-type MonedaDropdownProps = {
+type TipoProcedimientoQDropdownProps = {
   id?: string;
   label: string;
   error?: boolean;
@@ -43,4 +51,4 @@ type MonedaDropdownProps = {
   value?: number | string;
 };
 
-export default MonedaDropdown;
+export default TipoProcedimientoQDropdown;

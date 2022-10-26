@@ -1,1 +1,1 @@
-export { default as MonedaRepository } from './moneda.repository';
+export { default as TipoProcedimientoQRepository } from './tipo-procedimiento-q.repository';
