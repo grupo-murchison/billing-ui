@@ -7,8 +7,11 @@ RUN chmod +x /entrypoint.sh
 
 ADD . .
 
+RUN npm cache clean --force
+
 RUN npm install --legacy-peer-deps
 
 ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["npm", "run", "dev"]
+
