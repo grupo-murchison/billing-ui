@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite --host",
     "build": "vite build",
+    "build-ocp": "vite build --mode test",
     "preview": "vite preview"
   },
   "repository": {
