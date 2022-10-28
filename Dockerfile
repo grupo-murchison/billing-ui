@@ -5,7 +5,7 @@ RUN chmod -R 777 /app/
 COPY package*.json /app/
 COPY tsconfig.json /app/
 COPY tsconfig.node.json /app/
-RUN npm ci
+RUN npm ci --legacy-peer-deps
 COPY ./ /app/
 RUN npm run build
 
