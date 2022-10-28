@@ -1,4 +1,4 @@
-FROM node:14.0.0-alpine3.11
+FROM node:15.0.0-buster
 
 WORKDIR /app
 
@@ -6,8 +6,6 @@ COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
 ADD . .
-
-RUN npm cache clean --force
 
 RUN npm install --legacy-peer-deps
 
