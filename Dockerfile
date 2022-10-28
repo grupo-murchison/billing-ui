@@ -1,16 +1,17 @@
-FROM node:18.0.0
+FROM node:16.14.2-alpine as build-stage      
+RUN mkdir -p /app/
+WORKDIR /app/
+RUN chmod -R 777 /app/
+COPY package*.json /app/
+COPY tsconfig.json /app/
+COPY tsconfig.node.json /app/
+RUN npm ci
+COPY ./ /app/
+RUN npm run build
 
-WORKDIR /app
-
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-ADD . .
-
-RUN npm install --legacy-peer-deps
-
-ENTRYPOINT ["/entrypoint.sh"]
-
-CMD ["npm", "run", "dev"]
-
-EXPOSE 8080
+FROM nginxinc/nginx-unprivileged 
+#FROM bitnami/nginx:latest
+COPY --from=build-stage /app/dist/ /usr/share/nginx/html
+#CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["nginx", "-g", "daemon off;"]
+EXPOSE 80
