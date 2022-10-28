@@ -1,17 +1,13 @@
-FROM node:16.14.2-alpine as build-stage      
-RUN mkdir -p /app/
-WORKDIR /app/
-RUN chmod -R 777 /app/
-COPY package*.json /app/
-COPY tsconfig.json /app/
-COPY tsconfig.node.json /app/
-RUN npm i --legacy-peer-deps
-COPY ./ /app/
-RUN npm run build
+# Stage 1: Use yarn to build the app
+FROM node:14 as builder
+WORKDIR /usr/src/app
+COPY package.json yarn.lock ./
+RUN yarn
+COPY . ./
+RUN yarn build
 
-FROM nginxinc/nginx-unprivileged 
-#FROM bitnami/nginx:latest
-COPY --from=build-stage /app/dist/ /usr/share/nginx/html
-#CMD ["nginx", "-g", "daemon off;"]
-ENTRYPOINT ["nginx", "-g", "daemon off;"]
-EXPOSE 80
+# Stage 2: Copy the JS React SPA into the Nginx HTML directory
+FROM bitnami/nginx:latest
+COPY --from=builder /usr/src/app/build /app
+EXPOSE 8080
+CMD ["nginx", "-g", "daemon off;"]
