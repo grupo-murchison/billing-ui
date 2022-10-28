@@ -1,7 +1,7 @@
 import axios from 'axios';
 import type { AxiosRequestHeaders, AxiosInstance, AxiosRequestConfig, AxiosPromise } from 'axios';
 
-const BASE_URL = 'http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services'; //import.meta.env.VITE_API_HOST;
+const BASE_URL = import.meta.env.VITE_API_HOST;
 
 class ApiProvider {
   private instance: Undefined<AxiosInstance>;
