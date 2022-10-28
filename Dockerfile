@@ -9,5 +9,8 @@ RUN yarn build
 # Stage 2: Copy the JS React SPA into the Nginx HTML directory
 FROM bitnami/nginx:latest
 COPY --from=builder /usr/src/app/dist /app
+
+ENV NODE_ENV test
+
 EXPOSE 8080
 CMD ["nginx", "-g", "daemon off;"]
