@@ -14,6 +14,14 @@ class ModeloAcuerdoService {
     return [response, error];
   };
 
+  static getAllAsDropdown = async (): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>('api/v1/modelos-acuerdo/all/dropdown'),
+    );
+
+    return [response, error];
+  };
+
   static getById = async (id: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`api/v1/modelos-acuerdo/${id}`),

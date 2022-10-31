@@ -12,6 +12,7 @@ import { ConceptoAcuerdoContext } from '@domains/concepto-acuerdo/contexts';
 import type { ConceptoAcuerdoEditSchemaType } from '@domains/concepto-acuerdo/container/concepto-acuerdo-edit/schemas';
 
 import { TipoServicioDropdown } from '@domains/tipo-servicio/container/tipo-servicio-dropdown';
+import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
 import { ProcedimientoPDropdown } from '@domains/procedimiento-p/container/procedimiento-p-dropdown';
 import { ProcedimientoQDropdown } from '@domains/procedimiento-q/container/procedimiento-q-dropdown';
 import { ProcedimientoPSDropdown } from '@domains/procedimiento-ps/container/procedimiento-ps-dropdown';
@@ -22,7 +23,7 @@ import { Button, TextField } from '@mui/material';
 
 const ConceptoAcuerdoEdit = () => {
   const _navigate = useNavigate();
-  const { modeloAcuerdoId, conceptoAcuerdoId } = useParams();
+  const { conceptoAcuerdoId } = useParams();
 
   const { mainDataGrid } = useContext(ConceptoAcuerdoContext);
 
@@ -44,14 +45,14 @@ const ConceptoAcuerdoEdit = () => {
 
       mainDataGrid.reload();
 
-      _navigate(`/modelo-acuerdo/${modeloAcuerdoId}/edit`);
+      _navigate('/concepto-acuerdo');
     },
-    [_navigate, mainDataGrid, modeloAcuerdoId],
+    [_navigate, mainDataGrid],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/modelo-acuerdo/${modeloAcuerdoId}/edit`);
-  }, [_navigate, modeloAcuerdoId]);
+    _navigate('/concepto-acuerdo');
+  }, [_navigate]);
 
   useEffect(() => {
     ConceptoAcuerdoRepository.getConceptoAcuerdoById(conceptoAcuerdoId || '').then(({ data }) => {
@@ -67,6 +68,21 @@ const ConceptoAcuerdoEdit = () => {
   return (
     <Modal isOpen onClose={handleClose} title='Editar Concepto'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+        <Row>
+          <Col md={12}>
+            <ModeloAcuerdoDropdown
+              id='modeloAcuerdo'
+              label='Modelo Acuerdo'
+              {...register('modeloAcuerdoId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.modeloAcuerdoId}
+              helperText={formErrors?.modeloAcuerdoId?.message}
+              disabled={isSubmitting}
+              value={watch('modeloAcuerdoId')}
+            />
+          </Col>
+        </Row>
         <Row>
           <Col md={12}>
             <TextField

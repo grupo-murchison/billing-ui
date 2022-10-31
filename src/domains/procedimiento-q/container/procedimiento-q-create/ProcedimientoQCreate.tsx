@@ -7,6 +7,8 @@ import { useNavigate } from 'react-router-dom';
 import { Modal, Row, Col } from '@app/components';
 
 import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
+import { TipoProcedimientoCustomDropdown } from '@domains/tipo-procedimiento-custom/container/tipo-procedimiento-custom-dropdown';
+import { TipoProcedimientoBuiltinDropdown } from '@domains/tipo-procedimiento-builtin/container/tipo-procedimiento-builtin-dropdown';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQCreateSchema } from '@domains/procedimiento-q/container/procedimiento-q-create/schemas';
@@ -89,14 +91,42 @@ const ProcedimientoQCreate = () => {
           <Col md={6}>
             <TipoProcedimientoQDropdown
               id='tipoProcedimientoQ'
-              label='Tipo Procedimiento'
-              {...register('tipoProcedimientoId', {
+              label='Tipo Procedimiento Q'
+              {...register('tipoProcedimientoQId', {
                 valueAsNumber: true,
               })}
-              error={!!formErrors.tipoProcedimientoId}
-              helperText={formErrors?.tipoProcedimientoId?.message}
+              error={!!formErrors.tipoProcedimientoQId}
+              helperText={formErrors?.tipoProcedimientoQId?.message}
               disabled={isSubmitting}
-              value={watch('tipoProcedimientoId')}
+              value={watch('tipoProcedimientoQId')}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6}>
+            <TipoProcedimientoCustomDropdown
+              id='tipoProcedimientoCustom'
+              label='Tipo Procedimiento Custom'
+              {...register('tipoProcedimientoCustomId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.tipoProcedimientoCustomId}
+              helperText={formErrors?.tipoProcedimientoCustomId?.message}
+              disabled={isSubmitting}
+              value={watch('tipoProcedimientoCustomId')}
+            />
+          </Col>
+          <Col md={6}>
+            <TipoProcedimientoBuiltinDropdown
+              id='tipoProcedimientoBuiltin'
+              label='Tipo Procedimiento Builtin'
+              {...register('tipoProcedimientoBuiltinId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.tipoProcedimientoBuiltinId}
+              helperText={formErrors?.tipoProcedimientoBuiltinId?.message}
+              disabled={isSubmitting}
+              value={watch('tipoProcedimientoBuiltinId')}
             />
           </Col>
         </Row>

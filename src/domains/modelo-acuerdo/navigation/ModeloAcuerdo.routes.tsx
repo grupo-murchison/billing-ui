@@ -17,7 +17,7 @@ const ModeloAcuerdoRoutes = () => {
         }
       >
         <Route path='/modelo-acuerdo/create' element={<ModeloAcuerdoCreate />} />
-        <Route path='/modelo-acuerdo/:modeloAcuerdoId/edit/*' element={<ModeloAcuerdoEdit />} />
+        <Route path='/modelo-acuerdo/:modeloAcuerdoId/edit' element={<ModeloAcuerdoEdit />} />
       </Route>
       <Route path='/modelo-acuerdo/*' element={<Navigate to='/' replace />} />
     </Routes>

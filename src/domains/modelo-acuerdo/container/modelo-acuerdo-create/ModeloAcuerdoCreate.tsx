@@ -27,6 +27,7 @@ const ModeloAcuerdoCreate = () => {
   } = useForm<ModeloAcuerdoCreateSchemaType>({
     defaultValues: {
       codigo: '',
+      nombre: '',
       descripcion: '',
     },
     resolver: zodResolver(ModeloAcuerdoCreateSchema),
@@ -62,6 +63,18 @@ const ModeloAcuerdoCreate = () => {
             />
           </Col>
           <Col md={6}>
+            <TextField
+              id='nombre'
+              label='Nombre'
+              {...register('nombre')}
+              error={!!formErrors.nombre}
+              helperText={formErrors?.nombre?.message}
+              disabled={isSubmitting}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12}>
             <TextField
               id='descripcion'
               label='Descripción'

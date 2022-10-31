@@ -22,12 +22,12 @@ const ConceptoAcuerdoDataGrid = () => {
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/modelo-acuerdo/${modeloAcuerdoId}/edit/concepto-acuerdo/create`);
+    _navigate('/concepto-acuerdo/create');
   }, [_navigate, modeloAcuerdoId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/modelo-acuerdo/${modeloAcuerdoId}/edit/concepto-acuerdo/${id}/edit`);
+      _navigate(`/concepto-acuerdo/${id}/edit`);
     },
     [_navigate, modeloAcuerdoId],
   );
@@ -49,7 +49,7 @@ const ConceptoAcuerdoDataGrid = () => {
   useEffect(() => {
     mainDataGrid.load({
       fixedFilters: {
-        idProcedimientoPS: modeloAcuerdoId,
+        idModeloAcuerdo: modeloAcuerdoId,
       },
     });
   }, [mainDataGrid, modeloAcuerdoId]);
@@ -68,6 +68,7 @@ const ConceptoAcuerdoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
+              { label: 'MODELO ACUERDO' },
               { label: 'DESCRIPCIÓN' },
               { label: 'TIPO SERVICIO' },
               { label: 'PROC Q' },
@@ -78,6 +79,7 @@ const ConceptoAcuerdoDataGrid = () => {
             repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
             rowTemplate={row => (
               <>
+                <DataGrid.TableCell>{row.modeloAcuerdo}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.tipoServicio}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.procedimientoQ}</DataGrid.TableCell>

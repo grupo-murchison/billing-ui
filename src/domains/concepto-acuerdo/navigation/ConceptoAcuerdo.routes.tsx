@@ -6,11 +6,11 @@ import { ConceptoAcuerdoEdit } from '@domains/concepto-acuerdo/container/concept
 
 import { ConceptoAcuerdoProvider } from '@domains/concepto-acuerdo/contexts';
 
-export const ConceptoAcuerdoWithinModeloAcuerdoRoutes = () => {
+export const ConceptoAcuerdoRoutes = () => {
   return (
     <Routes>
       <Route
-        path='/'
+        path='/concepto-acuerdo'
         element={
           <ConceptoAcuerdoProvider>
             <ConceptoAcuerdoDataGrid />
