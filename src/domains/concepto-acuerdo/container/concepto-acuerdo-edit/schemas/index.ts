@@ -2,6 +2,7 @@ import z from 'zod';
 
 export const ConceptoAcuerdoEditSchema = z.object({
   id: z.number({ required_error: 'El campo es requerido.' }),
+  modeloAcuerdoId: z.number({ required_error: 'El campo es requerido.' }),
   descripcion: z
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })

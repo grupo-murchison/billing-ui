@@ -1,1 +1,1 @@
-export { ConceptoAcuerdoWithinModeloAcuerdoRoutes } from './ConceptoAcuerdo.routes';
+export { ConceptoAcuerdoRoutes } from './ConceptoAcuerdo.routes';

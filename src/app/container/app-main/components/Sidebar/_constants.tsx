@@ -1,12 +1,17 @@
 import { SetttingsIcon } from '@assets/icons';
 
-export const MENU_MODELOS_ITEMS = {
-  title: 'Modelos',
+export const MENU_CONTRATOS_ITEMS = {
+  title: 'Contratos',
   childs: [
     {
       label: 'Modelo acuerdo',
       icon: <SetttingsIcon />,
       path: '/modelo-acuerdo',
+    },
+    {
+      label: 'Concepto acuerdo',
+      icon: <SetttingsIcon />,
+      path: '/concepto-acuerdo',
     },
   ],
 };
@@ -43,4 +48,4 @@ export const MENU_OTHER_ITEMS = {
   ],
 };
 
-export const MENU_ITEMS = [MENU_MODELOS_ITEMS, MENU_PROCEDIMIENTOS_ITEMS, MENU_OTHER_ITEMS];
+export const MENU_ITEMS = [MENU_CONTRATOS_ITEMS, MENU_PROCEDIMIENTOS_ITEMS, MENU_OTHER_ITEMS];

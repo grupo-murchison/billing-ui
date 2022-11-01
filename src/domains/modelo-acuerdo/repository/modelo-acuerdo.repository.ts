@@ -5,13 +5,25 @@ import type { DataGridRepositoryFuncParams } from '@app/components';
 import { RepositoryUtils } from '@app/utils';
 
 import { ModeloAcuerdoService } from '@domains/modelo-acuerdo/repository/modelo-acuerdo.service';
-import { getAllModeloAcuerdoPaginatedSchema } from '@domains/modelo-acuerdo/repository/modelo-acuerdo.schemas';
+import {
+  getAllModeloAcuerdoPaginatedSchema,
+  getAllModeloAcuerdoAsDropdownSchema,
+} from '@domains/modelo-acuerdo/repository/modelo-acuerdo.schemas';
 
 class ModeloAcuerdoRepository {
   static getAllModeloAcuerdoPaginated = async (params: DataGridRepositoryFuncParams) => {
     const response$ = from(ModeloAcuerdoService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllModeloAcuerdoPaginatedSchema),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllModeloAcuerdoAsDropdown = async () => {
+    const response$ = from(ModeloAcuerdoService.getAllAsDropdown()).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllModeloAcuerdoAsDropdownSchema),
     );
     const response = await lastValueFrom(response$);
     return response;

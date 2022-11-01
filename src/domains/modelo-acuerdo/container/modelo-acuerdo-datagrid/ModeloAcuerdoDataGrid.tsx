@@ -64,11 +64,12 @@ const ModeloAcuerdoDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DESCRIPCIÓN' }, { label: '' }]}
+            columnHeads={[{ label: 'CÓDIGO' }, { label: 'NOMBRE' }, { label: 'DESCRIPCIÓN' }, { label: '' }]}
             repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
             rowTemplate={row => (
               <>
                 <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
+                <DataGrid.TableCell>{row.nombre}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
                 <DataGrid.TableCell>
                   <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>

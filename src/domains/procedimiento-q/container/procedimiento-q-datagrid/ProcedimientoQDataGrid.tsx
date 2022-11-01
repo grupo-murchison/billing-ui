@@ -68,7 +68,9 @@ const ProcedimientoQDataGrid = () => {
               { label: 'CÓDIGO' },
               { label: 'DESCRIPCIÓN' },
               { label: 'DENOMINACIÓN' },
-              { label: 'TIPO PROCEDIMIENTO' },
+              { label: 'TIPO PROC Q' },
+              { label: 'TIPO PROC BUILTIN' },
+              { label: 'TIPO PROC CUSTOM' },
               { label: '' },
             ]}
             repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
@@ -77,7 +79,9 @@ const ProcedimientoQDataGrid = () => {
                 <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
                 <DataGrid.TableCell>{row.denominacion}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.tipoProcedimiento}</DataGrid.TableCell>
+                <DataGrid.TableCell>{row.tipoProcedimientoQ}</DataGrid.TableCell>
+                <DataGrid.TableCell>{row.tipoProcedimientoBuiltin}</DataGrid.TableCell>
+                <DataGrid.TableCell>{row.tipoProcedimientoCustom}</DataGrid.TableCell>
                 <DataGrid.TableCell>
                   <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
                     <EditOutlinedIcon />

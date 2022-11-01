@@ -11,6 +11,7 @@ export const getAllConceptoAcuerdoPaginatedSchema = ZodUtils.withPagination(
     procedimientoPId: z.number(),
     procedimientoProductoSoftlandId: z.number(),
     descripcion: z.string(),
+    modeloAcuerdo: z.string(),
     tipoServicio: z.string(),
     procedimientoQ: z.string(),
     procedimientoP: z.string(),
