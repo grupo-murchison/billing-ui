@@ -1,5 +1,7 @@
 import { useCallback } from 'react';
 
+import { APP_VERSION } from '@app/constants';
+
 import { MenuIcon, SettingsOutlinedIcon } from '@assets/icons';
 
 import './Navbar.scss';
@@ -28,6 +30,7 @@ const Navbar = () => {
         <div className='navbar__menu-toggler' onClick={handleTogglerClick}>
           <MenuIcon />
         </div>
+        <small>{APP_VERSION}</small>
         <div className='navbar__toolbar'>
           <div className='toolbar__profile'>
             <div className='toolbar__profile--user-thumbnail'>

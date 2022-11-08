@@ -11,7 +11,7 @@ const initialState: InitialState = {
 const AuthContext = createContext(initialState);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(true);
 
   const allowAccess = useCallback(() => {
     setIsAuthenticated(true);
