@@ -9,7 +9,7 @@ class ApiProvider {
   private getInstance() {
     if (!this.instance) {
       this.instance = axios.create({
-        baseURL: BASE_URL,
+        baseURL: `${BASE_URL}/billing-services`,
         headers: {
           'Authorization': `Bearer ${''}`,
           'Content-Type': 'application/json',
