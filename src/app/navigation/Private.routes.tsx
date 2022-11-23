@@ -12,6 +12,7 @@ import { ProcedimientoPRoutes } from '@domains/procedimiento-p/navigation';
 import { ProcedimientoQRoutes } from '@domains/procedimiento-q/navigation';
 import { ModeloAcuerdoRoutes } from '@domains/modelo-acuerdo/navigation';
 import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
+import { ContratoRoutes } from '@domains/contrato/navigation';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -31,6 +32,7 @@ const PrivateRoutes = () => {
         <ProcedimientoQRoutes />
         <ModeloAcuerdoRoutes />
         <ConceptoAcuerdoRoutes />
+        <ContratoRoutes />
       </PageContainer>
     </ThemeProvider>
   );
