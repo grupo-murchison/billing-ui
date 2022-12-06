@@ -4,6 +4,11 @@ export const MENU_CONTRATOS_ITEMS = {
   title: 'Contratos',
   childs: [
     {
+      label: 'Contrato',
+      icon: <SetttingsIcon />,
+      path: '/contrato',
+    },
+    {
       label: 'Modelo acuerdo',
       icon: <SetttingsIcon />,
       path: '/modelo-acuerdo',
