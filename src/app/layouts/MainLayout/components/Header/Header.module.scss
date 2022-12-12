@@ -1,0 +1,84 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
+.header {
+  height: 120px;
+  display: flex;
+  align-items: center;
+}
+
+.sidebar-trigger {
+  background-color: VARS.$color-main;
+  width: 100px;
+  min-width: 100px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    display: block;
+    color: VARS.$color-white;
+    font-size: 70px;
+    cursor: pointer;
+  }
+}
+
+.header-container {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+}
+
+.header-brand {
+  padding-left: 20px;
+
+  h2 {
+    color: VARS.$color-gray-alter-1;
+  }
+
+  h1 {
+    color: VARS.$color-main;
+  }
+}
+
+.icon-wrapper {
+  border: 4px solid VARS.$color-gray-alter-1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 45px;
+  width: 45px;
+  border-radius: 50%;
+
+  svg {
+    color: VARS.$color-gray-alter-1;
+    font-size: 30px;
+  }
+}
+
+.icon-wrapper-search {
+  margin-left: auto;
+}
+
+.icon-wrapper-help {
+  margin-left: 10px;
+}
+
+.user-tools {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-left: 30px;
+
+  svg {
+    color: VARS.$color-gray-alter-1;
+    font-size: 65px;
+  }
+
+  span {
+    font-size: 1rem;
+    letter-spacing: 0rem;
+    line-height: 1.5rem;
+  }
+}

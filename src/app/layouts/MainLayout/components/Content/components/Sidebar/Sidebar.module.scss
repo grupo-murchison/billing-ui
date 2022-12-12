@@ -1,0 +1,12 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
+.content-sidebar {
+  position: absolute;
+  width: 100px;
+  height: calc(100vh - 120px);
+  background-color: VARS.$color-main;
+}
+
+.content-sidebar--open {
+  width: 300px;
+}
