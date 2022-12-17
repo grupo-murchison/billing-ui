@@ -1,17 +1,14 @@
-import Table from '@mui/material/Table';
-import TableContainer from '@mui/material/TableContainer';
+import { Head, Body } from '@app/components/DataGrid/components/Table/components';
 
-import { TableHead, TableBody } from '@app/components/DataGrid/components/Table/components';
+import styles from '@app/components/DataGrid/components/Table/Table.module.scss';
 
-const DataGridTable = () => {
+const Table = () => {
   return (
-    <TableContainer>
-      <Table sx={{ minWidth: 750 }} aria-labelledby='tableTitle'>
-        <TableHead />
-        <TableBody />
-      </Table>
-    </TableContainer>
+    <table className={styles['table']} cellSpacing='0' cellPadding='0'>
+      <Head />
+      <Body />
+    </table>
   );
 };
 
-export default DataGridTable;
+export default Table;

@@ -7,15 +7,13 @@ import { DataGrid, Portlet, Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandDataGridBreadcrumb } from '@domains/producto-softland/constants';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib } from '@libs';
-
-import { Button, IconButton } from '@mui/material';
 
 const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
@@ -56,13 +54,6 @@ const ProductoSoftlandDataGrid = () => {
   return (
     <Portlet>
       <Row>
-        <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleClickCreate}>
-            Nuevo Producto
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
@@ -73,25 +64,25 @@ const ProductoSoftlandDataGrid = () => {
               { label: 'ACTIVO' },
               { label: 'FECHA ACTIVO' },
               { label: '' },
+              { label: '' },
             ]}
             repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.agrupacion}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.activo ? 'SI' : 'NO'}</DataGrid.TableCell>
-                <DataGrid.TableCell>{DateLib.beautifyDBString(row.fechaCambioEstado)}</DataGrid.TableCell>
-                <DataGrid.TableCell>
-                  <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
-                    <EditOutlinedIcon />
-                  </IconButton>
-                  <IconButton color='primary' aria-label='Eliminar' onClick={() => handleClickDelete(row.id)}>
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </DataGrid.TableCell>
+                <td>{row.agrupacion}</td>
+                <td>{row.codigo}</td>
+                <td>{row.descripcion}</td>
+                <td>{row.activo ? 'SI' : 'NO'}</td>
+                <td>{DateLib.beautifyDBString(row.fechaCambioEstado)}</td>
+                <td align='center'>
+                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                </td>
               </>
             )}
+            onClickNew={handleClickCreate}
           />
         </Col>
       </Row>

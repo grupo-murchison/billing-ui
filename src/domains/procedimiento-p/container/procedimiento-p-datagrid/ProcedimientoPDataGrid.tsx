@@ -7,13 +7,11 @@ import { DataGrid, Portlet, Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 import { ProcedimientoPDataGridBreadcrumb } from '@domains/procedimiento-p/constants';
 import { ProcedimientoPContext } from '@domains/procedimiento-p/contexts';
-
-import { Button, IconButton } from '@mui/material';
 
 const ProcedimientoPDataGrid = () => {
   const _navigate = useNavigate();
@@ -54,33 +52,31 @@ const ProcedimientoPDataGrid = () => {
   return (
     <Portlet>
       <Row>
-        <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleClickCreate}>
-            Nuevo Procedimiento P
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: 'MONEDA' }, { label: '' }]}
+            columnHeads={[
+              { label: 'CÓDIGO' },
+              { label: 'DENOMINACIÓN' },
+              { label: 'MONEDA' },
+              { label: '' },
+              { label: '' },
+            ]}
             repositoryFunc={ProcedimientoPRepository.getAllProcedimientoPPaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.denominacion}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.moneda}</DataGrid.TableCell>
-                <DataGrid.TableCell>
-                  <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
-                    <EditOutlinedIcon />
-                  </IconButton>
-                  <IconButton color='primary' aria-label='Eliminar' onClick={() => handleClickDelete(row.id)}>
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </DataGrid.TableCell>
+                <td>{row.codigo}</td>
+                <td>{row.denominacion}</td>
+                <td>{row.moneda}</td>
+                <td align='center'>
+                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                </td>
               </>
             )}
+            onClickNew={handleClickCreate}
           />
         </Col>
       </Row>

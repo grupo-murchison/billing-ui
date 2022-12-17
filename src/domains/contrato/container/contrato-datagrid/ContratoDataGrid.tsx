@@ -12,8 +12,6 @@ import { ContratoContext } from '@domains/contrato/contexts';
 
 import { DateLib } from '@libs';
 
-import { Button } from '@mui/material';
-
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();
 
@@ -30,13 +28,6 @@ const ContratoDataGrid = () => {
   return (
     <Portlet>
       <Row>
-        <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleClickCreate}>
-            Nuevo Contrato
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
@@ -47,17 +38,17 @@ const ContratoDataGrid = () => {
               { label: 'CLIENTE' },
               { label: 'FECHA INICIO' },
               { label: 'FECHA FIN' },
-              { label: '' },
             ]}
+            onClickNew={handleClickCreate}
             repositoryFunc={ContratoRepository.getAllContratoPaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.descripcion}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.tipContrato}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.modeloAcuerdo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.cliente}</DataGrid.TableCell>
-                <DataGrid.TableCell>{DateLib.beautifyDBString(row.fechaInicioContrato)}</DataGrid.TableCell>
-                <DataGrid.TableCell>{DateLib.beautifyDBString(row.fechaFinContrato)}</DataGrid.TableCell>
+                <td>{row.descripcion}</td>
+                <td>{row.tipContrato}</td>
+                <td>{row.modeloAcuerdo}</td>
+                <td>{row.cliente}</td>
+                <td>{DateLib.beautifyDBString(row.fechaInicioContrato)}</td>
+                <td>{DateLib.beautifyDBString(row.fechaFinContrato)}</td>
               </>
             )}
           />
