@@ -1,0 +1,35 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
+.menu-item {
+  display: flex;
+}
+
+.item-icon {
+  width: 100px;
+  height: 80px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  position: relative;
+
+  &--active {
+    background-color: VARS.$color-main-nn;
+
+    &::before {
+      content: '';
+      height: 100%;
+      width: 10px;
+      background-color: VARS.$color-white;
+      position: absolute;
+      left: 0;
+      top: 0;
+    }
+  }
+
+  svg {
+    display: block;
+    color: VARS.$color-white;
+    font-size: 60px;
+  }
+}

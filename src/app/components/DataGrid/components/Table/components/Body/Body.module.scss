@@ -1,0 +1,28 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
+.body {
+  tr {
+    td {
+      height: 50px;
+      max-height: 50px;
+
+      padding: 0 25px;
+
+      font-size: 0.875rem;
+
+      color: rgb(112, 112, 112);
+    }
+
+    &:nth-child(even) {
+      background-color: rgb(243, 246, 249);
+    }
+
+    &:nth-child(odd) {
+      background-color: VARS.$color-white;
+    }
+
+    &:hover {
+      background-color: rgb(204, 206, 208);
+    }
+  }
+}

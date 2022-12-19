@@ -6,12 +6,10 @@ import { DataGrid, Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProcedimientoQVariableContext } from '@domains/procedimiento-q-variable/contexts';
 import { ProcedimientoQVariableRepository } from '@domains/procedimiento-q-variable/repository';
-
-import { Button, IconButton } from '@mui/material';
 
 const ProcedimientoQVariableDataGrid = () => {
   const _navigate = useNavigate();
@@ -57,13 +55,6 @@ const ProcedimientoQVariableDataGrid = () => {
   return (
     <>
       <Row>
-        <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleClickCreate}>
-            Nueva Variable
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
@@ -73,24 +64,24 @@ const ProcedimientoQVariableDataGrid = () => {
               { label: 'TIPO' },
               { label: 'DICCIONARIO' },
               { label: '' },
+              { label: '' },
             ]}
             repositoryFunc={ProcedimientoQVariableRepository.getAllProcedimientoQVariablePaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.codigo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.nombre}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.tipo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.diccionario}</DataGrid.TableCell>
-                <DataGrid.TableCell>
-                  <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
-                    <EditOutlinedIcon />
-                  </IconButton>
-                  <IconButton color='primary' aria-label='Eliminar' onClick={() => handleClickDelete(row.id)}>
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </DataGrid.TableCell>
+                <td>{row.codigo}</td>
+                <td>{row.nombre}</td>
+                <td>{row.tipo}</td>
+                <td>{row.diccionario}</td>
+                <td align='center'>
+                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                </td>
               </>
             )}
+            onClickNew={handleClickCreate}
           />
         </Col>
       </Row>

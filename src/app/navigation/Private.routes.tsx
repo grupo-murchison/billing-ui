@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthContext, ThemeProvider } from '@app/contexts';
 
-import { Navbar, PageContainer, Sidebar } from '@app/container/app-main/components';
+import { MainLayout } from '@app/layouts';
 
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';
@@ -23,9 +23,7 @@ const PrivateRoutes = () => {
 
   return (
     <ThemeProvider>
-      <Navbar />
-      <Sidebar />
-      <PageContainer>
+      <MainLayout>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
         <ProcedimientoPRoutes />
@@ -33,7 +31,7 @@ const PrivateRoutes = () => {
         <ModeloAcuerdoRoutes />
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
-      </PageContainer>
+      </MainLayout>
     </ThemeProvider>
   );
 };

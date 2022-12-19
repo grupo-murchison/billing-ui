@@ -1,0 +1,36 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
+.button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 2px 16px;
+}
+
+.button--primary-outlined {
+  border: 1px solid rgb(112, 112, 112);
+  border-radius: 4px;
+
+  color: VARS.$color-main;
+
+  background-color: VARS.$color-white;
+
+  font-size: 0.875rem;
+  font-weight: 500;
+
+  &:hover {
+    color: VARS.$color-white;
+
+    background-color: VARS.$color-main;
+
+    border-color: VARS.$color-main;
+  }
+}
+
+.button--icon {
+  > svg {
+    margin-right: 4px;
+    font-size: 1.125rem;
+  }
+}

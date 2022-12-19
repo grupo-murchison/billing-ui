@@ -6,12 +6,10 @@ import { DataGrid, Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
-
-import { Button, IconButton } from '@mui/material';
 
 const ProcedimientoPIntervaloDataGrid = () => {
   const _navigate = useNavigate();
@@ -57,13 +55,6 @@ const ProcedimientoPIntervaloDataGrid = () => {
   return (
     <>
       <Row>
-        <Col md={12} textAlign='right'>
-          <Button variant='outlined' onClick={handleClickCreate}>
-            Nuevo Intervalo
-          </Button>
-        </Col>
-      </Row>
-      <Row>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
@@ -73,24 +64,24 @@ const ProcedimientoPIntervaloDataGrid = () => {
               { label: 'VALOR FINAL' },
               { label: 'PRECIO' },
               { label: '' },
+              { label: '' },
             ]}
             repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
             rowTemplate={row => (
               <>
-                <DataGrid.TableCell>{row.intervalo}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.valorInicial}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.valorFinal}</DataGrid.TableCell>
-                <DataGrid.TableCell>{row.precio}</DataGrid.TableCell>
-                <DataGrid.TableCell>
-                  <IconButton color='primary' aria-label='Editar' onClick={() => handleClickEdit(row.id)}>
-                    <EditOutlinedIcon />
-                  </IconButton>
-                  <IconButton color='primary' aria-label='Eliminar' onClick={() => handleClickDelete(row.id)}>
-                    <DeleteOutlineIcon />
-                  </IconButton>
-                </DataGrid.TableCell>
+                <td>{row.intervalo}</td>
+                <td>{row.valorInicial}</td>
+                <td>{row.valorFinal}</td>
+                <td>{row.precio}</td>
+                <td align='center'>
+                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                </td>
               </>
             )}
+            onClickNew={handleClickCreate}
           />
         </Col>
       </Row>

@@ -1,0 +1,17 @@
+.total-count {
+  > label {
+    font-weight: normal;
+    margin-right: 4px;
+  }
+
+  > span {
+    font-weight: bold;
+  }
+
+  > label,
+  > span {
+    font-size: 0.875rem;
+
+    color: rgb(112, 112, 112);
+  }
+}

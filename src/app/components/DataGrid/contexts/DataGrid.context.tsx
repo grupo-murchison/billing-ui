@@ -10,16 +10,22 @@ import {
 const initialContext: InitialContext = {
   columnHeads: [],
   currentPage: 0,
+  onClickNew: () => {
+    return;
+  },
   handleChangeRowsPerPage: () => {
     return;
   },
-  handlePageChange: () => {
+  handleNextPageChange: () => {
+    return;
+  },
+  handlePrevPageChange: () => {
     return;
   },
   rowTemplate: () => <></>,
   rows: [],
   rowsCount: 0,
-  rowsPerPage: 100,
+  rowsPerPage: 50,
   rowsTotalCount: 0,
 };
 
@@ -28,6 +34,7 @@ const DataGridContext = createContext(initialContext);
 const DataGridProvider = <T,>({
   hookRef,
   columnHeads,
+  onClickNew,
   rowTemplate,
   repositoryFunc,
   children,
@@ -60,17 +67,37 @@ const DataGridProvider = <T,>({
     });
   }, []);
 
-  const handlePageChange = useCallback((event: unknown, newPage: number) => {
-    setCurrentPage(newPage);
+  const handleNextPageChange = useCallback(() => {
+    setCurrentPage(lastPage => {
+      const newPage = lastPage + 1;
 
-    repositoryFuncParamsRef.current = {
-      ...repositoryFuncParamsRef.current,
-      page: newPage + 1,
-    };
-    makeRequest();
-  }, []);
+      repositoryFuncParamsRef.current = {
+        ...repositoryFuncParamsRef.current,
+        page: newPage,
+      };
 
-  const handleChangeRowsPerPage = useCallback((event: ChangeEvent<HTMLInputElement>) => {
+      makeRequest();
+
+      return newPage;
+    });
+  }, [makeRequest]);
+
+  const handlePrevPageChange = useCallback(() => {
+    setCurrentPage(lastPage => {
+      const newPage = lastPage - 1;
+
+      repositoryFuncParamsRef.current = {
+        ...repositoryFuncParamsRef.current,
+        page: newPage,
+      };
+
+      makeRequest();
+
+      return newPage;
+    });
+  }, [makeRequest]);
+
+  const handleChangeRowsPerPage = useCallback((event: ChangeEvent<HTMLSelectElement>) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setCurrentPage(0);
 
@@ -98,7 +125,9 @@ const DataGridProvider = <T,>({
         columnHeads,
         currentPage,
         handleChangeRowsPerPage,
-        handlePageChange,
+        handleNextPageChange,
+        handlePrevPageChange,
+        onClickNew,
         rowTemplate,
         rows,
         rowsCount,
@@ -114,8 +143,10 @@ const DataGridProvider = <T,>({
 type InitialContext = {
   columnHeads: DataGridColumnHeadProps[];
   currentPage: number;
-  handleChangeRowsPerPage: (event: ChangeEvent<HTMLInputElement>) => void;
-  handlePageChange: (event: unknown, newPage: number) => void;
+  onClickNew?: () => void;
+  handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleNextPageChange: () => void;
+  handlePrevPageChange: () => void;
   rowTemplate: (row: AnyValue) => ReactNode;
   rows: AnyValue[];
   rowsCount: number;

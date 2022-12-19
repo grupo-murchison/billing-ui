@@ -10,6 +10,7 @@ export type DataGridProps<T> = {
     reload: () => void;
   }>;
   columnHeads: DataGridColumnHeadProps[];
+  onClickNew?: () => void;
   rowTemplate: (row: T) => ReactNode;
   repositoryFunc: (params: DataGridRepositoryFuncParams) => Promise<
     AxiosResponse<{

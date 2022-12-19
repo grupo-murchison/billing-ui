@@ -1,2 +1,3 @@
-export { default as DataGridPagination } from './Pagination';
-export { default as DataGridTable } from './Table';
+export * from './Pagination';
+export * from './Table';
+export * from './Toolbar';
