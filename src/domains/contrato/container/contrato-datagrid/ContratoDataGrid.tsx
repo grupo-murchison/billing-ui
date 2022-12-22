@@ -44,7 +44,7 @@ const ContratoDataGrid = () => {
             rowTemplate={row => (
               <>
                 <td>{row.descripcion}</td>
-                <td>{row.tipContrato}</td>
+                <td>{row.tipoContrato}</td>
                 <td>{row.modeloAcuerdo}</td>
                 <td>{row.cliente}</td>
                 <td>{DateLib.beautifyDBString(row.fechaInicioContrato)}</td>

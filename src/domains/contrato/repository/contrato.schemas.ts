@@ -5,7 +5,7 @@ import { ZodUtils } from '@app/utils';
 export const getAllContratoPaginatedSchema = ZodUtils.withPagination(
   z.object({
     id: z.number(),
-    tipContrato: z.string(),
+    tipoContrato: z.string(),
     modeloAcuerdo: z.string(),
     descripcion: z.string(),
     cliente: z.string(),

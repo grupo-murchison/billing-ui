@@ -78,7 +78,7 @@ const ConceptoAcuerdoEdit = () => {
               })}
               error={!!formErrors.modeloAcuerdoId}
               helperText={formErrors?.modeloAcuerdoId?.message}
-              disabled={isSubmitting}
+              disabled
               value={watch('modeloAcuerdoId')}
             />
           </Col>
