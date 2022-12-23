@@ -59,6 +59,7 @@ const ProcedimientoQVariableCreate = () => {
             <TextField
               id='codigo'
               label='Código'
+              {...register('codigo')}
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
@@ -68,6 +69,7 @@ const ProcedimientoQVariableCreate = () => {
             <TextField
               id='nombre'
               label='Nombre'
+              {...register('nombre')}
               error={!!formErrors.nombre}
               helperText={formErrors?.nombre?.message}
               disabled={isSubmitting}

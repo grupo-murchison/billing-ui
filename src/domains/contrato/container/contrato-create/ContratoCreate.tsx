@@ -36,9 +36,6 @@ const ContratoCreate = () => {
   } = useForm<ContratoCreateSchemaType>({
     defaultValues: {
       descripcion: '',
-      clienteId: '',
-      modeloAcuerdoId: '',
-      tipoContratoId: '',
       fechaInicioContrato: null,
       fechaFinContrato: null,
     },

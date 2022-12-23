@@ -18,4 +18,7 @@ export {
   FilterAlt as FilterAltIcon,
   Add as AddIcon,
   Download as DownloadIcon,
+  Description as DescriptionIcon,
+  AccountTree as AccountTreeIcon,
+  GppGood as GppGoodIcon,
 } from '@mui/icons-material';

@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { TipoProcedimientoBuiltinRepository } from '@domains/tipo-procedimiento-builtin/repository';
+import { ProcedimientoBuiltinRepository } from '@domains/procedimiento-builtin/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-const TipoProcedimientoBuiltinDropdown = ({
+const ProcedimientoBuiltinDropdown = ({
   id,
   label,
   disabled,
@@ -14,11 +14,11 @@ const TipoProcedimientoBuiltinDropdown = ({
   helperText,
   value,
   ...props
-}: TipoProcedimientoBuiltinDropdownProps) => {
+}: ProcedimientoBuiltinDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    TipoProcedimientoBuiltinRepository.getAllTipoProcedimientoBuiltinAsDropdown()
+    ProcedimientoBuiltinRepository.getAllProcedimientoBuiltinAsDropdown()
       .then(({ data }) => {
         setItems(data);
       })
@@ -42,7 +42,7 @@ const TipoProcedimientoBuiltinDropdown = ({
   );
 };
 
-type TipoProcedimientoBuiltinDropdownProps = {
+type ProcedimientoBuiltinDropdownProps = {
   id?: string;
   label: string;
   error?: boolean;
@@ -51,4 +51,4 @@ type TipoProcedimientoBuiltinDropdownProps = {
   value?: number | string;
 };
 
-export default TipoProcedimientoBuiltinDropdown;
+export default ProcedimientoBuiltinDropdown;

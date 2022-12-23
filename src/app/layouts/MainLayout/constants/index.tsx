@@ -1,8 +1,8 @@
-import { SetttingsIcon } from '@assets/icons';
+import { DescriptionIcon, AccountTreeIcon, GppGoodIcon } from '@assets/icons';
 
 export const MENU_CONTRATOS_ITEMS = {
   title: 'Contratos',
-  icon: <SetttingsIcon />,
+  icon: <DescriptionIcon />,
   childs: [
     {
       label: 'Contrato',
@@ -21,7 +21,7 @@ export const MENU_CONTRATOS_ITEMS = {
 
 export const MENU_PROCEDIMIENTOS_ITEMS = {
   title: 'Procedimientos',
-  icon: <SetttingsIcon />,
+  icon: <AccountTreeIcon />,
   childs: [
     {
       label: 'Procedimiento Q',
@@ -40,7 +40,7 @@ export const MENU_PROCEDIMIENTOS_ITEMS = {
 
 export const MENU_OTHER_ITEMS = {
   title: 'Otros',
-  icon: <SetttingsIcon />,
+  icon: <GppGoodIcon />,
   childs: [
     {
       label: 'Producto Softland',

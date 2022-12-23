@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { TipoProcedimientoCustomRepository } from '@domains/tipo-procedimiento-custom/repository';
+import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-const TipoProcedimientoCustomDropdown = ({
+const ProcedimientoCustomDropdown = ({
   id,
   label,
   disabled,
@@ -14,11 +14,11 @@ const TipoProcedimientoCustomDropdown = ({
   helperText,
   value,
   ...props
-}: TipoProcedimientoCustomDropdownProps) => {
+}: ProcedimientoCustomDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    TipoProcedimientoCustomRepository.getAllTipoProcedimientoCustomAsDropdown()
+    ProcedimientoCustomRepository.getAllProcedimientoCustomAsDropdown()
       .then(({ data }) => {
         setItems(data);
       })
@@ -42,7 +42,7 @@ const TipoProcedimientoCustomDropdown = ({
   );
 };
 
-type TipoProcedimientoCustomDropdownProps = {
+type ProcedimientoCustomDropdownProps = {
   id?: string;
   label: string;
   error?: boolean;
@@ -51,4 +51,4 @@ type TipoProcedimientoCustomDropdownProps = {
   value?: number | string;
 };
 
-export default TipoProcedimientoCustomDropdown;
+export default ProcedimientoCustomDropdown;

@@ -14,8 +14,8 @@ export const ProcedimientoQEditSchema = z.object({
     .min(1, { message: 'El campo es requerido.' })
     .max(50, { message: 'Ha superado el límite de caracteres' }),
   tipoProcedimientoQId: z.number({ required_error: 'El campo es requerido.' }),
-  tipoProcedimientoBuiltinId: z.number({ required_error: 'El campo es requerido.' }),
-  tipoProcedimientoCustomId: z.number({ required_error: 'El campo es requerido.' }),
+  procedimientoBuiltinId: z.number({ required_error: 'El campo es requerido.' }),
+  procedimientoCustomId: z.number({ required_error: 'El campo es requerido.' }),
 });
 
 export type ProcedimientoQEditSchemaType = z.infer<typeof ProcedimientoQEditSchema>;
