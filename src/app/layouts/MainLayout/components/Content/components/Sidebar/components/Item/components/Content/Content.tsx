@@ -8,7 +8,7 @@ import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@assets/icons';
 import styles from '@app/layouts/MainLayout/components/Content/components/Sidebar/components/Item/components/Content/Content.module.scss';
 
 const Content = ({ title, items, isActive }: ContentProps) => {
-  const { isSidebarOpen } = useContext(MainLayoutContext);
+  const { isSidebarOpen, closeSidebar } = useContext(MainLayoutContext);
 
   const [isContentItemsVisible, setIsContentItemsVisible] = useState<boolean>(false);
 
@@ -32,7 +32,9 @@ const Content = ({ title, items, isActive }: ContentProps) => {
       <ul className={`${styles['content-items']} ${isContentItemsVisible ? '' : styles['content-items--hide']}`}>
         {items?.map(x => (
           <li key={x.path}>
-            <Link to={x.path}>{x.label}</Link>
+            <Link to={x.path} onClick={() => closeSidebar()}>
+              {x.label}
+            </Link>
           </li>
         ))}
       </ul>
