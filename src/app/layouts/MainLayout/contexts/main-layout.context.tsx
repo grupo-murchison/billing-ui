@@ -3,6 +3,9 @@ import type { ReactNode } from 'react';
 
 const initialContext: InitialContext = {
   isSidebarOpen: false,
+  closeSidebar: () => {
+    /* */
+  },
   toogleSidebar: () => {
     /* */
   },
@@ -13,6 +16,10 @@ const MainLayoutContext = createContext(initialContext);
 const MainLayoutProvider = ({ children }: MainLayoutProviderProps) => {
   const [isSidebarOpen, setIsSidebarOpen] = useState<boolean>(initialContext.isSidebarOpen);
 
+  const closeSidebar = useCallback(() => {
+    setIsSidebarOpen(false);
+  }, []);
+
   const toogleSidebar = useCallback(() => {
     setIsSidebarOpen(prevValue => !prevValue);
   }, []);
@@ -21,6 +28,7 @@ const MainLayoutProvider = ({ children }: MainLayoutProviderProps) => {
     <MainLayoutContext.Provider
       value={{
         isSidebarOpen,
+        closeSidebar,
         toogleSidebar,
       }}
     >
@@ -35,6 +43,7 @@ type MainLayoutProviderProps = {
 
 type InitialContext = {
   isSidebarOpen: boolean;
+  closeSidebar: () => void;
   toogleSidebar: () => void;
 };
 

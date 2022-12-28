@@ -5,6 +5,9 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { DataGrid, Portlet, Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
+import { useConfirmDialog } from '@app/hooks';
+
+import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
@@ -17,9 +20,32 @@ const ContratoDataGrid = () => {
 
   const { mainDataGrid } = useContext(ContratoContext);
 
+  const confirmDialog = useConfirmDialog();
+
   const handleClickCreate = useCallback(() => {
     _navigate('/contrato/create');
   }, [_navigate]);
+
+  const handleClickEdit = useCallback(
+    (id: number) => {
+      _navigate(`/contrato/${id}/edit`);
+    },
+    [_navigate],
+  );
+
+  const handleClickDelete = useCallback(
+    (id: number) => {
+      confirmDialog.open({
+        message: 'Desea eliminar el registro?',
+        async onClickYes() {
+          await ContratoRepository.deleteContratoById(id);
+          confirmDialog.close();
+          mainDataGrid.reload();
+        },
+      });
+    },
+    [confirmDialog],
+  );
 
   useEffect(() => {
     mainDataGrid.load();
@@ -38,6 +64,8 @@ const ContratoDataGrid = () => {
               { label: 'CLIENTE' },
               { label: 'FECHA INICIO' },
               { label: 'FECHA FIN' },
+              { label: '' },
+              { label: '' },
             ]}
             onClickNew={handleClickCreate}
             repositoryFunc={ContratoRepository.getAllContratoPaginated}
@@ -49,6 +77,12 @@ const ContratoDataGrid = () => {
                 <td>{row.cliente}</td>
                 <td>{DateLib.beautifyDBString(row.fechaInicioContrato)}</td>
                 <td>{DateLib.beautifyDBString(row.fechaFinContrato)}</td>
+                <td align='center'>
+                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                </td>
               </>
             )}
           />
