@@ -1,5 +1,7 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
+
+import clsx from 'clsx';
 
 import { MainLayoutContext } from '@app/layouts/MainLayout/contexts';
 
@@ -7,7 +9,7 @@ import { KeyboardArrowDownIcon, KeyboardArrowUpIcon } from '@assets/icons';
 
 import styles from '@app/layouts/MainLayout/components/Content/components/Sidebar/components/Item/components/Content/Content.module.scss';
 
-const Content = ({ title, items, isActive }: ContentProps) => {
+const Content = ({ title, items, isActive, isOpen, closeItself }: ContentProps) => {
   const { isSidebarOpen, closeSidebar } = useContext(MainLayoutContext);
 
   const [isContentItemsVisible, setIsContentItemsVisible] = useState<boolean>(false);
@@ -16,8 +18,19 @@ const Content = ({ title, items, isActive }: ContentProps) => {
     setIsContentItemsVisible(prevValue => !prevValue);
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      setIsContentItemsVisible(true);
+    }
+  }, [isOpen]);
+
   return (
-    <div className={`${styles['content']} ${isSidebarOpen ? styles['content--open'] : ''}`}>
+    <div
+      className={clsx(styles['content'], {
+        [styles['content--open']]: isSidebarOpen || isOpen,
+        [styles['content--self-open']]: !isSidebarOpen && isOpen,
+      })}
+    >
       <div
         className={`
           ${styles['content-title']} 
@@ -32,7 +45,13 @@ const Content = ({ title, items, isActive }: ContentProps) => {
       <ul className={`${styles['content-items']} ${isContentItemsVisible ? '' : styles['content-items--hide']}`}>
         {items?.map(x => (
           <li key={x.path}>
-            <Link to={x.path} onClick={() => closeSidebar()}>
+            <Link
+              to={x.path}
+              onClick={() => {
+                closeSidebar();
+                closeItself();
+              }}
+            >
               {x.label}
             </Link>
           </li>
@@ -44,7 +63,9 @@ const Content = ({ title, items, isActive }: ContentProps) => {
 
 type ContentProps = {
   isActive: boolean;
+  isOpen: boolean;
   title: string;
+  closeItself: () => void;
   items: {
     label: string;
     path: string;
