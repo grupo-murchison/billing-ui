@@ -17,8 +17,26 @@ class ContratoRepository {
     return response;
   };
 
+  static getContratoById = async (id: string) => {
+    const response$ = from(ContratoService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static createContrato = async (Contrato: AnyValue) => {
     const response$ = from(ContratoService.post(Contrato)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static updateContrato = async (contrato: AnyValue) => {
+    const response$ = from(ContratoService.patch(contrato)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static deleteContratoById = async (id: number) => {
+    const response$ = from(ContratoService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
