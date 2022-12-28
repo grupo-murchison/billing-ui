@@ -3,9 +3,17 @@
 .content {
   display: none;
   flex-grow: 1;
+  background-color: VARS.$color-main;
 
   &--open {
     display: initial;
+  }
+
+  &--self-open {
+    position: absolute;
+    top: 0;
+    left: 60px;
+    min-width: 240px;
   }
 }
 

@@ -1,7 +1,5 @@
-import { useContext, useMemo } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useLocation, matchRoutes } from 'react-router-dom';
-
-import { MainLayoutContext } from '@app/layouts/MainLayout/contexts';
 
 import { Content } from '@app/layouts/MainLayout/components/Content/components/Sidebar/components/Item/components';
 
@@ -11,18 +9,26 @@ const Item = ({ title, icon, items }: ItemProps) => {
   const location = useLocation();
   const validRoutes = matchRoutes(items, location);
 
-  const { toogleSidebar } = useContext(MainLayoutContext);
+  const [isItemOpen, setIsItemOpen] = useState<boolean>(false);
 
   const isActive = useMemo(() => {
     return validRoutes ? validRoutes.length > 0 : false;
   }, [validRoutes]);
 
+  const toogleItemContent = useCallback(() => {
+    setIsItemOpen(prevValue => !prevValue);
+  }, []);
+
+  const closeItself = useCallback(() => {
+    setIsItemOpen(false);
+  }, []);
+
   return (
     <div className={styles['menu-item']}>
       <div className={`${styles['item-icon']} ${isActive ? styles['item-icon--active'] : ''}`}>
-        <span onClick={toogleSidebar}>{icon}</span>
+        <span onClick={toogleItemContent}>{icon}</span>
       </div>
-      <Content title={title} items={items} isActive={isActive} />
+      <Content title={title} items={items} isActive={isActive} isOpen={isItemOpen} closeItself={closeItself} />
     </div>
   );
 };
