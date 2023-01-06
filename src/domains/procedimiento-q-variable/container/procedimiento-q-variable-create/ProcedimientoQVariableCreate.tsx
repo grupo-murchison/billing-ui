@@ -42,13 +42,13 @@ const ProcedimientoQVariableCreate = () => {
 
       mainDataGrid.reload();
 
-      _navigate(`/procedimiento-q/${procedimientoQId}/edit`);
+      _navigate(`/procedimiento-q/${procedimientoQId}`);
     },
     [_navigate, mainDataGrid, procedimientoQId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/procedimiento-q/${procedimientoQId}/edit`);
+    _navigate(`/procedimiento-q/${procedimientoQId}`);
   }, [_navigate, procedimientoQId]);
 
   return (

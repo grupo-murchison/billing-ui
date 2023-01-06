@@ -7,7 +7,7 @@ import { DataGrid, Portlet, Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGridViewButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQDataGridBreadcrumb } from '@domains/procedimiento-q/constants';
@@ -24,9 +24,9 @@ const ProcedimientoQDataGrid = () => {
     _navigate('/procedimiento-q/create');
   }, [_navigate]);
 
-  const handleClickEdit = useCallback(
+  const handleClickView = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-q/${id}/edit`);
+      _navigate(`/procedimiento-q/${id}`);
     },
     [_navigate],
   );
@@ -60,8 +60,8 @@ const ProcedimientoQDataGrid = () => {
               { label: 'DESCRIPCIÓN' },
               { label: 'DENOMINACIÓN' },
               { label: 'TIPO PROC Q' },
-              { label: 'TIPO PROC BUILTIN' },
-              { label: 'TIPO PROC CUSTOM' },
+              { label: 'PROC BUILTIN' },
+              { label: 'PROC CUSTOM' },
               { label: '' },
               { label: '' },
             ]}
@@ -72,10 +72,10 @@ const ProcedimientoQDataGrid = () => {
                 <td>{row.descripcion}</td>
                 <td>{row.denominacion}</td>
                 <td>{row.tipoProcedimientoQ}</td>
-                <td>{row.tipoProcedimientoBuiltin}</td>
-                <td>{row.tipoProcedimientoCustom}</td>
+                <td>{row.procedimientoBuiltin}</td>
+                <td>{row.procedimientoCustom}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGridViewButton onClick={() => handleClickView(row.id)} />
                 </td>
                 <td align='center'>
                   <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />

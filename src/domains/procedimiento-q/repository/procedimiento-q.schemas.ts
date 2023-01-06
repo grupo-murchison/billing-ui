@@ -9,8 +9,8 @@ export const getAllProcedimientoQPaginatedSchema = ZodUtils.withPagination(
     descripcion: z.string(),
     denominacion: z.string(),
     tipoProcedimientoQ: z.string(),
-    tipoProcedimientoBuiltin: z.string().optional(),
-    tipoProcedimientoCustom: z.string().optional(),
+    procedimientoBuiltin: z.string().optional(),
+    procedimientoCustom: z.string().optional(),
   }),
 );
 
