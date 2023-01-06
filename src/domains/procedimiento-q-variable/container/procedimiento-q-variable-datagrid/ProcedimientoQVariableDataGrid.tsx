@@ -20,12 +20,12 @@ const ProcedimientoQVariableDataGrid = () => {
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-q/${procedimientoQId}/edit/procedimiento-q-variable/create`);
+    _navigate(`/procedimiento-q/${procedimientoQId}/procedimiento-q-variable/create`);
   }, [_navigate, procedimientoQId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-q/${procedimientoQId}/edit/procedimiento-q-variable/${id}/edit`);
+      _navigate(`/procedimiento-q/${procedimientoQId}/procedimiento-q-variable/${id}/edit`);
     },
     [_navigate, procedimientoQId],
   );

@@ -10,9 +10,11 @@ import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQEditSchema } from '@domains/procedimiento-q/container/procedimiento-q-edit/schemas';
 import type { ProcedimientoQEditSchemaType } from '@domains/procedimiento-q/container/procedimiento-q-edit/schemas';
 
+import { ProcedimientoQVariableWithinProcedimientoQRoutes } from '@domains/procedimiento-q-variable/navigation';
+
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
+import { Divider, TextField } from '@mui/material';
 
 const ProcedimientoQEdit = () => {
   const { procedimientoQId } = useParams();
@@ -73,6 +75,8 @@ const ProcedimientoQEdit = () => {
           </Col>
         </Row>
       </form>
+      <Divider style={{ marginBottom: '1rem' }} />
+      <ProcedimientoQVariableWithinProcedimientoQRoutes />
     </Modal>
   );
 };
