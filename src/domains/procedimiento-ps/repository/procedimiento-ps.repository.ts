@@ -41,6 +41,12 @@ class ProcedimientoPSRepository {
     return response;
   };
 
+  static updateProcedimientoPS = async (procedimientoPS: AnyValue) => {
+    const response$ = from(ProcedimientoPSService.patch(procedimientoPS)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static deleteProcedimientoPSById = async (id: number) => {
     const response$ = from(ProcedimientoPSService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);

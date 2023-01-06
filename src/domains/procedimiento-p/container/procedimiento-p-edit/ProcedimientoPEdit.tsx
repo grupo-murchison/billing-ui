@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useContext } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -12,23 +12,26 @@ import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 import { ProcedimientoPEditSchema } from '@domains/procedimiento-p/container/procedimiento-p-edit/schemas';
 import type { ProcedimientoPEditSchemaType } from '@domains/procedimiento-p/container/procedimiento-p-edit/schemas';
 
-import { ProcedimientoPIntervaloWithinProcedimientoPRoutes } from '@domains/procedimiento-p-intervalo/navigation';
+import { ProcedimientoPContext } from '@domains/procedimiento-p/contexts';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Divider, TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const ProcedimientoPEdit = () => {
   const { procedimientoPId } = useParams();
   const _navigate = useNavigate();
 
+  const { mainDataGrid } = useContext(ProcedimientoPContext);
+
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
     register,
+    handleSubmit: rhfHandleSubmit,
     reset,
     watch,
-    formState: { errors: formErrors },
+    formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -40,6 +43,17 @@ const ProcedimientoPEdit = () => {
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-p');
   }, [_navigate]);
+
+  const handleSubmit = useCallback(
+    async (data: ProcedimientoPEditSchemaType) => {
+      await ProcedimientoPRepository.updateProcedimientoP(data);
+
+      mainDataGrid.reload();
+
+      _navigate('/procedimiento-p');
+    },
+    [_navigate, mainDataGrid],
+  );
 
   useEffect(() => {
     ProcedimientoPRepository.getProcedimientoPById(procedimientoPId || '').then(({ data }) => {
@@ -53,8 +67,8 @@ const ProcedimientoPEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento PS'>
-      <form noValidate autoComplete='off'>
+    <Modal isOpen onClose={handleClose} title='Editar Procedimiento P'>
+      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
             <TextField
@@ -63,7 +77,7 @@ const ProcedimientoPEdit = () => {
               {...register('codigo')}
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
-              disabled
+              disabled={isSubmitting}
             />
           </Col>
           <Col md={6}>
@@ -73,7 +87,7 @@ const ProcedimientoPEdit = () => {
               {...register('denominacion')}
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
-              disabled
+              disabled={isSubmitting}
             />
           </Col>
         </Row>
@@ -88,13 +102,18 @@ const ProcedimientoPEdit = () => {
               value={watch('monedaId')}
               error={!!formErrors.monedaId}
               helperText={formErrors?.monedaId?.message}
-              disabled
+              disabled={isSubmitting}
             />
           </Col>
         </Row>
+        <Row>
+          <Col md={12} textAlign='right'>
+            <Button variant='contained' type='submit' disabled={isSubmitting}>
+              Actualizar Procedimiento
+            </Button>
+          </Col>
+        </Row>
       </form>
-      <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPIntervaloWithinProcedimientoPRoutes />
     </Modal>
   );
 };

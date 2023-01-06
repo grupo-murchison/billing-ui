@@ -38,6 +38,14 @@ class ProcedimientoPService {
     return [response, error];
   };
 
+  static patch = async (procedimientoPS: AnyValue): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.patch<AnyValue>('api/v1/procedimiento-p/crud', procedimientoPS),
+    );
+
+    return [response, error];
+  };
+
   static deleteById = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.delete<AnyValue>(`api/v1/procedimiento-p/crud/${id}`),

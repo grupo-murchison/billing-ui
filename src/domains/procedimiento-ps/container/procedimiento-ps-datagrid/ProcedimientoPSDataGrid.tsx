@@ -7,7 +7,7 @@ import { DataGrid, Portlet, Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGridEditButton, DataGridDeleteButton, DataGridViewButton } from '@app/pro-components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 import { ProcedimientoPSDataGridBreadcrumb } from '@domains/procedimiento-ps/constants';
@@ -27,6 +27,13 @@ const ProcedimientoPSDataGrid = () => {
   const handleClickEdit = useCallback(
     (id: number) => {
       _navigate(`/procedimiento-ps/${id}/edit`);
+    },
+    [_navigate],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      _navigate(`/procedimiento-ps/${id}`);
     },
     [_navigate],
   );
@@ -55,12 +62,15 @@ const ProcedimientoPSDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }, { label: '' }]}
+            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }, { label: '' }, { label: '' }]}
             repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
             rowTemplate={row => (
               <>
                 <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
+                <td align='center'>
+                  <DataGridViewButton onClick={() => handleClickView(row.id)} />
+                </td>
                 <td align='center'>
                   <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
                 </td>

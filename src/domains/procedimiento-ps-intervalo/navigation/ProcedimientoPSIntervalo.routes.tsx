@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { ProcedimientoPSDataGrid } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-datagrid';
+import { ProcedimientoPSIntervaloDataGrid } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-datagrid';
 import { ProcedimientoPSIntervaloCreate } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create';
 import { ProcedimientoPSIntervaloEdit } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-edit';
 
@@ -13,7 +13,7 @@ export const ProcedimientoPSIntervaloWithinProcedimientoPSRoutes = () => {
         path='/'
         element={
           <ProcedimientoPSIntervaloProvider>
-            <ProcedimientoPSDataGrid />
+            <ProcedimientoPSIntervaloDataGrid />
           </ProcedimientoPSIntervaloProvider>
         }
       >

@@ -3,6 +3,7 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 import { ProcedimientoPDataGrid } from '@domains/procedimiento-p/container/procedimiento-p-datagrid';
 import { ProcedimientoPCreate } from '@domains/procedimiento-p/container/procedimiento-p-create';
 import { ProcedimientoPEdit } from '@domains/procedimiento-p/container/procedimiento-p-edit';
+import { ProcedimientoPView } from '@domains/procedimiento-p/container/procedimiento-p-view';
 import { ProcedimientoPProvider } from '@domains/procedimiento-p/contexts';
 
 const ProcedimientoPRoutes = () => {
@@ -17,7 +18,8 @@ const ProcedimientoPRoutes = () => {
         }
       >
         <Route path='/procedimiento-p/create' element={<ProcedimientoPCreate />} />
-        <Route path='/procedimiento-p/:procedimientoPId/edit/*' element={<ProcedimientoPEdit />} />
+        <Route path='/procedimiento-p/:procedimientoPId/edit' element={<ProcedimientoPEdit />} />
+        <Route path='/procedimiento-p/:procedimientoPId/*' element={<ProcedimientoPView />} />
       </Route>
       <Route path='/procedimiento-p/*' element={<Navigate to='/' replace />} />
     </Routes>

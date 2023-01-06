@@ -41,13 +41,13 @@ const ProcedimientoPSIntervaloCreate = () => {
 
       mainDataGrid.reload();
 
-      _navigate(`/procedimiento-ps/${procedimientoPSId}/edit`);
+      _navigate(`/procedimiento-ps/${procedimientoPSId}`);
     },
     [_navigate, mainDataGrid, procedimientoPSId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/procedimiento-ps/${procedimientoPSId}/edit`);
+    _navigate(`/procedimiento-ps/${procedimientoPSId}`);
   }, [_navigate, procedimientoPSId]);
 
   return (

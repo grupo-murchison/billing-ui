@@ -21,4 +21,5 @@ export {
   Description as DescriptionIcon,
   AccountTree as AccountTreeIcon,
   GppGood as GppGoodIcon,
+  VisibilityOutlined as VisibilityOutlinedIcon,
 } from '@mui/icons-material';
