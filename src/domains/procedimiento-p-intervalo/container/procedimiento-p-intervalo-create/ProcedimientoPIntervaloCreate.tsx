@@ -38,13 +38,13 @@ const ProcedimientoPIntervaloCreate = () => {
 
       mainDataGrid.reload();
 
-      _navigate(`/procedimiento-p/${procedimientoPId}/edit`);
+      _navigate(`/procedimiento-p/${procedimientoPId}`);
     },
     [_navigate, mainDataGrid, procedimientoPId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/procedimiento-p/${procedimientoPId}/edit`);
+    _navigate(`/procedimiento-p/${procedimientoPId}`);
   }, [_navigate, procedimientoPId]);
 
   return (

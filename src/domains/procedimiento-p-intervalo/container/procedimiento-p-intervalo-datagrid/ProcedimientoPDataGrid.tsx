@@ -20,12 +20,12 @@ const ProcedimientoPIntervaloDataGrid = () => {
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/create`);
+    _navigate(`/procedimiento-p/${procedimientoPId}/procedimiento-p-intervalo/create`);
   }, [_navigate, procedimientoPId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/${id}/edit`);
+      _navigate(`/procedimiento-p/${procedimientoPId}/procedimiento-p-intervalo/${id}/edit`);
     },
     [_navigate, procedimientoPId],
   );

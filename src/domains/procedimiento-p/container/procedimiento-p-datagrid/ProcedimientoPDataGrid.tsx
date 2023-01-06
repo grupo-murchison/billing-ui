@@ -7,7 +7,7 @@ import { DataGrid, Portlet, Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGridViewButton, DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
 
 import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 import { ProcedimientoPDataGridBreadcrumb } from '@domains/procedimiento-p/constants';
@@ -27,6 +27,13 @@ const ProcedimientoPDataGrid = () => {
   const handleClickEdit = useCallback(
     (id: number) => {
       _navigate(`/procedimiento-p/${id}/edit`);
+    },
+    [_navigate],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      _navigate(`/procedimiento-p/${id}`);
     },
     [_navigate],
   );
@@ -61,6 +68,7 @@ const ProcedimientoPDataGrid = () => {
               { label: 'MONEDA' },
               { label: '' },
               { label: '' },
+              { label: '' },
             ]}
             repositoryFunc={ProcedimientoPRepository.getAllProcedimientoPPaginated}
             rowTemplate={row => (
@@ -68,6 +76,9 @@ const ProcedimientoPDataGrid = () => {
                 <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
                 <td>{row.moneda}</td>
+                <td align='center'>
+                  <DataGridViewButton onClick={() => handleClickView(row.id)} />
+                </td>
                 <td align='center'>
                   <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
                 </td>

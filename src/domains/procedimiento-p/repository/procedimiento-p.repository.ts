@@ -41,6 +41,12 @@ class ProcedimientoPRepository {
     return response;
   };
 
+  static updateProcedimientoP = async (procedimientoP: AnyValue) => {
+    const response$ = from(ProcedimientoPService.patch(procedimientoP)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static deleteProcedimientoPById = async (id: number) => {
     const response$ = from(ProcedimientoPService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);

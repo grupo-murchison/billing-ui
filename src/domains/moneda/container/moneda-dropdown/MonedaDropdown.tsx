@@ -41,6 +41,7 @@ type MonedaDropdownProps = {
   helperText?: string;
   disabled?: boolean;
   value?: number | string;
+  defaultValue?: number | string;
 };
 
 export default MonedaDropdown;
