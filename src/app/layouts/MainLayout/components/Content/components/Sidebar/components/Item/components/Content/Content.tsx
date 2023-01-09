@@ -32,10 +32,10 @@ const Content = ({ title, items, isActive, isOpen, closeItself }: ContentProps) 
       })}
     >
       <div
-        className={`
-          ${styles['content-title']} 
-          ${isActive ? styles['content-title--active'] : ''}
-        `}
+        className={clsx(styles['content-title'], {
+          [styles['content-title--active']]: isActive,
+          [styles['content-title--hide']]: isOpen && !isSidebarOpen,
+        })}
       >
         <span>{title}</span>
         <span onClick={handleArrowToggleClick}>

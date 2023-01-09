@@ -25,8 +25,11 @@ const Item = ({ title, icon, items }: ItemProps) => {
 
   return (
     <div className={styles['menu-item']}>
-      <div className={`${styles['item-icon']} ${isActive ? styles['item-icon--active'] : ''}`}>
-        <span onClick={toogleItemContent}>{icon}</span>
+      <div
+        className={`${styles['item-icon']} ${isActive ? styles['item-icon--active'] : ''}`}
+        onClick={toogleItemContent}
+      >
+        <span>{icon}</span>
       </div>
       <Content title={title} items={items} isActive={isActive} isOpen={isItemOpen} closeItself={closeItself} />
     </div>

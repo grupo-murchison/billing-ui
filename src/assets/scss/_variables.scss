@@ -8,3 +8,8 @@ $color-gray-alter-1: #505e70;
 $color-gray-alter-2: #9eaab8;
 
 $color-main-nn: rgb(66, 154, 120);
+
+$sidebar-width: 50px;
+$sidebar-width--open: calc(300px - $sidebar-width);
+
+$header-height: 60px;

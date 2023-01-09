@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { DataGrid, Portlet, Col, Row } from '@app/components';
+import { Portlet, Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
@@ -78,10 +78,10 @@ const ContratoDataGrid = () => {
                 <td>{DateLib.beautifyDBString(row.fechaInicioContrato)}</td>
                 <td>{DateLib.beautifyDBString(row.fechaFinContrato)}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}

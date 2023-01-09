@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { ConfirmDialog } from '@app/components';
+import { ConfirmDialog } from '@app/pro-components';
 import { ThemeContext } from '@app/contexts';
 
 const useConfirmDialog = () => {

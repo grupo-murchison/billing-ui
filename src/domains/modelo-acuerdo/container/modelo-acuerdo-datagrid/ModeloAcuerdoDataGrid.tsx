@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { DataGrid, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { ModeloAcuerdoDataGridBreadcrumb } from '@domains/modelo-acuerdo/constants';
@@ -70,10 +70,10 @@ const ModeloAcuerdoDataGrid = () => {
                 <td>{row.nombre}</td>
                 <td>{row.descripcion}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}

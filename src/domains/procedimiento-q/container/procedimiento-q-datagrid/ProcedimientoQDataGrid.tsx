@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { DataGrid, Portlet, Col, Row } from '@app/components';
+import { Portlet, Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridViewButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQDataGridBreadcrumb } from '@domains/procedimiento-q/constants';
@@ -75,10 +75,10 @@ const ProcedimientoQDataGrid = () => {
                 <td>{row.procedimientoBuiltin}</td>
                 <td>{row.procedimientoCustom}</td>
                 <td align='center'>
-                  <DataGridViewButton onClick={() => handleClickView(row.id)} />
+                  <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}
