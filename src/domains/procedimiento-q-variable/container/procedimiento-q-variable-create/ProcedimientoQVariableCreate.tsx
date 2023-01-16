@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Modal, Row, Col } from '@app/components';
+import { Button, Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoQVariableRepository } from '@domains/procedimiento-q-variable/repository';
 import { ProcedimientoQVariableCreateSchema } from '@domains/procedimiento-q-variable/container/procedimiento-q-variable-create/schemas';
@@ -16,7 +16,7 @@ import { DiccionarioDropdown } from '@domains/diccionario/container/diccionario-
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 const ProcedimientoQVariableCreate = () => {
   const _navigate = useNavigate();
@@ -105,9 +105,12 @@ const ProcedimientoQVariableCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12} textAlign='right'>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Variable
+          <Col md={12} className='d-flex jc-end'>
+            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color='primary' type='submit' disabled={isSubmitting}>
+              Crear
             </Button>
           </Col>
         </Row>

@@ -2,11 +2,11 @@
 
 .content-sidebar {
   position: absolute;
-  width: 60px;
-  min-height: calc(100vh - 80px);
+  width: VARS.$sidebar-width;
+  min-height: calc(100vh - VARS.$header-height);
   background-color: VARS.$color-main;
 }
 
 .content-sidebar--open {
-  width: 300px;
+  width: VARS.$sidebar-width--open;
 }

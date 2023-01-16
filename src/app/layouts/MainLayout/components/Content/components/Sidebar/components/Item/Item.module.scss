@@ -6,13 +6,17 @@
 }
 
 .item-icon {
-  width: 60px;
-  height: 60px;
+  width: VARS.$sidebar-width;
+  height: VARS.$sidebar-width;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   position: relative;
+
+  &:hover {
+    background-color: VARS.$color-main-nn;
+  }
 
   &--active {
     background-color: VARS.$color-main-nn;
@@ -20,7 +24,7 @@
     &::before {
       content: '';
       height: 100%;
-      width: 10px;
+      width: 5px;
       background-color: VARS.$color-white;
       position: absolute;
       left: 0;

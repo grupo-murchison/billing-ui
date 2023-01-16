@@ -2,11 +2,11 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
-import { DataGrid, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
@@ -74,10 +74,10 @@ const ProcedimientoPIntervaloDataGrid = () => {
                 <td>{row.valorFinal}</td>
                 <td>{row.precio}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}

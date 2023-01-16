@@ -1,3 +1,23 @@
 .breadcrumb {
-  
+  width: 100%;
+  margin: 16px 0;
+  padding: 0 8px;
+
+  display: flex;
+  align-items: center;
+
+  a,
+  p {
+    font-size: 1.125rem;
+    text-decoration: none;
+    color: #7c878e;
+  }
+
+  a {
+    font-weight: 600;
+  }
+
+  span {
+    margin: 0 4px;
+  }
 }

@@ -2,13 +2,15 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
-import { DataGrid, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
+import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ConceptoAcuerdoContext } from '@domains/concepto-acuerdo/contexts';
+import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/constants';
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 
 const ConceptoAcuerdoDataGrid = () => {
@@ -78,10 +80,10 @@ const ConceptoAcuerdoDataGrid = () => {
                 <td>{row.procedimientoP}</td>
                 <td>{row.procedimientoProductoSoftland}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}
@@ -94,4 +96,4 @@ const ConceptoAcuerdoDataGrid = () => {
   );
 };
 
-export default ConceptoAcuerdoDataGrid;
+export default withBreadcrumb(ConceptoAcuerdoDataGrid, ConceptoAcuerdoDataGridBreadcrumb);

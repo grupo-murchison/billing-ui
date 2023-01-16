@@ -7,7 +7,10 @@ const Button = ({ className, color, icon, outlined, children, ...props }: Button
     <button
       className={clsx(className, styles['button'], {
         [styles['button--icon']]: !!icon,
+        [styles['button--primary']]: color === 'primary' && !outlined,
         [styles['button--primary-outlined']]: color === 'primary' && outlined,
+        [styles['button--secondary']]: color === 'secondary' && !outlined,
+        [styles['button--secondary-outlined']]: color === 'secondary' && outlined,
       })}
       {...props}
     >

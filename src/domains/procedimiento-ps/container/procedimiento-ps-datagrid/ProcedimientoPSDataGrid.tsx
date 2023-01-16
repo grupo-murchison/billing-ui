@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { DataGrid, Portlet, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton, DataGridViewButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 import { ProcedimientoPSDataGridBreadcrumb } from '@domains/procedimiento-ps/constants';
@@ -57,7 +57,7 @@ const ProcedimientoPSDataGrid = () => {
   }, [mainDataGrid]);
 
   return (
-    <Portlet>
+    <>
       <Row>
         <Col md={12}>
           <DataGrid
@@ -69,13 +69,13 @@ const ProcedimientoPSDataGrid = () => {
                 <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
                 <td align='center'>
-                  <DataGridViewButton onClick={() => handleClickView(row.id)} />
+                  <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}
@@ -84,7 +84,7 @@ const ProcedimientoPSDataGrid = () => {
         </Col>
       </Row>
       <Outlet />
-    </Portlet>
+    </>
   );
 };
 

@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { DataGrid, Portlet, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGridEditButton, DataGridDeleteButton } from '@app/pro-components';
+import { DataGrid } from '@app/pro-components';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandDataGridBreadcrumb } from '@domains/producto-softland/constants';
@@ -52,7 +52,7 @@ const ProductoSoftlandDataGrid = () => {
   }, [mainDataGrid]);
 
   return (
-    <Portlet>
+    <>
       <Row>
         <Col md={12}>
           <DataGrid
@@ -75,10 +75,10 @@ const ProductoSoftlandDataGrid = () => {
                 <td>{row.activo ? 'SI' : 'NO'}</td>
                 <td>{DateLib.beautifyDBString(row.fechaCambioEstado)}</td>
                 <td align='center'>
-                  <DataGridEditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
-                  <DataGridDeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                 </td>
               </>
             )}
@@ -87,7 +87,7 @@ const ProductoSoftlandDataGrid = () => {
         </Col>
       </Row>
       <Outlet />
-    </Portlet>
+    </>
   );
 };
 
