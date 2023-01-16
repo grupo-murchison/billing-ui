@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Modal, Row, Col } from '@app/components';
+import { Button, Modal, Row, Col } from '@app/components';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandCreateSchema } from '@domains/producto-softland/container/producto-softland-create/schemas';
@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { DateLib } from '@libs';
 
-import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 const ProductoSoftlandCreate = () => {
@@ -118,9 +118,12 @@ const ProductoSoftlandCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12} textAlign='right'>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Producto
+          <Col md={12} className='d-flex jc-end'>
+            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color='primary' type='submit' disabled={isSubmitting}>
+              Crear
             </Button>
           </Col>
         </Row>

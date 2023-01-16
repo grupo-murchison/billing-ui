@@ -4,11 +4,13 @@ import { useNavigate, useParams, Outlet } from 'react-router-dom';
 
 import { Col, Row } from '@app/components';
 
+import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
 import { DataGrid } from '@app/pro-components';
 
 import { ConceptoAcuerdoContext } from '@domains/concepto-acuerdo/contexts';
+import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/constants';
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 
 const ConceptoAcuerdoDataGrid = () => {
@@ -94,4 +96,4 @@ const ConceptoAcuerdoDataGrid = () => {
   );
 };
 
-export default ConceptoAcuerdoDataGrid;
+export default withBreadcrumb(ConceptoAcuerdoDataGrid, ConceptoAcuerdoDataGridBreadcrumb);

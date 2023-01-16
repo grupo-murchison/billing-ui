@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Modal, Row, Col } from '@app/components';
+import { Button, Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 import { ProcedimientoPSCreateSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
@@ -13,7 +13,7 @@ import type { ProcedimientoPSCreateSchemaType } from '@domains/procedimiento-ps/
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 const ProcedimientoPSCreate = () => {
   const _navigate = useNavigate();
@@ -73,9 +73,12 @@ const ProcedimientoPSCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12} textAlign='right'>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Procedimiento
+          <Col md={12} className='d-flex jc-end'>
+            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color='primary' type='submit' disabled={isSubmitting}>
+              Crear
             </Button>
           </Col>
         </Row>

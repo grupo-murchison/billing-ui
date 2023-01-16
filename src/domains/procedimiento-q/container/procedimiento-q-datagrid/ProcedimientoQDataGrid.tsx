@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
-import { Portlet, Col, Row } from '@app/components';
+import { Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -50,7 +50,7 @@ const ProcedimientoQDataGrid = () => {
   }, [mainDataGrid]);
 
   return (
-    <Portlet>
+    <>
       <Row>
         <Col md={12}>
           <DataGrid
@@ -87,7 +87,7 @@ const ProcedimientoQDataGrid = () => {
         </Col>
       </Row>
       <Outlet />
-    </Portlet>
+    </>
   );
 };
 

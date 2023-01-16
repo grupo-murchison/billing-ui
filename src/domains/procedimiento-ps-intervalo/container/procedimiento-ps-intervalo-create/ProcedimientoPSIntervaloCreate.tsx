@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Modal, Row, Col } from '@app/components';
+import { Button, Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
 import { ProcedimientoPSIntervaloCreateSchema } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
@@ -15,7 +15,7 @@ import { ProductoSoftlandDropdown } from '@domains/producto-softland/container/p
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 const ProcedimientoPSIntervaloCreate = () => {
   const _navigate = useNavigate();
@@ -110,9 +110,12 @@ const ProcedimientoPSIntervaloCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12} textAlign='right'>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Crear Intervalo
+          <Col md={12} className='d-flex jc-end'>
+            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </Button>
+            <Button color='primary' type='submit' disabled={isSubmitting}>
+              Crear
             </Button>
           </Col>
         </Row>
