@@ -1,6 +1,6 @@
 import { ApiProvider } from '@providers';
 
-import type { DataGridRepositoryFuncParams } from '@app/components';
+import type { DataGridRepositoryFuncParams } from '@app/pro-components';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';

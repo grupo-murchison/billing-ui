@@ -15,12 +15,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { DateLib } from '@libs';
 
-import { TextField } from '@mui/material';
+import { Divider, TextField, FormGroup, FormControlLabel, Checkbox } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
 import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
+import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
+import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -66,7 +68,7 @@ const ContratoCreate = () => {
     <Modal isOpen onClose={handleClose} title='Nuevo Contrato'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
-          <Col md={6}>
+          <Col md={3}>
             <ModeloAcuerdoDropdown
               id='modeloAcuerdo'
               label='Modelo Acuerdo'
@@ -79,7 +81,7 @@ const ContratoCreate = () => {
               value={watch('modeloAcuerdoId')}
             />
           </Col>
-          <Col md={6}>
+          <Col md={3}>
             <TipoContratoDropdown
               id='tipoContratoId'
               label='Tipo Contrato'
@@ -92,9 +94,7 @@ const ContratoCreate = () => {
               value={watch('tipoContratoId')}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col md={12}>
+          <Col md={6}>
             <ClienteDropdown
               id='clienteId'
               label='Cliente'
@@ -109,7 +109,27 @@ const ContratoCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={12}>
+          <Col md={3}>
+            <DesktopDatePicker
+              label='Fecha Inicio Contrato'
+              inputFormat='dd-MM-yyyy'
+              value={watch('fechaInicioContrato')}
+              onChange={newValue => setValue('fechaInicioContrato', newValue)}
+              renderInput={params => <TextField {...params} />}
+              disabled={isSubmitting}
+            />
+          </Col>
+          <Col md={3}>
+            <DesktopDatePicker
+              label='Fecha Fin Contrato'
+              inputFormat='dd-MM-yyyy'
+              value={watch('fechaFinContrato')}
+              onChange={newValue => setValue('fechaFinContrato', newValue)}
+              renderInput={params => <TextField {...params} />}
+              disabled={isSubmitting}
+            />
+          </Col>
+          <Col md={6}>
             <TextField
               id='descripcion'
               label='Descripción'
@@ -120,26 +140,59 @@ const ContratoCreate = () => {
             />
           </Col>
         </Row>
+        <Divider>PLAN FACTURACIÓN</Divider>
         <Row>
           <Col md={6}>
-            <DesktopDatePicker
-              label='Fecha Inicio Contrato'
-              inputFormat='dd-MM-yyyy'
-              value={watch('fechaInicioContrato')}
-              onChange={newValue => setValue('fechaInicioContrato', newValue)}
-              renderInput={params => <TextField {...params} />}
+            <TipoPlanFacturacionDropdown
+              id='tipoPlanFacturacionId'
+              label='Tipo PLan Facturacion'
+              {...register('tipoPlanFacturacionId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.tipoPlanFacturacionId}
+              helperText={formErrors?.tipoPlanFacturacionId?.message}
               disabled={isSubmitting}
+              value={watch('tipoPlanFacturacionId')}
             />
           </Col>
           <Col md={6}>
-            <DesktopDatePicker
-              label='Fecha Fin Contrato'
-              inputFormat='dd-MM-yyyy'
-              value={watch('fechaFinContrato')}
-              onChange={newValue => setValue('fechaFinContrato', newValue)}
-              renderInput={params => <TextField {...params} />}
+            <ReglaFechaPeriodoDropdown
+              id='reglaFechaPeriodoId'
+              label='Regla Fecha Periodo'
+              {...register('reglaFechaPeriodoId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.reglaFechaPeriodoId}
+              helperText={formErrors?.reglaFechaPeriodoId?.message}
               disabled={isSubmitting}
+              value={watch('reglaFechaPeriodoId')}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6}>
+            <TextField
+              id='diaPeriodo'
+              label='Día Periodo'
+              error={!!formErrors.diaPeriodo}
+              helperText={formErrors?.diaPeriodo?.message}
+              disabled={isSubmitting}
+              type='number'
+              {...register('diaPeriodo', {
+                valueAsNumber: true,
+              })}
+            />
+          </Col>
+          <Col md={6}>
+            <FormGroup>
+              <FormControlLabel
+                control={
+                  <Checkbox checked={watch('pausado')} onChange={() => setValue('pausado', !watch('pausado'))} />
+                }
+                label='Pausado'
+                disabled={isSubmitting}
+              />
+            </FormGroup>
           </Col>
         </Row>
         <Row>
