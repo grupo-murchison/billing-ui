@@ -1,6 +1,6 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/components';
+import type { DataGridRepositoryFuncParams } from '@app/pro-components';
 
 import { RepositoryUtils } from '@app/utils';
 
