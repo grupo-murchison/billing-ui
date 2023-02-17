@@ -13,6 +13,7 @@ import type { ProcedimientoQEditSchemaType } from '@domains/procedimiento-q/cont
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { TextField } from '@mui/material';
+import { label } from '@domains/procedimiento-q/constants';
 
 const ProcedimientoQEdit = () => {
   const { procedimientoQId } = useParams();
@@ -48,7 +49,7 @@ const ProcedimientoQEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Q'>
+    <Modal isOpen onClose={handleClose} title={`Editar ${label.procedimientoQ}`}>
       <form noValidate autoComplete='off'>
         <Row>
           <Col md={6}>

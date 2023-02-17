@@ -140,7 +140,7 @@ const ConceptoAcuerdoEdit = () => {
           <Col md={6}>
             <ProcedimientoQDropdown
               id='procedimientoQ'
-              label='Procedimiento Q'
+              label='Procedimiento Cantidad'
               {...register('procedimientoQId', {
                 valueAsNumber: true,
               })}

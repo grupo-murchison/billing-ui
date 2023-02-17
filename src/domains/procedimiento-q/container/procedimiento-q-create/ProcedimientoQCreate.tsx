@@ -19,6 +19,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { TextField } from '@mui/material';
 
+import { label } from '@domains/procedimiento-q/constants';
+
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
 
@@ -53,7 +55,7 @@ const ProcedimientoQCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Q'>
+    <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
@@ -91,7 +93,7 @@ const ProcedimientoQCreate = () => {
           <Col md={6}>
             <TipoProcedimientoQDropdown
               id='tipoProcedimientoQ'
-              label='Tipo Procedimiento Q'
+              label={`Tipo ${label.procedimientoQ}`}
               {...register('tipoProcedimientoQId', {
                 valueAsNumber: true,
               })}

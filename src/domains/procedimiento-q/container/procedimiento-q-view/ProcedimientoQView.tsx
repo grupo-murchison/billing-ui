@@ -15,6 +15,7 @@ import { ProcedimientoQVariableWithinProcedimientoQRoutes } from '@domains/proce
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Divider, TextField } from '@mui/material';
+import { label } from '@domains/procedimiento-q/constants';
 
 const ProcedimientoQEdit = () => {
   const { procedimientoQId } = useParams();
@@ -50,7 +51,7 @@ const ProcedimientoQEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Q'>
+    <Modal isOpen onClose={handleClose} title={label.procedimientoQ}>
       <form noValidate autoComplete='off'>
         <Row>
           <Col md={6}>
