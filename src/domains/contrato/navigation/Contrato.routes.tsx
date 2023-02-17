@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { ContratoCreate } from '@domains/contrato/container/contrato-create';
+import { ContratoCreateV2 as ContratoCreate} from '@domains/contrato/container/contrato-create';
 import { ContratoEdit } from '@domains/contrato/container/contrato-edit';
 import { ContratoDataGrid } from '@domains/contrato/container/contrato-datagrid';
 

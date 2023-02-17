@@ -2,7 +2,21 @@
 
 ## Description
 
-## Dockerizar
+## ENVIRONMENT
+
+Hacer una copia de _.env.test_, renombrarla como `.env.local` y actualizar los valores según el entorno local.
+
+## Vite Modos
+
+```bash
+# Apunta a localhost ( .env.local )
+$ yarn run dev
+
+# Apunta a test ( .env.test )
+$ yarn run dev --mode test
+```
+
+### Dockerizar
 
 Ingresar por terminal al root del proyecto y ejecutar
 
@@ -18,13 +32,3 @@ $ docker start -i billingUI
 ```
 
 Abrir el navegador en http://localhost:8080/
-
-## Vite Modos
-
-```bash
-# Apunta a localhost
-$ yarn run dev
-
-# Apunta a test ( .env.test )
-$ yarn run dev --mode test
-```

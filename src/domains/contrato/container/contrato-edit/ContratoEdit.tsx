@@ -84,7 +84,7 @@ const ContratoEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Contrato'>
+    <Modal isOpen onClose={handleClose} title='Editar Contrato'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
@@ -166,7 +166,7 @@ const ContratoEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Contrato
+              Guardar
             </Button>
           </Col>
         </Row>
