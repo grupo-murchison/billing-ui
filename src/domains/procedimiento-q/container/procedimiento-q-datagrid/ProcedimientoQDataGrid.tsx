@@ -31,6 +31,13 @@ const ProcedimientoQDataGrid = () => {
     [_navigate],
   );
 
+  const handleClickEdit = useCallback(
+    (id: number) => {
+      _navigate(`/procedimiento-q/${id}/edit`);
+    },
+    [_navigate],
+  );
+
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
@@ -64,6 +71,7 @@ const ProcedimientoQDataGrid = () => {
               { label: 'PROC CUSTOM' },
               { label: '' },
               { label: '' },
+              { label: '' },
             ]}
             repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
             rowTemplate={row => (
@@ -76,6 +84,9 @@ const ProcedimientoQDataGrid = () => {
                 <td>{row.procedimientoCustom}</td>
                 <td align='center'>
                   <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
+                </td>
+                <td align='center'>
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
                 <td align='center'>
                   <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
