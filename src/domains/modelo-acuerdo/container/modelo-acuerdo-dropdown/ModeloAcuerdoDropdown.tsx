@@ -15,7 +15,7 @@ const ModeloAcuerdoDropdown = ({
   value,
   ...props
 }: ModeloAcuerdoDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+  const [items, setItems] = useState<DropdownSchemaType>([{value: '', label: ''}]);
 
   useEffect(() => {
     ModeloAcuerdoRepository.getAllModeloAcuerdoAsDropdown()

@@ -11,6 +11,12 @@ class TipoContratoService {
 
     return [response, error];
   };
+
+  static getById = async (id: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`api/v1/tipos-contrato/crud/${id}`));
+
+    return [response, error];
+  };
 }
 
 export { TipoContratoService };

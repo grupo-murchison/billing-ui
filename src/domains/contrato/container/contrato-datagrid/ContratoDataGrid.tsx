@@ -58,12 +58,13 @@ const ContratoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'DESCRIPCIÓN' },
-              { label: 'TIPO CONTRATO' },
-              { label: 'MODELO ACUERDO' },
-              { label: 'CLIENTE' },
-              { label: 'FECHA INICIO' },
-              { label: 'FECHA FIN' },
+              { label: 'Nº Contrato' },
+              { label: 'Descripción' },
+              { label: 'Tipo Contrato' },
+              { label: 'Modelo Acuerdo' },
+              { label: 'Cliente' },
+              { label: 'Fecha Inicio' },
+              { label: 'Fecha Fin' },
               { label: '' },
               { label: '' },
             ]}
@@ -71,6 +72,7 @@ const ContratoDataGrid = () => {
             repositoryFunc={ContratoRepository.getAllContratoPaginated}
             rowTemplate={row => (
               <>
+                <td>{row.nroContrato}</td>
                 <td>{row.descripcion}</td>
                 <td>{row.tipoContrato}</td>
                 <td>{row.modeloAcuerdo}</td>

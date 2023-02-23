@@ -15,7 +15,7 @@ const ReglaFechaPeriodoDropdown = ({
   value,
   ...props
 }: ReglaFechaPeriodoDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+  const [items, setItems] = useState<DropdownSchemaType>([{ value: '', label: '' }]);
 
   useEffect(() => {
     ReglaFechaPeriodoRepository.getAllReglasFechaPeriodoAsDropdown()

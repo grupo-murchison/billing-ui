@@ -14,6 +14,12 @@ class ClienteRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static getClienteById = async (id: string) => {
+    const response$ = from(ClienteService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default ClienteRepository;

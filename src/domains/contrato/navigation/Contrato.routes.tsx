@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { ContratoCreateV2 as ContratoCreate} from '@domains/contrato/container/contrato-create';
+import { ContratoCreateV2 as ContratoCreate } from '@domains/contrato/container/contrato-create';
 import { ContratoEdit } from '@domains/contrato/container/contrato-edit';
 import { ContratoDataGrid } from '@domains/contrato/container/contrato-datagrid';
 
@@ -17,9 +17,9 @@ const ContratoRoutes = () => {
           </ContratoProvider>
         }
       >
-        <Route path='/contrato/create' element={<ContratoCreate />} />
         <Route path='/contrato/:contratoId/edit' element={<ContratoEdit />} />
       </Route>
+      <Route path='/contrato/create' element={<ContratoCreate />} />
       <Route path='/contrato/*' element={<Navigate to='/' replace />} />
     </Routes>
   );

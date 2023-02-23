@@ -13,7 +13,6 @@ export const ContratoCreateSchema = z.object({
   fechaInicioContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(),
   fechaFinContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(),
   diaPeriodo: z.number({ required_error: 'El campo es requerido.' }),
-  pausado: z.boolean({ required_error: 'El campo es requerido.' }),
 });
 
 export type ContratoCreateSchemaType = z.infer<typeof ContratoCreateSchema>;

@@ -8,6 +8,7 @@ export {
   SettingsOutlined as SettingsOutlinedIcon,
   DeleteOutline as DeleteOutlineIcon,
   EditOutlined as EditOutlinedIcon,
+  ExpandMore as ExpandMoreIcon,
   Home as HomeIcon,
   AddCircleOutline as AddCircleOutlineIcon,
   Visibility as ViewIcon,

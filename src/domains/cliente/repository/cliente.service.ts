@@ -11,6 +11,14 @@ class ClienteService {
 
     return [response, error];
   };
+
+  static getById = async (id: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`api/v1/clientes/crud/${id}`),
+    );
+
+    return [response, error];
+  };
 }
 
 export { ClienteService };

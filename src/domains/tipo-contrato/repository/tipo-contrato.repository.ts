@@ -14,6 +14,12 @@ class TipoContratoRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static getTipoContratoById = async (id: string) => {
+    const response$ = from(TipoContratoService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default TipoContratoRepository;

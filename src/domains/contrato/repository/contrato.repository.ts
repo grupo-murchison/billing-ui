@@ -24,6 +24,8 @@ class ContratoRepository {
   };
 
   static createContrato = async (Contrato: AnyValue) => {
+    console.log('Contrato :',Contrato);
+    
     const response$ = from(ContratoService.post(Contrato)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
