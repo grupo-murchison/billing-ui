@@ -27,6 +27,9 @@ import {
   Accordion,
   AccordionSummary,
   AccordionDetails,
+  Alert,
+  AlertTitle,
+  Collapse,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
@@ -118,11 +121,181 @@ const ContratoCreate = () => {
     reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
   }, [watch('reglaFechaPeriodoId')]);
 
+  const formHeader = (
+    <CardContent>
+      <Row>
+        <Col md={6}>
+          <ClienteDropdown
+            id='clienteId'
+            label='Cliente'
+            {...register('clienteId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.clienteId}
+            helperText={formErrors?.clienteId?.message}
+            disabled={isSubmitting}
+            value={watch('clienteId')}
+          />
+        </Col>
+        <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col>
+        {/* <Col md={6}>
+          <ClienteDropdown
+            id='destinatarioId'
+            label='Destinatario'
+            // {...register('destinatarioId', {
+            //   valueAsNumber: true,
+            // })}
+            // error={!!formErrors.destinatarioId}
+            // helperText={formErrors?.destinatarioId?.message}
+            // disabled={isSubmitting}
+            // value={watch('destinatarioId')}
+          />
+        </Col> */}
+        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
+      </Row>
+      <Row>
+        <Col md={6}>
+          <ModeloAcuerdoDropdown
+            id='modeloAcuerdoId'
+            label='Modelo Acuerdo'
+            {...register('modeloAcuerdoId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.modeloAcuerdoId}
+            helperText={formErrors?.modeloAcuerdoId?.message}
+            disabled={isSubmitting}
+            value={watch('modeloAcuerdoId')}
+          />
+        </Col>
+        <Col md={6}>
+          <TipoContratoDropdown
+            id='tipoContratoId'
+            label='Tipo Contrato'
+            {...register('tipoContratoId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.tipoContratoId}
+            helperText={formErrors?.tipoContratoId?.message}
+            disabled={isSubmitting}
+            value={watch('tipoContratoId')}
+          />
+        </Col>
+      </Row>
+      <Row>
+        <Col md={6}>{modeloAcuerdo && <JsonViewerProvisorio object={modeloAcuerdo} label='Modelo Acuerdo' />}</Col>
+        <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col>
+      </Row>
+    </CardContent>
+  );
+
+  const datosContractuales = (
+    <CardContent>
+      <Row>
+        <Col md={12}>
+          <TextField
+            id='descripcion'
+            label='Descripción'
+            error={!!formErrors.descripcion}
+            helperText={formErrors?.descripcion?.message}
+            disabled={isSubmitting}
+            multiline
+            // variant='standard'
+            {...register('descripcion')}
+          />
+        </Col>
+        <Col md={4}>
+          <DesktopDatePicker
+            label='Fecha Inicio Contrato'
+            inputFormat='dd-MM-yyyy'
+            value={watch('fechaInicioContrato')}
+            onChange={newValue => setValue('fechaInicioContrato', newValue)}
+            renderInput={params => <TextField {...params} />}
+            disabled={isSubmitting}
+          />
+        </Col>
+        <Col md={4}>
+          <DesktopDatePicker
+            label='Fecha Fin Contrato'
+            inputFormat='dd-MM-yyyy'
+            value={watch('fechaFinContrato')}
+            onChange={newValue => setValue('fechaFinContrato', newValue)}
+            renderInput={params => <TextField {...params} />}
+            disabled={isSubmitting}
+          />
+        </Col>
+      </Row>
+    </CardContent>
+  );
+
+  const planFacturacion = (
+    <CardContent>
+      <Row>
+        <Col md={4}>
+          <TipoPlanFacturacionDropdown
+            id='tipoPlanFacturacionId'
+            label='Tipo Plan Facturación'
+            {...register('tipoPlanFacturacionId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.tipoPlanFacturacionId}
+            helperText={formErrors?.tipoPlanFacturacionId?.message}
+            disabled={isSubmitting}
+            value={watch('tipoPlanFacturacionId')}
+          />
+        </Col>
+        <Col md={4}>
+          <ReglaFechaPeriodoDropdown
+            id='reglaFechaPeriodoId'
+            label='Regla Fecha Periodo'
+            {...register('reglaFechaPeriodoId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.reglaFechaPeriodoId}
+            helperText={formErrors?.reglaFechaPeriodoId?.message}
+            disabled={isSubmitting}
+            value={watch('reglaFechaPeriodoId')}
+          />
+        </Col>
+
+        <Col md={4}>
+          {/* // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select */}
+          <TextField
+            id='diaPeriodo'
+            label='Día Periodo'
+            error={!!formErrors.diaPeriodo}
+            helperText={formErrors?.diaPeriodo?.message}
+            disabled={isSubmitting || !enableDiaPeriodo}
+            type='number'
+            {...register('diaPeriodo', {
+              valueAsNumber: true,
+            })}
+          />
+        </Col>
+      </Row>
+    </CardContent>
+  );
+
+  const actions = (
+    <CardContent>
+      <Row>
+        <Col md={12} className='d-flex jc-end'>
+          <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+            Cancelar
+          </Button>
+          <Button color='primary' type='submit' disabled={isSubmitting}>
+            Crear
+          </Button>
+        </Col>
+      </Row>
+    </CardContent>
+  );
+
   return (
     <>
+      <CustomAlert />
       <Box sx={{ my: '2.5rem' }} />
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
-        <Card>
+        <Card sx={{ p: 3 }}>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>
@@ -130,161 +303,17 @@ const ContratoCreate = () => {
               </Typography>
             }
           />
+          {formHeader}
 
-          <CardContent>
-            <Row>
-              <Col md={6}>
-                <ClienteDropdown
-                  id='clienteId'
-                  label='Cliente'
-                  {...register('clienteId', {
-                    valueAsNumber: true,
-                  })}
-                  error={!!formErrors.clienteId}
-                  helperText={formErrors?.clienteId?.message}
-                  disabled={isSubmitting}
-                  value={watch('clienteId')}
-                />
-              </Col>
-              <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <ModeloAcuerdoDropdown
-                  id='modeloAcuerdoId'
-                  label='Modelo Acuerdo'
-                  {...register('modeloAcuerdoId', {
-                    valueAsNumber: true,
-                  })}
-                  error={!!formErrors.modeloAcuerdoId}
-                  helperText={formErrors?.modeloAcuerdoId?.message}
-                  disabled={isSubmitting}
-                  value={watch('modeloAcuerdoId')}
-                />
-              </Col>
-              <Col md={6}>
-                {modeloAcuerdo && <JsonViewerProvisorio object={modeloAcuerdo} label='Modelo Acuerdo' />}
-              </Col>
-            </Row>
-            <Row>
-              <Col md={6}>
-                <TipoContratoDropdown
-                  id='tipoContratoId'
-                  label='Tipo Contrato'
-                  {...register('tipoContratoId', {
-                    valueAsNumber: true,
-                  })}
-                  error={!!formErrors.tipoContratoId}
-                  helperText={formErrors?.tipoContratoId?.message}
-                  disabled={isSubmitting}
-                  value={watch('tipoContratoId')}
-                />
-              </Col>
-              <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col>
-            </Row>
-          </CardContent>
-        </Card>
+          <DivisorProvisorio label='Datos Contractuales' />
 
-        <DivisorProvisorio label='Datos Contractuales' />
+          {datosContractuales}
 
-        <Card>
-          <CardContent>
-            <Row>
-              <Col md={3}>
-                <DesktopDatePicker
-                  label='Fecha Inicio Contrato'
-                  inputFormat='dd-MM-yyyy'
-                  value={watch('fechaInicioContrato')}
-                  onChange={newValue => setValue('fechaInicioContrato', newValue)}
-                  renderInput={params => <TextField {...params} />}
-                  disabled={isSubmitting}
-                />
-              </Col>
-              <Col md={3}>
-                <DesktopDatePicker
-                  label='Fecha Fin Contrato'
-                  inputFormat='dd-MM-yyyy'
-                  value={watch('fechaFinContrato')}
-                  onChange={newValue => setValue('fechaFinContrato', newValue)}
-                  renderInput={params => <TextField {...params} />}
-                  disabled={isSubmitting}
-                />
-              </Col>
-              <Col md={6}>
-                <TextField
-                  id='descripcion'
-                  label='Descripción'
-                  error={!!formErrors.descripcion}
-                  helperText={formErrors?.descripcion?.message}
-                  disabled={isSubmitting}
-                  multiline
-                  // variant='standard'
-                  {...register('descripcion')}
-                />
-              </Col>
-            </Row>
-          </CardContent>
-        </Card>
+          <DivisorProvisorio label='Plan Facturación' />
 
-        <DivisorProvisorio label='Plan Facturación' />
+          {planFacturacion}
 
-        <Card>
-          <CardContent>
-            <Row>
-              <Col md={6}>
-                <TipoPlanFacturacionDropdown
-                  id='tipoPlanFacturacionId'
-                  label='Tipo Plan Facturación'
-                  {...register('tipoPlanFacturacionId', {
-                    valueAsNumber: true,
-                  })}
-                  error={!!formErrors.tipoPlanFacturacionId}
-                  helperText={formErrors?.tipoPlanFacturacionId?.message}
-                  disabled={isSubmitting}
-                  value={watch('tipoPlanFacturacionId')}
-                />
-              </Col>
-              <Col md={6}>
-                <ReglaFechaPeriodoDropdown
-                  id='reglaFechaPeriodoId'
-                  label='Regla Fecha Periodo'
-                  {...register('reglaFechaPeriodoId', {
-                    valueAsNumber: true,
-                  })}
-                  error={!!formErrors.reglaFechaPeriodoId}
-                  helperText={formErrors?.reglaFechaPeriodoId?.message}
-                  disabled={isSubmitting}
-                  value={watch('reglaFechaPeriodoId')}
-                />
-              </Col>
-            </Row>
-            <Row>
-              {/* // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select */}
-              <Col md={6}>
-                <TextField
-                  id='diaPeriodo'
-                  label='Día Periodo'
-                  error={!!formErrors.diaPeriodo}
-                  helperText={formErrors?.diaPeriodo?.message}
-                  disabled={isSubmitting || !enableDiaPeriodo}
-                  type='number'
-                  {...register('diaPeriodo', {
-                    valueAsNumber: true,
-                  })}
-                />
-              </Col>
-            </Row>
-            <Row>
-              <Col md={12} className='d-flex jc-end'>
-                <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
-                  Cancelar
-                </Button>
-                <Button color='primary' type='submit' disabled={isSubmitting}>
-                  Crear
-                </Button>
-              </Col>
-            </Row>
-          </CardContent>
+          {actions}
         </Card>
       </form>
       {/* </Paper> */}
@@ -293,11 +322,13 @@ const ContratoCreate = () => {
 };
 
 // TODO resolver mejor el Breadcrumb, buscar una solucion dinámica o mas global
-const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [{ label: 'Contrato', path: '/contrato' }, { label: 'Nuevo Contrato', path: '/contrato/create' }];
+const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Contrato', path: '/contrato' },
+  { label: 'Nuevo Contrato', path: '/contrato/create' },
+];
 
 // export default ContratoCreate;
 export default withBreadcrumb(ContratoCreate, ContratoDataGridBreadcrumb);
-
 
 const DivisorProvisorio = ({ label, chip }: { label: string; chip?: boolean }) => (
   <Divider sx={{ my: '2rem' }} textAlign='left'>
@@ -317,8 +348,8 @@ const JsonViewerProvisorio = ({ object, label }: { object: JSONObject; label?: s
           <AccordionDetails>
             <Box sx={{ mx: '2.5rem' }}>
               <ul>
-                {keys.map((key: string) => (
-                  <li key={key}>{`${key}: ${object[key]}`}</li>
+                {keys.map((key: string, index: number) => (
+                  <li key={index}>{`${key}: ${object[key]}`}</li>
                 ))}
               </ul>
             </Box>
@@ -334,3 +365,23 @@ type JSONValue = string | number | boolean | JSONObject;
 interface JSONObject {
   [key: string]: JSONValue;
 }
+
+const CustomAlert = () => {
+  // const openAlert = useRef(true);
+  const [openAlert, setOpenAlert] = useState<boolean>(true);
+  return (
+    <Collapse in={openAlert}>
+      <Alert
+        onClose={() => {
+          setOpenAlert(false);
+          // openAlert.current = false;
+        }}
+        severity='warning'
+        variant='filled'
+      >
+        <AlertTitle>Atención</AlertTitle>
+        Esta sección aún está en etapa de desarrollo!
+      </Alert>
+    </Collapse>
+  );
+};

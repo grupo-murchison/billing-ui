@@ -14,7 +14,6 @@ import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
 import { ContratoContext } from '@domains/contrato/contexts';
 
 import { DateLib } from '@libs';
-import { type } from 'os';
 
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();
