@@ -257,6 +257,7 @@ const ContratoCreate = () => {
               </Col>
             </Row>
             <Row>
+              {/* // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select */}
               <Col md={6}>
                 <TextField
                   id='diaPeriodo'
@@ -307,9 +308,13 @@ const JsonViewerProvisorio = ({ object, label }: { object: JSONObject; label?: s
             <Typography>{'Datos Crudos' + `${label ? ' - ' + label : ''}`}</Typography>
           </AccordionSummary>
           <AccordionDetails>
-            {keys.map((key: string) => (
-              <div key={key}>{`${key}: ${object[key]}`}</div>
-            ))}
+            <Box sx={{ mx: '2.5rem' }}>
+              <ul>
+                {keys.map((key: string) => (
+                  <li key={key}>{`${key}: ${object[key]}`}</li>
+                ))}
+              </ul>
+            </Box>
           </AccordionDetails>
         </Accordion>
       )}
