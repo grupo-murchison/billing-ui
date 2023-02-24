@@ -40,6 +40,8 @@ import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
 import { ExpandMoreIcon } from '@assets/icons';
 import { ClienteRepository } from '@domains/cliente/repository';
+import { withBreadcrumb } from '@app/hocs';
+import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -290,7 +292,12 @@ const ContratoCreate = () => {
   );
 };
 
-export default ContratoCreate;
+// TODO resolver mejor el Breadcrumb, buscar una solucion dinámica o mas global
+const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [{ label: 'Contrato', path: '/contrato' }, { label: 'Nuevo Contrato', path: '/contrato/create' }];
+
+// export default ContratoCreate;
+export default withBreadcrumb(ContratoCreate, ContratoDataGridBreadcrumb);
+
 
 const DivisorProvisorio = ({ label, chip }: { label: string; chip?: boolean }) => (
   <Divider sx={{ my: '2rem' }} textAlign='left'>

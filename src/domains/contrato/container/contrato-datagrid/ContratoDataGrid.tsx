@@ -14,6 +14,7 @@ import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
 import { ContratoContext } from '@domains/contrato/contexts';
 
 import { DateLib } from '@libs';
+import { type } from 'os';
 
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();
@@ -72,13 +73,15 @@ const ContratoDataGrid = () => {
             repositoryFunc={ContratoRepository.getAllContratoPaginated}
             rowTemplate={row => (
               <>
-                <td>{row.nroContrato}</td>
-                <td>{row.descripcion}</td>
-                <td>{row.tipoContrato}</td>
-                <td>{row.modeloAcuerdo}</td>
-                <td>{row.cliente}</td>
-                <td>{DateLib.beautifyDBString(row.fechaInicioContrato)}</td>
-                <td>{DateLib.beautifyDBString(row.fechaFinContrato)}</td>
+                {/* // TODO acá iria una funcion con row.map() que aplique rowSanitizer() a cada column y deberia recibir además un archivo de configuracion para ordenar las columnas*/}
+                <td>{rowSanitizer(row.nroContrato)}</td>
+                <td>{rowSanitizer(row.descripcion)}</td>
+                <td>{rowSanitizer(row.tipoContrato)}</td>
+                <td>{rowSanitizer(row.modeloAcuerdo)}</td>
+                <td>{rowSanitizer(row.cliente)}</td>
+                <td>{rowSanitizer(row.fechaFinContrato && DateLib.beautifyDBString(row.fechaFinContrato))}</td>
+                <td>{row.fechaInicioContrato ? DateLib.beautifyDBString(row.fechaInicioContrato) : ' '}</td>
+
                 <td align='center'>
                   <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                 </td>
@@ -96,3 +99,11 @@ const ContratoDataGrid = () => {
 };
 
 export default withBreadcrumb(ContratoDataGrid, ContratoDataGridBreadcrumb);
+
+type TFn = (value: any) => any;
+type TTowSanitizer = string | number | boolean | null | undefined | TFn;
+
+//* idea prototipo, se puede mejorar
+const rowSanitizer = (value: TTowSanitizer): string | any => {
+  return value === null || value === undefined ? ' ' : value;
+};
