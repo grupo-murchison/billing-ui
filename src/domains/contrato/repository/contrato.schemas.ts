@@ -5,14 +5,12 @@ import { ZodUtils } from '@app/utils';
 export const getAllContratoPaginatedSchema = ZodUtils.withPagination(
   z.object({
     id: z.number(),
-    nroContrato: z.number().nullish(),
+    nroContrato: z.string().nullish(),
     tipoContrato: z.string().nullish(),
     modeloAcuerdo: z.string().nullish(),
     descripcion: z.string().nullish(),
     cliente: z.string().nullish(),
-    // fechaInicioContrato: z.string(),
-    // fechaFinContrato: z.string(),
-    fechaInicioContrato: z.string().nullish(), // TODO ver con Sorro si admite null o undefined
+    fechaInicioContrato: z.string().nullish(),
     fechaFinContrato: z.string().nullish(),
   }),
 );
