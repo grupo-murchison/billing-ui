@@ -1,6 +1,10 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { TextField, Box, Typography, Card, CardContent, CardHeader } from '@mui/material';
+import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Button, Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
@@ -12,12 +16,7 @@ import { ContratoCreateSchema } from '@domains/contrato/container/contrato-creat
 import { ContratoContext } from '@domains/contrato/contexts';
 import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-create/schemas';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { DateLib } from '@libs';
-
-import { TextField, Box, Typography, Card, CardContent, CardHeader } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
@@ -29,7 +28,8 @@ import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
 import { ClienteRepository } from '@domains/cliente/repository';
 import { withBreadcrumb } from '@app/hocs';
-import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+
+import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -306,11 +306,4 @@ const ContratoCreate = () => {
   );
 };
 
-// TODO resolver mejor el Breadcrumb, buscar una solucion dinámica o mas global
-const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Contrato', path: '/contrato' },
-  { label: 'Nuevo Contrato', path: '/contrato/create' },
-];
-
-// export default ContratoCreate;
-export default withBreadcrumb(ContratoCreate, ContratoDataGridBreadcrumb);
+export default withBreadcrumb(ContratoCreate, ContratoCreateBreadcrumb);
