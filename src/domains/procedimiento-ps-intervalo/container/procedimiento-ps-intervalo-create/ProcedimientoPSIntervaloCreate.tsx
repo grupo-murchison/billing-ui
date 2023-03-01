@@ -51,7 +51,7 @@ const ProcedimientoPSIntervaloCreate = () => {
   }, [_navigate, procedimientoPSId]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento PS'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Producto Softland'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>

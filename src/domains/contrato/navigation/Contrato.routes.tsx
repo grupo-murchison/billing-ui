@@ -16,9 +16,8 @@ const ContratoRoutes = () => {
             <ContratoDataGrid />
           </ContratoProvider>
         }
-      >
-        <Route path='/contrato/:contratoId/edit' element={<ContratoEdit />} />
-      </Route>
+      ></Route>
+      <Route path='/contrato/:contratoId/edit' element={<ContratoEdit />} />
       <Route path='/contrato/create' element={<ContratoCreate />} />
       <Route path='/contrato/*' element={<Navigate to='/' replace />} />
     </Routes>

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Modal, Row, Col } from '@app/components';
+import {  Row, Col } from '@app/components';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoEditSchema } from '@domains/contrato/container/contrato-edit/schemas';
@@ -84,7 +84,7 @@ const ContratoEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Contrato'>
+    <>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
@@ -171,7 +171,7 @@ const ContratoEdit = () => {
           </Col>
         </Row>
       </form>
-    </Modal>
+    </>
   );
 };
 

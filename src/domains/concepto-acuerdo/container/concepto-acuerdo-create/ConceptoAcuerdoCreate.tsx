@@ -98,7 +98,7 @@ const ConceptoAcuerdoCreate = () => {
           <Col md={6}>
             <ProcedimientoPSDropdown
               id='procedimientoProductoSoftland'
-              label='Procedimiento PS'
+              label='Procedimiento Producto Softland'
               {...register('procedimientoProductoSoftlandId', {
                 valueAsNumber: true,
               })}
@@ -113,7 +113,7 @@ const ConceptoAcuerdoCreate = () => {
           <Col md={6}>
             <ProcedimientoPDropdown
               id='procedimientoP'
-              label='Procedimiento P'
+              label='Procedimiento Precio'
               {...register('procedimientoPId', {
                 valueAsNumber: true,
               })}

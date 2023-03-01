@@ -1,10 +1,11 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-
+import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
-import { useNavigate } from 'react-router-dom';
-
 import { Button, Row, Col } from '@app/components';
+import { AlertInProgress } from '@app/components/Alerts';
+import { DivisorProvisorio } from '@app/components/Divider';
+import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoCreateSchema } from '@domains/contrato/container/contrato-create/schemas';
@@ -15,22 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { DateLib } from '@libs';
 
-import {
-  Divider,
-  TextField,
-  Chip,
-  Box,
-  Typography,
-  Card,
-  CardContent,
-  CardHeader,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Alert,
-  AlertTitle,
-  Collapse,
-} from '@mui/material';
+import { TextField, Box, Typography, Card, CardContent, CardHeader } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
@@ -41,7 +27,6 @@ import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/containe
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
-import { ExpandMoreIcon } from '@assets/icons';
 import { ClienteRepository } from '@domains/cliente/repository';
 import { withBreadcrumb } from '@app/hocs';
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
@@ -292,7 +277,7 @@ const ContratoCreate = () => {
 
   return (
     <>
-      <CustomAlert />
+      <AlertInProgress />
       <Box sx={{ my: '2.5rem' }} />
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Card sx={{ p: 3 }}>
@@ -329,59 +314,3 @@ const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [
 
 // export default ContratoCreate;
 export default withBreadcrumb(ContratoCreate, ContratoDataGridBreadcrumb);
-
-const DivisorProvisorio = ({ label, chip }: { label: string; chip?: boolean }) => (
-  <Divider sx={{ my: '2rem' }} textAlign='left'>
-    {chip ? <Chip label={label} /> : <>{label}</>}
-  </Divider>
-);
-
-const JsonViewerProvisorio = ({ object, label }: { object: JSONObject; label?: string }) => {
-  const keys = Object.keys(object);
-  return (
-    <>
-      {keys.length > 0 && (
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-            <Typography>{'Datos Crudos' + `${label ? ' - ' + label : ''}`}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={{ mx: '2.5rem' }}>
-              <ul>
-                {keys.map((key: string, index: number) => (
-                  <li key={index}>{`${key}: ${object[key]}`}</li>
-                ))}
-              </ul>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </>
-  );
-};
-
-type JSONValue = string | number | boolean | JSONObject;
-
-interface JSONObject {
-  [key: string]: JSONValue;
-}
-
-const CustomAlert = () => {
-  // const openAlert = useRef(true);
-  const [openAlert, setOpenAlert] = useState<boolean>(true);
-  return (
-    <Collapse in={openAlert}>
-      <Alert
-        onClose={() => {
-          setOpenAlert(false);
-          // openAlert.current = false;
-        }}
-        severity='warning'
-        variant='filled'
-      >
-        <AlertTitle>Atención</AlertTitle>
-        Esta sección aún está en etapa de desarrollo!
-      </Alert>
-    </Collapse>
-  );
-};
