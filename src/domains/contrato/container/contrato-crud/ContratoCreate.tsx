@@ -12,9 +12,9 @@ import { DivisorProvisorio } from '@app/components/Divider';
 import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
-import { ContratoCreateSchema } from '@domains/contrato/container/contrato-create/schemas';
 import { ContratoContext } from '@domains/contrato/contexts';
-import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-create/schemas';
+import { ContratoCreateSchema } from '@domains/contrato/container/contrato-crud/schemas';
+import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
 
 import { DateLib } from '@libs';
 

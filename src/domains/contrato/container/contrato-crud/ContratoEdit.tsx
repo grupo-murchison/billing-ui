@@ -10,14 +10,14 @@ import { Row, Col, Button } from '@app/components';
 import { DivisorProvisorio } from '@app/components/Divider';
 
 import { ContratoRepository } from '@domains/contrato/repository';
-import { ContratoEditSchema } from '@domains/contrato/container/contrato-edit/schemas';
+import { ContratoEditSchema } from '@domains/contrato/container/contrato-crud/schemas';
 import { ContratoContext } from '@domains/contrato/contexts';
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
 import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
 import { ContratoEditBreadcrumb } from '@domains/contrato/constants';
 
-import type { ContratoEditSchemaType } from '@domains/contrato/container/contrato-edit/schemas';
+import type { ContratoEditSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
 
 import { withBreadcrumb } from '@app/hocs';
 
