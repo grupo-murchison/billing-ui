@@ -6,7 +6,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { TextField, Box, Typography, Card, CardContent, CardHeader } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
-import { Button, Row, Col } from '@app/components';
+import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
 import { DivisorProvisorio } from '@app/components/Divider';
 import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
@@ -30,6 +30,8 @@ import { ClienteRepository } from '@domains/cliente/repository';
 import { withBreadcrumb } from '@app/hocs';
 
 import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
+
+import { CardCrudActions } from './views';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -260,21 +262,6 @@ const ContratoCreate = () => {
     </CardContent>
   );
 
-  const actions = (
-    <CardContent>
-      <Row>
-        <Col md={12} className='d-flex jc-end'>
-          <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button color='primary' type='submit' disabled={isSubmitting}>
-            Crear
-          </Button>
-        </Col>
-      </Row>
-    </CardContent>
-  );
-
   return (
     <>
       <AlertInProgress />
@@ -298,7 +285,7 @@ const ContratoCreate = () => {
 
           {planFacturacion}
 
-          {actions}
+          <CardCrudActions labelSubmitButton='Crear' isSubmitting={isSubmitting} handleClose={handleClose} />
         </Card>
       </form>
       {/* </Paper> */}

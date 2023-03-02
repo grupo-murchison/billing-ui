@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Card, CardContent, CardHeader, TextField, Typography } from '@mui/material';
+import { Card, CardHeader, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col, Button } from '@app/components';
@@ -22,6 +22,7 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
+import { CardCrudActions } from './views';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -83,22 +84,6 @@ const ContratoEdit = () => {
   if (!isDataFetched) {
     return <></>;
   }
-
-  const actions = (
-    <CardContent>
-      <Row>
-        <Col md={12} className='d-flex jc-end'>
-          <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
-            Cancelar
-          </Button>
-
-          <Button color='primary' type='submit' disabled={isSubmitting}>
-            Guardar
-          </Button>
-        </Col>
-      </Row>
-    </CardContent>
-  );
 
   return (
     <>
@@ -194,7 +179,7 @@ const ContratoEdit = () => {
 
           <DivisorProvisorio label='Plan Facturación' />
 
-          {actions}
+          <CardCrudActions labelSubmitButton='Guardar' isSubmitting={isSubmitting} handleClose={handleClose} />
         </Card>
       </form>
     </>
