@@ -20,6 +20,14 @@ class ContratoService {
     return [response, error];
   };
 
+  static getByIdAndContratoVariables = async (id: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`api/v1/contratos/${id}/contratoVariables`),
+    );
+
+    return [response, error];
+  };
+
   static post = async (contrato: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.post<AnyValue>('api/v1/contratos/crud', contrato),

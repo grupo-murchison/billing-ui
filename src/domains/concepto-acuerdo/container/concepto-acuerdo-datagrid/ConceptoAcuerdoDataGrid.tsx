@@ -64,9 +64,9 @@ const ConceptoAcuerdoDataGrid = () => {
               { label: 'MODELO ACUERDO' },
               { label: 'DESCRIPCIÓN' },
               { label: 'TIPO SERVICIO' },
-              { label: 'PROC Q' },
-              { label: 'PROC P' },
-              { label: 'PROC PS' },
+              { label: 'Pocedimiento Cantidad' },
+              { label: 'Pocedimiento Precio' },
+              { label: 'Pocedimiento Producto Softland' },
               { label: '' },
               { label: '' },
             ]}

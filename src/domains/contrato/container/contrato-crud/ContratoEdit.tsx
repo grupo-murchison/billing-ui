@@ -1,85 +1,75 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-
 import { useForm } from 'react-hook-form';
-
-import { useNavigate } from 'react-router-dom';
-
-import { Button, Row, Col } from '@app/components';
-
-import { ContratoRepository } from '@domains/contrato/repository';
-import { ContratoCreateSchema } from '@domains/contrato/container/contrato-create/schemas';
-import { ContratoContext } from '@domains/contrato/contexts';
-import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-create/schemas';
-
+import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { DateLib } from '@libs';
-
 import {
-  Divider,
-  TextField,
-  Chip,
-  Box,
-  Typography,
   Card,
   CardContent,
   CardHeader,
-  Accordion,
-  AccordionSummary,
-  AccordionDetails,
-  Alert,
-  AlertTitle,
-  Collapse,
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  TextField,
+  Typography,
 } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
+import { Row, Col } from '@app/components';
+import { DivisorProvisorio } from '@app/components/Divider';
+// import { JsonViewerProvisorio } from '@app/components/JsonTree';
+
+import { ContratoRepository } from '@domains/contrato/repository';
+import { ContratoEditSchema } from '@domains/contrato/container/contrato-crud/schemas';
+import { ContratoContext } from '@domains/contrato/contexts';
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
 import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
+import { ContratoEditBreadcrumb } from '@domains/contrato/constants';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
 
-import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
-import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
-import { ExpandMoreIcon } from '@assets/icons';
-import { ClienteRepository } from '@domains/cliente/repository';
-import { withBreadcrumb } from '@app/hocs';
-import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+import type { ContratoEditSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
 
-const ContratoCreate = () => {
+import { withBreadcrumb } from '@app/hocs';
+
+import { DateLib } from '@libs';
+import { CardCrudActions } from './views';
+
+const ContratoEdit = () => {
+  const { contratoId } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ContratoContext);
 
-  const [modeloAcuerdo, setModeloAcuerdo] = useState<JSONObject>({}); // TODO tipar correctamente
-  const [tipoContrato, setTipoContrato] = useState<JSONObject>({}); // TODO tipar correctamente
-  const [cliente, setCliente] = useState<JSONObject>({}); // TODO tipar correctamente
+  const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
 
   const {
     register,
+    reset,
     handleSubmit: rhfHandleSubmit,
     watch,
     setValue,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<ContratoCreateSchemaType>({
+  } = useForm<ContratoEditSchemaType>({
     defaultValues: {
       descripcion: '',
       fechaInicioContrato: null,
       fechaFinContrato: null,
     },
-    resolver: zodResolver(ContratoCreateSchema),
+    resolver: zodResolver(ContratoEditSchema),
   });
 
   const handleSubmit = useCallback(
-    async (data: ContratoCreateSchemaType) => {
+    async (data: ContratoEditSchemaType) => {
       const submitData = {
         ...data,
         fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
         fechaFinContrato: DateLib.parseToDBString(data.fechaFinContrato),
       };
 
-      await ContratoRepository.createContrato(submitData);
+      await ContratoRepository.updateContrato(submitData);
 
       mainDataGrid.reload();
       _navigate('/contrato');
@@ -92,34 +82,33 @@ const ContratoCreate = () => {
   }, [_navigate]);
 
   useEffect(() => {
-    const modeloAcuerdoId = watch('modeloAcuerdoId');
-    modeloAcuerdoId &&
-      ModeloAcuerdoRepository.getModeloAcuerdoById(`${modeloAcuerdoId}`).then(response => {
-        setModeloAcuerdo(response.data);
+    ContratoRepository.getContratoByIdAndContratoVariables(contratoId || '').then(({ data }) => {
+      reset({
+        ...data,
+        fechaInicioContrato: DateLib.parseFromDBString(
+          DateLib.parseToDBString(new Date(data.fechaInicioContrato)) || '',
+        ),
+        fechaFinContrato: DateLib.parseFromDBString(DateLib.parseToDBString(new Date(data.fechaFinContrato)) || ''),
+        tipoPlanFacturacionId: data?.planFacturacion?.id,
+        reglaFechaPeriodoId: data?.planFacturacion?.reglaFechaPeriodoId,
+        diaPeriodo: data?.planFacturacion?.diaPeriodo,
+        pausado: data?.planFacturacion?.pausado,
       });
-  }, [watch('modeloAcuerdoId'), modeloAcuerdo.length]);
+      setIsDataFetched(true);
+    });
+  }, [contratoId, reset]);
 
   useEffect(() => {
-    const tipoContratoId = watch('tipoContratoId');
-    tipoContratoId &&
-      TipoContratoRepository.getTipoContratoById(`${tipoContratoId}`).then(response => {
-        setTipoContrato(response.data);
-      });
-  }, [watch('tipoContratoId')]);
-
-  useEffect(() => {
-    const clienteId = watch('clienteId');
-    clienteId &&
-      ClienteRepository.getClienteById(`${clienteId}`).then(response => {
-        setCliente(response.data);
-      });
-  }, [watch('clienteId')]);
-
-  useEffect(() => {
-    const diaFijoPosteriorAlperiodoId = 3; // id en la Tabla de base de datos
-    const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
-    reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
+    if (watch('reglaFechaPeriodoId')) {
+      const diaFijoPosteriorAlperiodoId = 3; // id en la Tabla de base de datos
+      const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
+      reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
+    }
   }, [watch('reglaFechaPeriodoId')]);
+
+  if (!isDataFetched) {
+    return <></>;
+  }
 
   const formHeader = (
     <CardContent>
@@ -137,7 +126,7 @@ const ContratoCreate = () => {
             value={watch('clienteId')}
           />
         </Col>
-        <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col>
+        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
         {/* <Col md={6}>
           <ClienteDropdown
             id='destinatarioId'
@@ -181,10 +170,10 @@ const ContratoCreate = () => {
           />
         </Col>
       </Row>
-      <Row>
+      {/* <Row>
         <Col md={6}>{modeloAcuerdo && <JsonViewerProvisorio object={modeloAcuerdo} label='Modelo Acuerdo' />}</Col>
         <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col>
-      </Row>
+      </Row> */}
     </CardContent>
   );
 
@@ -203,7 +192,7 @@ const ContratoCreate = () => {
             {...register('descripcion')}
           />
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <DesktopDatePicker
             label='Fecha Inicio Contrato'
             inputFormat='dd-MM-yyyy'
@@ -213,7 +202,7 @@ const ContratoCreate = () => {
             disabled={isSubmitting}
           />
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <DesktopDatePicker
             label='Fecha Fin Contrato'
             inputFormat='dd-MM-yyyy'
@@ -229,6 +218,20 @@ const ContratoCreate = () => {
 
   const planFacturacion = (
     <CardContent>
+      <Row>
+        <Col md={4}>
+          <FormGroup>
+            <FormControlLabel
+              labelPlacement='end'
+              control={<Checkbox />}
+              label='Pausado'
+              id='pausado'
+              checked={watch('pausado') || false}
+              value={watch('pausado')}
+            />
+          </FormGroup>
+        </Col>
+      </Row>
       <Row>
         <Col md={4}>
           <TipoPlanFacturacionDropdown
@@ -275,34 +278,18 @@ const ContratoCreate = () => {
     </CardContent>
   );
 
-  const actions = (
-    <CardContent>
-      <Row>
-        <Col md={12} className='d-flex jc-end'>
-          <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
-            Cancelar
-          </Button>
-          <Button color='primary' type='submit' disabled={isSubmitting}>
-            Crear
-          </Button>
-        </Col>
-      </Row>
-    </CardContent>
-  );
-
   return (
     <>
-      <CustomAlert />
-      <Box sx={{ my: '2.5rem' }} />
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Card sx={{ p: 3 }}>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>
-                Nuevo Contrato
+                Editar Contrato
               </Typography>
             }
           />
+
           {formHeader}
 
           <DivisorProvisorio label='Datos Contractuales' />
@@ -313,75 +300,11 @@ const ContratoCreate = () => {
 
           {planFacturacion}
 
-          {actions}
+          <CardCrudActions labelSubmitButton='Guardar' isSubmitting={isSubmitting} handleClose={handleClose} />
         </Card>
       </form>
-      {/* </Paper> */}
     </>
   );
 };
 
-// TODO resolver mejor el Breadcrumb, buscar una solucion dinámica o mas global
-const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Contrato', path: '/contrato' },
-  { label: 'Nuevo Contrato', path: '/contrato/create' },
-];
-
-// export default ContratoCreate;
-export default withBreadcrumb(ContratoCreate, ContratoDataGridBreadcrumb);
-
-const DivisorProvisorio = ({ label, chip }: { label: string; chip?: boolean }) => (
-  <Divider sx={{ my: '2rem' }} textAlign='left'>
-    {chip ? <Chip label={label} /> : <>{label}</>}
-  </Divider>
-);
-
-const JsonViewerProvisorio = ({ object, label }: { object: JSONObject; label?: string }) => {
-  const keys = Object.keys(object);
-  return (
-    <>
-      {keys.length > 0 && (
-        <Accordion>
-          <AccordionSummary expandIcon={<ExpandMoreIcon />} aria-controls='panel1a-content' id='panel1a-header'>
-            <Typography>{'Datos Crudos' + `${label ? ' - ' + label : ''}`}</Typography>
-          </AccordionSummary>
-          <AccordionDetails>
-            <Box sx={{ mx: '2.5rem' }}>
-              <ul>
-                {keys.map((key: string, index: number) => (
-                  <li key={index}>{`${key}: ${object[key]}`}</li>
-                ))}
-              </ul>
-            </Box>
-          </AccordionDetails>
-        </Accordion>
-      )}
-    </>
-  );
-};
-
-type JSONValue = string | number | boolean | JSONObject;
-
-interface JSONObject {
-  [key: string]: JSONValue;
-}
-
-const CustomAlert = () => {
-  // const openAlert = useRef(true);
-  const [openAlert, setOpenAlert] = useState<boolean>(true);
-  return (
-    <Collapse in={openAlert}>
-      <Alert
-        onClose={() => {
-          setOpenAlert(false);
-          // openAlert.current = false;
-        }}
-        severity='warning'
-        variant='filled'
-      >
-        <AlertTitle>Atención</AlertTitle>
-        Esta sección aún está en etapa de desarrollo!
-      </Alert>
-    </Collapse>
-  );
-};
+export default withBreadcrumb(ContratoEdit, ContratoEditBreadcrumb);

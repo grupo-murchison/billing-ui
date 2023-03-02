@@ -51,7 +51,7 @@ const ProcedimientoPCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento P'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Precio'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>

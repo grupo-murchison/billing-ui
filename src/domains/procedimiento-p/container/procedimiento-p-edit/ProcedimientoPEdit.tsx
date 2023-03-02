@@ -67,7 +67,7 @@ const ProcedimientoPEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento P'>
+    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Precio'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>

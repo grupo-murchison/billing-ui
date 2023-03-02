@@ -13,7 +13,7 @@ const TableHead = () => {
     <thead className={styles['head']}>
       <tr>
         {columnHeads.map(colHead => (
-          <th key={UuidLib.newUuid()}>{colHead.label}</th>
+          <th key={UuidLib.newUuid()}>{colHead.label.toLowerCase()}</th>
         ))}
       </tr>
     </thead>

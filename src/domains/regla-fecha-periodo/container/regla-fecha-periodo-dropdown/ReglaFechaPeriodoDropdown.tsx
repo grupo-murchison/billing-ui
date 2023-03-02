@@ -15,7 +15,7 @@ const ReglaFechaPeriodoDropdown = ({
   value,
   ...props
 }: ReglaFechaPeriodoDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([{ value: '', label: '' }]);
+  const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
     ReglaFechaPeriodoRepository.getAllReglasFechaPeriodoAsDropdown()
@@ -28,17 +28,21 @@ const ReglaFechaPeriodoDropdown = ({
   }, []);
 
   return (
-    <FormControl fullWidth error={error} disabled={disabled}>
-      <InputLabel>{label}</InputLabel>
-      <Select id={id} label={label} value={value} {...props}>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    <>
+      {items.length > 0 && (
+        <FormControl fullWidth error={error} disabled={disabled}>
+          <InputLabel>{label}</InputLabel>
+          <Select id={id} label={label} value={value} {...props}>
+            {items.map(item => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+          {helperText && <FormHelperText>{helperText}</FormHelperText>}
+        </FormControl>
+      )}
+    </>
   );
 };
 

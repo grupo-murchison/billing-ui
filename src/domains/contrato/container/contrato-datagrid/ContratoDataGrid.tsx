@@ -10,8 +10,9 @@ import { useConfirmDialog } from '@app/hooks';
 import { DataGrid } from '@app/pro-components';
 
 import { ContratoRepository } from '@domains/contrato/repository';
-import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
 import { ContratoContext } from '@domains/contrato/contexts';
+import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
+import { ContratoRowDataGridSchema } from '@domains/contrato/repository/contrato.schemas';
 
 import { DateLib } from '@libs';
 
@@ -27,18 +28,18 @@ const ContratoDataGrid = () => {
   }, [_navigate]);
 
   const handleClickEdit = useCallback(
-    (id: number) => {
-      _navigate(`/contrato/${id}/edit`);
+    (row: ContratoRowDataGridSchema) => {
+      _navigate(`/contrato/${row.id}/edit`);
     },
     [_navigate],
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: ContratoRowDataGridSchema) => {
       confirmDialog.open({
-        message: 'Desea eliminar el registro?',
+        message: `Desea eliminar el Contrato Nº ${row.nroContrato}?`,
         async onClickYes() {
-          await ContratoRepository.deleteContratoById(id);
+          await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -78,14 +79,14 @@ const ContratoDataGrid = () => {
                 <td>{rowSanitizer(row.tipoContrato)}</td>
                 <td>{rowSanitizer(row.modeloAcuerdo)}</td>
                 <td>{rowSanitizer(row.cliente)}</td>
+                <td>{rowSanitizer(row.fechaInicioContrato && DateLib.beautifyDBString(row.fechaInicioContrato))}</td>
                 <td>{rowSanitizer(row.fechaFinContrato && DateLib.beautifyDBString(row.fechaFinContrato))}</td>
-                <td>{row.fechaInicioContrato ? DateLib.beautifyDBString(row.fechaInicioContrato) : ' '}</td>
 
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                  <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
                 </td>
                 <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                 </td>
               </>
             )}

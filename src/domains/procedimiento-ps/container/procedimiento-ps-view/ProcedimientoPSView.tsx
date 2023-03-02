@@ -33,7 +33,7 @@ const ProcedimientoPSView = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Ver Procedimiento PS'>
+    <Modal isOpen onClose={handleClose} title='Ver Procedimiento Producto Softland'>
       <form noValidate autoComplete='off'>
         <Row>
           <Col md={6}>

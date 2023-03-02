@@ -64,7 +64,7 @@ const ProcedimientoPSIntervaloEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento PS'>
+    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>

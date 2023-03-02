@@ -24,15 +24,15 @@ export const MENU_PROCEDIMIENTOS_ITEMS = {
   icon: <AccountTreeIcon />,
   childs: [
     {
-      label: 'Proc. Cantidad',
+      label: 'Procedimiento Cantidad',
       path: '/procedimiento-q',
     },
     {
-      label: 'Proc. Precio',
+      label: 'Procedimiento Precio',
       path: '/procedimiento-p',
     },
     {
-      label: 'Proc. Prod. Softland',
+      label: 'Procedimiento Producto Softland',
       path: '/procedimiento-ps',
     },
   ],
