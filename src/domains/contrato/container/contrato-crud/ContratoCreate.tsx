@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField, Box, Typography, Card, CardContent, CardHeader } from '@mui/material';
+import { TextField, Typography, Card, CardContent, CardHeader } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
@@ -190,7 +190,7 @@ const ContratoCreate = () => {
             {...register('descripcion')}
           />
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <DesktopDatePicker
             label='Fecha Inicio Contrato'
             inputFormat='dd-MM-yyyy'
@@ -200,7 +200,7 @@ const ContratoCreate = () => {
             disabled={isSubmitting}
           />
         </Col>
-        <Col md={4}>
+        <Col md={6}>
           <DesktopDatePicker
             label='Fecha Fin Contrato'
             inputFormat='dd-MM-yyyy'
@@ -265,7 +265,7 @@ const ContratoCreate = () => {
   return (
     <>
       <AlertInProgress />
-      <Box sx={{ my: '2.5rem' }} />
+
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Card sx={{ p: 3 }}>
           <CardHeader

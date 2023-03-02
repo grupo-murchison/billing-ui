@@ -23,6 +23,12 @@ class ContratoRepository {
     return response;
   };
 
+  static getContratoByIdAndContratoVariables = async (id: string) => {
+    const response$ = from(ContratoService.getByIdAndContratoVariables(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static createContrato = async (Contrato: AnyValue) => {
     console.log('Contrato :',Contrato);
     

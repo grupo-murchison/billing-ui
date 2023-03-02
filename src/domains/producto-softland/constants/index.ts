@@ -1,7 +1,7 @@
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 export const ProductoSoftlandDataGridBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Producto Sofland', path: '/producto-softland' },
+  { label: 'Producto Softland', path: '/producto-softland' },
 ];
 
 export const ProductoSoftlandCreateBreadcrumb: BreadcrumbItem[] = [

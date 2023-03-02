@@ -37,7 +37,7 @@ const ContratoDataGrid = () => {
   const handleClickDelete = useCallback(
     (row: ContratoRowDataGridSchema) => {
       confirmDialog.open({
-        message: `Desea eliminar el registro Nº Contrato: ${row.nroContrato}?`,
+        message: `Desea eliminar el Contrato Nº ${row.nroContrato}?`,
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();
@@ -79,8 +79,8 @@ const ContratoDataGrid = () => {
                 <td>{rowSanitizer(row.tipoContrato)}</td>
                 <td>{rowSanitizer(row.modeloAcuerdo)}</td>
                 <td>{rowSanitizer(row.cliente)}</td>
+                <td>{rowSanitizer(row.fechaInicioContrato && DateLib.beautifyDBString(row.fechaInicioContrato))}</td>
                 <td>{rowSanitizer(row.fechaFinContrato && DateLib.beautifyDBString(row.fechaFinContrato))}</td>
-                <td>{row.fechaInicioContrato ? DateLib.beautifyDBString(row.fechaInicioContrato) : ' '}</td>
 
                 <td align='center'>
                   <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
