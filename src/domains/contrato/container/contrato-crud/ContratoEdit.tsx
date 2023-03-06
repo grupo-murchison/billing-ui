@@ -34,7 +34,8 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
-import { CardCrudActions } from './views';
+import { CardCrudActions, DataGridContratoVariables } from './views';
+import { watch } from 'fs';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -93,6 +94,7 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: data?.planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: data?.planFacturacion?.diaPeriodo,
         pausado: data?.planFacturacion?.pausado,
+        contratoVariables: data.contratoVariables,
       });
       setIsDataFetched(true);
     });
@@ -220,12 +222,12 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={4}>
-          <FormGroup>
+          <FormGroup sx={{ display: 'flex', alignItems: 'flex-start' }}>
             <FormControlLabel
-              labelPlacement='end'
+              id='pausado'
+              labelPlacement='start'
               control={<Checkbox />}
               label='Pausado'
-              id='pausado'
               checked={watch('pausado') || false}
               value={watch('pausado')}
             />
@@ -289,6 +291,21 @@ const ContratoEdit = () => {
               </Typography>
             }
           />
+          <CardContent>
+            <Row>
+              <Col md={4}>
+                <TextField
+                  id='nroContrato'
+                  label='Nro. Contrato'
+                  InputProps={{ readOnly: true }}
+                  type='string'
+                  {...register('nroContrato', {
+                    //  valueAsNumber: true,
+                  })}
+                />
+              </Col>
+            </Row>
+          </CardContent>
 
           {formHeader}
 
@@ -299,6 +316,10 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
+
+          <DivisorProvisorio label='Variables Contrato' />
+
+          <DataGridContratoVariables id='contratoVariables' rows={watch('contratoVariables')} />
 
           <CardCrudActions labelSubmitButton='Guardar' isSubmitting={isSubmitting} handleClose={handleClose} />
         </Card>
