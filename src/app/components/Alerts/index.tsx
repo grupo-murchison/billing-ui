@@ -1,7 +1,7 @@
 import { Alert, AlertTitle, Box, Collapse } from '@mui/material';
 import { useState } from 'react';
 
-export const AlertInProgress = () => {
+export const AlertInProgress = ({ message }: { message?: string }) => {
   // const openAlert = useRef(true);
   const [openAlert, setOpenAlert] = useState<boolean>(true);
   return (
@@ -15,10 +15,10 @@ export const AlertInProgress = () => {
                 // openAlert.current = false;
               }}
               severity='warning'
-              variant='filled'
+              variant='standard'
             >
               <AlertTitle>Atención</AlertTitle>
-              Esta sección aún está en etapa de desarrollo!
+              {message ? message : 'Esta sección aún está en etapa de desarrollo!'}
             </Alert>
           </Collapse>
         </Box>

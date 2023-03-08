@@ -1,26 +1,39 @@
 export {
+  // A
+  AddCircleOutline as AddCircleOutlineIcon,
+  AccountCircle as AccountCircleIcon,
+  Add as AddIcon,
+  AccountTree as AccountTreeIcon,
+
+  // C
+  Category as CategoryIcon,
+
+  // D
+  DeleteOutline as DeleteOutlineIcon,
+  Description as DescriptionIcon,
+  Download as DownloadIcon,
+
+  // K
   KeyboardArrowDown as KeyboardArrowDownIcon,
   KeyboardArrowUp as KeyboardArrowUpIcon,
   KeyboardArrowLeft as KeyboardArrowLeftIcon,
   KeyboardArrowRight as KeyboardArrowRightIcon,
+
+  // I
+  Inventory as InventoryIcon,
+
+  // M
   Menu as MenuIcon,
   Settings as SetttingsIcon,
   SettingsOutlined as SettingsOutlinedIcon,
-  DeleteOutline as DeleteOutlineIcon,
   EditOutlined as EditOutlinedIcon,
   ExpandMore as ExpandMoreIcon,
   Home as HomeIcon,
-  AddCircleOutline as AddCircleOutlineIcon,
   Visibility as ViewIcon,
   FilterList as FilterListIcon,
   Search as SearchIcon,
   QuestionMark as QuestionMarkIcon,
-  AccountCircle as AccountCircleIcon,
   FilterAlt as FilterAltIcon,
-  Add as AddIcon,
-  Download as DownloadIcon,
-  Description as DescriptionIcon,
-  AccountTree as AccountTreeIcon,
   GppGood as GppGoodIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
 } from '@mui/icons-material';

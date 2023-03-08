@@ -1,6 +1,6 @@
 import { useContext } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, Route } from 'react-router-dom';
 
 import { AuthContext, ThemeProvider } from '@app/contexts';
 
@@ -13,6 +13,7 @@ import { ProcedimientoQRoutes } from '@domains/procedimiento-q/navigation';
 import { ModeloAcuerdoRoutes } from '@domains/modelo-acuerdo/navigation';
 import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
+import RootRoute from '@domains/root/Root.route';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -31,6 +32,7 @@ const PrivateRoutes = () => {
         <ModeloAcuerdoRoutes />
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
+        <RootRoute />
       </MainLayout>
     </ThemeProvider>
   );
