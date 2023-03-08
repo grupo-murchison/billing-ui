@@ -326,17 +326,13 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
-          <Stack direction='row' justifyContent='center' alignItems='center'>
-            <div style={{ height: 400, width: '98%' }}>
-              <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
-            </div>
+          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+            <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
           </Stack>
 
           <DivisorProvisorio label='Variables Contrato' />
-          <Stack direction='row' justifyContent='center' alignItems='center'>
-            <div style={{ height: 400, width: '98%' }}>
-              <DataGridContratoVariables id='contratoVariables' rows={watch('contratoVariables')} />
-            </div>
+          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+            <DataGridContratoVariables id='contratoVariables' rows={watch('contratoVariables')} />
           </Stack>
 
           <DivisorProvisorio label='Interlocutores' />

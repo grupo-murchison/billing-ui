@@ -25,7 +25,6 @@ const columns: GridColDef[] = [
 ];
 
 export const DataGridContratoVariables = ({ rows }: { id: string; rows: any }) => {
-  console.log('rows ', rows);
 
   return (
     <div style={{ height: 400, width: '100%' }}>
