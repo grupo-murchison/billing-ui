@@ -1,14 +1,12 @@
-
-import { Button } from '@app/components';
-import { CardActions } from '@mui/material';
+import { Button, CardActions } from '@mui/material';
 
 export const CardCrudActions = ({ isSubmitting, handleClose, labelSubmitButton }: ActionsCrudCard): JSX.Element => {
   return (
     <CardActions sx={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+      <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
         Cancelar
       </Button>
-      <Button color='primary' type='submit' disabled={isSubmitting}>
+      <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
         {labelSubmitButton ? labelSubmitButton : 'Enviar'}
       </Button>
     </CardActions>

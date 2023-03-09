@@ -1,10 +1,29 @@
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { format, parseISO } from 'date-fns';
 
 const columns: GridColDef[] = [
-  { field: 'periodo', headerName: 'Periodo', width: 80 },
-  { field: 'liquidacionDesde', headerName: 'Desde', width: 160 },
-  { field: 'liquidacionHasta', headerName: 'Hasta', width: 160 },
-  { field: 'fechaFacturacion', headerName: 'Fecha Facturación', type: 'Date', width: 160 },
+  { field: 'periodo', headerName: 'Periodo', width: 80, type: 'number' },
+  {
+    field: 'liquidacionDesde',
+    headerName: 'Desde',
+    width: 160,
+    type: 'Date',
+    valueFormatter: ({ value }) => format(parseISO(value), 'dd-MM-yyyy'),
+  },
+  {
+    field: 'liquidacionHasta',
+    headerName: 'Hasta',
+    width: 160,
+    type: 'Date',
+    valueFormatter: ({ value }) => format(parseISO(value), 'dd-MM-yyyy'),
+  },
+  {
+    field: 'fechaFacturacion',
+    headerName: 'Fecha Facturación',
+    width: 160,
+    type: 'Date',
+    valueFormatter: ({ value }) => format(parseISO(value), 'dd-MM-yyyy'),
+  },
   { field: 'estado', headerName: 'Estado', type: 'string', width: 110 },
 ];
 
