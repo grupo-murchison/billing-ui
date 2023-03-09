@@ -1,5 +1,20 @@
 import z from 'zod';
 
+const ContratoVariablesSchema = z.object({
+  id: z.number(),
+  codigo: z.string(),
+  valor: z.string(),
+});
+
+const PlanFacturacionPeriodosSchema = z.object({
+  id: z.number(),
+  periodo: z.number(),
+  liquidacionDesde: z.date(),
+  liquidacionHasta: z.date(),
+  fechaFacturacion: z.date(),
+  estado: z.string(),
+});
+
 export const ContratoCreateSchema = z
   .object({
     tipoContratoId: z.number({ required_error: 'El campo es requerido.' }),
@@ -35,7 +50,10 @@ export const ContratoEditSchema = z
     fechaInicioContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(),
     fechaFinContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(),
     diaPeriodo: z.number().optional(),
-    pausado: z.boolean().optional()
+    pausado: z.boolean().optional(),
+    nroContrato: z.boolean().optional(),
+    contratoVariables: z.array(ContratoVariablesSchema),
+    periodos: z.array(PlanFacturacionPeriodosSchema),
   })
   .refine(schema => (schema.reglaFechaPeriodoId === 3 ? !!schema.diaPeriodo : true), {
     // FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)

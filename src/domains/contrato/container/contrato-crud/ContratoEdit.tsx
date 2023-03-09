@@ -10,6 +10,7 @@ import {
   Checkbox,
   FormControlLabel,
   FormGroup,
+  Stack,
   TextField,
   Typography,
 } from '@mui/material';
@@ -34,7 +35,8 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
-import { CardCrudActions } from './views';
+import { CardCrudActions, DataGridContratoVariables, DataGridPlanFacturacion } from './views';
+import { AlertInProgress } from '@app/components/Alerts';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -93,6 +95,8 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: data?.planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: data?.planFacturacion?.diaPeriodo,
         pausado: data?.planFacturacion?.pausado,
+        periodos: data?.planFacturacion?.periodos,
+        contratoVariables: data.contratoVariables,
       });
       setIsDataFetched(true);
     });
@@ -100,7 +104,7 @@ const ContratoEdit = () => {
 
   useEffect(() => {
     if (watch('reglaFechaPeriodoId')) {
-      const diaFijoPosteriorAlperiodoId = 3; // id en la Tabla de base de datos
+      const diaFijoPosteriorAlperiodoId = 3; // FIXME id en la Tabla de base de datos, cambiar por codigo
       const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
       reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
     }
@@ -220,12 +224,12 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={4}>
-          <FormGroup>
+          <FormGroup sx={{ display: 'flex', alignItems: 'flex-start' }}>
             <FormControlLabel
-              labelPlacement='end'
+              id='pausado'
+              labelPlacement='start'
               control={<Checkbox />}
               label='Pausado'
-              id='pausado'
               checked={watch('pausado') || false}
               value={watch('pausado')}
             />
@@ -278,6 +282,10 @@ const ContratoEdit = () => {
     </CardContent>
   );
 
+  const conceptoAcuerdo = <AlertInProgress message='Próximamente, aquí estará la "Grilla Concepto Acuerdo".' />;
+
+  const interlocutores = <AlertInProgress message='Próximamente, aquí estará sección "Interlocutores".' />;
+
   return (
     <>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
@@ -289,6 +297,21 @@ const ContratoEdit = () => {
               </Typography>
             }
           />
+          <CardContent>
+            <Row>
+              <Col md={4}>
+                <TextField
+                  id='nroContrato'
+                  label='Nro. Contrato'
+                  InputProps={{ readOnly: true }}
+                  type='string'
+                  {...register('nroContrato', {
+                    //  valueAsNumber: true,
+                  })}
+                />
+              </Col>
+            </Row>
+          </CardContent>
 
           {formHeader}
 
@@ -296,9 +319,25 @@ const ContratoEdit = () => {
 
           {datosContractuales}
 
+          <DivisorProvisorio label='Resumen Posiciones/Concepto Acuerdo' />
+
+          {conceptoAcuerdo}
+
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
+          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+            <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
+          </Stack>
+
+          <DivisorProvisorio label='Variables Contrato' />
+          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+            <DataGridContratoVariables id='contratoVariables' rows={watch('contratoVariables')} />
+          </Stack>
+
+          <DivisorProvisorio label='Interlocutores' />
+
+          {interlocutores}
 
           <CardCrudActions labelSubmitButton='Guardar' isSubmitting={isSubmitting} handleClose={handleClose} />
         </Card>

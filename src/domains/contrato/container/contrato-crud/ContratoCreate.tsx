@@ -266,6 +266,7 @@ const ContratoCreate = () => {
     <>
       <AlertInProgress />
 
+      {/* <Paper sx={{p: 3}}> */}
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Card sx={{ p: 3 }}>
           <CardHeader

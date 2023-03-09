@@ -1,4 +1,4 @@
-import { DescriptionIcon, AccountTreeIcon, GppGoodIcon } from '@assets/icons';
+import { DescriptionIcon, AccountTreeIcon, InventoryIcon } from '@assets/icons';
 
 export const MENU_CONTRATOS_ITEMS = {
   title: 'Contratos',
@@ -40,7 +40,7 @@ export const MENU_PROCEDIMIENTOS_ITEMS = {
 
 export const MENU_OTHER_ITEMS = {
   title: 'Otros',
-  icon: <GppGoodIcon />,
+  icon: <InventoryIcon />,
   childs: [
     {
       label: 'Producto Softland',
