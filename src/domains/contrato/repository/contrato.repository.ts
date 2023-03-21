@@ -24,7 +24,7 @@ class ContratoRepository {
   };
 
   static getContratoByIdAndContratoVariables = async (id: string) => {
-    const response$ = from(ContratoService.getByIdAndContratoVariables(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(ContratoService.getByIdFull(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };

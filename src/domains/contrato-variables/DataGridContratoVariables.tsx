@@ -37,7 +37,6 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
     ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId }).then(({ data }) => {
       setRows(data);
       setLoading(false);
-      setRefreshData(false);
     });
   }, [contratoId, refreshData]);
 
@@ -50,13 +49,13 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
     ContratoVariablesRepository.updateContratoVariable(row, id)
       .then(({ status }) => {
         // console.log('status', status === 201 );
-
-        setRefreshData(true);
-        setLoading(false);
       })
       .catch((error: any) => {
         // TODO falta un handlerError() que sustituya el console.log
         console.log('Error al actualizar variable:\n', error);
+      })
+      .finally(() => {
+        setRefreshData(!refreshData);
         setLoading(false);
       });
   };

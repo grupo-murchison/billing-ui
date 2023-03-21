@@ -29,6 +29,7 @@ export const ContratoCreateSchema = z
     fechaInicioContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), // TODO por qué permiten null ?
     fechaFinContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), //TODO por qué permiten null ?
     diaPeriodo: z.number().optional(),
+    sociedadId: z.number({ required_error: 'El campo es requerido.' })
   })
   .refine(schema => (schema.reglaFechaPeriodoId === 3 ? !!schema.diaPeriodo : true), {
     // FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)
@@ -54,6 +55,7 @@ export const ContratoEditSchema = z
     nroContrato: z.boolean().optional(),
     contratoVariables: z.array(ContratoVariablesSchema),
     periodos: z.array(PlanFacturacionPeriodosSchema),
+    sociedadId: z.number({ required_error: 'El campo es requerido.' })
   })
   .refine(schema => (schema.reglaFechaPeriodoId === 3 ? !!schema.diaPeriodo : true), {
     // FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)

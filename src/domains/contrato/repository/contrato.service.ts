@@ -22,10 +22,8 @@ class ContratoService {
     return [response, error];
   };
 
-  static getByIdAndContratoVariables = async (id: string): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${ENDPOINT}/${id}/contratoVariables`),
-    );
+  static getByIdFull = async (id: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`${ENDPOINT}/${id}/full`));
 
     return [response, error];
   };

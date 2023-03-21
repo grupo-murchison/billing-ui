@@ -38,6 +38,7 @@ import { DateLib } from '@libs';
 import { CardCrudActions, DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
+import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -133,6 +134,21 @@ const ContratoEdit = () => {
             value={watch('clienteId')}
           />
         </Col>
+        <Col md={6}>
+          <SociedadDropdown
+            id='sociedadId'
+            label='Sociedad'
+            {...register('sociedadId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.sociedadId}
+            helperText={formErrors?.sociedadId?.message}
+            disabled={isSubmitting}
+            value={watch('sociedadId')}
+          />
+        </Col>
+      </Row>
+      <Row>
         {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
         {/* <Col md={6}>
           <ClienteDropdown
