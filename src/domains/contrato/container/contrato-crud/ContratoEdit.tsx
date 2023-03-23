@@ -43,7 +43,6 @@ import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 const ContratoEdit = () => {
   const { contratoId } = useParams();
   const _navigate = useNavigate();
-  console.log('contratoId', contratoId);
 
   const { mainDataGrid } = useContext(ContratoContext);
 
@@ -315,6 +314,9 @@ const ContratoEdit = () => {
               </Typography>
             }
           />
+
+          <DivisorProvisorio label='Datos Generales' />
+
           <CardContent>
             <Row>
               <Col md={4}>

@@ -6,24 +6,37 @@ import ContratoVariablesRepository from './repository/contrato-variables.reposit
 
 const columns: GridColDef[] = [
   {
-    field: 'fullName',
+    field: 'procedimientoQ.conceptoAcuerdo.descripcion',
     headerName: 'Nombre del Concepto Acuerdo',
     description: 'This column has some type value.',
     sortable: false,
-    width: 250,
+    width: 450,
+    valueGetter: (params: any) => {
+      return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
+    },
   },
   {
-    field: 'nombreProcedimientoQ',
+    field: 'procedimientoQ.denominacion',
     headerName: 'Nombre Procedimiento Cantidad',
-    width: 290,
+    width: 350,
+    valueGetter: (params: any) => {
+      return params.row.procedimientoQ?.denominacion || ' ';
+    },
   },
-  { field: 'codigo', headerName: 'Codigo Variable', width: 130 },
-  { field: 'nombreVariable', headerName: 'Nombre Variable', width: 140 },
+  { field: 'codigo', headerName: 'Codigo Variable', width: 150 },
+  {
+    field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
+    headerName: 'Nombre Variable',
+    width: 340,
+    valueGetter: (params: any) => {
+      return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
+    },
+  },
   {
     field: 'valor',
     headerName: 'Valor',
     type: 'string',
-    width: 110,
+    width: 120,
     editable: true,
   },
 ];
@@ -48,7 +61,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
 
     ContratoVariablesRepository.updateContratoVariable(row, id)
       .then(({ status }) => {
-        // console.log('status', status === 201 );
+        console.log('status', status);
       })
       .catch((error: any) => {
         // TODO falta un handlerError() que sustituya el console.log

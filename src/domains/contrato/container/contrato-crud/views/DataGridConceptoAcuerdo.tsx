@@ -4,7 +4,7 @@ import { DataGrid, GridColDef } from '@mui/x-data-grid';
 const columns: GridColDef[] = [
   { field: 'tipoServicio', headerName: 'Tipo Servicio', width: 200 },
   { field: 'concepto', headerName: 'Concepto', width: 400 },
-  { field: 'procedimientoQ', headerName: 'procedimiento Cantidad', width: 350 },
+  { field: 'procedimientoQ', headerName: 'Procedimiento Cantidad', width: 350 },
   { field: 'procedimientoP', headerName: 'Procedimiento Precio', width: 320 },
   { field: 'procedimientoPS', headerName: 'Procedimiento Producto Softland', width: 320 },
 ];

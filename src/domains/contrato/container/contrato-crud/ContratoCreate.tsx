@@ -295,6 +295,9 @@ const ContratoCreate = () => {
               </Typography>
             }
           />
+
+          <DivisorProvisorio label='Datos Generales' />
+
           {formHeader}
 
           <DivisorProvisorio label='Datos Contractuales' />
