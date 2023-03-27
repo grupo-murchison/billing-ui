@@ -35,8 +35,10 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
-import { CardCrudActions, DataGridContratoVariables, DataGridPlanFacturacion } from './views';
+import { CardCrudActions, DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import { AlertInProgress } from '@app/components/Alerts';
+import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
+import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -96,7 +98,8 @@ const ContratoEdit = () => {
         diaPeriodo: data?.planFacturacion?.diaPeriodo,
         pausado: data?.planFacturacion?.pausado,
         periodos: data?.planFacturacion?.periodos,
-        contratoVariables: data.contratoVariables,
+        contratoVariables: data?.contratoVariables,
+        conceptosAcuerdo: data?.modeloAcuerdo?.conceptosAcuerdo,
       });
       setIsDataFetched(true);
     });
@@ -130,6 +133,21 @@ const ContratoEdit = () => {
             value={watch('clienteId')}
           />
         </Col>
+        <Col md={6}>
+          <SociedadDropdown
+            id='sociedadId'
+            label='Sociedad'
+            {...register('sociedadId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.sociedadId}
+            helperText={formErrors?.sociedadId?.message}
+            disabled={isSubmitting}
+            value={watch('sociedadId')}
+          />
+        </Col>
+      </Row>
+      <Row>
         {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
         {/* <Col md={6}>
           <ClienteDropdown
@@ -148,6 +166,7 @@ const ContratoEdit = () => {
       </Row>
       <Row>
         <Col md={6}>
+          {/* // TODO agregar Notificación con mensaje de de Alerta: Si cambia el Modelo Acuerdo, se eliminarán las variables del contrato y deberá cargar las nuevas manualmente. */}
           <ModeloAcuerdoDropdown
             id='modeloAcuerdoId'
             label='Modelo Acuerdo'
@@ -282,8 +301,6 @@ const ContratoEdit = () => {
     </CardContent>
   );
 
-  const conceptoAcuerdo = <AlertInProgress message='Próximamente, aquí estará la "Grilla Concepto Acuerdo".' />;
-
   const interlocutores = <AlertInProgress message='Próximamente, aquí estará sección "Interlocutores".' />;
 
   return (
@@ -297,6 +314,9 @@ const ContratoEdit = () => {
               </Typography>
             }
           />
+
+          <DivisorProvisorio label='Datos Generales' />
+
           <CardContent>
             <Row>
               <Col md={4}>
@@ -321,7 +341,10 @@ const ContratoEdit = () => {
 
           <DivisorProvisorio label='Resumen Posiciones/Concepto Acuerdo' />
 
-          {conceptoAcuerdo}
+          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+            {/* // TODO falta tipar en zod conceptosAcuerdo (schema) */}
+            <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={watch('conceptosAcuerdo')} />
+          </Stack>
 
           <DivisorProvisorio label='Plan Facturación' />
 
@@ -332,7 +355,7 @@ const ContratoEdit = () => {
 
           <DivisorProvisorio label='Variables Contrato' />
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <DataGridContratoVariables id='contratoVariables' rows={watch('contratoVariables')} />
+            <DataGridContratoVariables contratoId={contratoId} />
           </Stack>
 
           <DivisorProvisorio label='Interlocutores' />

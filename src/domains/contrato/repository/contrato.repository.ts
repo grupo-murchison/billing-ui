@@ -24,14 +24,12 @@ class ContratoRepository {
   };
 
   static getContratoByIdAndContratoVariables = async (id: string) => {
-    const response$ = from(ContratoService.getByIdAndContratoVariables(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(ContratoService.getByIdFull(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static createContrato = async (Contrato: AnyValue) => {
-    console.log('Contrato :',Contrato);
-    
     const response$ = from(ContratoService.post(Contrato)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
@@ -45,6 +43,14 @@ class ContratoRepository {
 
   static deleteContratoById = async (id: number) => {
     const response$ = from(ContratoService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static variablesPorContratoProcedimientoQ = async (Contrato: AnyValue) => {
+    const response$ = from(ContratoService.postVariablesPorContratoProcedimientoQ(Contrato)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
     const response = await lastValueFrom(response$);
     return response;
   };

@@ -23,6 +23,7 @@ import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-
 import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
+import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
@@ -124,7 +125,25 @@ const ContratoCreate = () => {
             value={watch('clienteId')}
           />
         </Col>
+        <Col md={6}>
+          <SociedadDropdown
+            id='sociedadId'
+            label='Sociedad'
+            {...register('sociedadId', {
+              valueAsNumber: true,
+            })}
+            error={!!formErrors.sociedadId}
+            helperText={formErrors?.sociedadId?.message}
+            disabled={isSubmitting}
+            value={watch('sociedadId')}
+          />
+        </Col>
+      </Row>
+      <Row>
         <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col>
+        {/* <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col> */}
+      </Row>
+      <Row>
         {/* <Col md={6}>
           <ClienteDropdown
             id='destinatarioId'
@@ -276,6 +295,9 @@ const ContratoCreate = () => {
               </Typography>
             }
           />
+
+          <DivisorProvisorio label='Datos Generales' />
+
           {formHeader}
 
           <DivisorProvisorio label='Datos Contractuales' />
