@@ -28,6 +28,10 @@ export const MENU_PROCEDIMIENTOS_ITEMS = {
       path: '/procedimiento-q',
     },
     {
+      label: 'Procedimiento Cantidad Custom',
+      path: '/procedimiento-custom',
+    },
+    {
       label: 'Procedimiento Precio',
       path: '/procedimiento-p',
     },
