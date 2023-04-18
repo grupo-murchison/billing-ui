@@ -12,6 +12,7 @@ export const getAllProcedimientoCustomPaginatedSchema = ZodUtils.withPagination(
     codigo: z.string().nullable(),
     denominacion: z.string().nullable(),
     eventoCampoAgrupacionId: z.number().nullable(),
+    expresionFiltro: z.string().nullable(),
     funcion: z.string().nullable(),
     accion: z.string().nullable(),
     evento: z.string().nullable(),

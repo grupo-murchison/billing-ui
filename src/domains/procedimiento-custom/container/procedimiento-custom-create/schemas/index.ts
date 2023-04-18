@@ -1,6 +1,7 @@
 import z from 'zod';
 
-export const ProcedimientoCustomCreateSchema = z.object({
+export const ProcedimientoCustomCreateSchema = z
+.object({
   codigo: z
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
@@ -9,17 +10,58 @@ export const ProcedimientoCustomCreateSchema = z.object({
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
     .max(50, { message: 'Ha superado el límite de caracteres' }),
-  funcionId: z.number({ required_error: 'El campo es requerido.' }),
-  eventoId: z.number({ required_error: 'El campo es requerido.' }),
-  accionId: z.number({ required_error: 'El campo es requerido.' }).optional(),
-  eventoCampoId: z.number({ required_error: 'El campo es requerido.' }).optional(),
-}).superRefine(({ accionId }, ctx) => {
-  if (accionId) {
-    ctx.addIssue({
-      code: 'custom',
-      message: 'Evento Campo es requerido cuando una Acción es seleccionada.',
-      path: ['eventoCampoId']
-    })
+  funcionCode: z.union([z.string({ required_error: 'El campo es requerido.' }), z.literal(''), z.literal('C')]),
+  eventoCode: z.union([z.string({ required_error: 'El campo es requerido.' }), z.literal('')]),
+  eventoCampoCode: z.union([z.string(), z.literal('')]).nullish(),
+  accionCode: z.union([z.string(), z.literal(''), z.literal('FIL')]).nullish(),
+  filtroCampoCode: z.union([z.string(), z.literal('')]).nullish(),
+  filtroValue: z.string().optional(),
+})
+.superRefine(({ funcionCode, eventoCode, eventoCampoCode, accionCode, filtroCampoCode, filtroValue }, ctx) => {
+  if (funcionCode && funcionCode !== 'C') {
+    if (!eventoCode) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Evento es requerido.',
+        path: ['eventoCode'],
+      });
+    }
+
+    if (!eventoCampoCode) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Campo es requerido.',
+        path: ['eventoCampoCode'],
+      });
+    }
+  }
+
+  if (accionCode && accionCode === 'AGR') {
+    // AGR
+    if (!filtroCampoCode) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Para agrupar, Campo es requerido.',
+        path: ['filtroCampoCode'],
+      });
+    }
+  } else if (accionCode && accionCode === 'FIL') {
+    // FIL
+    if (!filtroCampoCode) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Para filtrar, Campo es requerido.',
+        path: ['filtroCampoCode'],
+      });
+    }
+
+    if (!filtroValue) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Para filtrar, Valor es requerido.',
+        path: ['filtroValue'],
+      });
+    }
   }
 });
 

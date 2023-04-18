@@ -27,6 +27,7 @@
     background-color: white;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
+    width: min(800px, 80vw);
 
     .modal-content__header {
       display: flex;

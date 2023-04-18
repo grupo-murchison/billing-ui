@@ -1,39 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { Select, MenuItem, FormControl, InputLabel, FormHelperText, SelectChangeEvent } from '@mui/material';
 
-import { DropdownSchemaType } from '@app/utils/zod.util';
+import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
 
-import { EventoCampoRepository } from '@domains/evento-campo/repository';
-
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
-
-const EventoCampoDropdown = ({
-  id,
-  label,
-  disabled,
-  error,
-  helperText,
-  value,
-  ...props
-}: EventoCampoDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
-
-  useEffect(() => {
-    EventoCampoRepository.getAllEventoCampoAsDropdown()
-      .then(({ data }) => {
-        setItems(data);
-      })
-      .catch(() => {
-        setItems([]);
-      });
-  }, []);
+const EventoCampoDropdown = ({ id, label, disabled, error, helperText, value, ...props }: EventoCampoDropdownProps) => {
+  const {
+    state: { eventosCampo },
+  } = useContext(ProcedimientoCustomContext);
 
   return (
     <FormControl fullWidth error={error} disabled={disabled}>
       <InputLabel>{label}</InputLabel>
       <Select id={id} label={label} value={value} {...props}>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
+        <MenuItem value="">
+          <em>Ninguno</em>
+        </MenuItem>
+        {eventosCampo.map(({ code, label, value }) => (
+          <MenuItem key={value} value={code}>
+            {`${code} - ${label}`}
           </MenuItem>
         ))}
       </Select>
@@ -48,7 +32,8 @@ type EventoCampoDropdownProps = {
   error?: boolean;
   helperText?: string;
   disabled?: boolean;
-  value?: number | string;
+  value?: string;
+  onChange?: (event: SelectChangeEvent) => void;
 };
 
 export default EventoCampoDropdown;

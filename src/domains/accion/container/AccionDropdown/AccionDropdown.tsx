@@ -1,34 +1,23 @@
-import { useEffect, useState } from 'react';
+import { useContext } from 'react';
+import { Select, MenuItem, FormControl, InputLabel, FormHelperText, SelectChangeEvent } from '@mui/material';
 
-import { DropdownSchemaType } from '@app/utils/zod.util';
-
-import { AccionRepository } from '@domains/accion/repository';
-
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
 
 const AccionDropdown = ({ id, label, disabled, error, helperText, value, ...props }: AccionDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
-
-  useEffect(() => {
-    AccionRepository.getAllAccionAsDropdown()
-      .then(({ data }) => {
-        setItems(data);
-      })
-      .catch(() => {
-        setItems([]);
-      });
-  }, []);
+  const {
+    state: { acciones },
+  } = useContext(ProcedimientoCustomContext);
 
   return (
     <FormControl fullWidth error={error} disabled={disabled}>
       <InputLabel>{label}</InputLabel>
       <Select id={id} label={label} value={value} {...props}>
         <MenuItem value=''>
-          <em>Vacio</em>
+          <em>Ninguno</em>
         </MenuItem>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
+        {acciones.map(({ code, label, value }) => (
+          <MenuItem key={value} value={code}>
+            {`${code} - ${label}`}
           </MenuItem>
         ))}
       </Select>
@@ -43,7 +32,8 @@ type AccionDropdownProps = {
   error?: boolean;
   helperText?: string;
   disabled?: boolean;
-  value?: number | string;
+  value?: string;
+  onChange?: (event: SelectChangeEvent) => void;
 };
 
 export default AccionDropdown;
