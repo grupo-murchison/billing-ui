@@ -1,12 +1,10 @@
-import { useCallback, useContext, forwardRef } from 'react';
+import { useEffect, useCallback, useContext, forwardRef } from 'react';
 
 import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
 import { Button, Modal, Row, Col } from '@app/components';
-
-import { FuncionDropdown } from '@domains/funcion/container/FuncionDropdown';
 
 import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
 import { ProcedimientoCustomCreateSchema } from '@domains/procedimiento-custom/container/procedimiento-custom-create/schemas';
@@ -18,9 +16,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
-import { AccionDropdown } from '@domains/accion/container/AccionDropdown';
-import { EventoDropdown } from '@domains/evento/container/EventoDropdown';
-import { EventoCampoDropdown } from '@domains/evento-campo/container/EventoCampoDropdown';
+import { Dropdown } from '@app/components/FormInputs/Dropdown';
 
 const ProcedimientoCustomCreate = forwardRef((_, ref) => {
   const _navigate = useNavigate();
@@ -29,6 +25,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
 
   const {
     register,
+    control,
     handleSubmit: rhfHandleSubmit,
     watch,
     formState: { errors: formErrors, isSubmitting },
@@ -46,16 +43,6 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
     },
     resolver: zodResolver(ProcedimientoCustomCreateSchema),
   });
-
-  // const handleSubmit = useCallback(
-  //   async (data: ProcedimientoCustomCreateSchemaType) => {
-  //     await ProcedimientoCustomRepository.createProcedimientoCustom(data);
-
-  //     mainDataGrid.reload();
-  //     _navigate('/procedimiento-custom');
-  //   },
-  //   [_navigate, mainDataGrid],
-  // );
 
   const handleSubmit = useCallback(
     async (data: ProcedimientoCustomCreateSchemaType) => {
@@ -93,6 +80,25 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
     [_navigate, mainDataGrid],
   );
 
+  useEffect(() => {
+    const subscription = watch((value, { name }) => {
+      if (name === 'funcionCode' && value['funcionCode'] === 'C') {
+        // Funcion Change
+        setValue('eventoCampoCode', '');
+      } else if (name === 'accionCode') {
+        // Accion Change
+        if (value['accionCode'] === '') {
+          setValue('filtroCampoCode', '');
+          setValue('filtroValue', '');
+        } else if (value['accionCode'] !== 'FIL') {
+          setValue('filtroValue', '');
+        }
+      }
+    });
+
+    return () => subscription.unsubscribe();
+  }, [watch]);
+
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-custom');
   }, [_navigate]);
@@ -125,45 +131,38 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         </Row>
         <Row>
           <Col md={4}>
-            <FuncionDropdown
-              id='funcionCode'
-              label='Función'
-              {...register('funcionCode')}
+            <Dropdown
+              labelDisplay='Función'
+              name='funcionCode'
+              control={control}
               error={!!formErrors.funcionCode}
               helperText={formErrors?.funcionCode?.message}
               disabled={isSubmitting}
-              value={watch('funcionCode')}
-              onChange={event => {
-                event.preventDefault();
-
-                setValue('funcionCode', event.target.value);
-                if (event.target.value === 'C') {
-                  setValue('eventoCode', '');
-                  setValue('eventoCampoCode', '');
-                }
-              }}
+              options={state.funciones}
             />
           </Col>
           <Col md={4}>
-            <EventoDropdown
-              id='evento'
-              label='Evento'
-              {...register('eventoCode')}
+            <Dropdown
+              labelDisplay='Evento'
+              name='eventoCode'
+              control={control}
               error={!!formErrors.eventoCode}
               helperText={formErrors?.eventoCode?.message}
-              disabled={isSubmitting || watch('funcionCode') === 'C'}
-              value={watch('eventoCode')}
+              disabled={isSubmitting}
+              options={state.eventos}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
             />
           </Col>
           <Col md={4}>
-            <EventoCampoDropdown
-              id='eventoCampo'
-              label='Campo'
-              {...register('eventoCampoCode')}
+            <Dropdown
+              labelDisplay='Campo'
+              name='eventoCampoCode'
+              control={control}
               error={!!formErrors.eventoCampoCode}
               helperText={formErrors?.eventoCampoCode?.message}
               disabled={isSubmitting || watch('funcionCode') === 'C'}
-              value={watch('eventoCampoCode') || ''}
+              options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
             />
           </Col>
         </Row>
@@ -196,34 +195,27 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
           </Box>
           <Row>
             <Col md={4}>
-              <AccionDropdown
-                id='accion'
-                label='Acción'
-                {...register('accionCode')}
+              <Dropdown
+                labelDisplay='Acción'
+                name='accionCode'
+                control={control}
                 error={!!formErrors.accionCode}
                 helperText={formErrors?.accionCode?.message}
                 disabled={isSubmitting}
-                value={watch('accionCode') || ''}
-                onChange={event => {
-                  event.preventDefault();
-
-                  setValue('accionCode', event.target.value);
-                  setValue('filtroValue', '');
-                  if (event.target.value === '') {
-                    setValue('filtroCampoCode', '');
-                  }
-                }}
+                options={state.acciones}
+                emptyOption={{ value: '', label: 'Ninguno', code: '' }}
               />
             </Col>
             <Col md={4}>
-              <EventoCampoDropdown
-                id='filtroCampo'
-                label='Campo'
-                {...register('filtroCampoCode')}
+              <Dropdown
+                labelDisplay='Campo'
+                name='filtroCampoCode'
+                control={control}
                 error={!!formErrors.filtroCampoCode}
                 helperText={formErrors?.filtroCampoCode?.message}
                 disabled={isSubmitting || !watch('accionCode')}
-                value={watch('filtroCampoCode') || ''}
+                options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
+                emptyOption={{ value: '', label: 'Ninguno', code: '' }}
               />
             </Col>
             <Col md={4} sx={{ display: 'flex', justifyContent: 'center' }}>

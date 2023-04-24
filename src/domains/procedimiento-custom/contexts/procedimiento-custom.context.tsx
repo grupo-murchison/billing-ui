@@ -19,12 +19,14 @@ type InitialContext = {
   mainDataGrid: typeof useDataGrid.initialValues;
   state: ProcedimientoCustomState;
   dispatch: Dispatch<ActionParam>;
+  setEventoSelected: (prop: { payload: string }) => void;
 };
 
 const initialContext: InitialContext = {
   mainDataGrid: useDataGrid.initialValues,
   state: initialState,
   dispatch: () => null,
+  setEventoSelected: () => undefined,
 };
 
 const ProcedimientoCustomContext = createContext(initialContext);
@@ -65,8 +67,15 @@ const ProcedimientoCustomProvider = ({ children }: ProcedimientoCustomProviderPr
     }
   };
 
+  const setEventoSelected = ({ payload }: { payload: string }) => {
+    dispatch({
+      type: ACTION_TYPES.SET_EVENTO_SELECTED,
+      payload,
+    });
+  };
+
   return (
-    <ProcedimientoCustomContext.Provider value={{ mainDataGrid, state, dispatch }}>
+    <ProcedimientoCustomContext.Provider value={{ mainDataGrid, state, dispatch, setEventoSelected }}>
       {children}
     </ProcedimientoCustomContext.Provider>
   );

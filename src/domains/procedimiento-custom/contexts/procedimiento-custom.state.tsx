@@ -5,6 +5,7 @@ export type ProcedimientoCustomState = {
   eventos: DropdownSchemaType;
   eventosCampo: DropdownSchemaType;
   acciones: DropdownSchemaType;
+  eventoCodeSelected?: string;
 };
 
 export interface ActionParam {
@@ -21,6 +22,7 @@ export const initialState: ProcedimientoCustomState = {
 
 export const ACTION_TYPES = {
   SET_ENTITIES: 'SET_ENTITIES',
+  SET_EVENTO_SELECTED: 'SET_EVENTO_SELECTED',
 };
 
 export function reducer(
@@ -30,9 +32,14 @@ export function reducer(
   switch (action.type) {
     case ACTION_TYPES.SET_ENTITIES:
       return {
-        ...action.payload
+        ...state,
+        ...action.payload,
       };
-    
+    case ACTION_TYPES.SET_EVENTO_SELECTED:
+      return {
+        ...state,
+        eventoCodeSelected: action.payload,
+      };
     default:
       return state;
   }

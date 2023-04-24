@@ -5,21 +5,23 @@ import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contex
 
 const EventoCampoDropdown = ({ id, label, disabled, error, helperText, value, ...props }: EventoCampoDropdownProps) => {
   const {
-    state: { eventosCampo },
+    state: { eventosCampo, eventoCodeSelected },
   } = useContext(ProcedimientoCustomContext);
 
   return (
     <FormControl fullWidth error={error} disabled={disabled}>
       <InputLabel>{label}</InputLabel>
       <Select id={id} label={label} value={value} {...props}>
-        <MenuItem value="">
+        <MenuItem value=''>
           <em>Ninguno</em>
         </MenuItem>
-        {eventosCampo.map(({ code, label, value }) => (
-          <MenuItem key={value} value={code}>
-            {`${code} - ${label}`}
-          </MenuItem>
-        ))}
+        {eventosCampo
+          .filter(({ parentCode }) => parentCode === eventoCodeSelected)
+          .map(({ code, label, value }) => (
+            <MenuItem key={value} value={code}>
+              {`${code} - ${label}`}
+            </MenuItem>
+          ))}
       </Select>
       {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>

@@ -19,7 +19,16 @@ export const ProcedimientoCustomEditSchema = z
     filtroValue: z.string().optional(),
   })
   .superRefine(({ funcionCode, eventoCode, eventoCampoCode, accionCode, filtroCampoCode, filtroValue }, ctx) => {
-    if (funcionCode && funcionCode !== 'C') {
+    if (!funcionCode) {
+      ctx.addIssue({
+        code: 'custom',
+        message: 'Funcion es requerido.',
+        path: ['funcionCode'],
+        fatal: true,
+      });
+      
+      return z.never;
+    } else {
       if (!eventoCode) {
         ctx.addIssue({
           code: 'custom',
@@ -27,8 +36,8 @@ export const ProcedimientoCustomEditSchema = z
           path: ['eventoCode'],
         });
       }
-
-      if (!eventoCampoCode) {
+  
+      if (funcionCode !== 'C' && !eventoCampoCode) {
         ctx.addIssue({
           code: 'custom',
           message: 'Campo es requerido.',
