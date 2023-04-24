@@ -10,7 +10,7 @@ export const ProcedimientoCustomCreateSchema = z
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
     .max(50, { message: 'Ha superado el límite de caracteres' }),
-  funcionCode: z.union([z.string({ required_error: 'El campo es requerido.' }), z.literal(''), z.literal('C')]),
+  funcionCode: z.string({ required_error: 'El campo es requerido.' }),
   eventoCode: z.union([z.string({ required_error: 'El campo es requerido.' }), z.literal('')]),
   eventoCampoCode: z.union([z.string(), z.literal('')]).nullish(),
   accionCode: z.union([z.string(), z.literal(''), z.literal('FIL')]).nullish(),
@@ -18,7 +18,16 @@ export const ProcedimientoCustomCreateSchema = z
   filtroValue: z.string().optional(),
 })
 .superRefine(({ funcionCode, eventoCode, eventoCampoCode, accionCode, filtroCampoCode, filtroValue }, ctx) => {
-  if (funcionCode && funcionCode !== 'C') {
+  if (!funcionCode) {
+    ctx.addIssue({
+      code: 'custom',
+      message: 'Funcion es requerido.',
+      path: ['funcionCode'],
+      fatal: true,
+    });
+    
+    return z.never;
+  } else {
     if (!eventoCode) {
       ctx.addIssue({
         code: 'custom',
@@ -27,7 +36,7 @@ export const ProcedimientoCustomCreateSchema = z
       });
     }
 
-    if (!eventoCampoCode) {
+    if (funcionCode !== 'C' && !eventoCampoCode) {
       ctx.addIssue({
         code: 'custom',
         message: 'Campo es requerido.',
