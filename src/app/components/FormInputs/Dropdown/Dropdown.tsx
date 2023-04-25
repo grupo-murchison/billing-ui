@@ -1,13 +1,10 @@
-import { useContext } from 'react';
 import { Controller, Control } from 'react-hook-form';
 import {
   Select as MuiSelect,
   MenuItem,
   FormControl,
-  FormLabel,
   InputLabel,
   FormHelperText,
-  SelectChangeEvent,
 } from '@mui/material';
 
 import { DropdownItemType } from '@app/utils/zod.util';
