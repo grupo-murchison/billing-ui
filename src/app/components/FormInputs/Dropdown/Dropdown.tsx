@@ -49,7 +49,7 @@ export const Dropdown = ({
           ) : null}
           {options.map(({ value, code, label }) => (
             <MenuItem key={value} value={code}>
-              {label}
+              {`${code} - ${label}`}
             </MenuItem>
           ))}
         </MuiSelect>
