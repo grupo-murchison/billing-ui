@@ -13,6 +13,7 @@ export const DROPDOWN_ITEM_SCHEMA = z.object({
   value: z.string().or(z.number()),
   code: z.string(),
   label: z.string(),
+  isDefault: z.boolean().optional(),
   parentCode: z.string().optional(),
 });
 
