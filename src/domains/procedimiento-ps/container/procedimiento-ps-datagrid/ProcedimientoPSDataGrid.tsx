@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -62,20 +63,18 @@ const ProcedimientoPSDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }, { label: '' }, { label: '' }]}
+            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }]}
             repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
             rowTemplate={row => (
               <>
                 <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
                 <td align='center'>
-                  <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  </Stack>
                 </td>
               </>
             )}

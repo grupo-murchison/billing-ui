@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -64,7 +65,6 @@ const ProcedimientoQVariableDataGrid = () => {
               { label: 'TIPO' },
               { label: 'DICCIONARIO' },
               { label: '' },
-              { label: '' },
             ]}
             repositoryFunc={ProcedimientoQVariableRepository.getAllProcedimientoQVariablePaginated}
             rowTemplate={row => (
@@ -74,10 +74,10 @@ const ProcedimientoQVariableDataGrid = () => {
                 <td>{row.tipo}</td>
                 <td>{row.diccionario}</td>
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  </Stack>
                 </td>
               </>
             )}

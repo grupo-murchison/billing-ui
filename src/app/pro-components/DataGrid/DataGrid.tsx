@@ -12,6 +12,9 @@ import { DataGridProvider } from '@app/pro-components/DataGrid/contexts';
 import { DataGridProps } from '@app/pro-components/DataGrid/utils/types';
 
 import styles from '@app/pro-components/DataGrid/DataGrid.module.scss';
+import { EditIconButton } from './components/EditButton/EditButton';
+import { DeleteIconButton } from './components/DeleteButton/DeleteButton';
+import { ViewIconButton } from './components/ViewButton/ViewButton';
 
 const DataGrid = <T,>(props: DataGridProps<T>) => {
   return (
@@ -25,8 +28,11 @@ const DataGrid = <T,>(props: DataGridProps<T>) => {
   );
 };
 
-DataGrid.DeleteButton = DeleteButton;
-DataGrid.EditButton = EditButton;
-DataGrid.ViewButton = ViewButton;
+// DataGrid.DeleteButton = DeleteButton;
+// DataGrid.EditButton = EditButton;
+// DataGrid.ViewButton = ViewButton;
+DataGrid.DeleteButton = DeleteIconButton;
+DataGrid.EditButton = EditIconButton;
+DataGrid.ViewButton = ViewIconButton;
 
 export default DataGrid;
