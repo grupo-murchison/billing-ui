@@ -6,7 +6,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 class DiccionarioService {
   static getAllAsDropdown = async (): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>('api/v1/diccionarios/all/dropdown'),
+      ApiProvider.get<AnyValue>('v1/diccionarios/all/dropdown'),
     );
 
     return [response, error];
