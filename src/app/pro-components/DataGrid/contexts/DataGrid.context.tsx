@@ -27,6 +27,8 @@ const initialContext: InitialContext = {
   rowsCount: 0,
   rowsPerPage: 50,
   rowsTotalCount: 0,
+  loading: true,
+  error: null,
 };
 
 const DataGridContext = createContext(initialContext);
@@ -43,6 +45,8 @@ const DataGridProvider = <T,>({
   const [rowsPerPage, setRowsPerPage] = useState<number>(initialContext.rowsPerPage);
   const [rowsTotalCount, setRowsTotalCount] = useState<number>(initialContext.rowsTotalCount);
   const [rows, setRows] = useState<AnyValue[]>([]);
+  const [loading, setLoading] = useState<boolean>(initialContext.loading);
+  const [error, setError] = useState<any>(initialContext.error);
 
   const repositoryFuncParamsRef = useRef<DataGridRepositoryFuncParams>({
     page: initialContext.currentPage + 1,
@@ -59,12 +63,17 @@ const DataGridProvider = <T,>({
       ...repositoryFuncParamsRef.current,
       ...repositoryFuncParamsRef.current.filters,
       ...config?.filters,
-    }).then(response => {
-      if (response.data) {
-        setRows(response.data.data);
-        setRowsTotalCount(response.data.meta.itemCount);
-      }
-    });
+    })
+      .then(response => {
+        if (response.data) {
+          setRows(response.data.data);
+          setRowsTotalCount(response.data.meta.itemCount);
+        }
+      })
+      .catch(err => {
+        setError(err);
+      })
+      .finally(() => setLoading(false));
   }, []);
 
   const handleNextPageChange = useCallback(() => {
@@ -133,6 +142,8 @@ const DataGridProvider = <T,>({
         rowsCount,
         rowsPerPage,
         rowsTotalCount,
+        loading,
+        error,
       }}
     >
       {children}
@@ -152,6 +163,8 @@ type InitialContext = {
   rowsCount: number;
   rowsPerPage: number;
   rowsTotalCount: number;
+  loading: boolean;
+  error: any;
 };
 
 export { DataGridContext, DataGridProvider };

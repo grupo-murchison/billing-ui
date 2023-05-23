@@ -52,7 +52,7 @@ const ConceptoAcuerdoCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Concepto'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Concepto Acuerdo'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={12}>
