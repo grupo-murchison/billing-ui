@@ -76,7 +76,7 @@ const ProductoSoftlandDataGrid = () => {
                 <td>{row.activo ? 'SI' : 'NO'}</td>
                 <td>{DateLib.beautifyDBString(row.fechaCambioEstado)}</td>
                 <td align='center'>
-                  <Stack direction='row' spacing={1}>
+                  <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                     <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
                   </Stack>

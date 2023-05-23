@@ -1,7 +1,7 @@
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 export const label = {
-  procedimientoCustom: 'Procedimiento Q Custom',
+  procedimientoCustom: 'Procedimiento Cantidad Custom',
 };
 
 export const ProcedimientoCustomDataGridBreadcrumb: BreadcrumbItem[] = [
