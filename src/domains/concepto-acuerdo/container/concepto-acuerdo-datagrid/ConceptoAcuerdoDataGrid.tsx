@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -68,7 +69,6 @@ const ConceptoAcuerdoDataGrid = () => {
               { label: 'Pocedimiento Precio' },
               { label: 'Pocedimiento Producto Softland' },
               { label: '' },
-              { label: '' },
             ]}
             repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
             rowTemplate={row => (
@@ -80,10 +80,10 @@ const ConceptoAcuerdoDataGrid = () => {
                 <td>{row.procedimientoP}</td>
                 <td>{row.procedimientoProductoSoftland}</td>
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  </Stack>
                 </td>
               </>
             )}

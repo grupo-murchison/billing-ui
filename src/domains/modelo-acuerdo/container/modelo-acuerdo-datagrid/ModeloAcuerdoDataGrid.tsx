@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -56,13 +57,7 @@ const ModeloAcuerdoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             onClickNew={handleClickCreate}
-            columnHeads={[
-              { label: 'CÓDIGO' },
-              { label: 'NOMBRE' },
-              { label: 'DESCRIPCIÓN' },
-              { label: '' },
-              { label: '' },
-            ]}
+            columnHeads={[{ label: 'CÓDIGO' }, { label: 'NOMBRE' }, { label: 'DESCRIPCIÓN' }, { label: '' }]}
             repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
             rowTemplate={row => (
               <>
@@ -70,10 +65,10 @@ const ModeloAcuerdoDataGrid = () => {
                 <td>{row.nombre}</td>
                 <td>{row.descripcion}</td>
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  </Stack>
                 </td>
               </>
             )}

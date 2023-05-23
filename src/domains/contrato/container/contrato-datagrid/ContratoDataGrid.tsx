@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -67,7 +68,6 @@ const ContratoDataGrid = () => {
               { label: 'Fecha Inicio' },
               { label: 'Fecha Fin' },
               { label: '' },
-              { label: '' },
             ]}
             onClickNew={handleClickCreate}
             repositoryFunc={ContratoRepository.getAllContratoPaginated}
@@ -83,10 +83,10 @@ const ContratoDataGrid = () => {
                 <td>{rowSanitizer(row.fechaFinContrato && DateLib.beautifyDBString(row.fechaFinContrato))}</td>
 
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
+                  </Stack>
                 </td>
               </>
             )}

@@ -6,8 +6,7 @@ import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 
 class FuncionService {
-  // TODO: Implement next BASE_PATH const in the rest of service databases.
-  private static BASE_PATH = 'api/v1/funciones';
+  private static BASE_PATH = 'v1/funciones';
 
   static getAllAsDropdown = async (): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(

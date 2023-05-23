@@ -6,7 +6,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 class ProcedimientoBuiltinService {
   static getAllAsDropdown = async (): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>('api/v1/procedimiento-builtin/all/dropdown'),
+      ApiProvider.get<AnyValue>('v1/procedimiento-builtin/all/dropdown'),
     );
 
     return [response, error];

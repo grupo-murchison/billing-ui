@@ -8,7 +8,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 class ProcedimientoPIntervaloService {
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>('api/v1/procedimiento-p-intervalo/all/pagination', { params }),
+      ApiProvider.get<AnyValue>('v1/procedimiento-p-intervalo/all/pagination', { params }),
     );
 
     return [response, error];
@@ -16,7 +16,7 @@ class ProcedimientoPIntervaloService {
 
   static getById = async (id: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`api/v1/procedimiento-p-intervalo/${id}`),
+      ApiProvider.get<AnyValue>(`v1/procedimiento-p-intervalo/${id}`),
     );
 
     return [response, error];
@@ -24,7 +24,7 @@ class ProcedimientoPIntervaloService {
 
   static post = async (procedimientoPIntervalo: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.post<AnyValue>('api/v1/procedimiento-p-intervalo/crud', procedimientoPIntervalo),
+      ApiProvider.post<AnyValue>('v1/procedimiento-p-intervalo/crud', procedimientoPIntervalo),
     );
 
     return [response, error];
@@ -32,7 +32,7 @@ class ProcedimientoPIntervaloService {
 
   static patch = async (procedimientoPIntervalo: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.patch<AnyValue>('api/v1/procedimiento-p-intervalo/crud', procedimientoPIntervalo),
+      ApiProvider.patch<AnyValue>('v1/procedimiento-p-intervalo/crud', procedimientoPIntervalo),
     );
 
     return [response, error];
@@ -40,7 +40,7 @@ class ProcedimientoPIntervaloService {
 
   static deleteById = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.delete<AnyValue>(`api/v1/procedimiento-p-intervalo/crud/${id}`),
+      ApiProvider.delete<AnyValue>(`v1/procedimiento-p-intervalo/crud/${id}`),
     );
 
     return [response, error];

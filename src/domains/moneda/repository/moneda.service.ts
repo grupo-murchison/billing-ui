@@ -3,9 +3,10 @@ import { ApiProvider } from '@providers';
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 
+const BASE_PATH = 'v1/monedas';
 class MonedaService {
   static getAllAsDropdown = async (): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>('api/v1/monedas/all/dropdown'));
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`${BASE_PATH}/all/dropdown`));
 
     return [response, error];
   };

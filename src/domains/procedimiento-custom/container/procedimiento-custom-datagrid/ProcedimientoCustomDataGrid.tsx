@@ -1,6 +1,7 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
+import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -62,7 +63,6 @@ const ProcedimientoCustomDataGrid = () => {
               { label: 'EVENTO' },
               { label: 'CAMPO' },
               { label: '' },
-              { label: '' },
             ]}
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
             rowTemplate={row => (
@@ -73,10 +73,10 @@ const ProcedimientoCustomDataGrid = () => {
                 <td>{row.evento}</td>
                 <td>{row.eventoCampo}</td>
                 <td align='center'>
-                  <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                </td>
-                <td align='center'>
-                  <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  <Stack direction='row' spacing={1}>
+                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                  </Stack>
                 </td>
               </>
             )}

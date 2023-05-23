@@ -5,26 +5,26 @@ import type { DataGridRepositoryFuncParams } from '@app/pro-components';
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 
-const ENDPOINT = 'api/v1/conceptos-acuerdo';
+const BASE_PATH = 'v1/conceptos-acuerdo';
 
 class ConceptoAcuerdoService {
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${ENDPOINT}/all/pagination`, { params }),
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/all/pagination`, { params }),
     );
 
     return [response, error];
   };
 
   static getById = async (id: string): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`${ENDPOINT}/${id}`));
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`${BASE_PATH}/${id}`));
 
     return [response, error];
   };
 
   static post = async (conceptoAcuerdo: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.post<AnyValue>(`${ENDPOINT}/crud`, conceptoAcuerdo),
+      ApiProvider.post<AnyValue>(`${BASE_PATH}/crud`, conceptoAcuerdo),
     );
 
     return [response, error];
@@ -32,14 +32,14 @@ class ConceptoAcuerdoService {
 
   static patch = async (conceptoAcuerdo: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.patch<AnyValue>(`${ENDPOINT}/crud`, conceptoAcuerdo),
+      ApiProvider.patch<AnyValue>(`${BASE_PATH}/crud`, conceptoAcuerdo),
     );
 
     return [response, error];
   };
 
   static deleteById = async (id: number): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.delete<AnyValue>(`${ENDPOINT}/crud/${id}`));
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.delete<AnyValue>(`${BASE_PATH}/crud/${id}`));
 
     return [response, error];
   };

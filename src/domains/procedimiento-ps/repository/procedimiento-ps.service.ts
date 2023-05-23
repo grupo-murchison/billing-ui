@@ -8,7 +8,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 class ProcedimientoPSService {
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>('api/v1/procedimiento-ps/all/pagination', { params }),
+      ApiProvider.get<AnyValue>('v1/procedimiento-ps/all/pagination', { params }),
     );
 
     return [response, error];
@@ -16,23 +16,21 @@ class ProcedimientoPSService {
 
   static getAllAsDropdown = async (): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>('api/v1/procedimiento-ps/all/dropdown'),
+      ApiProvider.get<AnyValue>('v1/procedimiento-ps/all/dropdown'),
     );
 
     return [response, error];
   };
 
   static getById = async (id: string): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`api/v1/procedimiento-ps/${id}`),
-    );
+    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.get<AnyValue>(`v1/procedimiento-ps/${id}`));
 
     return [response, error];
   };
 
   static post = async (procedimientoPS: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.post<AnyValue>('api/v1/procedimiento-ps/crud', procedimientoPS),
+      ApiProvider.post<AnyValue>('v1/procedimiento-ps/crud', procedimientoPS),
     );
 
     return [response, error];
@@ -40,7 +38,7 @@ class ProcedimientoPSService {
 
   static patch = async (procedimientoPS: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.patch<AnyValue>('api/v1/procedimiento-ps/crud', procedimientoPS),
+      ApiProvider.patch<AnyValue>('v1/procedimiento-ps/crud', procedimientoPS),
     );
 
     return [response, error];
@@ -48,7 +46,7 @@ class ProcedimientoPSService {
 
   static deleteById = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.delete<AnyValue>(`api/v1/procedimiento-ps/crud/${id}`),
+      ApiProvider.delete<AnyValue>(`v1/procedimiento-ps/crud/${id}`),
     );
 
     return [response, error];
