@@ -42,6 +42,7 @@ const ProcedimientoPDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Precio?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoPRepository.deleteProcedimientoPById(id);

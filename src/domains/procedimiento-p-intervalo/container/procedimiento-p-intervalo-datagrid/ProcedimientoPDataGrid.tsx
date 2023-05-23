@@ -34,6 +34,7 @@ const ProcedimientoPIntervaloDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Precio Intervalo?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(id);

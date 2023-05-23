@@ -42,6 +42,7 @@ const ProcedimientoQDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Cantidad?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoQRepository.deleteProcedimientoQById(id);

@@ -35,6 +35,7 @@ const ModeloAcuerdoDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Modelo Acuerdo?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ModeloAcuerdoRepository.deleteModeloAcuerdoById(id);

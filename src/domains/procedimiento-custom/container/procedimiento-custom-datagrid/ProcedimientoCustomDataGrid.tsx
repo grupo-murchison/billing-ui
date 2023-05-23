@@ -35,6 +35,7 @@ const ProcedimientoCustomDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Cantidad Custom?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoCustomRepository.deleteProcedimientoCustomById(id);

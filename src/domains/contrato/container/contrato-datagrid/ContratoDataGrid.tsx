@@ -38,7 +38,8 @@ const ContratoDataGrid = () => {
   const handleClickDelete = useCallback(
     (row: ContratoRowDataGridSchema) => {
       confirmDialog.open({
-        message: `Desea eliminar el Contrato Nº ${row.nroContrato}?`,
+        title: '¿Eliminar Contrato?',
+        message: `Se eliminará el Contrato Nº ${row.nroContrato}?`,
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();

@@ -37,6 +37,7 @@ const ProductoSoftlandDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Producto Softland?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProductoSoftlandRepository.deleteProductoSoftlandById(id);

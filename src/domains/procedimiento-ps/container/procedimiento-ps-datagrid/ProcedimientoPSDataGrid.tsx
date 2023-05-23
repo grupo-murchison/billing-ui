@@ -42,6 +42,7 @@ const ProcedimientoPSDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Producto Softland?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoPSRepository.deleteProcedimientoPSById(id);
