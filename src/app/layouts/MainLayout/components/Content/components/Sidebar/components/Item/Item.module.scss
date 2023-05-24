@@ -15,11 +15,11 @@
   position: relative;
 
   &:hover {
-    background-color: VARS.$color-main-nn;
+    background-color: VARS.$color-primary-nn;
   }
 
   &--active {
-    background-color: VARS.$color-main-nn;
+    background-color: VARS.$color-primary-nn;
 
     &::before {
       content: '';

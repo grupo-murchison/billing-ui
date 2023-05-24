@@ -2,14 +2,18 @@ $font-family: Poppins, sans-serif;
 
 $color-white: #ffffff;
 
-$color-main: rgb(0, 134, 81);
-$color-gray-main: #38485c;
-$color-gray-alter-1: #505e70;
-$color-gray-alter-2: #9eaab8;
+$color-primary: #007749;
+$color-primary-nn: rgb(66, 154, 120);
 
-$color-main-nn: rgb(66, 154, 120);
+$color-gray-main: #38485c;
+$color-secondary: #505e70;
+$color-gray-disabled: #9eaab8;
+
 
 $sidebar-width: 50px;
 $sidebar-width--open: calc(300px - $sidebar-width);
 
 $header-height: 60px;
+
+$background-primary: #ffffff;
+$background-secondary: #f3f6f9;

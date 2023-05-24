@@ -8,7 +8,7 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <div className={styles['breadcrumb']}>
       <Link to='/'>
-        <span className={styles['breadcrumb-inicio']}>Inicio</span>
+        <span className={""}>Inicio</span>
       </Link>
       <span>&#62;</span>
       {items.map((x, k) => {

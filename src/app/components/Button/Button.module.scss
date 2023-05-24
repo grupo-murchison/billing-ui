@@ -17,50 +17,50 @@
 }
 
 .button--primary {
-  border: 1px solid VARS.$color-main;
+  border: 1px solid VARS.$color-primary;
 
-  background-color: VARS.$color-main;
+  background-color: VARS.$color-primary;
 
   color: VARS.$color-white;
 
   // &:hover {
   //   color: VARS.$color-white;
 
-  //   background-color: VARS.$color-main;
+  //   background-color: VARS.$color-primary;
 
-  //   border-color: VARS.$color-main;
+  //   border-color: VARS.$color-primary;
   // }
 }
 
 .button--primary-outlined {
-  border: 1px solid rgb(112, 112, 112);
+  border: 1px solid VARS.$color-secondary;
 
-  color: VARS.$color-main;
+  color: VARS.$color-primary;
 
   background-color: VARS.$color-white;
 
   &:hover {
     color: VARS.$color-white;
 
-    background-color: VARS.$color-main;
+    background-color: VARS.$color-primary;
 
-    border-color: VARS.$color-main;
+    border-color: VARS.$color-primary;
   }
 }
 
 .button--secondary-outlined {
-  border: 1px solid rgb(112, 112, 112);
+  border: 1px solid VARS.$color-secondary;
 
-  color: rgb(112, 112, 112);
+  color: VARS.$color-secondary;
 
   background-color: VARS.$color-white;
 
   &:hover {
     color: VARS.$color-white;
 
-    background-color: rgb(112, 112, 112);
+    background-color: VARS.$color-secondary;
 
-    border-color: rgb(112, 112, 112);
+    border-color: VARS.$color-secondary;
   }
 }
 
