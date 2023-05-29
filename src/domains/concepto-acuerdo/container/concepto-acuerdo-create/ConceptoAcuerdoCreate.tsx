@@ -139,7 +139,7 @@ const ConceptoAcuerdoCreate = () => {
         </Row>
         <Row>
           <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+            <Button color='secondary' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
             <Button color='primary' type='submit' disabled={isSubmitting}>
