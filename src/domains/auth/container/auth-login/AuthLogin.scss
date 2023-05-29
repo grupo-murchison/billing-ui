@@ -1,3 +1,5 @@
+@use 'src/assets/scss/variables' as VARS;
+
 .auth-login {
   width: 100vw;
   height: 100vh;
@@ -5,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  background-color: #e3f2fd;
+  background-color: VARS.$background-secondary;
 
   .login__card {
     padding: 20px;
@@ -42,7 +44,7 @@
       width: 100%;
       padding-top: 20px;
 
-      border-top: 1px solid rgb(238, 238, 238);
+      border-top: 1.25px solid VARS.$color-gray-disabled;
 
       text-align: center;
     }
