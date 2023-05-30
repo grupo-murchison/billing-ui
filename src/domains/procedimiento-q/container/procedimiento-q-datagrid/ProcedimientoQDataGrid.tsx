@@ -65,9 +65,9 @@ const ProcedimientoQDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'CÓDIGO' },
-              { label: 'DESCRIPCIÓN' },
-              { label: 'DENOMINACIÓN' },
+              { label: 'Código' },
+              { label: 'Denominación' },
+              // { label: 'Descripción' },
               { label: 'Tipo Procedimiento Cantidad' },
               { label: 'Procedimiento Builtin' },
               { label: 'Procedimiento Custom' },
@@ -77,8 +77,8 @@ const ProcedimientoQDataGrid = () => {
             rowTemplate={row => (
               <>
                 <td>{row.codigo}</td>
-                <td>{row.descripcion}</td>
                 <td>{row.denominacion}</td>
+                {/* <td>{row.descripcion}</td> */}
                 <td>{row.tipoProcedimientoQ}</td>
                 <td>{row.procedimientoBuiltin}</td>
                 <td>{row.procedimientoCustom}</td>

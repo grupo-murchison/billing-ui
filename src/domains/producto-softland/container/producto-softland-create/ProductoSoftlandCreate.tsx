@@ -60,7 +60,7 @@ const ProductoSoftlandCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Producto Softland'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Producto Softland'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
