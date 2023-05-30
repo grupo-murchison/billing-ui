@@ -1,3 +1,5 @@
+@use 'src/assets/scss/variables.scss' as VARS;
+
 .rows-per-page {
   display: flex;
   align-items: center;
@@ -6,7 +8,7 @@
     font-weight: normal;
     font-size: 0.875rem;
 
-    color: rgb(112, 112, 112);
+    color: VARS.$color-secondary;
 
     margin-right: 8px;
   }

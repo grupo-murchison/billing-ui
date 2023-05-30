@@ -42,6 +42,7 @@ const ProcedimientoPDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Precio?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoPRepository.deleteProcedimientoPById(id);
@@ -71,7 +72,7 @@ const ProcedimientoPDataGrid = () => {
                 <td>{row.denominacion}</td>
                 <td>{row.moneda}</td>
                 <td align='center'>
-                  <Stack direction='row' spacing={1}>
+                  <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                     <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />

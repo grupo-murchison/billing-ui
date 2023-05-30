@@ -6,15 +6,15 @@
       height: 50px;
       max-height: 50px;
 
-      padding: 0 25px;
+      padding: 0 0.87rem;
 
       font-size: 0.87rem;
 
-      color: rgb(112, 112, 112);
+      color: VARS.$color-secondary;
     }
 
     &:nth-child(even) {
-      background-color: rgb(243, 246, 249);
+      background-color: VARS.$background-secondary;
     }
 
     &:nth-child(odd) {
@@ -22,7 +22,7 @@
     }
 
     &:hover {
-      background-color: rgb(204, 206, 208);
+      background-color: #ccced0;
     }
   }
 }

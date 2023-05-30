@@ -42,6 +42,7 @@ const ProcedimientoQDataGrid = () => {
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
+        title: '¿Eliminar Procedimiento Cantidad?',
         message: 'Desea eliminar el registro?',
         async onClickYes() {
           await ProcedimientoQRepository.deleteProcedimientoQById(id);
@@ -64,9 +65,9 @@ const ProcedimientoQDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'CÓDIGO' },
-              { label: 'DESCRIPCIÓN' },
-              { label: 'DENOMINACIÓN' },
+              { label: 'Código' },
+              { label: 'Denominación' },
+              // { label: 'Descripción' },
               { label: 'Tipo Procedimiento Cantidad' },
               { label: 'Procedimiento Builtin' },
               { label: 'Procedimiento Custom' },
@@ -76,13 +77,13 @@ const ProcedimientoQDataGrid = () => {
             rowTemplate={row => (
               <>
                 <td>{row.codigo}</td>
-                <td>{row.descripcion}</td>
                 <td>{row.denominacion}</td>
+                {/* <td>{row.descripcion}</td> */}
                 <td>{row.tipoProcedimientoQ}</td>
                 <td>{row.procedimientoBuiltin}</td>
                 <td>{row.procedimientoCustom}</td>
                 <td align='center'>
-                  <Stack direction='row' spacing={1}>
+                  <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
                     <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />

@@ -66,7 +66,7 @@ const ConceptoAcuerdoEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Concepto'>
+    <Modal isOpen onClose={handleClose} title='Editar Concepto Acuerdo'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={12}>

@@ -4,7 +4,7 @@
   position: absolute;
   width: VARS.$sidebar-width;
   min-height: calc(100vh - VARS.$header-height);
-  background-color: VARS.$color-main;
+  background-color: VARS.$color-primary;
 }
 
 .content-sidebar--open {

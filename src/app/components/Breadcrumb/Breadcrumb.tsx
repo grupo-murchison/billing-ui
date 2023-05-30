@@ -7,7 +7,9 @@ import styles from '@app/components/Breadcrumb/Breadcrumb.module.scss';
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
   return (
     <div className={styles['breadcrumb']}>
-      <Link to='/'>Inicio</Link>
+      <Link to='/'>
+        <span className={""}>Inicio</span>
+      </Link>
       <span>&#62;</span>
       {items.map((x, k) => {
         return k !== items.length - 1 ? (

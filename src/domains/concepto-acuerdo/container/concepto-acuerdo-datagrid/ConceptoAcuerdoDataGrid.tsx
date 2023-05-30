@@ -34,11 +34,12 @@ const ConceptoAcuerdoDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        message: 'Desea eliminar el registro?',
+        title: '¿Eliminar Concepto Acuerdo?',
+        message: `Se eliminará el Concepto Acuerdo ${row.modeloAcuerdo} ?`,
         async onClickYes() {
-          await ConceptoAcuerdoRepository.deleteConceptoAcuerdoById(id);
+          await ConceptoAcuerdoRepository.deleteConceptoAcuerdoById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -80,9 +81,9 @@ const ConceptoAcuerdoDataGrid = () => {
                 <td>{row.procedimientoP}</td>
                 <td>{row.procedimientoProductoSoftland}</td>
                 <td align='center'>
-                  <Stack direction='row' spacing={1}>
+                  <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

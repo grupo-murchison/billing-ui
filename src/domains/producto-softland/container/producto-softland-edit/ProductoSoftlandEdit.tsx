@@ -78,7 +78,7 @@ const ProductoSoftlandEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
+    <Modal isOpen onClose={handleClose} title='Editar Producto Softland'>
       <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>

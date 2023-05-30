@@ -27,7 +27,7 @@
     background-color: white;
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
-    width: min(800px, 80vw);
+    width: min(1200px, 120vw);
 
     .modal-content__header {
       display: flex;
@@ -39,7 +39,7 @@
         flex-grow: 1;
         font-size: 1.5rem;
         font-weight: 600;
-        color: VARS.$color-main;
+        color: VARS.$color-primary;
       }
 
       .mch__closeButton {
