@@ -16,10 +16,10 @@ const Header = () => {
           <MenuIcon />
         </span>
       </div>
+      {/* // TODO Ajustar estilos del logo  */}
       <div className={styles['header-container']}>
         <div className={styles['header-brand']}>
-          <h2>GRUPO</h2>
-          <h1>MURCHISON</h1>
+          <img src='/logo/logo-murchison.png' alt='LOGO' />
         </div>
         <div className={`${styles['icon-wrapper']} ${styles['icon-wrapper-search']}`}>
           <SearchIcon />
