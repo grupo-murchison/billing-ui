@@ -32,14 +32,8 @@
 }
 
 .header-brand {
-  h1 {
-    color: VARS.$color-primary;
-    line-height: 1.5rem;
-  }
-
-  h2 {
-    color: VARS.$color-secondary;
-    line-height: 1.25rem;
+  img {
+    max-height: 2.8rem;
   }
 }
 

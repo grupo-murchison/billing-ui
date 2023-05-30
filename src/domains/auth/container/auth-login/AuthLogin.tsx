@@ -28,7 +28,7 @@ const AuthLogin = () => {
         <Grid container spacing={2}>
           <Grid xs={12}>
             <div className='lc__logo'>
-              <img src='/logo/logo-placeholder.png' alt='LOGO' />
+              <img src='/logo/logo-murchison.png' alt='LOGO' />
             </div>
           </Grid>
           <Grid xs={12}>
