@@ -74,7 +74,7 @@ const ProcedimientoQEdit = () => {
               {...register('denominacion')}
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
-              disabled
+              disabled={isSubmitting}
             />
           </Col>
         </Row>
