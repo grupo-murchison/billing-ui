@@ -64,7 +64,7 @@ const DeleteDialog = ({ message, title, isLoading, identifier, entity, handleCli
   <>
     <DialogTitle  style={{fontWeight:'Bold'}} color='error'>{`¿Eliminar ${entity}?`}</DialogTitle>
     <DialogContent>
-      <DialogContentText>Se eliminará {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
+      <DialogContentText>Se eliminará el registro {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
     </DialogContent>
     <DialogActions>
       <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>

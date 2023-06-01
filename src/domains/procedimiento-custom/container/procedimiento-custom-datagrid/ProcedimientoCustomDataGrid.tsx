@@ -11,7 +11,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
-import { ProcedimientoCustomDataGridBreadcrumb } from '@domains/procedimiento-custom/constants';
+import { ProcedimientoCustomDataGridBreadcrumb, label } from '@domains/procedimiento-custom/constants';
 import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
 
 const ProcedimientoCustomDataGrid = () => {
@@ -33,12 +33,12 @@ const ProcedimientoCustomDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Cantidad Custom?',
-        message: 'Desea eliminar el registro?',
+        entity: `${label.procedimientoCustom}`,
+        identifier: `${row.denominacion}`,
         async onClickYes() {
-          await ProcedimientoCustomRepository.deleteProcedimientoCustomById(id);
+          await ProcedimientoCustomRepository.deleteProcedimientoCustomById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -76,7 +76,7 @@ const ProcedimientoCustomDataGrid = () => {
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

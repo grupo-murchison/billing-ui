@@ -11,7 +11,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
-import { ProcedimientoPSDataGridBreadcrumb } from '@domains/procedimiento-ps/constants';
+import { ProcedimientoPSDataGridBreadcrumb, labelAndPath } from '@domains/procedimiento-ps/constants';
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 
 const ProcedimientoPSDataGrid = () => {
@@ -40,12 +40,12 @@ const ProcedimientoPSDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Producto Softland?',
-        message: 'Desea eliminar el registro?',
+        entity: `${labelAndPath.label}`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
-          await ProcedimientoPSRepository.deleteProcedimientoPSById(id);
+          await ProcedimientoPSRepository.deleteProcedimientoPSById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -74,7 +74,7 @@ const ProcedimientoPSDataGrid = () => {
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

@@ -13,6 +13,7 @@ import { DataGrid } from '@app/pro-components';
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQDataGridBreadcrumb } from '@domains/procedimiento-q/constants';
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
+import { label } from '@domains/procedimiento-q/constants';
 
 const ProcedimientoQDataGrid = () => {
   const _navigate = useNavigate();
@@ -40,12 +41,12 @@ const ProcedimientoQDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Cantidad?',
-        message: 'Desea eliminar el registro?',
+        entity: `${label.procedimientoQ}`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
-          await ProcedimientoQRepository.deleteProcedimientoQById(id);
+          await ProcedimientoQRepository.deleteProcedimientoQById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -86,7 +87,7 @@ const ProcedimientoQDataGrid = () => {
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>
