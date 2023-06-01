@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 // TODO: Update is loading prop in order to show some loading animation.
-const ConfirmDialog = ({ message, title, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
+const ConfirmDialog = ({ message, title, identifier, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -36,6 +36,7 @@ const ConfirmDialog = ({ message, title, onClickYes, onClickNot, onClose }: Conf
         message={message}
         title={title}
         isLoading={isLoading}
+        identifier={identifier}
         handleClickYes={handleClickYes}
         handleClickNot={handleClickNot}
       />
@@ -59,11 +60,12 @@ const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogIn
   </>
 );
 
-const DeleteDialog = ({ message, title, isLoading, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
+const DeleteDialog = ({ message, title, isLoading, identifier, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
+  //TODO: no usar estilos en linea, osea remplazar los existentes
   <>
-    <DialogTitle>{title || '¿Eliminar?'}</DialogTitle>
+    <DialogTitle  style={{fontWeight:'Bold'}} color='error'>{title || '¿Eliminar?'}</DialogTitle>
     <DialogContent>
-      <DialogContentText>{message}</DialogContentText>
+      <DialogContentText>{message} <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
     </DialogContent>
     <DialogActions>
       <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
@@ -79,6 +81,7 @@ const DeleteDialog = ({ message, title, isLoading, handleClickYes, handleClickNo
 type ConfirmDialogProps = {
   message: string;
   title: string;
+  identifier: string;
   onClickYes: () => void;
   onClickNot: () => void;
   onClose: () => void;
@@ -88,6 +91,7 @@ type ConfirmDialogInternalProps = {
   message: string;
   title: string;
   isLoading: boolean;
+  identifier: string;
   handleClickYes: () => void;
   handleClickNot?: () => void;
 };

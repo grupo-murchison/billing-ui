@@ -40,6 +40,7 @@ const ContratoDataGrid = () => {
       confirmDialog.open({
         title: '¿Eliminar Contrato?',
         message: `Se eliminará el Contrato Nº ${row.nroContrato}?`,
+        identifier: '',
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();

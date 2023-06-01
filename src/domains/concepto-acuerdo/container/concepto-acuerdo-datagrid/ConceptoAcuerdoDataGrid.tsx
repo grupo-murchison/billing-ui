@@ -33,11 +33,13 @@ const ConceptoAcuerdoDataGrid = () => {
     [_navigate, modeloAcuerdoId],
   );
 
+  //TODO:  Obtener el valor con el nombre de la entidad de una constante, 
   const handleClickDelete = useCallback(
     (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Concepto Acuerdo?',
-        message: `Se eliminará el Concepto Acuerdo ${row.modeloAcuerdo} ?`,
+        title: `¿Eliminar Concepto Acuerdo?`,
+        message: `Se eliminará el Concepto Acuerdo`,
+        identifier: `${row.modeloAcuerdo}`,
         async onClickYes() {
           await ConceptoAcuerdoRepository.deleteConceptoAcuerdoById(row.id);
           confirmDialog.close();
