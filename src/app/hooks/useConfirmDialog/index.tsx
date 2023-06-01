@@ -11,12 +11,13 @@ const useConfirmDialog = () => {
   }, []);
 
   const openDialog: OpenDialog = useCallback(
-    ({ message, title, identifier, onClickNot, onClickYes }) => {
+    ({ message, title, identifier, entity, onClickNot, onClickYes }) => {
       setDialogNode(
         <ConfirmDialog
           title={title}
           message={message}
           identifier={identifier}
+          entity={entity}
           onClickYes={onClickYes}
           onClickNot={onClickNot || destroyDialog}
           onClose={destroyDialog}
@@ -29,6 +30,6 @@ const useConfirmDialog = () => {
   return { open: openDialog, close: destroyDialog };
 };
 
-type OpenDialog = (params: { message: string; title: string, identifier: string, onClickYes: () => void; onClickNot?: () => void }) => void;
+type OpenDialog = (params: { message?: string; title?: string, identifier: string, entity: string, onClickYes: () => void; onClickNot?: () => void }) => void;
 
 export default useConfirmDialog;
