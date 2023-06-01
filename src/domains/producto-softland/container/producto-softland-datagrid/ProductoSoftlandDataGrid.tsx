@@ -38,7 +38,7 @@ const ProductoSoftlandDataGrid = () => {
     (row: any) => {
       confirmDialog.open({
         entity: `${labelAndPath.label}`,
-        identifier: `${row.agrupacion}`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
           await ProductoSoftlandRepository.deleteProductoSoftlandById(row.id);
           confirmDialog.close();
