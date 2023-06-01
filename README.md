@@ -13,7 +13,7 @@ Hacer una copia de _.env.test_, renombrarla como `.env.local` y actualizar los v
 $ yarn run dev
 
 # Apunta a test ( .env.test )
-$ yarn run dev --mode test
+$ yarn run dev -- --mode=test
 ```
 
 ### Dockerizar

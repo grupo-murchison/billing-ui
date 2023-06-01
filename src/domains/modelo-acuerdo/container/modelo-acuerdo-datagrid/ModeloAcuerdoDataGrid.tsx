@@ -11,7 +11,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DataGrid } from '@app/pro-components';
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
-import { ModeloAcuerdoDataGridBreadcrumb } from '@domains/modelo-acuerdo/constants';
+import { ModeloAcuerdoDataGridBreadcrumb, ModeloAcuerdoLabelAndPath } from '@domains/modelo-acuerdo/constants';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
 
 const ModeloAcuerdoDataGrid = () => {
@@ -33,12 +33,13 @@ const ModeloAcuerdoDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    //TODO: tipar o buscar si existe para rows de Modelo Acuerdo
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Modelo Acuerdo?',
-        message: 'Desea eliminar el registro?',
+        entity: `${ModeloAcuerdoLabelAndPath.label}`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
-          await ModeloAcuerdoRepository.deleteModeloAcuerdoById(id);
+          await ModeloAcuerdoRepository.deleteModeloAcuerdoById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -68,7 +69,7 @@ const ModeloAcuerdoDataGrid = () => {
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

@@ -13,6 +13,7 @@ import { DataGrid } from '@app/pro-components';
 import { ConceptoAcuerdoContext } from '@domains/concepto-acuerdo/contexts';
 import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/constants';
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
+import { ConceptoAcuerdoLabelAndPath } from '@domains/concepto-acuerdo/constants';
 
 const ConceptoAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -33,11 +34,13 @@ const ConceptoAcuerdoDataGrid = () => {
     [_navigate, modeloAcuerdoId],
   );
 
+  //TODO:  Obtener el valor con el nombre de la entidad de una constante, 
   const handleClickDelete = useCallback(
     (row: any) => {
+      console.log(ConceptoAcuerdoLabelAndPath)
       confirmDialog.open({
-        title: '¿Eliminar Concepto Acuerdo?',
-        message: `Se eliminará el Concepto Acuerdo ${row.modeloAcuerdo} ?`,
+        entity: `${ConceptoAcuerdoLabelAndPath.label}`,
+        identifier: `${row.modeloAcuerdo}`,
         async onClickYes() {
           await ConceptoAcuerdoRepository.deleteConceptoAcuerdoById(row.id);
           confirmDialog.close();

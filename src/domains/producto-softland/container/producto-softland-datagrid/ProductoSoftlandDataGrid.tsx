@@ -11,7 +11,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DataGrid } from '@app/pro-components';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
-import { ProductoSoftlandDataGridBreadcrumb } from '@domains/producto-softland/constants';
+import { ProductoSoftlandDataGridBreadcrumb, labelAndPath } from '@domains/producto-softland/constants';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib } from '@libs';
@@ -35,12 +35,12 @@ const ProductoSoftlandDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Producto Softland?',
-        message: 'Desea eliminar el registro?',
+        entity: `${labelAndPath.label}`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
-          await ProductoSoftlandRepository.deleteProductoSoftlandById(id);
+          await ProductoSoftlandRepository.deleteProductoSoftlandById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -78,7 +78,7 @@ const ProductoSoftlandDataGrid = () => {
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

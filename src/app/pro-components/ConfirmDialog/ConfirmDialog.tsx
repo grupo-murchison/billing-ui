@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 
 // TODO: Update is loading prop in order to show some loading animation.
-const ConfirmDialog = ({ message, title, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
+const ConfirmDialog = ({ message, title, identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -33,9 +33,9 @@ const ConfirmDialog = ({ message, title, onClickYes, onClickNot, onClose }: Conf
   return (
     <Dialog fullScreen={fullScreen} open onClose={onClose}>
       <DeleteDialog
-        message={message}
-        title={title}
+        entity={entity}
         isLoading={isLoading}
+        identifier={identifier}
         handleClickYes={handleClickYes}
         handleClickNot={handleClickNot}
       />
@@ -59,11 +59,12 @@ const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogIn
   </>
 );
 
-const DeleteDialog = ({ message, title, isLoading, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
+const DeleteDialog = ({ message, title, isLoading, identifier, entity, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
+  //TODO: no usar estilos en linea, osea remplazar los existentes
   <>
-    <DialogTitle>{title || '¿Eliminar?'}</DialogTitle>
+    <DialogTitle  style={{fontWeight:'Bold'}} color='error'>{`¿Eliminar ${entity}?`}</DialogTitle>
     <DialogContent>
-      <DialogContentText>{message}</DialogContentText>
+      <DialogContentText>Se eliminará el registro {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
     </DialogContent>
     <DialogActions>
       <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
@@ -76,18 +77,25 @@ const DeleteDialog = ({ message, title, isLoading, handleClickYes, handleClickNo
   </>
 );
 
+// TODO: luego de corrobar el alcanze de estos componentes. reemplzar message y title por entity
+//* es la razon por la cual los atributos son opcionales
+
 type ConfirmDialogProps = {
-  message: string;
-  title: string;
+  message?: string;
+  title?: string;
+  identifier: string;
+  entity?: string;
   onClickYes: () => void;
   onClickNot: () => void;
   onClose: () => void;
 };
 
 type ConfirmDialogInternalProps = {
-  message: string;
-  title: string;
+  message?: string;
+  title?: string;
   isLoading: boolean;
+  identifier: string;
+  entity?: string;
   handleClickYes: () => void;
   handleClickNot?: () => void;
 };
