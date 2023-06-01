@@ -14,6 +14,7 @@ import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
 import { ContratoDataGridBreadcrumb } from '@domains/contrato/constants';
 import { ContratoRowDataGridSchema } from '@domains/contrato/repository/contrato.schemas';
+import { ContartoLabelAndPath } from '@domains/contrato/constants';
 
 import { DateLib } from '@libs';
 
@@ -38,9 +39,8 @@ const ContratoDataGrid = () => {
   const handleClickDelete = useCallback(
     (row: ContratoRowDataGridSchema) => {
       confirmDialog.open({
-        title: '¿Eliminar Contrato?',
-        message: `Se eliminará el Contrato Nº ${row.nroContrato}?`,
-        identifier: '',
+        entity:`${ContartoLabelAndPath.label}`,
+        identifier: `${row.nroContrato}`,
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();

@@ -1,15 +1,15 @@
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
-const base = { label: 'Contrato', path: '/contrato' };
+export const ContartoLabelAndPath = { label: 'Contrato', path: '/contrato' };
 
-export const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [{ ...base }];
+export const ContratoDataGridBreadcrumb: BreadcrumbItem[] = [{ ...ContartoLabelAndPath }];
 
 export const ContratoCreateBreadcrumb: BreadcrumbItem[] = [
-  { ...base },
-  { label: 'Nuevo Contrato', path: `${base.path}/create` },
+  { ...ContartoLabelAndPath },
+  { label: 'Nuevo Contrato', path: `${ContartoLabelAndPath.path}/create` },
 ];
 
 export const ContratoEditBreadcrumb: BreadcrumbItem[] = [
-  { ...base },
-  { label: 'Editar Contrato', path: `${base.path}/edit` },
+  { ...ContartoLabelAndPath },
+  { label: 'Editar Contrato', path: `${ContartoLabelAndPath.path}/edit` },
 ];
