@@ -8,6 +8,14 @@ import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
+import { DeleteOutlineIcon } from '@assets/icons';
+
+const centerDialogConfirm = {
+  display: 'flex',
+  flexDirection: 'column',
+  m: 'auto',
+  width: 'fit-content',
+}
 
 // TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({ message, title, identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
@@ -62,9 +70,12 @@ const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogIn
 const DeleteDialog = ({ message, title, isLoading, identifier, entity, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
   //TODO: no usar estilos en linea, osea remplazar los existentes
   <>
-    <DialogTitle  style={{fontWeight:'Bold'}} color='error'>{`¿Eliminar ${entity}?`}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>Se eliminará el registro {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
+    <DialogTitle sx={centerDialogConfirm} >
+      <DeleteOutlineIcon color='error' fontSize='large'/>
+      </DialogTitle>
+    <DialogTitle  style={{fontWeight:'Bold'}} color='error' sx={centerDialogConfirm} >{`¿Eliminar ${entity}?` }</DialogTitle>
+    <DialogContent >
+      <DialogContentText >Se eliminará el registro {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
     </DialogContent>
     <DialogActions>
       <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
