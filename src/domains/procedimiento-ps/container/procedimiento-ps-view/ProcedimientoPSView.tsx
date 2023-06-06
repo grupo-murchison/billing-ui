@@ -34,7 +34,7 @@ const ProcedimientoPSView = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Ver Procedimiento Producto Softland'>
-      <form noValidate autoComplete='off'>
+      <form noValidate autoComplete='off'>  
         <Row>
           <Col md={6}>
             <TextField id='codigo' label='Código' defaultValue={procedimientoPSData.codigo} disabled />
@@ -50,7 +50,7 @@ const ProcedimientoPSView = () => {
         </Row>
       </form>
       <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes />
+      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} />
     </Modal>
   );
 };

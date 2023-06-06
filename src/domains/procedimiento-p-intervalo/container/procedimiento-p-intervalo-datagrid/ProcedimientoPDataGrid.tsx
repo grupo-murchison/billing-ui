@@ -11,8 +11,9 @@ import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
+import { label } from '@domains/procedimiento-p-intervalo/contexts/constants';
 
-const ProcedimientoPIntervaloDataGrid = () => {
+const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
   const _navigate = useNavigate();
   const { procedimientoPId } = useParams();
 
@@ -31,13 +32,14 @@ const ProcedimientoPIntervaloDataGrid = () => {
     [_navigate, procedimientoPId],
   );
 
+  //TODO: remplazar codigo.codigo.codigo por useContext
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Precio Intervalo?',
-        message: 'Desea eliminar el registro?',
+        entity: `${label.label}`,
+        identifier: `${codigo.codigo.codigo}`,
         async onClickYes() {
-          await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(id);
+          await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -77,7 +79,7 @@ const ProcedimientoPIntervaloDataGrid = () => {
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>

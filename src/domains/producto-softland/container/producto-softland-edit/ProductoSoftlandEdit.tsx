@@ -138,7 +138,7 @@ const ProductoSoftlandEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Producto
+              Actualizar
             </Button>
           </Col>
         </Row>

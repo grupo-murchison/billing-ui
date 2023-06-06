@@ -35,7 +35,7 @@ const ProcedimientoPEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Ver Procedimiento Producto Softland'>
+    <Modal isOpen onClose={handleClose} title='Ver Procedimiento Precio'>
       <form noValidate autoComplete='off'>
         <Row>
           <Col md={6}>
@@ -52,7 +52,7 @@ const ProcedimientoPEdit = () => {
         </Row>
       </form>
       <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPIntervaloWithinProcedimientoPRoutes />
+      <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo}/>
     </Modal>
   );
 };

@@ -6,14 +6,14 @@ import { ProcedimientoPIntervaloEdit } from '@domains/procedimiento-p-intervalo/
 
 import { ProcedimientoPIntervaloProvider } from '@domains/procedimiento-p-intervalo/contexts';
 
-export const ProcedimientoPIntervaloWithinProcedimientoPRoutes = () => {
+export const ProcedimientoPIntervaloWithinProcedimientoPRoutes = (codigo: any) => {
   return (
     <Routes>
       <Route
         path='/'
         element={
           <ProcedimientoPIntervaloProvider>
-            <ProcedimientoPDataGrid />
+            <ProcedimientoPDataGrid codigo={codigo} />
           </ProcedimientoPIntervaloProvider>
         }
       >

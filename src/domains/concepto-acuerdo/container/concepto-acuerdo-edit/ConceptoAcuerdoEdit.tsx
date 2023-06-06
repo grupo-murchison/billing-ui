@@ -154,7 +154,7 @@ const ConceptoAcuerdoEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Concepto
+              Actualizar
             </Button>
           </Col>
         </Row>

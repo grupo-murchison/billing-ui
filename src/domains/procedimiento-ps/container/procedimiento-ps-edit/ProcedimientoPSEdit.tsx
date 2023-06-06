@@ -91,7 +91,7 @@ const ProcedimientoPSEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Procedimiento
+              Actualizar 
             </Button>
           </Col>
         </Row>

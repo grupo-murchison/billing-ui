@@ -12,7 +12,7 @@ import type { ModeloAcuerdoEditSchemaType } from '@domains/modelo-acuerdo/contai
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const ModeloAcuerdoEdit = () => {
   const { modeloAcuerdoId } = useParams();
@@ -23,7 +23,7 @@ const ModeloAcuerdoEdit = () => {
   const {
     register,
     reset,
-    formState: { errors: formErrors },
+    formState: { errors: formErrors, isSubmitting },
   } = useForm<ModeloAcuerdoEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -79,6 +79,13 @@ const ModeloAcuerdoEdit = () => {
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
             />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={12} textAlign='right'>
+            <Button variant='contained' type='submit' disabled={isSubmitting}>
+              Actualizar
+            </Button>
           </Col>
         </Row>
       </form>

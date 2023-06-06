@@ -32,12 +32,12 @@ const ProcedimientoQVariableDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: any) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Cantidad Cantidad Variable?',
-        message: 'Desea eliminar el registro?',
+        entity: `Procedimiento Cantidad Cantidad Variable`,
+        identifier: `${row.codigo}`,
         async onClickYes() {
-          await ProcedimientoQVariableRepository.deleteProcedimientoQVariableById(id);
+          await ProcedimientoQVariableRepository.deleteProcedimientoQVariableById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -77,7 +77,7 @@ const ProcedimientoQVariableDataGrid = () => {
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
+                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
                   </Stack>
                 </td>
               </>
