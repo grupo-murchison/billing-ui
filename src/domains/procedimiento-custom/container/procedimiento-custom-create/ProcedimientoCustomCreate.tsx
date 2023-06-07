@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Modal, Row, Col } from '@app/components';
+import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
 import { ProcedimientoCustomCreateSchema } from '@domains/procedimiento-custom/container/procedimiento-custom-create/schemas';
@@ -13,7 +13,7 @@ import type { ProcedimientoCustomCreateSchemaType } from '@domains/procedimiento
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, TextField } from '@mui/material';
+import { Button, Box, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
@@ -233,10 +233,10 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         </Box>
         <Row>
           <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button color='primary' type='submit' disabled={isSubmitting}>
+            <Button  color='primary' variant='contained'  type='submit' disabled={isSubmitting}>
               Crear
             </Button>
           </Col>
