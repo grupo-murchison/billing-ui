@@ -11,22 +11,32 @@ import { useTheme } from '@mui/material/styles';
 
 const Sidebar = () => {
   const { isSidebarOpen } = useContext(MainLayoutContext);
-  const theme = useTheme();
+
   return (
-    // <Drawer
-    //   variant={'permanent'}
-    //   open={isSidebarOpen}
-    //   PaperProps={{
-    //     sx: { backgroundColor: theme.palette.primary.main },
-    //   }}
-    // >
-      <div className={`${styles['content-sidebar']} ${isSidebarOpen ? styles['content-sidebar--open'] : ''}`}>
-        {MENU_ITEMS.map(x => (
-          <Item key={x.title} title={x.title} icon={x.icon} items={x.childs} />
-        ))}
-      </div>
-    // </Drawer>
+    <div className={`${styles['content-sidebar']} ${isSidebarOpen ? styles['content-sidebar--open'] : ''}`}>
+      {MENU_ITEMS.map(x => (
+        <Item key={x.title} title={x.title} icon={x.icon} items={x.childs} />
+      ))}
+    </div>
   );
+};
+
+// TODO Sidebar con componentes MUI nativos. Falta terminar y debe reemplazar al viejo
+const SidebarNuevo = () => {
+  const { isSidebarOpen } = useContext(MainLayoutContext);
+  const theme = useTheme();
+
+  <Drawer
+    variant={'permanent'}
+    open={isSidebarOpen}
+    PaperProps={{
+      sx: { backgroundColor: theme.palette.primary.main },
+    }}
+  >
+    {MENU_ITEMS.map(x => (
+      <Item key={x.title} title={x.title} icon={x.icon} items={x.childs} />
+    ))}
+  </Drawer>;
 };
 
 export default Sidebar;
