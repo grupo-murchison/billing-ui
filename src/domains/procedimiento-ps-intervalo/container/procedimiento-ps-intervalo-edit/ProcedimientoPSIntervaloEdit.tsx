@@ -125,7 +125,7 @@ const ProcedimientoPSIntervaloEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Intervalo
+              Actualizar
             </Button>
           </Col>
         </Row>

@@ -11,8 +11,9 @@ import { DataGrid } from '@app/pro-components';
 
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
+import { label } from '@domains/procedimiento-ps-intervalo/contexts/constans';
 
-const ProcedimientoPSIntervaloDataGrid = () => {
+const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
 
@@ -31,11 +32,12 @@ const ProcedimientoPSIntervaloDataGrid = () => {
     [_navigate, procedimientoPSId],
   );
 
+  //TODO: Obenter codigo.codigo.codigo con useContext
   const handleClickDelete = useCallback(
     (id: number) => {
       confirmDialog.open({
-        title: '¿Eliminar Procedimiento Producto Softland Intervalo?',
-        message: 'Desea eliminar el registro?',
+        entity: `${label.label}`,
+        identifier: `${codigo.codigo.codigo}`,
         async onClickYes() {
           await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(id);
           confirmDialog.close();

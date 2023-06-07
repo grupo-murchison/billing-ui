@@ -274,7 +274,7 @@ const ProcedimientoCustomEdit = () => {
         <Row>
           <Col md={12} textAlign='right'>
             <MuiButton variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar Producto
+              Actualizar
             </MuiButton>
           </Col>
         </Row>

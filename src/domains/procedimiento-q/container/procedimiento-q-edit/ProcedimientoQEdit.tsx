@@ -137,7 +137,7 @@ const ProcedimientoQEdit = () => {
               Cancelar
             </Button>
             <Button color='primary' type='submit' disabled={isSubmitting}>
-              Crear
+              Actualizar
             </Button>
           </Col>
         </Row>
