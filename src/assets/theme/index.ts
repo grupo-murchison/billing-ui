@@ -8,11 +8,24 @@ const theme = createTheme({
     error: { main: '#E41E2D' }, // Rojo AIT
     warning: { main: '#FF8200' }, // Naranja TZ
     info: { main: '#005C97' }, // Azul UTE
-    success: { main: '#003A76'}// Azul AIT
+    success: { main: '#003A76' }, // Azul AIT
   },
   typography: {
     button: {
       textTransform: 'capitalize',
+    },
+  },
+  components: {
+    MuiButton: {
+      styleOverrides: {
+        // Name of the slot
+        root: {
+          borderRadius: '4px',
+          padding: '2px 16px',
+          fontSize: '0.875rem',
+          // fontWeight: 500,
+        },
+      },
     },
   },
 });
