@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import { Button, Modal, Row, Col } from '@app/components';
+import {  Modal, Row, Col } from '@app/components';
 
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 import { ConceptoAcuerdoCreateSchema } from '@domains/concepto-acuerdo/container/concepto-acuerdo-create/schemas';
@@ -19,7 +19,7 @@ import { ProcedimientoPSDropdown } from '@domains/procedimiento-ps/container/pro
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 
 const ConceptoAcuerdoCreate = () => {
   const _navigate = useNavigate();
@@ -139,10 +139,10 @@ const ConceptoAcuerdoCreate = () => {
         </Row>
         <Row>
           <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' disabled={isSubmitting} onClick={handleClose}>
+            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button color='primary' type='submit' disabled={isSubmitting}>
+            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
               Crear
             </Button>
           </Col>

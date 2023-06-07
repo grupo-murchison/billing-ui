@@ -83,6 +83,9 @@ const ModeloAcuerdoEdit = () => {
         </Row>
         <Row>
           <Col md={12} textAlign='right'>
+            <Button variant='outlined' color='secondary' onClick={handleClose} disabled={isSubmitting}>
+              Cancelar
+            </Button>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
               Actualizar
             </Button>

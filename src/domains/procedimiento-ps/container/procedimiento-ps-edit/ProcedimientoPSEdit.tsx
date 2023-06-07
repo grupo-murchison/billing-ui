@@ -90,6 +90,9 @@ const ProcedimientoPSEdit = () => {
         </Row>
         <Row>
           <Col md={12} textAlign='right'>
+            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </Button>
             <Button variant='contained' type='submit' disabled={isSubmitting}>
               Actualizar 
             </Button>

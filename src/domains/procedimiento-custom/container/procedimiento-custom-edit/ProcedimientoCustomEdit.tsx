@@ -273,6 +273,9 @@ const ProcedimientoCustomEdit = () => {
         </Box>
         <Row>
           <Col md={12} textAlign='right'>
+          <MuiButton  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
+              Cancelar
+            </MuiButton>
             <MuiButton variant='contained' type='submit' disabled={isSubmitting}>
               Actualizar
             </MuiButton>
