@@ -41,6 +41,12 @@ class ModeloAcuerdoRepository {
     return response;
   };
 
+  static updateModeloAcuerdo = async (modeloAcuerdo: AnyValue, id: any) => {
+    const response$ = from(ModeloAcuerdoService.patch(modeloAcuerdo, id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static deleteModeloAcuerdoById = async (id: number) => {
     const response$ = from(ModeloAcuerdoService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
