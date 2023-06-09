@@ -1,4 +1,5 @@
 import * as React from 'react';
+import { Box } from '@mui/material';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
 
 const columns: GridColDef[] = [
@@ -26,8 +27,8 @@ export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: any }) => 
   });
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
-      <DataGrid rows={_rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} />
-    </div>
+    <Box style={{ width: '100%' }}>
+      <DataGrid rows={_rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true}/>
+    </Box>
   );
 };

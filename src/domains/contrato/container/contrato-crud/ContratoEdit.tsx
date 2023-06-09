@@ -41,7 +41,7 @@ import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridC
 import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 
 const ContratoEdit = () => {
-  const { contratoId } = useParams();
+  const { contratoId } = useParams(); // TODO ver como tipar como number
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ContratoContext);
@@ -93,7 +93,7 @@ const ContratoEdit = () => {
           DateLib.parseToDBString(new Date(data.fechaInicioContrato)) || '',
         ),
         fechaFinContrato: DateLib.parseFromDBString(DateLib.parseToDBString(new Date(data.fechaFinContrato)) || ''),
-        tipoPlanFacturacionId: data?.planFacturacion?.id,
+        tipoPlanFacturacionId: data?.planFacturacion?.tipoPlanFacturacionId,
         reglaFechaPeriodoId: data?.planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: data?.planFacturacion?.diaPeriodo,
         pausado: data?.planFacturacion?.pausado,
