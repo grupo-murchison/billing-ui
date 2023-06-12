@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { Box } from '@mui/material';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import ContratoVariablesRepository from './repository/contrato-variables.repository';
@@ -74,15 +75,16 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
   };
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <Box style={{ width: '100%' }}>
       <DataGrid
+        autoHeight={true}
         rows={rows}
         columns={columns}
-        pageSize={5}
+        pageSize={10}
         rowsPerPageOptions={[10]}
         loading={loading}
         onCellEditStop={handleCellEdit}
       />
-    </div>
+    </Box>
   );
 };

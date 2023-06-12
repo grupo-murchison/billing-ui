@@ -20,7 +20,7 @@ const theme = createTheme({
       styleOverrides: {
         // Name of the slot
         root: {
-          borderRadius: '4px',
+          borderRadius: '6px',
           padding: '2px 16px',
           fontSize: '0.875rem',
           // fontWeight: 500,
