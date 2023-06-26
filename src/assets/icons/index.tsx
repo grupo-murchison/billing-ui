@@ -36,4 +36,5 @@ export {
   FilterAlt as FilterAltIcon,
   GppGood as GppGoodIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
+  Receipt as ReceiptIcon,
 } from '@mui/icons-material';
