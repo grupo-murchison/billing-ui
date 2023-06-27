@@ -10,26 +10,26 @@ import { useConfirmDialog } from '@app/hooks';
 
 import { DataGrid } from '@app/pro-components';
 
-import { FacturasRepository } from '@domains/facturas/repository';
-import { FacturasContext } from '@domains/facturas/contexts';
-import { FacturasDataGridBreadcrumb } from '@domains/facturas/constants';
+import { FacturacionRepository } from '@domains/facturacion/repository';
+import { FacturacionContext } from '@domains/facturacion/contexts';
+import { FacturacionDataGridBreadcrumb } from '@domains/facturacion/constants';
 import { ContratoRowDataGridSchema } from '@domains/contrato/repository/contrato.schemas';
 import { ContartoLabelAndPath } from '@domains/contrato/constants';
 
-const FacturasDataGrid = () => {
+const FacturacionDataGrid = () => {
   const _navigate = useNavigate();
 
-  const { mainDataGrid } = useContext(FacturasContext);
+  const { mainDataGrid } = useContext(FacturacionContext);
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate('/contrato/create');
+    // _navigate('/contrato/create');
   }, [_navigate]);
 
   const handleClickEdit = useCallback(
     (row: ContratoRowDataGridSchema) => {
-      _navigate(`/contrato/${row.id}/edit`);
+      _navigate(`/facturacion/${row.id}/edit`);
     },
     [_navigate],
   );
@@ -40,7 +40,7 @@ const FacturasDataGrid = () => {
         entity: `${ContartoLabelAndPath.label}`,
         identifier: `${row.nroContrato}`,
         async onClickYes() {
-          await FacturasRepository.deleteFacturasById(row.id);
+          await FacturacionRepository.deleteFacturasById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -50,8 +50,6 @@ const FacturasDataGrid = () => {
   );
 
   useEffect(() => {
-    console.log('useEffect');
-
     mainDataGrid.load();
   }, [mainDataGrid]);
 
@@ -70,7 +68,7 @@ const FacturasDataGrid = () => {
               { label: '' },
             ]}
             onClickNew={handleClickCreate}
-            repositoryFunc={FacturasRepository.getAllFacturasPaginated}
+            repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
             rowTemplate={row => (
               <>
                 {/* // TODO acá iria una funcion con row.map() que aplique rowSanitizer() a cada column y deberia recibir además un archivo de configuracion para ordenar las columnas*/}
@@ -96,7 +94,7 @@ const FacturasDataGrid = () => {
   );
 };
 
-export default withBreadcrumb(FacturasDataGrid, FacturasDataGridBreadcrumb);
+export default withBreadcrumb(FacturacionDataGrid, FacturacionDataGridBreadcrumb);
 
 type TFn = (value: any) => any;
 type TTowSanitizer = string | number | boolean | null | undefined | TFn;

@@ -7,15 +7,15 @@ const initialContext: InitialContext = {
   mainDataGrid: useDataGrid.initialValues,
 };
 
-const FacturasContext = createContext(initialContext);
+const FacturacionContext = createContext(initialContext);
 
-const FacturasProvider = ({ children }: FacturasProviderProps) => {
+const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
   const mainDataGrid = useDataGrid();
 
-  return <FacturasContext.Provider value={{ mainDataGrid }}>{children}</FacturasContext.Provider>;
+  return <FacturacionContext.Provider value={{ mainDataGrid }}>{children}</FacturacionContext.Provider>;
 };
 
-type FacturasProviderProps = {
+type FacturacionProviderProps = {
   children?: ReactNode;
 };
 
@@ -23,4 +23,4 @@ type InitialContext = {
   mainDataGrid: typeof useDataGrid.initialValues;
 };
 
-export { FacturasContext, FacturasProvider };
+export { FacturacionContext, FacturacionProvider };

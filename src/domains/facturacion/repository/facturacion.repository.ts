@@ -4,12 +4,12 @@ import type { DataGridRepositoryFuncParams } from '@app/pro-components';
 
 import { RepositoryUtils } from '@app/utils';
 
-import { FacturasService } from './facturas.service';
-import { getAllFacturasPaginatedSchema } from './facturas.schemas';
+import { FacturacionService } from './facturacion.service';
+import { getAllFacturasPaginatedSchema } from './facturacion.schemas';
 
-class FacturasRepository {
+class FacturacionRepository {
   static getAllFacturasPaginated = async (params: DataGridRepositoryFuncParams) => {
-    const response$ = from(FacturasService.getAllPaginated(params)).pipe(
+    const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllFacturasPaginatedSchema),
     );
@@ -19,35 +19,35 @@ class FacturasRepository {
 
   static getAllFacturasPaginatedV2 = async (params: DataGridRepositoryFuncParams) => {
     const response = await RepositoryUtils.fromRxjs(
-      FacturasService.getAllPaginated(params),
+      FacturacionService.getAllPaginated(params),
       RepositoryUtils.PIPES.validateWithSchema(getAllFacturasPaginatedSchema),
     );
     return response;
   };
 
   static getFacturasById = async (id: string) => {
-    const response$ = from(FacturasService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(FacturacionService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static getFacturasByIdAndContratoVariables = async (id: string) => {
-    const response$ = from(FacturasService.getByIdFull(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(FacturacionService.getByIdFull(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static updateFacturas = async (contrato: AnyValue) => {
-    const response$ = from(FacturasService.patch(contrato)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(FacturacionService.patch(contrato)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static deleteFacturasById = async (id: number) => {
-    const response$ = from(FacturasService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(FacturacionService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 }
 
-export default FacturasRepository;
+export default FacturacionRepository;

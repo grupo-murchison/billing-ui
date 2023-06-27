@@ -7,10 +7,8 @@ import type { HandlePromise } from '@app/utils/axios.util';
 
 const BASE_PATH = 'v1/facturaciones';
 
-class FacturaService {
+class FacturacionService {
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
-    console.log('getAllPaginated FacturasService');
-    
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/all/pagination`, { params }),
     );
@@ -61,4 +59,4 @@ class FacturaService {
   };
 }
 
-export { FacturaService as FacturasService };
+export { FacturacionService };
