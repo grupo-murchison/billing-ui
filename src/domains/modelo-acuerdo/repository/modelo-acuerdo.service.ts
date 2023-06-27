@@ -36,6 +36,14 @@ class ModeloAcuerdoService {
     return [response, error];
   };
 
+  static patch = async (modeloAcuerdo: AnyValue, id: any): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.patch<AnyValue>(`${BASE_PATH}/crud/${id}`, modeloAcuerdo),
+    );
+
+    return [response, error];
+  };
+
   static deleteById = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(ApiProvider.delete<AnyValue>(`${BASE_PATH}/crud/${id}`));
 

@@ -16,6 +16,7 @@ import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
 import { FacturasRoutes } from '@domains/facturas/navigation';
 import RootRoute from '@domains/root/Root.route';
+import MainLayoutV2 from '@app/layouts/MainLayoutV2/MainLayoutV2';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -24,9 +25,11 @@ const PrivateRoutes = () => {
     return <Navigate to='/auth/login' replace />;
   }
 
+  //TODO estaria bueno migrar a useRoutes de mantis
+
   return (
     <ThemeProvider>
-      <MainLayout>
+      <MainLayoutV2>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
         <ProcedimientoPRoutes />
@@ -37,7 +40,7 @@ const PrivateRoutes = () => {
         <ContratoRoutes />
         <FacturasRoutes />
         <RootRoute />
-      </MainLayout>
+      </MainLayoutV2>
     </ThemeProvider>
   );
 };

@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
-import { Button, Modal, Row, Col } from '@app/components';
+import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQEditSchema } from '@domains/procedimiento-q/container/procedimiento-q-edit/schemas';
@@ -12,7 +12,7 @@ import type { ProcedimientoQEditSchemaType } from '@domains/procedimiento-q/cont
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
+import { Button, TextField } from '@mui/material';
 import { label } from '@domains/procedimiento-q/constants';
 import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
 import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown';
@@ -133,10 +133,10 @@ const ProcedimientoQEdit = () => {
         </Row>
         <Row>
           <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' outlined disabled={isSubmitting} onClick={handleClose}>
+            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button color='primary' type='submit' disabled={isSubmitting}>
+            <Button  color='primary' variant='contained' type='submit' disabled={isSubmitting}>
               Actualizar
             </Button>
           </Col>

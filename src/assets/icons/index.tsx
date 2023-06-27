@@ -53,4 +53,5 @@ export {
   // V
   Visibility as ViewIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
+  Receipt as ReceiptIcon,
 } from '@mui/icons-material';
