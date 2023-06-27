@@ -15,7 +15,7 @@ const Sidebar = () => {
   return (
     <div className={`${styles['content-sidebar']} ${isSidebarOpen ? styles['content-sidebar--open'] : ''}`}>
       {MENU_ITEMS.map(x => (
-        <Item key={x.title} title={x.title} icon={x.icon} items={x.childs} />
+        <Item key={x.title} title={x.title} icon={x.icon} items={x.items} />
       ))}
     </div>
   );
@@ -34,7 +34,7 @@ const SidebarNuevo = () => {
     }}
   >
     {MENU_ITEMS.map(x => (
-      <Item key={x.title} title={x.title} icon={x.icon} items={x.childs} />
+      <Item key={x.title} title={x.title} icon={x.icon} items={x.items} />
     ))}
   </Drawer>;
 };

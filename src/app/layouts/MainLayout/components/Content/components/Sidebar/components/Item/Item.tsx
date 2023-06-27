@@ -6,6 +6,7 @@ import { Content } from '@app/layouts/MainLayout/components/Content/components/S
 import { MainLayoutContext } from '@app/layouts/MainLayout/contexts';
 
 import styles from '@app/layouts/MainLayout/components/Content/components/Sidebar/components/Item/Item.module.scss';
+import { ItemProps } from '@app/layouts/MainLayout/interfaces/main-layout.interface';
 
 const Item = ({ title, icon, items }: ItemProps) => {
   const location = useLocation();
@@ -40,15 +41,6 @@ const Item = ({ title, icon, items }: ItemProps) => {
       <Content title={title} items={items} isActive={isActive} isOpen={isItemOpen} closeItself={closeItself} />
     </div>
   );
-};
-
-type ItemProps = {
-  title: string;
-  icon: JSX.Element;
-  items: {
-    label: string;
-    path: string;
-  }[];
 };
 
 export default Item;

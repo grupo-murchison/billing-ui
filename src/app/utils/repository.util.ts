@@ -1,9 +1,22 @@
-import type { AxiosError, AxiosResponse } from 'axios';
-import { map } from 'rxjs';
+import type { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
+import { from, lastValueFrom, map } from 'rxjs';
 
 import z from 'zod';
 
 import type { HandlePromise } from './axios.util';
+
+const getResponse = () => {
+  return map(([response, error]: HandlePromise) => {
+    if (response) {
+      return response;
+    }
+
+    const err = AxiosHandlerError(error);
+
+    // throw new Error(`${error?.response?.data || '-'}`);
+    throw new Error(`${JSON.stringify(err?.message)}`);
+  });
+};
 
 export const PIPES = {
   getResponse: () => {
@@ -25,6 +38,13 @@ export const PIPES = {
       return response;
     });
   },
+};
+
+export const fromRxjs = async (axiosService: Promise<HandlePromise>, pipes?: any) => {
+  const response$ = from(axiosService).pipe(getResponse(), pipes());
+
+  const response = await lastValueFrom(response$);
+  return response;
 };
 
 function AxiosHandlerError(axiosError: Undefined<AxiosError<unknown, any>>) {
