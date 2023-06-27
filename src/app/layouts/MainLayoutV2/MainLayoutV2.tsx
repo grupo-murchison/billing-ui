@@ -4,9 +4,11 @@ import Box from '@mui/material/Box/Box';
 import { Outlet } from 'react-router-dom';
 import Navbar from './Navbar/Navbar';
 import Sidebar from './Sidebar';
+import { useTheme } from '@mui/material';
 
 function MainLayoutV2({ children }: { children?: ReactNode }) {
   const [open, setOpen] = useState(false);
+  const theme = useTheme();
 
   const handleDrawerOpen = () => {
     if (open) {
@@ -28,7 +30,6 @@ function MainLayoutV2({ children }: { children?: ReactNode }) {
           sx={{
             flexGrow: 1,
             p: 3,
-            backgroundColor: 'whitesmoke',
             heigth: '100%',
           }}
         >
