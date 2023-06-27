@@ -71,7 +71,7 @@ function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: 
         >
           <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />
         </ListItemIcon>
-        <ListItemText primary={menuItem?.title || 'Generic'} sx={{ opacity: open ? 1 : 0 }} />
+        <ListItemText primary={menuItem?.title || 'Generic'} sx={{ opacity: open ? 1 : 0, whiteSpace: 'normal' }} />
       </ListItemButton>
     </ListItem>
   );

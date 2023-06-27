@@ -9,6 +9,10 @@ const theme = createTheme({
     warning: { main: '#FF8200' }, // Naranja TZ
     info: { main: '#005C97' }, // Azul UTE
     success: { main: '#003A76' }, // Azul AIT
+    background: {
+      default: '#F3F6F9',
+      paper: '#FFFFFF',
+    },
   },
   typography: {
     button: {
