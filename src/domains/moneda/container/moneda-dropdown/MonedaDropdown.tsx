@@ -20,17 +20,21 @@ const MonedaDropdown = ({ id, label, disabled, error, helperText, value, ...prop
   }, []);
 
   return (
-    <FormControl fullWidth error={error} disabled={disabled}>
-      <InputLabel>{label}</InputLabel>
-      <Select id={id} label={label} value={value} {...props}>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    <>
+      {items.length > 0 && (
+        <FormControl fullWidth error={error} disabled={disabled}>
+          <InputLabel>{label}</InputLabel>
+          <Select id={id} label={label} value={value} {...props}>
+            {items.map(item => (
+              <MenuItem key={item.value} value={item.value}>
+                {item.label}
+              </MenuItem>
+            ))}
+          </Select>
+          {helperText && <FormHelperText>{helperText}</FormHelperText>}
+        </FormControl>
+      )}
+    </>
   );
 };
 
