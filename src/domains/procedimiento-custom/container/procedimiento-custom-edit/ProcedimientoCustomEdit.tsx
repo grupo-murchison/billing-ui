@@ -91,7 +91,7 @@ const ProcedimientoCustomEdit = () => {
       if (accionCode === 'FIL') {
         const splittedFilter = data.expresionFiltro.split('=');
         values.filtroCampoCode = splittedFilter[0].trim();
-        values.filtroValue = splittedFilter[1].trim();
+        values.filtroValue = splittedFilter[1]?.trim();
       } else if (accionCode === 'AGR') {
         values.filtroCampoCode = eventosCampo.find(({ value }) => value === data.eventoCampoAgrupacionId)?.code || '';
       }

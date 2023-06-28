@@ -64,6 +64,7 @@ const ProcedimientoCustomDataGrid = () => {
               { label: 'ACCIÓN' },
               { label: 'EVENTO' },
               { label: 'CAMPO' },
+              { label: 'Expresión Filtro' },
               { label: '' },
             ]}
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
@@ -75,6 +76,7 @@ const ProcedimientoCustomDataGrid = () => {
                 <td>{row.accion}</td>
                 <td>{row.evento}</td>
                 <td>{row.eventoCampo}</td>
+                <td>{row.expresionFiltro}</td>
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
