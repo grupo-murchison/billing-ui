@@ -55,7 +55,7 @@ const dashboard: IMenuItem = {
           breadcrumbs: false,
         },
         {
-          id: 'procedimientoCantidad',
+          id: 'procedimientoCantidadCustom',
           title: 'Procedimiento Cantidad Custom',
           type: 'item',
           url: '/procedimiento-custom',

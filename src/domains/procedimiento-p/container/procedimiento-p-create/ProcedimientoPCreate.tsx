@@ -31,6 +31,7 @@ const ProcedimientoPCreate = () => {
     defaultValues: {
       codigo: '',
       denominacion: '',
+      monedaId: 1,
     },
     resolver: zodResolver(ProcedimientoPCreateSchema),
   });
@@ -92,10 +93,10 @@ const ProcedimientoPCreate = () => {
         </Row>
         <Row>
           <Col md={12} className='d-flex jc-end'>
-            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
+            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button  color='primary' variant='contained' disabled={isSubmitting}>
+            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
               Crear
             </Button>
           </Col>

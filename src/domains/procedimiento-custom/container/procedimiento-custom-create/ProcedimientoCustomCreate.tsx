@@ -150,7 +150,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
               options={state.eventos}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
           <Col md={4}>
@@ -162,7 +162,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               helperText={formErrors?.eventoCampoCode?.message}
               disabled={isSubmitting || watch('funcionCode') === 'C'}
               options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
         </Row>
