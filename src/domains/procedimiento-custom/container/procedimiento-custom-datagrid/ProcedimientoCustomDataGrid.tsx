@@ -58,6 +58,7 @@ const ProcedimientoCustomDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
+              { label: 'Código' },
               { label: 'DENOMINACIÓN' },
               { label: 'TIPO FUNCIÓN' },
               { label: 'ACCIÓN' },
@@ -68,6 +69,7 @@ const ProcedimientoCustomDataGrid = () => {
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
             rowTemplate={row => (
               <>
+                <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
                 <td>{row.funcion}</td>
                 <td>{row.accion}</td>

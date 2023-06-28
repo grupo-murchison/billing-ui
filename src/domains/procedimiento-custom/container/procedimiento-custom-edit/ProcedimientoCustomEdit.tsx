@@ -18,11 +18,13 @@ import { Box, Button as MuiButton, TextField } from '@mui/material';
 import { label } from '@domains/procedimiento-custom/constants';
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
 
+import { ACTION_TYPES } from '@domains/procedimiento-custom/contexts/procedimiento-custom.state';
+
 const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
   const _navigate = useNavigate();
 
-  const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
+  const { mainDataGrid, state, dispatch } = useContext(ProcedimientoCustomContext);
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const {
@@ -128,10 +130,15 @@ const ProcedimientoCustomEdit = () => {
             }),
       });
       const apiPayload = parseToNull(data);
-      await ProcedimientoCustomRepository.updateProcedimientoCustom(apiPayload);
 
-      mainDataGrid.reload();
-      _navigate('/procedimiento-custom');
+      ProcedimientoCustomRepository.updateProcedimientoCustom(apiPayload)
+        .then(x => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-custom');
+        })
+        .catch(error => {
+          dispatch({ type: ACTION_TYPES.SET_ERROR, payload: { error: error } });
+        });
     },
     [_navigate, mainDataGrid],
   );
@@ -190,7 +197,7 @@ const ProcedimientoCustomEdit = () => {
               helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
               options={state.eventos}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
           <Col md={4}>
@@ -202,7 +209,7 @@ const ProcedimientoCustomEdit = () => {
               helperText={formErrors?.eventoCampoCode?.message}
               disabled={isSubmitting || watch('funcionCode') === 'C'}
               options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: true }}
+              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
         </Row>
@@ -273,7 +280,7 @@ const ProcedimientoCustomEdit = () => {
         </Box>
         <Row>
           <Col md={12} textAlign='right'>
-          <MuiButton  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
+            <MuiButton color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </MuiButton>
             <MuiButton variant='contained' type='submit' disabled={isSubmitting}>
@@ -282,6 +289,8 @@ const ProcedimientoCustomEdit = () => {
           </Col>
         </Row>
       </form>
+
+      {state.error && <Box>Error: {...state.error}</Box>}
     </Modal>
   );
 };

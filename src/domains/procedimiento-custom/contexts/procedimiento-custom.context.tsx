@@ -1,8 +1,7 @@
-import { createContext, useReducer, Dispatch, useEffect } from 'react';
+import { createContext, useReducer, Dispatch, useEffect  } from 'react';
 import type { ReactNode } from 'react';
 
 import { useDataGrid } from '@app/hooks';
-import { DropdownSchemaType } from '@app/utils/zod.util';
 import {
   ProcedimientoCustomState,
   reducer,
@@ -62,8 +61,8 @@ const ProcedimientoCustomProvider = ({ children }: ProcedimientoCustomProviderPr
         },
       });
     } catch (error) {
-      console.error('Error', error);
-      throw error;
+      console.error('Error ProcedimientoCustomProvider: ', error);
+      dispatch({ type: ACTION_TYPES.SET_ERROR, payload: { error: error } });
     }
   };
 
