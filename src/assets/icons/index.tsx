@@ -9,6 +9,7 @@ export {
   Category as CategoryIcon,
 
   // D
+  Dashboard as DashboardIcon,
   DeleteOutline as DeleteOutlineIcon,
   Description as DescriptionIcon,
   Download as DownloadIcon,
