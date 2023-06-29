@@ -1,11 +1,5 @@
 import { Controller, Control } from 'react-hook-form';
-import {
-  Select as MuiSelect,
-  MenuItem,
-  FormControl,
-  InputLabel,
-  FormHelperText,
-} from '@mui/material';
+import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
 import { DropdownItemType } from '@app/utils/zod.util';
 
@@ -38,7 +32,7 @@ export const Dropdown = ({
       name={name}
       control={control}
       render={({ field }) => (
-        <MuiSelect {...field} label={labelDisplay}>
+        <Select {...field} label={labelDisplay}>
           {emptyOption ? (
             <MenuItem key={emptyOption.value} value={emptyOption.code} disabled={emptyOption.disabled}>
               <em>{emptyOption.label}</em>
@@ -49,7 +43,7 @@ export const Dropdown = ({
               {`${code} - ${label}`}
             </MenuItem>
           ))}
-        </MuiSelect>
+        </Select>
       )}
     />
     {helperText && <FormHelperText>{helperText}</FormHelperText>}

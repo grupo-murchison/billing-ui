@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -31,6 +31,7 @@ const ProcedimientoQCreate = () => {
     handleSubmit: rhfHandleSubmit,
     watch,
     formState: { errors: formErrors, isSubmitting },
+    setValue,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -42,8 +43,8 @@ const ProcedimientoQCreate = () => {
 
   const handleSubmit = useCallback(
     async (data: ProcedimientoQCreateSchemaType) => {
-      await ProcedimientoQRepository.createProcedimientoQ(data);
-
+      // await ProcedimientoQRepository.createProcedimientoQ(data);
+      console.log(data);
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
@@ -53,6 +54,23 @@ const ProcedimientoQCreate = () => {
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-q');
   }, [_navigate]);
+
+  useEffect(() => {
+    if (watch('tipoProcedimientoQId') === 1) {
+      setValue('procedimientoCustomId', 0);
+      setDisablePBuiltin(false);
+      setDisablePCustom(true);
+    } else if (watch('tipoProcedimientoQId') === 2) {
+      setDisablePBuiltin(true);
+      setDisablePCustom(false);
+    } else {
+      setDisablePBuiltin(true);
+      setDisablePCustom(true);
+    }
+  }, [watch('tipoProcedimientoQId')]);
+
+  const [disablePBuiltin, setDisablePBuiltin] = useState(false);
+  const [disablePCustom, setDisablePCustom] = useState(false);
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
@@ -94,7 +112,7 @@ const ProcedimientoQCreate = () => {
         <Row>
           <Col md={12}>
             <TipoProcedimientoQDropdown
-              id='tipoProcedimientoQ'
+              id='tipoProcedimientoQId'
               label={`Tipo ${label.procedimientoQ}`}
               {...register('tipoProcedimientoQId', {
                 valueAsNumber: true,
@@ -109,28 +127,32 @@ const ProcedimientoQCreate = () => {
         <Row>
           <Col md={6}>
             <ProcedimientoBuiltinDropdown
-              id='procedimientoBuiltin'
+              id='procedimientoBuiltinId'
               label='Procedimiento Builtin'
               {...register('procedimientoBuiltinId', {
                 valueAsNumber: true,
               })}
               error={!!formErrors.procedimientoBuiltinId}
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              disabled={isSubmitting}
+              disabled={isSubmitting || disablePBuiltin}
               value={watch('procedimientoBuiltinId')}
+              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
+
+              // disabled={isSubmitting || watch('accionCode') !== 'FIL'}
             />
           </Col>
           <Col md={6}>
             <ProcedimientoCustomDropdown
-              id='procedimientoCustom'
+              id='procedimientoCustomId'
               label='Procedimiento Custom'
               {...register('procedimientoCustomId', {
                 valueAsNumber: true,
               })}
               error={!!formErrors.procedimientoCustomId}
               helperText={formErrors?.procedimientoCustomId?.message}
-              disabled={isSubmitting}
+              disabled={isSubmitting || disablePCustom}
               value={watch('procedimientoCustomId')}
+              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
         </Row>
