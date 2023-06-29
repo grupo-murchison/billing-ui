@@ -4,7 +4,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-  font-family: VARS.$font-family !important;
+  // font-family: VARS.$font-family !important;
 }
 
 span.muted {
@@ -28,13 +28,13 @@ body {
   padding: 5rem;
 }
 
-h1 {
-  font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  font-weight: 900;
-  font-size: 2rem;
-  letter-spacing: -0.125rem;
-  line-height: 1.75rem;
-}
+// h1 {
+//   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+//   font-weight: 900;
+//   font-size: 2rem;
+//   letter-spacing: -0.125rem;
+//   line-height: 1.75rem;
+// }
 
 h2 {
   font-family: Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
