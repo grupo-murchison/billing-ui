@@ -1,13 +1,11 @@
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
-import Logo from '../../../public/logo/logo-murchison.png';
 
 //TODO como puedo utilizar ruta absoluta
-import { MenuIcon, SearchIcon, QuestionMarkIcon, AccountCircleIcon } from '@assets/icons';
+import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -21,9 +19,11 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
 })<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  color: '#000000',
-  backgroundColor: '#ffffff',
-  boxShadow: 'none',
+  color: theme.palette.text.primary,
+  backgroundColor: theme.palette.background.paper,
+  // boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // Original MUI
+  boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // TODO validar si esto les gusta o no
+  // boxShadow: 'none',
   margin: '0px',
   padding: '0px',
 }));
@@ -41,7 +41,7 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
           sx={{
             'height': '64px',
             'width': '50px',
-            'color': '#ffffff',
+            'color': theme.palette.common.white,
             'mr': 2,
             'borderRadius': 0,
             'backgroundColor': theme.palette.primary.main,
