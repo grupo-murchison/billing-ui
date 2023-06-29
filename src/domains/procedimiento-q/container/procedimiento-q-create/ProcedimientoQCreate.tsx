@@ -80,7 +80,7 @@ const ProcedimientoQCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={12}>
             <TextField
               id='descripcion'
               label='Descripción'
@@ -90,7 +90,9 @@ const ProcedimientoQCreate = () => {
               disabled={isSubmitting}
             />
           </Col>
-          <Col md={6}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <TipoProcedimientoQDropdown
               id='tipoProcedimientoQ'
               label={`Tipo ${label.procedimientoQ}`}
@@ -106,19 +108,6 @@ const ProcedimientoQCreate = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <ProcedimientoCustomDropdown
-              id='procedimientoCustom'
-              label='Procedimiento Custom'
-              {...register('procedimientoCustomId', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.procedimientoCustomId}
-              helperText={formErrors?.procedimientoCustomId?.message}
-              disabled={isSubmitting}
-              value={watch('procedimientoCustomId')}
-            />
-          </Col>
-          <Col md={6}>
             <ProcedimientoBuiltinDropdown
               id='procedimientoBuiltin'
               label='Procedimiento Builtin'
@@ -131,13 +120,26 @@ const ProcedimientoQCreate = () => {
               value={watch('procedimientoBuiltinId')}
             />
           </Col>
+          <Col md={6}>
+            <ProcedimientoCustomDropdown
+              id='procedimientoCustom'
+              label='Procedimiento Custom'
+              {...register('procedimientoCustomId', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.procedimientoCustomId}
+              helperText={formErrors?.procedimientoCustomId?.message}
+              disabled={isSubmitting}
+              value={watch('procedimientoCustomId')}
+            />
+          </Col>
         </Row>
         <Row>
           <Col md={12} className='d-flex jc-end'>
             <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
             </Button>
-            <Button  color='primary' variant='contained' type='submit' disabled={isSubmitting}>
+            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
               Crear
             </Button>
           </Col>
