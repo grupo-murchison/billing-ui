@@ -21,7 +21,9 @@ import { Button, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
 import { TipoProcedimientoQDropdownController } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
-import Form from '@app/components/Form/Form';
+import Form, { FormV2 } from '@app/components/Form/Form';
+import { ProcedimientoBuiltinDropdownController } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdown';
+import { ProcedimientoCustomDropdownController } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdown';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -66,7 +68,7 @@ const ProcedimientoQCreate = () => {
     } else if (watch('tipoProcedimientoQId') === 2) {
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else {
+    } else if (watch('tipoProcedimientoQId') === 3) {
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
@@ -77,7 +79,7 @@ const ProcedimientoQCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <FormV2 onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -127,49 +129,32 @@ const ProcedimientoQCreate = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <ProcedimientoBuiltinDropdown
-              id='procedimientoBuiltinId'
-              label='Procedimiento Builtin'
-              {...register('procedimientoBuiltinId', {
-                valueAsNumber: true,
-              })}
+            <ProcedimientoBuiltinDropdownController
+              control={control}
+              name='procedimientoBuiltinId'
               error={!!formErrors.procedimientoBuiltinId}
+              // disabled={isSubmitting}
+              label='Procedimiento Builtin'
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              // disabled={isSubmitting || disablePBuiltin}
-              disabled={isSubmitting}
-              value={watch('procedimientoBuiltinId')}
+              disabled={isSubmitting || disablePBuiltin}
               emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
-
               // disabled={isSubmitting || watch('accionCode') !== 'FIL'}
             />
           </Col>
           <Col md={6}>
-            <ProcedimientoCustomDropdown
-              id='procedimientoCustomId'
-              label='Procedimiento Custom'
-              {...register('procedimientoCustomId', {
-                valueAsNumber: true,
-              })}
+            <ProcedimientoCustomDropdownController
+              control={control}
+              name='procedimientoCustomId'
               error={!!formErrors.procedimientoCustomId}
+              disabled={isSubmitting || disablePCustom}
+              // disabled={isSubmitting}
+              label='Procedimiento Custom'
               helperText={formErrors?.procedimientoCustomId?.message}
-              // disabled={isSubmitting || disablePCustom}
-              disabled={isSubmitting}
-              value={watch('procedimientoCustomId')}
               emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row> */}
-      </Form>
+      </FormV2>
     </Modal>
   );
 };

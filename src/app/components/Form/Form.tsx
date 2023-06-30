@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 
 import { Row, Col } from '@app/components';
-import { Button } from '@mui/material';
+import { Button, Stack } from '@mui/material';
 
 const Form = ({ children, isSubmitting, onSubmit, handleClose, isUpdate }: FromProps) => {
   return (
@@ -18,6 +18,29 @@ const Form = ({ children, isSubmitting, onSubmit, handleClose, isUpdate }: FromP
           </Button>
         </Col>
       </Row>
+    </form>
+  );
+};
+
+export const FormV2 = ({ children, isSubmitting, onSubmit, handleClose, isUpdate }: FromProps) => {
+  return (
+    <form noValidate onSubmit={onSubmit} autoComplete='off'>
+      <>{children}</>
+
+      <Stack direction='row' justifyContent='end' gap={2}>
+        <Button
+          color='secondary'
+          variant='outlined'
+          disabled={isSubmitting}
+          onClick={handleClose}
+          sx={{ width: '120px' }}
+        >
+          Cancelar
+        </Button>
+        <Button color='primary' variant='contained' type='submit' disabled={isSubmitting} sx={{ width: '120px' }}>
+          {isUpdate ? 'Actualizar' : 'Crear'}
+        </Button>
+      </Stack>
     </form>
   );
 };

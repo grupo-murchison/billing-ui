@@ -5,6 +5,8 @@ import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
 import { ProcedimientoBuiltinRepository } from '@domains/procedimiento-builtin/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
+import { Control } from 'react-hook-form';
 
 const ProcedimientoBuiltinDropdown = ({
   id,
@@ -55,6 +57,54 @@ type ProcedimientoBuiltinDropdownProps = {
   helperText?: string;
   disabled?: boolean;
   value?: number | string;
+  emptyOption?: DropdownItemType & {
+    disabled?: boolean;
+  };
+};
+
+export const ProcedimientoBuiltinDropdownController = ({
+  control,
+  name,
+  error,
+  disabled,
+  label,
+  helperText,
+  emptyOption,
+  ...props
+}: ProcedimientoBuiltinDropdownPropsV2) => {
+  const [items, setItems] = useState<DropdownSchemaType>([]);
+
+  useEffect(() => {
+    ProcedimientoBuiltinRepository.getAllProcedimientoBuiltinAsDropdown()
+      .then(({ data }) => {
+        setItems(data);
+      })
+      .catch(() => {
+        setItems([]);
+      });
+  }, []);
+
+  return (
+    <DropdownV2
+      name={name}
+      control={control}
+      options={items}
+      error={error}
+      disabled={disabled}
+      labelDisplay={label}
+      helperText={helperText}
+      emptyOption={emptyOption}
+    />
+  );
+};
+
+type ProcedimientoBuiltinDropdownPropsV2 = {
+  control: Control<any>;
+  name: string;
+  error?: boolean;
+  disabled?: boolean;
+  label: string;
+  helperText?: string;
   emptyOption?: DropdownItemType & {
     disabled?: boolean;
   };

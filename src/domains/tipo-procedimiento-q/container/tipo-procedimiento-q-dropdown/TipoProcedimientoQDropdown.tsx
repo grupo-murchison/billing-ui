@@ -102,7 +102,6 @@ type TipoDatoDropdownProps = {
 type TipoDatoDropdownPropsV2 = {
   control: Control<any>;
   name: string;
-  // options: DropdownItemType[];
   error?: boolean;
   disabled?: boolean;
   label: string;

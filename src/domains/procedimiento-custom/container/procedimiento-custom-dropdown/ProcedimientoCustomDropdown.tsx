@@ -5,6 +5,8 @@ import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
 import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
+import { Control } from 'react-hook-form';
 
 const ProcedimientoCustomDropdown = ({
   id,
@@ -55,6 +57,54 @@ type ProcedimientoCustomDropdownProps = {
   helperText?: string;
   disabled?: boolean;
   value?: number | string;
+  emptyOption?: DropdownItemType & {
+    disabled?: boolean;
+  };
+};
+
+export const ProcedimientoCustomDropdownController = ({
+  control,
+  name,
+  error,
+  disabled,
+  label,
+  helperText,
+  emptyOption,
+  ...props
+}: ProcedimientoCustomDropdownPropsV2) => {
+  const [items, setItems] = useState<DropdownSchemaType>([]);
+
+  useEffect(() => {
+    ProcedimientoCustomRepository.getAllProcedimientoCustomAsDropdown()
+      .then(({ data }) => {
+        setItems(data);
+      })
+      .catch(() => {
+        setItems([]);
+      });
+  }, []);
+
+  return (
+    <DropdownV2
+      name={name}
+      control={control}
+      options={items}
+      error={error}
+      disabled={disabled}
+      labelDisplay={label}
+      helperText={helperText}
+      emptyOption={emptyOption}
+    />
+  );
+};
+
+type ProcedimientoCustomDropdownPropsV2 = {
+  control: Control<any>;
+  name: string;
+  error?: boolean;
+  disabled?: boolean;
+  label: string;
+  helperText?: string;
   emptyOption?: DropdownItemType & {
     disabled?: boolean;
   };
