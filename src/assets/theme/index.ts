@@ -17,6 +17,9 @@ const theme = createTheme({
     },
   },
   typography: {
+    fontFamily: ['Roboto', '"Open Sans Variable"', '"Helvetica Neue"', 'Arial', 'sans-serif', '-apple-system'].join(
+      ',',
+    ),
     // h1: {
     //   fontFamily: 'Roboto',
     //   fontSize: '2.3125rem',
