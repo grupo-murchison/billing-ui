@@ -6,7 +6,6 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 import Logo from '../../../public/logo/logo-murchison.png';
 
-//TODO como puedo utilizar ruta absoluta
 import { MenuIcon, SearchIcon, QuestionMarkIcon, AccountCircleIcon } from '@assets/icons';
 
 interface AppBarProps extends MuiAppBarProps {
@@ -21,11 +20,9 @@ const AppBar = styled(MuiAppBar, {
   shouldForwardProp: prop => prop !== 'open',
 })<AppBarProps>(({ theme }) => ({
   zIndex: theme.zIndex.drawer + 1,
-  color: '#000000',
-  backgroundColor: '#ffffff',
+  color: theme.palette.text.primary,
+  backgroundColor: theme.palette.background.paper,
   boxShadow: 'none',
-  margin: '0px',
-  padding: '0px',
 }));
 
 const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
@@ -35,13 +32,12 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
     <AppBar position='fixed'>
       <Toolbar>
         <IconButton
-          //TODO no pude agrandar el icono
           edge='start'
           aria-label='menu'
           sx={{
             'height': '64px',
             'width': '50px',
-            'color': '#ffffff',
+            'color': theme.palette.common.white,
             'mr': 2,
             'borderRadius': 0,
             'backgroundColor': theme.palette.primary.main,
@@ -55,7 +51,7 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
           <MenuIcon />
         </IconButton>
         <Stack direction='row' justifyContent='space-between' width='100%'>
-          <Box component='img' src='/logo/logo-murchison.png' alt='LOGO' sx={{ height: '45px' }} />
+          <Box component='img' src='/logo/logo-murchison.png' alt='Logo Grupo Murchison' sx={{ height: '45px' }} />
 
           <Stack direction='row' spacing={2} alignItems='center' sx={{ p: 0.5 }}>
             <IconButton
