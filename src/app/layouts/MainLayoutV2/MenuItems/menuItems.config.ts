@@ -9,6 +9,8 @@ import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, Dashboard
 const dashboard: IMenuItem = {
   id: 'dashboard',
   type: 'group',
+  // title: 'Dashboard',
+  // caption: 'Dashboard',
   children: [
     {
       id: 'dashboard',
@@ -22,7 +24,6 @@ const dashboard: IMenuItem = {
 
 const contrato: IMenuItem = {
   id: 'contratos',
-  // title: 'Contrato',
   type: 'group',
   children: [
     {

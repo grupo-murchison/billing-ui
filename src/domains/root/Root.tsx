@@ -1,9 +1,9 @@
 import { withBreadcrumb } from '@app/hocs';
 import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
-import { Typography } from '@mui/material';
+import { Button, Typography } from '@mui/material';
 
 function RootLayout() {
-  return <Typography variant='h4'>Inicio</Typography>;
+  return <></>;
 }
 
 const RootBreadcrumb: BreadcrumbItem[] = [{ label: '', path: '/' }];

@@ -21,11 +21,8 @@ const AppBar = styled(MuiAppBar, {
   zIndex: theme.zIndex.drawer + 1,
   color: theme.palette.text.primary,
   backgroundColor: theme.palette.background.paper,
-  // boxShadow: '0px 2px 4px -1px rgba(0,0,0,0.2),0px 4px 5px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // Original MUI
-  boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // TODO validar si esto les gusta o no
   // boxShadow: 'none',
-  margin: '0px',
-  padding: '0px',
+  boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // TODO validar si esto les gusta o no
 }));
 
 const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
@@ -35,7 +32,6 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
     <AppBar position='fixed'>
       <Toolbar>
         <IconButton
-          //TODO no pude agrandar el icono
           edge='start'
           aria-label='menu'
           sx={{
@@ -55,7 +51,7 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
           <MenuIcon />
         </IconButton>
         <Stack direction='row' justifyContent='space-between' width='100%'>
-          <Box component='img' src='/logo/logo-murchison.png' alt='LOGO' sx={{ height: '45px' }} />
+          <Box component='img' src='/logo/logo-murchison.png' alt='Logo Grupo Murchison' sx={{ height: '45px' }} />
 
           <Stack direction='row' spacing={2} alignItems='center' sx={{ p: 0.5 }}>
             <IconButton

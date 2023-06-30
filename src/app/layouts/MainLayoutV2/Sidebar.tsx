@@ -50,7 +50,7 @@ const Sidebar = ({ open }: { open: boolean }) => {
       variant='permanent'
       open={open}
       PaperProps={{
-        sx: { backgroundColor: theme.palette.primary.main, color: '#FFFFFF' },
+        sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white },
       }}
     >
       <Toolbar />
