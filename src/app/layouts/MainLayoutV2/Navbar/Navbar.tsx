@@ -1,12 +1,11 @@
 import MuiAppBar, { AppBarProps as MuiAppBarProps } from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
-// import MenuIcon from '@mui/icons-material/Menu';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
-import Logo from '../../../public/logo/logo-murchison.png';
 
-import { MenuIcon, SearchIcon, QuestionMarkIcon, AccountCircleIcon } from '@assets/icons';
+//TODO como puedo utilizar ruta absoluta
+import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -22,7 +21,8 @@ const AppBar = styled(MuiAppBar, {
   zIndex: theme.zIndex.drawer + 1,
   color: theme.palette.text.primary,
   backgroundColor: theme.palette.background.paper,
-  boxShadow: 'none',
+  // boxShadow: 'none',
+  boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // TODO validar si esto les gusta o no
 }));
 
 const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
