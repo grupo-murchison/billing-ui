@@ -3,7 +3,7 @@ import { ReactNode } from 'react';
 import { Row, Col } from '@app/components';
 import { Button } from '@mui/material';
 
-const Form = ({ children, isSubmitting, onSubmit, handleClose, update }: FromProps) => {
+const Form = ({ children, isSubmitting, onSubmit, handleClose, isUpdate }: FromProps) => {
   return (
     <form noValidate onSubmit={onSubmit} autoComplete='off'>
       <>{children}</>
@@ -14,7 +14,7 @@ const Form = ({ children, isSubmitting, onSubmit, handleClose, update }: FromPro
             Cancelar
           </Button>
           <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-            {update ? 'Actualizar' : 'Crear'}
+            {isUpdate ? 'Actualizar' : 'Crear'}
           </Button>
         </Col>
       </Row>
@@ -27,7 +27,7 @@ type FromProps = {
   onSubmit: any;
   isSubmitting: boolean;
   handleClose: any;
-  update?: boolean;
+  isUpdate?: boolean;
 };
 
 export default Form;

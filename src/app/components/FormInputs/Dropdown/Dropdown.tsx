@@ -49,3 +49,37 @@ export const Dropdown = ({
     {helperText && <FormHelperText>{helperText}</FormHelperText>}
   </FormControl>
 );
+
+export const DropdownV2 = ({
+  control,
+  name,
+  options,
+  error,
+  disabled,
+  labelDisplay,
+  helperText,
+  emptyOption,
+}: DropdownProps) => (
+  <FormControl fullWidth error={error} disabled={disabled}>
+    <InputLabel>{labelDisplay}</InputLabel>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <Select {...field} label={labelDisplay}>
+          {emptyOption ? (
+            <MenuItem key={emptyOption.code} value={emptyOption.value} disabled={emptyOption.disabled}>
+              <em>{emptyOption.label}</em>
+            </MenuItem>
+          ) : null}
+          {options.map(({ value, code, label }) => (
+            <MenuItem key={code} value={value}>
+              {`${code} - ${label}`}
+            </MenuItem>
+          ))}
+        </Select>
+      )}
+    />
+    {helperText && <FormHelperText>{helperText}</FormHelperText>}
+  </FormControl>
+);

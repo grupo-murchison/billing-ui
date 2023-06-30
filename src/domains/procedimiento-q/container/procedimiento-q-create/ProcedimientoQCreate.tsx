@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -20,6 +20,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
+import { TipoProcedimientoQDropdownController } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -28,6 +30,7 @@ const ProcedimientoQCreate = () => {
 
   const {
     register,
+    control,
     handleSubmit,
     watch,
     formState: { errors: formErrors, isSubmitting },
@@ -41,8 +44,8 @@ const ProcedimientoQCreate = () => {
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
-  const onSubmit = useCallback(
-    async (data: ProcedimientoQCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
+    async data => {
       // await ProcedimientoQRepository.createProcedimientoQ(data);
       console.log(data);
       mainDataGrid.reload();
@@ -74,7 +77,7 @@ const ProcedimientoQCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <form noValidate onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -111,16 +114,14 @@ const ProcedimientoQCreate = () => {
         </Row>
         <Row>
           <Col md={12}>
-            <TipoProcedimientoQDropdown
-              id='tipoProcedimientoQId'
-              label={`Tipo ${label.procedimientoQ}`}
-              {...register('tipoProcedimientoQId', {
-                valueAsNumber: true,
-              })}
+            <TipoProcedimientoQDropdownController
+              control={control}
+              name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}
-              helperText={formErrors?.tipoProcedimientoQId?.message}
               disabled={isSubmitting}
-              value={watch('tipoProcedimientoQId')}
+              label={`Tipo ${label.procedimientoQ}`}
+              helperText={formErrors?.tipoProcedimientoQId?.message}
+              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: true }}
             />
           </Col>
         </Row>
@@ -134,7 +135,8 @@ const ProcedimientoQCreate = () => {
               })}
               error={!!formErrors.procedimientoBuiltinId}
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              disabled={isSubmitting || disablePBuiltin}
+              // disabled={isSubmitting || disablePBuiltin}
+              disabled={isSubmitting}
               value={watch('procedimientoBuiltinId')}
               emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
 
@@ -150,13 +152,14 @@ const ProcedimientoQCreate = () => {
               })}
               error={!!formErrors.procedimientoCustomId}
               helperText={formErrors?.procedimientoCustomId?.message}
-              disabled={isSubmitting || disablePCustom}
+              // disabled={isSubmitting || disablePCustom}
+              disabled={isSubmitting}
               value={watch('procedimientoCustomId')}
               emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
             />
           </Col>
         </Row>
-        <Row>
+        {/* <Row>
           <Col md={12} className='d-flex jc-end'>
             <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
               Cancelar
@@ -165,8 +168,8 @@ const ProcedimientoQCreate = () => {
               Crear
             </Button>
           </Col>
-        </Row>
-      </form>
+        </Row> */}
+      </Form>
     </Modal>
   );
 };
