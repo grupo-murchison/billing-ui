@@ -28,7 +28,7 @@ const ProcedimientoQCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     formState: { errors: formErrors, isSubmitting },
     setValue,
@@ -41,7 +41,7 @@ const ProcedimientoQCreate = () => {
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async (data: ProcedimientoQCreateSchemaType) => {
       // await ProcedimientoQRepository.createProcedimientoQ(data);
       console.log(data);
@@ -74,7 +74,7 @@ const ProcedimientoQCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <form noValidate onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
         <Row>
           <Col md={6}>
             <TextField
