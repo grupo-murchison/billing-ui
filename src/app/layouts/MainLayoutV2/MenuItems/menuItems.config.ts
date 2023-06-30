@@ -8,7 +8,9 @@ import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon } from '@a
 
 const dashboard: IMenuItem = {
   id: 'contratos',
-  // title: 'Dashboard',
+  //TODO queda el title y el caption?
+  title: 'Dashboard',
+  caption: 'Dashboard caption',
   type: 'group',
   children: [
     {
