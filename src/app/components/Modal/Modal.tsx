@@ -25,7 +25,7 @@ const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
     <div className={className}>
       <div className='modal-content'>
         <div className='modal-content__header'>
-          <Typography variant='h1' sx={{ flexGrow: 1, color: theme.palette.primary.main }}>
+          <Typography variant='h2' sx={{ flexGrow: 1, color: theme.palette.primary.main }}>
             {title}
           </Typography>
           <span className='mch__closeButton' onClick={onClose}>
