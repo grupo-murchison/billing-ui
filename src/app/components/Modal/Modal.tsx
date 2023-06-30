@@ -25,7 +25,6 @@ const Modal = ({ isOpen, title, onClose, children }: ModalProps) => {
     <div className={className}>
       <div className='modal-content'>
         <div className='modal-content__header'>
-          {/* <h1 className='mch__title'>{title}</h1> */}
           <Typography variant='h1' sx={{ flexGrow: 1, color: theme.palette.primary.main }}>
             {title}
           </Typography>

@@ -3,6 +3,7 @@ import clsx from 'clsx';
 import styles from '@app/components/Button/Button.module.scss';
 
 const Button = ({ className, color, icon, outlined, children, ...props }: ButtonProps) => {
+  //TODO sacar las clases sass
   return (
     <button
       className={clsx(className, styles['button'], {

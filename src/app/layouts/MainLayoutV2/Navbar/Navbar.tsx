@@ -23,8 +23,6 @@ const AppBar = styled(MuiAppBar, {
   color: theme.palette.text.primary,
   backgroundColor: theme.palette.background.paper,
   boxShadow: 'none',
-  margin: '0px',
-  padding: '0px',
 }));
 
 const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
@@ -53,7 +51,7 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
           <MenuIcon />
         </IconButton>
         <Stack direction='row' justifyContent='space-between' width='100%'>
-          <Box component='img' src='/logo/logo-murchison.png' alt='LOGO' sx={{ height: '45px' }} />
+          <Box component='img' src='/logo/logo-murchison.png' alt='Logo Grupo Murchison' sx={{ height: '45px' }} />
 
           <Stack direction='row' spacing={2} alignItems='center' sx={{ p: 0.5 }}>
             <IconButton
@@ -82,9 +80,7 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
                 backgroundColor: theme.palette.secondary.main,
               }}
             />
-            <Typography variant='subtitle1' color='success'>
-              Nombre de usuario
-            </Typography>
+            <Typography variant='subtitle1'>Nombre de usuario</Typography>
           </Stack>
         </Stack>
       </Toolbar>
