@@ -50,6 +50,8 @@ export const Dropdown = ({
   </FormControl>
 );
 
+//TODO todavia no elimine el dropdown v1 porque lo estan utilizando en procedimientoCustom
+
 export const DropdownV2 = ({
   control,
   name,

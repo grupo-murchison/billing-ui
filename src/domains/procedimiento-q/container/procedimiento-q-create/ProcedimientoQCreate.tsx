@@ -20,10 +20,10 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Button, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
-import { TipoProcedimientoQDropdownController } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
-import Form, { FormV2 } from '@app/components/Form/Form';
+import Form from '@app/components/Form/Form';
 import { ProcedimientoBuiltinDropdownController } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdown';
 import { ProcedimientoCustomDropdownController } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdown';
+import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -79,7 +79,7 @@ const ProcedimientoQCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <FormV2 onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -154,7 +154,7 @@ const ProcedimientoQCreate = () => {
             />
           </Col>
         </Row>
-      </FormV2>
+      </Form>
     </Modal>
   );
 };

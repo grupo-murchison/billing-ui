@@ -8,6 +8,7 @@ import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
 import { Control } from 'react-hook-form';
 import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
+import { DropdownProps } from '@app/components/Form/form.interfaces';
 
 const TipoProcedimientoQDropdown = ({
   id,
@@ -60,7 +61,7 @@ export const TipoProcedimientoQDropdownController = ({
   helperText,
   emptyOption,
   ...props
-}: TipoDatoDropdownPropsV2) => {
+}: DropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -77,6 +78,8 @@ export const TipoProcedimientoQDropdownController = ({
     <DropdownV2
       name={name}
       control={control}
+      //TODO aca revisar el tema de pasar las options con items usando el useState o que lleguen como parametro
+
       options={items}
       error={error}
       disabled={disabled}
@@ -87,6 +90,7 @@ export const TipoProcedimientoQDropdownController = ({
   );
 };
 
+//TODO borrar
 type TipoDatoDropdownProps = {
   id?: string;
   label: string;
@@ -94,18 +98,6 @@ type TipoDatoDropdownProps = {
   helperText?: string;
   disabled?: boolean;
   value?: number | string;
-  emptyOption?: DropdownItemType & {
-    disabled?: boolean;
-  };
-};
-
-type TipoDatoDropdownPropsV2 = {
-  control: Control<any>;
-  name: string;
-  error?: boolean;
-  disabled?: boolean;
-  label: string;
-  helperText?: string;
   emptyOption?: DropdownItemType & {
     disabled?: boolean;
   };
