@@ -53,6 +53,7 @@ const TipoProcedimientoQDropdown = ({
 };
 
 export const TipoProcedimientoQDropdownController = ({
+  onChange,
   control,
   name,
   error,
@@ -78,8 +79,7 @@ export const TipoProcedimientoQDropdownController = ({
     <DropdownV2
       name={name}
       control={control}
-      //TODO aca revisar el tema de pasar las options con items usando el useState o que lleguen como parametro
-
+      onChange={onChange}
       options={items}
       error={error}
       disabled={disabled}
@@ -90,7 +90,7 @@ export const TipoProcedimientoQDropdownController = ({
   );
 };
 
-//TODO borrar
+//TODO borrar: es de v1
 type TipoDatoDropdownProps = {
   id?: string;
   label: string;

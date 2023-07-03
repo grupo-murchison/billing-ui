@@ -17,6 +17,7 @@ export type ActionButtonsProps = {
 };
 
 export type DropdownProps = {
+  onChange?: any;
   control: Control<any>;
   name: string;
   error?: boolean;

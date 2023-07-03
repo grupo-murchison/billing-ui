@@ -23,7 +23,7 @@ import { label } from '@domains/procedimiento-q/constants';
 import Form from '@app/components/Form/Form';
 import { ProcedimientoBuiltinDropdownController } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdown';
 import { ProcedimientoCustomDropdownController } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdown';
-import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
+import { TipoProcedimientoQDropdownController } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -37,11 +37,15 @@ const ProcedimientoQCreate = () => {
     watch,
     formState: { errors: formErrors, isSubmitting },
     setValue,
+    reset,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
       descripcion: '',
       denominacion: '',
+      tipoProcedimientoQId: 0,
+      procedimientoBuiltinId: 0,
+      procedimientoCustomId: 0,
     },
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
@@ -60,19 +64,55 @@ const ProcedimientoQCreate = () => {
     _navigate('/procedimiento-q');
   }, [_navigate]);
 
-  useEffect(() => {
-    if (watch('tipoProcedimientoQId') === 1) {
-      setValue('procedimientoCustomId', 0);
-      setDisablePBuiltin(false);
-      setDisablePCustom(true);
-    } else if (watch('tipoProcedimientoQId') === 2) {
-      setDisablePBuiltin(true);
-      setDisablePCustom(false);
-    } else if (watch('tipoProcedimientoQId') === 3) {
-      setDisablePBuiltin(true);
-      setDisablePCustom(true);
+  // useEffect(() => {
+  //   if (watch('tipoProcedimientoQId') === 1) {
+  //     setValue('procedimientoCustomId', 0);
+  //     setDisablePBuiltin(false);
+  //     setDisablePCustom(true);
+  //   } else if (watch('tipoProcedimientoQId') === 2) {
+  //     setDisablePBuiltin(true);
+  //     setDisablePCustom(false);
+  //   } else if (watch('tipoProcedimientoQId') === 3) {
+  //     setDisablePBuiltin(true);
+  //     setDisablePCustom(true);
+  //   }
+  // }, [watch('tipoProcedimientoQId')]);
+
+  // useEffect(() => {
+  //   const subscription = watch((value, { name }) => {
+  //     if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 1) {
+  //       resetField('procedimientoCustomId');
+  //       setValue('procedimientoCustomId', 0);
+  //       setDisablePBuiltin(false);
+  //       setDisablePCustom(true);
+  //     } else if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 2) {
+  //       setValue('procedimientoBuiltinId', 0);
+  //       setDisablePBuiltin(true);
+  //       setDisablePCustom(false);
+  //     } else if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 3) {
+  //       setValue('procedimientoCustomId', 0);
+  //       setValue('procedimientoBuiltinId', 0);
+  //       setDisablePBuiltin(true);
+  //       setDisablePCustom(true);
+  //     }
+  //   });
+
+  //   return () => subscription.unsubscribe();
+  // }, [watch]);
+
+  const onChangeTipoProcedimientoCantidad = (value: any, onChange: (...event: string[]) => void) => {
+    // console.log('data', data);
+    // const { value } = data;
+    // if (value === 1) {
+    //   reset({ procedimientoCustomId: 0 });
+    // }
+
+    onChange(value);
+    if (value === 1) {
+      reset({ procedimientoCustomId: 0 });
     }
-  }, [watch('tipoProcedimientoQId')]);
+    console.log('value', value);
+  };
 
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
@@ -117,6 +157,7 @@ const ProcedimientoQCreate = () => {
         <Row>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
+              onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}
@@ -134,11 +175,10 @@ const ProcedimientoQCreate = () => {
               name='procedimientoBuiltinId'
               error={!!formErrors.procedimientoBuiltinId}
               // disabled={isSubmitting}
+              disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              disabled={isSubmitting || disablePBuiltin}
               emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
-              // disabled={isSubmitting || watch('accionCode') !== 'FIL'}
             />
           </Col>
           <Col md={6}>

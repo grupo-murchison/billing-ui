@@ -4,6 +4,7 @@ import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/
 import { DropdownItemType } from '@app/utils/zod.util';
 
 export type DropdownProps = {
+  onChange?: any;
   control: Control<any>;
   options: DropdownItemType[];
   name: string;
@@ -53,6 +54,7 @@ export const Dropdown = ({
 //TODO todavia no elimine el dropdown v1 porque lo estan utilizando en procedimientoCustom
 
 export const DropdownV2 = ({
+  onChange: onChangeV2,
   control,
   name,
   options,
@@ -67,8 +69,8 @@ export const DropdownV2 = ({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
-        <Select {...field} label={labelDisplay}>
+      render={({ field: { value, onChange } }) => (
+        <Select label={labelDisplay} onChange={onChangeV2 ? (value: any) => onChangeV2(value, onChange) : onChange}>
           {emptyOption ? (
             <MenuItem key={emptyOption.code} value={emptyOption.value} disabled={emptyOption.disabled}>
               <em>{emptyOption.label}</em>

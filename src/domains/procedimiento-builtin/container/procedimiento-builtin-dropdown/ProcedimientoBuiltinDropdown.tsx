@@ -7,6 +7,7 @@ import { ProcedimientoBuiltinRepository } from '@domains/procedimiento-builtin/r
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
 import { Control } from 'react-hook-form';
+import { DropdownProps } from '@app/components/Form/form.interfaces';
 
 const ProcedimientoBuiltinDropdown = ({
   id,
@@ -71,7 +72,7 @@ export const ProcedimientoBuiltinDropdownController = ({
   helperText,
   emptyOption,
   ...props
-}: ProcedimientoBuiltinDropdownPropsV2) => {
+}: DropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
