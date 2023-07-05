@@ -24,7 +24,18 @@ export type DropdownProps = {
   disabled?: boolean;
   label: string;
   helperText?: string;
-  emptyOption?: DropdownItemType & {
-    disabled?: boolean;
-  };
+  emptyOption?: boolean;
+};
+
+export type FormSelectProps = {
+  control: Control<any>;
+  name: string;
+  options?: any[]; //TODO estas options deberian ser opcionales?
+  disabled?: boolean;
+  disabledEmpty?: boolean;
+  label?: string;
+  helperText?: string;
+  error?: boolean;
+  onChange?: any;
+  emptyOption?: boolean;
 };

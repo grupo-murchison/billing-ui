@@ -8,7 +8,8 @@ import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
 import { Control } from 'react-hook-form';
 import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
-import { DropdownProps } from '@app/components/Form/form.interfaces';
+import { DropdownProps, FormSelectProps } from '@app/components/Form/form.interfaces';
+import FormSelect from '@app/components/Form/FormSelect';
 
 const TipoProcedimientoQDropdown = ({
   id,
@@ -62,31 +63,42 @@ export const TipoProcedimientoQDropdownController = ({
   helperText,
   emptyOption,
   ...props
-}: DropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+}: FormSelectProps) => {
+  const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
     TipoDatoRepository.getAllTipoDatoAsDropdown()
       .then(({ data }) => {
-        setItems(data);
+        setOptions(data);
       })
       .catch(() => {
-        setItems([]);
+        setOptions([]);
       });
   }, []);
 
   return (
-    <DropdownV2
+    <FormSelect
       name={name}
       control={control}
       onChange={onChange}
-      options={items}
+      options={options}
       error={error}
       disabled={disabled}
-      labelDisplay={label}
+      label={label}
       helperText={helperText}
       emptyOption={emptyOption}
     />
+    // <DropdownV2
+    //   name={name}
+    //   control={control}
+    //   onChange={onChange}
+    //   options={options}
+    //   error={error}
+    //   disabled={disabled}
+    //   labelDisplay={label}
+    //   helperText={helperText}
+    //   emptyOption={emptyOption}
+    // />
   );
 };
 
