@@ -37,6 +37,7 @@ const ProcedimientoQCreate = () => {
     watch,
     formState: { errors: formErrors, isSubmitting },
     setValue,
+    trigger,
     reset,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
@@ -50,10 +51,18 @@ const ProcedimientoQCreate = () => {
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
+  const [isLoading, setLoading] = useState(false);
+
   const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
     async data => {
-      // await ProcedimientoQRepository.createProcedimientoQ(data);
-      console.log(data);
+      setLoading(true);
+      await ProcedimientoQRepository.createProcedimientoQ(data)
+        .then()
+        .catch()
+        .finally(() => {
+          setLoading(false);
+        });
+      // console.log(data);
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
@@ -100,22 +109,47 @@ const ProcedimientoQCreate = () => {
   //   return () => subscription.unsubscribe();
   // }, [watch]);
 
-  const onChangeTipoProcedimientoCantidad = (value: any, onChange: (...event: string[]) => void) => {
-    // console.log('data', data);
-    // const { value } = data;
-    // if (value === 1) {
-    //   reset({ procedimientoCustomId: 0 });
-    // }
+  // const onChangeTipoProcedimientoCantidad = (value: any, onChange: (...event: string[]) => void) => {
+  //   // console.log('data', data);
+  //   // const { value } = data;
+  //   // if (value === 1) {
+  //   //   reset({ procedimientoCustomId: 0 });
+  //   // }
 
-    onChange(value);
-    if (value === 1) {
-      reset({ procedimientoCustomId: 0 });
-    }
-    console.log('value', value);
-  };
+  //   onChange(value);
+  //   if (value === 1) {
+  //     reset({ procedimientoCustomId: 0 });
+  //     setDisablePBuiltin(false);
+
+  //     setDisablePCustom(true);
+  //   }
+  //   console.log('value', value);
+  //   trigger();
+  // };
 
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
+
+  const onChangeTipoProcedimientoCantidad = (data: any) => {
+    // console.log(data);
+    setValue('tipoProcedimientoQId', data?.props?.value);
+    // console.log('watch', watch('tipoProcedimientoQId'));
+    if (watch('tipoProcedimientoQId') === 1) {
+      console.log('watch 1');
+      setValue('procedimientoCustomId', '');
+      setDisablePBuiltin(false);
+      setDisablePCustom(true);
+    } else if (watch('tipoProcedimientoQId') === 2) {
+      setValue('procedimientoBuiltinId', '');
+      setDisablePBuiltin(true);
+      setDisablePCustom(false);
+    } else if (watch('tipoProcedimientoQId') === 3) {
+      setValue('procedimientoBuiltinId', '');
+      setValue('procedimientoCustomId', '');
+      setDisablePBuiltin(true);
+      setDisablePCustom(true);
+    }
+  };
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
@@ -164,7 +198,7 @@ const ProcedimientoQCreate = () => {
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
               helperText={formErrors?.tipoProcedimientoQId?.message}
-              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: true }}
+              emptyOption={false}
             />
           </Col>
         </Row>
@@ -174,11 +208,10 @@ const ProcedimientoQCreate = () => {
               control={control}
               name='procedimientoBuiltinId'
               error={!!formErrors.procedimientoBuiltinId}
-              // disabled={isSubmitting}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
+              emptyOption
             />
           </Col>
           <Col md={6}>
@@ -187,10 +220,9 @@ const ProcedimientoQCreate = () => {
               name='procedimientoCustomId'
               error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
-              // disabled={isSubmitting}
               label='Procedimiento Custom'
               helperText={formErrors?.procedimientoCustomId?.message}
-              emptyOption={{ value: 0, label: 'Ninguno', code: '', disabled: false }}
+              emptyOption
             />
           </Col>
         </Row>

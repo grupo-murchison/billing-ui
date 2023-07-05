@@ -65,6 +65,7 @@ export const TipoProcedimientoQDropdownController = ({
   ...props
 }: FormSelectProps) => {
   const [options, setOptions] = useState<DropdownSchemaType>([]);
+  console.log(options);
 
   useEffect(() => {
     TipoDatoRepository.getAllTipoDatoAsDropdown()

@@ -7,7 +7,8 @@ import { ProcedimientoBuiltinRepository } from '@domains/procedimiento-builtin/r
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
 import { Control } from 'react-hook-form';
-import { DropdownProps } from '@app/components/Form/form.interfaces';
+import { DropdownProps, FormSelectProps } from '@app/components/Form/form.interfaces';
+import FormSelect from '@app/components/Form/FormSelect';
 
 const ProcedimientoBuiltinDropdown = ({
   id,
@@ -64,6 +65,7 @@ type ProcedimientoBuiltinDropdownProps = {
 };
 
 export const ProcedimientoBuiltinDropdownController = ({
+  onChange,
   control,
   name,
   error,
@@ -72,43 +74,32 @@ export const ProcedimientoBuiltinDropdownController = ({
   helperText,
   emptyOption,
   ...props
-}: DropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+}: FormSelectProps) => {
+  const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
     ProcedimientoBuiltinRepository.getAllProcedimientoBuiltinAsDropdown()
       .then(({ data }) => {
-        setItems(data);
+        setOptions(data);
       })
       .catch(() => {
-        setItems([]);
+        setOptions([]);
       });
   }, []);
 
   return (
-    <DropdownV2
+    <FormSelect
       name={name}
       control={control}
-      options={items}
+      onChange={onChange}
+      options={options}
       error={error}
       disabled={disabled}
-      labelDisplay={label}
+      label={label}
       helperText={helperText}
       emptyOption={emptyOption}
     />
   );
-};
-
-type ProcedimientoBuiltinDropdownPropsV2 = {
-  control: Control<any>;
-  name: string;
-  error?: boolean;
-  disabled?: boolean;
-  label: string;
-  helperText?: string;
-  emptyOption?: DropdownItemType & {
-    disabled?: boolean;
-  };
 };
 
 export default ProcedimientoBuiltinDropdown;

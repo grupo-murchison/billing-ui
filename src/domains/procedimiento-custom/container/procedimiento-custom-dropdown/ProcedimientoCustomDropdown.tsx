@@ -7,6 +7,8 @@ import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/rep
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 import { DropdownV2 } from '@app/components/FormInputs/Dropdown/Dropdown';
 import { Control } from 'react-hook-form';
+import { FormSelectProps } from '@app/components/Form/form.interfaces';
+import FormSelect from '@app/components/Form/FormSelect';
 
 const ProcedimientoCustomDropdown = ({
   id,
@@ -63,6 +65,7 @@ type ProcedimientoCustomDropdownProps = {
 };
 
 export const ProcedimientoCustomDropdownController = ({
+  onChange,
   control,
   name,
   error,
@@ -71,43 +74,32 @@ export const ProcedimientoCustomDropdownController = ({
   helperText,
   emptyOption,
   ...props
-}: ProcedimientoCustomDropdownPropsV2) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+}: FormSelectProps) => {
+  const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
     ProcedimientoCustomRepository.getAllProcedimientoCustomAsDropdown()
       .then(({ data }) => {
-        setItems(data);
+        setOptions(data);
       })
       .catch(() => {
-        setItems([]);
+        setOptions([]);
       });
   }, []);
 
   return (
-    <DropdownV2
+    <FormSelect
       name={name}
       control={control}
-      options={items}
+      onChange={onChange}
+      options={options}
       error={error}
       disabled={disabled}
-      labelDisplay={label}
+      label={label}
       helperText={helperText}
       emptyOption={emptyOption}
     />
   );
-};
-
-type ProcedimientoCustomDropdownPropsV2 = {
-  control: Control<any>;
-  name: string;
-  error?: boolean;
-  disabled?: boolean;
-  label: string;
-  helperText?: string;
-  emptyOption?: DropdownItemType & {
-    disabled?: boolean;
-  };
 };
 
 export default ProcedimientoCustomDropdown;
