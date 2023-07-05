@@ -10,7 +10,7 @@ const dashboard: IMenuItem = {
   id: 'contratos',
   //TODO queda el title y el caption?
   title: 'Dashboard',
-  caption: 'Dashboard caption',
+  // caption: 'Dashboard caption',
   type: 'group',
   children: [
     {

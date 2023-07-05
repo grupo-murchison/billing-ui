@@ -1,10 +1,9 @@
 import { Controller, Control } from 'react-hook-form';
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { Select as MuiSelect, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
 import { DropdownItemType } from '@app/utils/zod.util';
 
 export type DropdownProps = {
-  onChange?: any;
   control: Control<any>;
   options: DropdownItemType[];
   name: string;
@@ -33,7 +32,7 @@ export const Dropdown = ({
       name={name}
       control={control}
       render={({ field }) => (
-        <Select {...field} label={labelDisplay}>
+        <MuiSelect {...field} label={labelDisplay}>
           {emptyOption ? (
             <MenuItem key={emptyOption.value} value={emptyOption.code} disabled={emptyOption.disabled}>
               <em>{emptyOption.label}</em>
@@ -44,44 +43,7 @@ export const Dropdown = ({
               {`${code} - ${label}`}
             </MenuItem>
           ))}
-        </Select>
-      )}
-    />
-    {helperText && <FormHelperText>{helperText}</FormHelperText>}
-  </FormControl>
-);
-
-//TODO todavia no elimine el dropdown v1 porque lo estan utilizando en procedimientoCustom
-
-export const DropdownV2 = ({
-  onChange: onChangeV2,
-  control,
-  name,
-  options,
-  error,
-  disabled,
-  labelDisplay,
-  helperText,
-  emptyOption,
-}: DropdownProps) => (
-  <FormControl fullWidth error={error} disabled={disabled}>
-    <InputLabel>{labelDisplay}</InputLabel>
-    <Controller
-      name={name}
-      control={control}
-      render={({ field: { value, onChange } }) => (
-        <Select label={labelDisplay} onChange={onChangeV2 ? (value: any) => onChangeV2(value, onChange) : onChange}>
-          {emptyOption ? (
-            <MenuItem key={emptyOption.code} value={emptyOption.value} disabled={emptyOption.disabled}>
-              <em>{emptyOption.label}</em>
-            </MenuItem>
-          ) : null}
-          {options.map(({ value, code, label }) => (
-            <MenuItem key={code} value={value}>
-              {`${code} - ${label}`}
-            </MenuItem>
-          ))}
-        </Select>
+        </MuiSelect>
       )}
     />
     {helperText && <FormHelperText>{helperText}</FormHelperText>}
