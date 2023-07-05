@@ -6,10 +6,6 @@ import { useNavigate } from 'react-router-dom';
 
 import { Modal, Row, Col } from '@app/components';
 
-import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
-import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown';
-import { ProcedimientoBuiltinDropdown } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown';
-
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQCreateSchema } from '@domains/procedimiento-q/container/procedimiento-q-create/schemas';
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
@@ -21,9 +17,9 @@ import { Button, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
 import Form from '@app/components/Form/Form';
-import { ProcedimientoBuiltinDropdownController } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdown';
-import { ProcedimientoCustomDropdownController } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdown';
-import { TipoProcedimientoQDropdownController } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdown';
+import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
+import ProcedimientoCustomDropdownController from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdownController';
+import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -34,11 +30,8 @@ const ProcedimientoQCreate = () => {
     register,
     control,
     handleSubmit,
-    watch,
     formState: { errors: formErrors, isSubmitting },
     setValue,
-    trigger,
-    reset,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -62,7 +55,6 @@ const ProcedimientoQCreate = () => {
         .finally(() => {
           setLoading(false);
         });
-      // console.log(data);
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
@@ -73,77 +65,22 @@ const ProcedimientoQCreate = () => {
     _navigate('/procedimiento-q');
   }, [_navigate]);
 
-  // useEffect(() => {
-  //   if (watch('tipoProcedimientoQId') === 1) {
-  //     setValue('procedimientoCustomId', 0);
-  //     setDisablePBuiltin(false);
-  //     setDisablePCustom(true);
-  //   } else if (watch('tipoProcedimientoQId') === 2) {
-  //     setDisablePBuiltin(true);
-  //     setDisablePCustom(false);
-  //   } else if (watch('tipoProcedimientoQId') === 3) {
-  //     setDisablePBuiltin(true);
-  //     setDisablePCustom(true);
-  //   }
-  // }, [watch('tipoProcedimientoQId')]);
-
-  // useEffect(() => {
-  //   const subscription = watch((value, { name }) => {
-  //     if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 1) {
-  //       resetField('procedimientoCustomId');
-  //       setValue('procedimientoCustomId', 0);
-  //       setDisablePBuiltin(false);
-  //       setDisablePCustom(true);
-  //     } else if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 2) {
-  //       setValue('procedimientoBuiltinId', 0);
-  //       setDisablePBuiltin(true);
-  //       setDisablePCustom(false);
-  //     } else if (name === 'tipoProcedimientoQId' && value['tipoProcedimientoQId'] === 3) {
-  //       setValue('procedimientoCustomId', 0);
-  //       setValue('procedimientoBuiltinId', 0);
-  //       setDisablePBuiltin(true);
-  //       setDisablePCustom(true);
-  //     }
-  //   });
-
-  //   return () => subscription.unsubscribe();
-  // }, [watch]);
-
-  // const onChangeTipoProcedimientoCantidad = (value: any, onChange: (...event: string[]) => void) => {
-  //   // console.log('data', data);
-  //   // const { value } = data;
-  //   // if (value === 1) {
-  //   //   reset({ procedimientoCustomId: 0 });
-  //   // }
-
-  //   onChange(value);
-  //   if (value === 1) {
-  //     reset({ procedimientoCustomId: 0 });
-  //     setDisablePBuiltin(false);
-
-  //     setDisablePCustom(true);
-  //   }
-  //   console.log('value', value);
-  //   trigger();
-  // };
-
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
 
   const onChangeTipoProcedimientoCantidad = (data: any) => {
-    // console.log(data);
+    //TODO habria que comparar con el "code" de las options que viene del back
+    const label: string = data.props.children;
     setValue('tipoProcedimientoQId', data?.props?.value);
-    // console.log('watch', watch('tipoProcedimientoQId'));
-    if (watch('tipoProcedimientoQId') === 1) {
-      console.log('watch 1');
+    if (label.includes('BUILT')) {
       setValue('procedimientoCustomId', '');
       setDisablePBuiltin(false);
       setDisablePCustom(true);
-    } else if (watch('tipoProcedimientoQId') === 2) {
+    } else if (label.includes('CUST')) {
       setValue('procedimientoBuiltinId', '');
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else if (watch('tipoProcedimientoQId') === 3) {
+    } else if (label.includes('EXT')) {
       setValue('procedimientoBuiltinId', '');
       setValue('procedimientoCustomId', '');
       setDisablePBuiltin(true);
