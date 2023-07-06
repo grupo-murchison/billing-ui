@@ -2,15 +2,28 @@
 import { IMenuItem, IMenuItemsGroup } from './menu-items.interface';
 
 //nano
-import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon } from '@assets/icons';
+import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
 const dashboard: IMenuItem = {
+  id: 'dashboard',
+  type: 'group',
+  // title: 'Dashboard',
+  // caption: 'Dashboard',
+  children: [
+    {
+      id: 'dashboard',
+      icon: DashboardIcon,
+      title: 'Inicio',
+      type: 'item',
+      url: '/',
+    },
+  ],
+};
+
+const contrato: IMenuItem = {
   id: 'contratos',
-  //TODO queda el title y el caption?
-  title: 'Dashboard',
-  // caption: 'Dashboard caption',
   type: 'group',
   children: [
     {
@@ -96,9 +109,44 @@ const facturaciones: IMenuItem = {
       children: [
         {
           id: 'facturacion',
-          title: 'Facturacion',
+          title: 'Facturación',
           type: 'item',
           url: '/facturacion',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionReversion',
+          title: 'Reversión',
+          type: 'item',
+          url: '/reversion',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionReporte',
+          title: 'Reporte',
+          type: 'item',
+          url: '/reporte',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionLogMasiva',
+          title: 'Log Facturación Masiva',
+          type: 'item',
+          url: '/log-masiva',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionEventosCliente',
+          title: 'Eventos Del Cliente',
+          type: 'item',
+          url: '/eventos-cliente',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionEventosServiciosCliente',
+          title: 'Eventos Por Servicios ',
+          type: 'item',
+          url: '/eventos-servicios-cliente',
           breadcrumbs: false,
         },
       ],
@@ -108,7 +156,6 @@ const facturaciones: IMenuItem = {
 
 const otros: IMenuItem = {
   id: 'otros',
-  // title: 'Facturaciones',
   type: 'group',
   children: [
     {
@@ -130,8 +177,7 @@ const otros: IMenuItem = {
 };
 
 const menuItems: IMenuItemsGroup = {
-  // items: [dashboard, utilities],
-  items: [dashboard, facturaciones, otros],
+  items: [dashboard, contrato, facturaciones, otros],
 };
 
 export default menuItems;

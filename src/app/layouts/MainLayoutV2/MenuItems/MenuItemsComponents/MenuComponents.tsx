@@ -1,5 +1,5 @@
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Typography } from '@mui/material';
+import { Typography, useTheme } from '@mui/material';
 import { IMenuItem } from '../menu-items.interface';
 
 // import { themeTypography } from "theme/typography";
@@ -15,18 +15,17 @@ export function IconRender({
   isActive?: string[];
   item?: IMenuItem;
 }) {
+  const theme = useTheme();
   const Icon = icon;
 
   const iconRender = icon ? (
-    <Icon sx={{ color: 'white' }} />
+    <Icon sx={{ color: theme.palette.common.white }} />
   ) : (
     <FiberManualRecordIcon
       sx={{
-        color: 'white',
-        // display: 'none',
+        color: theme.palette.common.white,
         width: isActive && isActive.findIndex((id: any) => id === item?.id) > -1 ? 10 : 6,
         height: isActive && isActive.findIndex((id: any) => id === item?.id) > -1 ? 10 : 6,
-        // color: isActive.findIndex((id: any) => id === item?.id) > -1 ? 'whitesmoke' : 'inherit'
       }}
       fontSize={level > 0 ? 'inherit' : 'medium'}
     />
@@ -37,16 +36,7 @@ export function IconRender({
 
 export function ListSubHeader({ title, caption }: { title: string; caption?: string }) {
   return (
-    <Typography
-      variant='caption'
-      sx={
-        {
-          // ...theme.typography.menuCaption
-        }
-      }
-      display='block'
-      gutterBottom
-    >
+    <Typography variant='caption' display='block' gutterBottom>
       {title}
       {caption && <MenuItemCaption caption={caption} />}
     </Typography>
@@ -55,17 +45,7 @@ export function ListSubHeader({ title, caption }: { title: string; caption?: str
 
 export function MenuItemCaption({ caption }: { caption: string }) {
   return (
-    <Typography
-      variant='caption'
-      sx={
-        {
-          // ...theme.typography.subMenuCaption
-          // ...themeTypography.subMenuCaption,
-        }
-      }
-      display='block'
-      gutterBottom
-    >
+    <Typography variant='caption' display='block' gutterBottom>
       {caption}
     </Typography>
   );
