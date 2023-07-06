@@ -1,14 +1,10 @@
-import { useCallback, useContext } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
 import { Modal, Row, Col } from '@app/components';
-
-import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
-import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown';
-import { ProcedimientoBuiltinDropdown } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 import { ProcedimientoQCreateSchema } from '@domains/procedimiento-q/container/procedimiento-q-create/schemas';
@@ -17,9 +13,13 @@ import type { ProcedimientoQCreateSchemaType } from '@domains/procedimiento-q/co
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
+import Form from '@app/components/Form/Form';
+import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
+import ProcedimientoCustomDropdownController from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdownController';
+import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
@@ -28,22 +28,25 @@ const ProcedimientoQCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
-    watch,
+    control,
+    handleSubmit,
     formState: { errors: formErrors, isSubmitting },
+    setValue,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
       descripcion: '',
       denominacion: '',
+      tipoProcedimientoQId: null,
+      procedimientoBuiltinId: null,
+      procedimientoCustomId: null,
     },
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoQCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
+    async data => {
       await ProcedimientoQRepository.createProcedimientoQ(data);
-
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
@@ -54,9 +57,31 @@ const ProcedimientoQCreate = () => {
     _navigate('/procedimiento-q');
   }, [_navigate]);
 
+  const [disablePBuiltin, setDisablePBuiltin] = useState(false);
+  const [disablePCustom, setDisablePCustom] = useState(false);
+
+  const onChangeTipoProcedimientoCantidad = (data: any) => {
+    //TODO habria que comparar con el "code" de las options que viene del back
+    const label: string = data.props.children;
+    if (label.includes('BUILT')) {
+      setValue('procedimientoCustomId', null);
+      setDisablePBuiltin(false);
+      setDisablePCustom(true);
+    } else if (label.includes('CUST')) {
+      setValue('procedimientoBuiltinId', null);
+      setDisablePBuiltin(true);
+      setDisablePCustom(false);
+    } else if (label.includes('EXT')) {
+      setValue('procedimientoBuiltinId', null);
+      setValue('procedimientoCustomId', null);
+      setDisablePBuiltin(true);
+      setDisablePCustom(true);
+    }
+  };
+
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -80,7 +105,7 @@ const ProcedimientoQCreate = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={12}>
             <TextField
               id='descripcion'
               label='Descripción'
@@ -90,59 +115,46 @@ const ProcedimientoQCreate = () => {
               disabled={isSubmitting}
             />
           </Col>
-          <Col md={6}>
-            <TipoProcedimientoQDropdown
-              id='tipoProcedimientoQ'
-              label={`Tipo ${label.procedimientoQ}`}
-              {...register('tipoProcedimientoQId', {
-                valueAsNumber: true,
-              })}
+        </Row>
+        <Row>
+          <Col md={12}>
+            <TipoProcedimientoQDropdownController
+              onChange={onChangeTipoProcedimientoCantidad}
+              control={control}
+              name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}
+              disabled={isSubmitting}
+              label={`Tipo ${label.procedimientoQ}`}
               helperText={formErrors?.tipoProcedimientoQId?.message}
-              disabled={isSubmitting}
-              value={watch('tipoProcedimientoQId')}
+              emptyOption={false}
             />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
-            <ProcedimientoCustomDropdown
-              id='procedimientoCustom'
-              label='Procedimiento Custom'
-              {...register('procedimientoCustomId', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.procedimientoCustomId}
-              helperText={formErrors?.procedimientoCustomId?.message}
-              disabled={isSubmitting}
-              value={watch('procedimientoCustomId')}
-            />
-          </Col>
-          <Col md={6}>
-            <ProcedimientoBuiltinDropdown
-              id='procedimientoBuiltin'
-              label='Procedimiento Builtin'
-              {...register('procedimientoBuiltinId', {
-                valueAsNumber: true,
-              })}
+            <ProcedimientoBuiltinDropdownController
+              control={control}
+              name='procedimientoBuiltinId'
               error={!!formErrors.procedimientoBuiltinId}
+              disabled={isSubmitting || disablePBuiltin}
+              label='Procedimiento Builtin'
               helperText={formErrors?.procedimientoBuiltinId?.message}
-              disabled={isSubmitting}
-              value={watch('procedimientoBuiltinId')}
+              emptyOption
+            />
+          </Col>
+          <Col md={6}>
+            <ProcedimientoCustomDropdownController
+              control={control}
+              name='procedimientoCustomId'
+              error={!!formErrors.procedimientoCustomId}
+              disabled={isSubmitting || disablePCustom}
+              label='Procedimiento Custom'
+              helperText={formErrors?.procedimientoCustomId?.message}
+              emptyOption
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button  color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };
