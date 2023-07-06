@@ -15,7 +15,7 @@ function FormSelect({
   emptyOption,
 }: FormSelectProps) {
   const fullOptions = emptyOption
-    ? [{ value: '', label: 'Ninguno', disabled: disabledEmpty }].concat(options)
+    ? [{ value: null, label: 'Ninguno', disabled: disabledEmpty }].concat(options)
     : options;
 
   const inputLabel = label || name;
@@ -30,7 +30,10 @@ function FormSelect({
           <Select
             {...field}
             label={inputLabel}
-            onChange={onChangeProp ? (_, data) => onChangeProp(data) : field.onChange}
+            onChange={(_, data) => {
+              field.onChange(_);
+              onChangeProp && onChangeProp(data);
+            }}
           >
             {fullOptions.length > 0 &&
               fullOptions.map((x, index) => (

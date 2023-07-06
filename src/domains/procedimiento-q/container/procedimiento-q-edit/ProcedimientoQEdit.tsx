@@ -41,14 +41,15 @@ const ProcedimientoQEdit = () => {
     setValue,
     handleSubmit,
     control,
+    watch,
   } = useForm<ProcedimientoQEditSchemaType>({
     defaultValues: {
       codigo: '',
       descripcion: '',
       denominacion: '',
-      tipoProcedimientoQId: '',
-      procedimientoBuiltinId: '',
-      procedimientoCustomId: '',
+      tipoProcedimientoQId: null,
+      procedimientoBuiltinId: null,
+      procedimientoCustomId: null,
     },
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
@@ -67,55 +68,54 @@ const ProcedimientoQEdit = () => {
   const onSubmit: SubmitHandler<ProcedimientoQEditSchemaType> = useCallback(
     async data => {
       setLoading(true);
-      await ProcedimientoQRepository.updateProcedimientoQ(data)
+      await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) })
         .then()
         .catch()
         .finally(() => {
           setLoading(false);
         });
-      console.log('enviado');
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
     [_navigate, mainDataGrid],
   );
 
-  // useEffect(()=> {
-  //   const label =
-  //   if (label.includes('BUILT')) {
-  //     setValue('procedimientoCustomId', '');
-  //     setDisablePBuiltin(false);
-  //     setDisablePCustom(true);
-  //   } else if (label.includes('CUST')) {
-  //     setValue('procedimientoBuiltinId', '');
-  //     setDisablePBuiltin(true);
-  //     setDisablePCustom(false);
-  //   } else if (label.includes('EXT')) {
-  //     setValue('procedimientoBuiltinId', '');
-  //     setValue('procedimientoCustomId', '');
-  //     setDisablePBuiltin(true);
-  //     setDisablePCustom(true);
-  //   }
-  // },[])
-
-  const onChangeTipoProcedimientoCantidad = (data: any) => {
-    //TODO habria que comparar con el "code" de las options que viene del back
-    const label: string = data.props.children;
-    setValue('tipoProcedimientoQId', data?.props?.value);
-    if (label.includes('BUILT')) {
-      setValue('procedimientoCustomId', '');
+  useEffect(() => {
+    const value = watch('tipoProcedimientoQId');
+    if (value === 1) {
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(false);
       setDisablePCustom(true);
-    } else if (label.includes('CUST')) {
-      setValue('procedimientoBuiltinId', '');
+    } else if (value === 2) {
+      setValue('procedimientoBuiltinId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else if (label.includes('EXT')) {
-      setValue('procedimientoBuiltinId', '');
-      setValue('procedimientoCustomId', '');
+    } else if (value === 3) {
+      setValue('procedimientoBuiltinId', null);
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
+  }, [watch('tipoProcedimientoQId')]);
+
+  const onChangeTipoProcedimientoCantidad = (data: any) => {
+    //TODO habria que comparar con el "code" de las options que viene del back
+    // const label: string = data.props.children;
+    // // setValue('tipoProcedimientoQId', data?.props?.value);
+    // if (label.includes('BUILT')) {
+    //   setValue('procedimientoCustomId', null);
+    //   setDisablePBuiltin(false);
+    //   setDisablePCustom(true);
+    // } else if (label.includes('CUST')) {
+    //   setValue('procedimientoBuiltinId', null);
+    //   setDisablePBuiltin(true);
+    //   setDisablePCustom(false);
+    // } else if (label.includes('EXT')) {
+    //   setValue('procedimientoBuiltinId', null);
+    //   setValue('procedimientoCustomId', null);
+    //   setDisablePBuiltin(true);
+    //   setDisablePCustom(true);
+    // }
   };
 
   if (!isDataFetched) {

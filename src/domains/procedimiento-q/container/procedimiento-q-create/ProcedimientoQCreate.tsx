@@ -37,9 +37,9 @@ const ProcedimientoQCreate = () => {
       codigo: '',
       descripcion: '',
       denominacion: '',
-      tipoProcedimientoQId: '',
-      procedimientoBuiltinId: '',
-      procedimientoCustomId: '',
+      tipoProcedimientoQId: null,
+      procedimientoBuiltinId: null,
+      procedimientoCustomId: null,
     },
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
@@ -71,18 +71,17 @@ const ProcedimientoQCreate = () => {
   const onChangeTipoProcedimientoCantidad = (data: any) => {
     //TODO habria que comparar con el "code" de las options que viene del back
     const label: string = data.props.children;
-    setValue('tipoProcedimientoQId', data?.props?.value);
     if (label.includes('BUILT')) {
-      setValue('procedimientoCustomId', '');
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(false);
       setDisablePCustom(true);
     } else if (label.includes('CUST')) {
-      setValue('procedimientoBuiltinId', '');
+      setValue('procedimientoBuiltinId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(false);
     } else if (label.includes('EXT')) {
-      setValue('procedimientoBuiltinId', '');
-      setValue('procedimientoCustomId', '');
+      setValue('procedimientoBuiltinId', null);
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
