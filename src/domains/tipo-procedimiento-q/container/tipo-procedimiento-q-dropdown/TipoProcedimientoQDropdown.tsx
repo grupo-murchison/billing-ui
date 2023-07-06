@@ -6,7 +6,15 @@ import { TipoDatoRepository } from '@domains/tipo-dato/repository';
 
 import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
 
-const TipoProcedimientoQDropdown = ({ id, label, disabled, error, helperText, value, ...props }: TipoDatoDropdownProps) => {
+const TipoProcedimientoQDropdown = ({
+  id,
+  label,
+  disabled,
+  error,
+  helperText,
+  value,
+  ...props
+}: TipoDatoDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {

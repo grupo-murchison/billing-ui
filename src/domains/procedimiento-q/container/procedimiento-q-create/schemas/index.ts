@@ -13,9 +13,19 @@ export const ProcedimientoQCreateSchema = z.object({
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
     .max(50, { message: 'Ha superado el límite de caracteres' }),
-  tipoProcedimientoQId: z.number({ required_error: 'El campo es requerido.' }),
-  procedimientoBuiltinId: z.number({ required_error: 'El campo es requerido.' }),
-  procedimientoCustomId: z.number({ required_error: 'El campo es requerido.' }),
+  tipoProcedimientoQId: z.number({ required_error: 'El campo es requerido.' }).nullable(),
+  procedimientoBuiltinId: z.number({ required_error: 'El campo es requerido.' }).nullable().optional(),
+  procedimientoCustomId: z.number({ required_error: 'El campo es requerido.' }).nullable().optional(),
 });
+// .refine(schema => (schema.tipoProcedimientoQId === 1 ? !!schema.procedimientoBuiltinId : true), {
+//   FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)
+//   BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select
+//   message: 'El campo es requerido.',
+// })
+// .refine(schema => (schema.tipoProcedimientoQId === 2 ? !!schema.procedimientoCustomId : true), {
+//   // FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)
+//   // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select
+//   message: 'El campo es requerido.',
+// })
 
 export type ProcedimientoQCreateSchemaType = z.infer<typeof ProcedimientoQCreateSchema>;

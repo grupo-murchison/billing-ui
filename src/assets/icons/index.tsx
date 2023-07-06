@@ -9,9 +9,21 @@ export {
   Category as CategoryIcon,
 
   // D
+  Dashboard as DashboardIcon,
   DeleteOutline as DeleteOutlineIcon,
   Description as DescriptionIcon,
   Download as DownloadIcon,
+
+  // E
+  EditOutlined as EditOutlinedIcon,
+  ExpandMore as ExpandMoreIcon,
+
+  // F
+  FilterList as FilterListIcon,
+  FilterAlt as FilterAltIcon,
+
+  // G
+  GppGood as GppGoodIcon,
 
   // K
   KeyboardArrowDown as KeyboardArrowDownIcon,
@@ -19,21 +31,27 @@ export {
   KeyboardArrowLeft as KeyboardArrowLeftIcon,
   KeyboardArrowRight as KeyboardArrowRightIcon,
 
+  // H
+  Home as HomeIcon,
+
   // I
   Inventory as InventoryIcon,
 
   // M
   Menu as MenuIcon,
+
+  // Q
+  QuestionMark as QuestionMarkIcon,
+
+  // R
+  Receipt as ReceiptIcon,
+
+  // S
+  Search as SearchIcon,
   Settings as SetttingsIcon,
   SettingsOutlined as SettingsOutlinedIcon,
-  EditOutlined as EditOutlinedIcon,
-  ExpandMore as ExpandMoreIcon,
-  Home as HomeIcon,
+
+  // V
   Visibility as ViewIcon,
-  FilterList as FilterListIcon,
-  Search as SearchIcon,
-  QuestionMark as QuestionMarkIcon,
-  FilterAlt as FilterAltIcon,
-  GppGood as GppGoodIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
 } from '@mui/icons-material';

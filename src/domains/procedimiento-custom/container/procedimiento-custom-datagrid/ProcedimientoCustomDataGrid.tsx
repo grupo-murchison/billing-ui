@@ -58,21 +58,25 @@ const ProcedimientoCustomDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
+              { label: 'Código' },
               { label: 'DENOMINACIÓN' },
               { label: 'TIPO FUNCIÓN' },
               { label: 'ACCIÓN' },
               { label: 'EVENTO' },
               { label: 'CAMPO' },
+              { label: 'Expresión Filtro' },
               { label: '' },
             ]}
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
             rowTemplate={row => (
               <>
+                <td>{row.codigo}</td>
                 <td>{row.denominacion}</td>
                 <td>{row.funcion}</td>
                 <td>{row.accion}</td>
                 <td>{row.evento}</td>
                 <td>{row.eventoCampo}</td>
+                <td>{row.expresionFiltro}</td>
                 <td align='center'>
                   <Stack direction='row' justifyContent='center' spacing={1}>
                     <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />

@@ -14,7 +14,9 @@ import { ProcedimientoCustomRoutes } from '@domains/procedimiento-custom/navigat
 import { ModeloAcuerdoRoutes } from '@domains/modelo-acuerdo/navigation';
 import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
+import { FacturacionRoutes } from '@domains/facturacion/navigation';
 import RootRoute from '@domains/root/Root.route';
+import MainLayoutV2 from '@app/layouts/MainLayoutV2/MainLayoutV2';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -23,9 +25,11 @@ const PrivateRoutes = () => {
     return <Navigate to='/auth/login' replace />;
   }
 
+  //TODO estaria bueno migrar a useRoutes de mantis
+
   return (
     <ThemeProvider>
-      <MainLayout>
+      <MainLayoutV2>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
         <ProcedimientoPRoutes />
@@ -34,8 +38,9 @@ const PrivateRoutes = () => {
         <ModeloAcuerdoRoutes />
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
+        <FacturacionRoutes />
         <RootRoute />
-      </MainLayout>
+      </MainLayoutV2>
     </ThemeProvider>
   );
 };
