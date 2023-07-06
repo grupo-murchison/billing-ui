@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -13,7 +13,7 @@ import type { ProcedimientoQCreateSchemaType } from '@domains/procedimiento-q/co
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-q/constants';
 import Form from '@app/components/Form/Form';
@@ -44,17 +44,9 @@ const ProcedimientoQCreate = () => {
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
-  const [isLoading, setLoading] = useState(false);
-
   const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
     async data => {
-      setLoading(true);
-      await ProcedimientoQRepository.createProcedimientoQ(data)
-        .then()
-        .catch()
-        .finally(() => {
-          setLoading(false);
-        });
+      await ProcedimientoQRepository.createProcedimientoQ(data);
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },

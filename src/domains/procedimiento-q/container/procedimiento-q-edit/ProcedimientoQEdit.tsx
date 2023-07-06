@@ -12,11 +12,8 @@ import type { ProcedimientoQEditSchemaType } from '@domains/procedimiento-q/cont
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { label } from '@domains/procedimiento-q/constants';
-import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
-import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown';
-import { ProcedimientoBuiltinDropdown } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown';
 import Form from '@app/components/Form/Form';
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
 import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
@@ -30,7 +27,6 @@ const ProcedimientoQEdit = () => {
   const { mainDataGrid } = useContext(ProcedimientoQContext);
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-  const [isLoading, setLoading] = useState(false);
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
 
@@ -67,13 +63,7 @@ const ProcedimientoQEdit = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoQEditSchemaType> = useCallback(
     async data => {
-      setLoading(true);
-      await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) })
-        .then()
-        .catch()
-        .finally(() => {
-          setLoading(false);
-        });
+      await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) });
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
     },
