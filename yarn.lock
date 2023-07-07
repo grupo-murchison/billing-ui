@@ -507,6 +507,11 @@
   resolved "https://registry.yarnpkg.com/@fontsource-variable/open-sans/-/open-sans-5.0.4.tgz#c65b4478088e44141885ee7ba0d49e172069bf37"
   integrity sha512-J0kjck5IzXDf5z3T0MljdWs3fNhOzGzP1AYwmkXtQ9QL8iKvrTDlLvf3erPIyUSqs6YDtQyWrz3yloQt7gLpYg==
 
+"@fontsource/open-sans@^5.0.4":
+  version "5.0.4"
+  resolved "https://registry.yarnpkg.com/@fontsource/open-sans/-/open-sans-5.0.4.tgz#7754ff01786ccd001fdb3effca7cb0333b947288"
+  integrity sha512-yUm+NNFElQ0k2J15SXXETmKMILIUawYF/MxFREwBtRItxBszIw68zM4+ipSulwJfFl2k9jITSpDPYr2nqBoshQ==
+
 "@fontsource/roboto@^5.0.3":
   version "5.0.3"
   resolved "https://registry.yarnpkg.com/@fontsource/roboto/-/roboto-5.0.3.tgz#bff6ce627b8c537e8f56e6f2bba221f425bfdf78"
