@@ -29,6 +29,10 @@ export const ProcedimientoQCreateSchema = z
   .refine(schema => schema.tipoProcedimientoQId !== null, {
     message: 'El campo es requerido.',
     path: ['tipoProcedimientoQId'],
+  })
+  .refine(schema => (schema.tipoProcedimientoQId === 3 ? !!schema.procedimientoBuiltinId : true), {
+    message: 'Tipo de procedimiento no disponible.',
+    path: ['tipoProcedimientoQId'],
   });
 
 export type ProcedimientoQCreateSchemaType = z.infer<typeof ProcedimientoQCreateSchema>;
