@@ -1,16 +1,16 @@
 // assets
-import { IMenuItem, IMenuItemsGroup } from './menu-items.interface';
+import { IMenuItemGroup } from './menu-items.interface';
 
 //nano
 import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
-const dashboard: IMenuItem = {
+const dashboard: IMenuItemGroup = {
   id: 'dashboard',
   type: 'group',
   // title: 'Dashboard',
-  // caption: 'Dashboard',
+  // caption: 'Dashboard Caption',
   children: [
     {
       id: 'dashboard',
@@ -22,7 +22,7 @@ const dashboard: IMenuItem = {
   ],
 };
 
-const contrato: IMenuItem = {
+const contrato: IMenuItemGroup = {
   id: 'contratos',
   type: 'group',
   children: [
@@ -38,7 +38,6 @@ const contrato: IMenuItem = {
           type: 'item',
           url: '/contrato',
           breadcrumbs: false,
-          //TODO pasar a constantes como en V1?
         },
         {
           id: 'modeloAcuerdo',
@@ -95,9 +94,9 @@ const contrato: IMenuItem = {
   ],
 };
 
-const facturaciones: IMenuItem = {
+const facturaciones: IMenuItemGroup = {
   id: 'facturaciones',
-  // title: 'Facturaciones',
+  // title: 'Facturaciones
   type: 'group',
   children: [
     {
@@ -105,7 +104,6 @@ const facturaciones: IMenuItem = {
       title: 'Facturación',
       type: 'collapse',
       icon: ReceiptIcon,
-      breadcrumbs: false,
       children: [
         {
           id: 'facturacion',
@@ -125,7 +123,7 @@ const facturaciones: IMenuItem = {
           id: 'facturacionReporte',
           title: 'Reporte',
           type: 'item',
-          url: '/reporte',
+          url: '/facturacion/reporte',
           breadcrumbs: false,
         },
         {
@@ -154,7 +152,7 @@ const facturaciones: IMenuItem = {
   ],
 };
 
-const otros: IMenuItem = {
+const otros: IMenuItemGroup = {
   id: 'otros',
   type: 'group',
   children: [
@@ -176,8 +174,6 @@ const otros: IMenuItem = {
   ],
 };
 
-const menuItems: IMenuItemsGroup = {
-  items: [dashboard, contrato, facturaciones, otros],
-};
+const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, otros];
 
 export default menuItems;

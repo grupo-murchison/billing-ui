@@ -55,7 +55,7 @@ const Sidebar = ({ open }: { open: boolean }) => {
     >
       <Toolbar />
       <Box>
-        <MenuItemsNestedList menuItem={menuItems} open={open} />{' '}
+        <MenuItemsNestedList menuItems={menuItems} open={open} />
       </Box>
     </Drawer>
   );

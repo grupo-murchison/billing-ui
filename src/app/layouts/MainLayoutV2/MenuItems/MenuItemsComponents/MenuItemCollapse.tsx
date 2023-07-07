@@ -14,14 +14,14 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
 import { IconRender } from './MenuComponents';
 import ContextualMenu from './ContextualMenu';
-import { IMenuItem } from '../menu-items.interface';
+import { IMenuItem, IMenuItemCollapse } from '../menu-items.interface';
 
 function MenuItemCollapse({
 	menuItem,
 	level,
 	open,
 }: {
-	menuItem?: IMenuItem;
+	menuItem?: IMenuItemCollapse;
 	level?: number;
 	open: boolean;
 }) {

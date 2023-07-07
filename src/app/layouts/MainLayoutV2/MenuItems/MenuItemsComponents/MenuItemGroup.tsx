@@ -2,7 +2,7 @@ import { Divider, List } from '@mui/material';
 import MenuItemCollapse from './MenuItemCollapse';
 import MenuItem from './MenuItem';
 import { MenuItemError, ListSubHeader } from './MenuComponents';
-import { IMenuItem } from '../menu-items.interface';
+import { IMenuItemGroup } from '../menu-items.interface';
 
 const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
   // menu list collapse & items
@@ -38,7 +38,7 @@ const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
 };
 
 type Props = {
-  item: IMenuItem;
+  item: IMenuItemGroup;
   open: boolean;
 };
 
