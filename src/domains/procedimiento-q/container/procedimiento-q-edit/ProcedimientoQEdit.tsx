@@ -63,6 +63,7 @@ const ProcedimientoQEdit = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoQEditSchemaType> = useCallback(
     async data => {
+      // console.log('data', data);
       await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) });
       mainDataGrid.reload();
       _navigate('/procedimiento-q');
@@ -88,25 +89,25 @@ const ProcedimientoQEdit = () => {
     }
   }, [watch('tipoProcedimientoQId')]);
 
-  const onChangeTipoProcedimientoCantidad = (data: any) => {
-    //TODO habria que comparar con el "code" de las options que viene del back
-    // const label: string = data.props.children;
-    // // setValue('tipoProcedimientoQId', data?.props?.value);
-    // if (label.includes('BUILT')) {
-    //   setValue('procedimientoCustomId', null);
-    //   setDisablePBuiltin(false);
-    //   setDisablePCustom(true);
-    // } else if (label.includes('CUST')) {
-    //   setValue('procedimientoBuiltinId', null);
-    //   setDisablePBuiltin(true);
-    //   setDisablePCustom(false);
-    // } else if (label.includes('EXT')) {
-    //   setValue('procedimientoBuiltinId', null);
-    //   setValue('procedimientoCustomId', null);
-    //   setDisablePBuiltin(true);
-    //   setDisablePCustom(true);
-    // }
-  };
+  // const onChangeTipoProcedimientoCantidad = (data: any) => {
+  //   //TODO habria que comparar con el "code" de las options que viene del back
+  //   // const label: string = data.props.children;
+  //   // // setValue('tipoProcedimientoQId', data?.props?.value);
+  //   // if (label.includes('BUILT')) {
+  //   //   setValue('procedimientoCustomId', null);
+  //   //   setDisablePBuiltin(false);
+  //   //   setDisablePCustom(true);
+  //   // } else if (label.includes('CUST')) {
+  //   //   setValue('procedimientoBuiltinId', null);
+  //   //   setDisablePBuiltin(true);
+  //   //   setDisablePCustom(false);
+  //   // } else if (label.includes('EXT')) {
+  //   //   setValue('procedimientoBuiltinId', null);
+  //   //   setValue('procedimientoCustomId', null);
+  //   //   setDisablePBuiltin(true);
+  //   //   setDisablePCustom(true);
+  //   // }
+  // };
 
   if (!isDataFetched) {
     return <></>;
@@ -150,7 +151,7 @@ const ProcedimientoQEdit = () => {
           </Col>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
-              onChange={onChangeTipoProcedimientoCantidad}
+              // onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}

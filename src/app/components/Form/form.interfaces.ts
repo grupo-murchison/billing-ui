@@ -1,6 +1,5 @@
 import { ReactNode } from 'react';
 import { Control } from 'react-hook-form';
-import { DropdownItemType } from '@app/utils/zod.util';
 
 export type FromProps = {
   children?: ReactNode;
