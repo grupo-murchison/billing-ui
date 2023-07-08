@@ -1,8 +1,6 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
-import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
-import IconButton from '@mui/material/IconButton';
 import Tooltip from '@mui/material/Tooltip';
 
 import MenuItem from './MenuItem';
@@ -23,7 +21,7 @@ export default function ContextualMenu({ menuItem }: { menuItem?: IMenuItem }) {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title={!open && menuItem?.title} arrow placement='right'>
+        <Tooltip title={!open && menuItem?.title || false} arrow placement='right'>
           {/* <IconButton
             onClick={handleClick}
             size='small'

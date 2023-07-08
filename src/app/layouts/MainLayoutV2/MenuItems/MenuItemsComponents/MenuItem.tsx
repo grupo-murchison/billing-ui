@@ -2,21 +2,21 @@ import { Ref, forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, useTheme } from '@mui/material/styles';
 
 import { IconRender } from './MenuComponents';
 import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 import { ACTION_TYPES } from '../../context/constants';
 
-function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: number; sx?: any; open: boolean }) {
+function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: number; sx?: SxProps; open: boolean }) {
   const theme = useTheme();
   const { isActive, dispatch } = useSidebarContext();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const itemHandler = (id: any) => {
+  const itemHandler = (id: number | string) => {
     dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
-    if (matchesSM) dispatch({ type: ACTION_TYPES.SET_MENU, opened: false });
+    if (matchesSM) dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
   };
 
   // active menu item on page load

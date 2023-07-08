@@ -1,20 +1,20 @@
 export enum ACTION_TYPES {
   MENU_OPEN,
-  SET_MENU,
+  TOGGLE_SIDEBAR,
 }
 
-export type TAction = { type: ACTION_TYPES; id: string; opened: boolean };
+export type TAction = { type: ACTION_TYPES; id?: string | number };
 
 export interface IStateSideBar {
   isActive: string[];
-  opened: boolean;
+  isSidebarOpen: boolean;
 }
 
 export interface ISideBarContext extends IStateSideBar {
-  dispatch: React.Dispatch<any>;
+  dispatch: React.Dispatch<TAction>;
 }
 
 export const initialState: IStateSideBar = {
   isActive: [''], // for active default menu
-  opened: true,
+  isSidebarOpen: false,
 };

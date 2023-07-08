@@ -14,7 +14,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
 import { IconRender } from './MenuComponents';
 import ContextualMenu from './ContextualMenu';
-import { IMenuItem, IMenuItemCollapse } from '../menu-items.interface';
+import { IMenuItemCollapse } from '../menu-items.interface';
 
 function MenuItemCollapse({
 	menuItem,
