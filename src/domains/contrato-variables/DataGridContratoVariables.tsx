@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
-import { DataGrid, GridColDef } from '@mui/x-data-grid';
+import { GridColDef } from '@mui/x-data-grid';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 import { Box } from '@mui/material';
 
 import { ContratoRepository } from '@domains/contrato/repository';
@@ -11,7 +12,6 @@ const columns: GridColDef[] = [
     headerName: 'Nombre del Concepto Acuerdo',
     description: 'This column has some type value.',
     sortable: false,
-    width: 450,
     valueGetter: (params: any) => {
       return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
     },
@@ -19,16 +19,14 @@ const columns: GridColDef[] = [
   {
     field: 'procedimientoQ.denominacion',
     headerName: 'Nombre Procedimiento Cantidad',
-    width: 350,
     valueGetter: (params: any) => {
       return params.row.procedimientoQ?.denominacion || ' ';
     },
   },
-  { field: 'codigo', headerName: 'Codigo Variable', width: 150 },
+  { field: 'codigo', headerName: 'Codigo Variable' },
   {
     field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
     headerName: 'Nombre Variable',
-    width: 340,
     valueGetter: (params: any) => {
       return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
     },
@@ -37,7 +35,6 @@ const columns: GridColDef[] = [
     field: 'valor',
     headerName: 'Valor',
     type: 'string',
-    width: 120,
     editable: true,
   },
 ];
