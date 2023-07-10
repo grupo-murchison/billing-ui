@@ -6,9 +6,9 @@ import Tooltip from '@mui/material/Tooltip';
 import MenuItem from './MenuItem';
 import { IconRender } from './MenuComponents';
 import { ListItemButton, ListItemIcon } from '@mui/material';
-import { IMenuItem } from '../menu-items.interface';
+import { IMenuItemCollapse } from '../menu-items.interface';
 
-export default function ContextualMenu({ menuItem }: { menuItem?: IMenuItem }) {
+export default function ContextualMenu({ menuItem }: { menuItem?: IMenuItemCollapse }) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -21,7 +21,7 @@ export default function ContextualMenu({ menuItem }: { menuItem?: IMenuItem }) {
   return (
     <React.Fragment>
       <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Tooltip title={!open && menuItem?.title || false} arrow placement='right'>
+        <Tooltip title={(!open && menuItem?.title) || false} arrow placement='right'>
           {/* <IconButton
             onClick={handleClick}
             size='small'
@@ -77,7 +77,7 @@ export default function ContextualMenu({ menuItem }: { menuItem?: IMenuItem }) {
         anchorOrigin={{ horizontal: 'right', vertical: 'center' }}
       >
         {menuItem?.children?.map(item => (
-          <MenuItem key={item.id} menuItem={item} sx={{ pl: 4 }} level={1} open={open} />
+          <MenuItem key={item.id} menuItem={item} sx={{ pl: 4 }} level={1} isOpen={open}/>
         ))}
       </Menu>
     </React.Fragment>

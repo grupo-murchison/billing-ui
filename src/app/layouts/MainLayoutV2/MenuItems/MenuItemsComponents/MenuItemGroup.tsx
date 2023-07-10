@@ -9,9 +9,9 @@ const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
   const items = item.children?.map(menu => {
     switch (menu.type) {
       case 'collapse':
-        return <MenuItemCollapse key={menu.id} menuItem={menu} level={1} open={open} />;
+        return <MenuItemCollapse key={menu.id} menuItem={menu} level={1} />;
       case 'item':
-        return <MenuItem key={menu.id} menuItem={menu} level={1} open={open} />;
+        return <MenuItem key={menu.id} menuItem={menu} level={1} isOpen={open} />;
       default:
         return <MenuItemError key={menu.id} message='Menu Items must be "item" or "collapse" type' />;
     }
