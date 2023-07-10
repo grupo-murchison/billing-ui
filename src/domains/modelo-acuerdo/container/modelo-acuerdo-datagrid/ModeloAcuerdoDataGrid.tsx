@@ -59,7 +59,12 @@ const ModeloAcuerdoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             onClickNew={handleClickCreate}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'NOMBRE' }, { label: 'DESCRIPCIÓN' }, { label: '' }]}
+            columnHeads={[
+              { headerName: 'CÓDIGO' },
+              { headerName: 'NOMBRE' },
+              { headerName: 'DESCRIPCIÓN' },
+              { headerName: '' },
+            ]}
             repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
             rowTemplate={row => (
               <>

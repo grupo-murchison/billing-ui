@@ -62,14 +62,14 @@ const ContratoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Nº Contrato' },
-              { label: 'Descripción' },
-              { label: 'Tipo Contrato' },
-              { label: 'Modelo Acuerdo' },
-              { label: 'Cliente' },
-              { label: 'Fecha Inicio' },
-              { label: 'Fecha Fin' },
-              { label: '' },
+              { headerName: 'Nº Contrato' },
+              { headerName: 'Descripción' },
+              { headerName: 'Tipo Contrato' },
+              { headerName: 'Modelo Acuerdo' },
+              { headerName: 'Cliente' },
+              { headerName: 'Fecha Inicio' },
+              { headerName: 'Fecha Fin' },
+              { headerName: '' },
             ]}
             onClickNew={handleClickCreate}
             repositoryFunc={ContratoRepository.getAllContratoPaginated}

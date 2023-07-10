@@ -66,13 +66,13 @@ const ConceptoAcuerdoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'MODELO ACUERDO' },
-              { label: 'DESCRIPCIÓN' },
-              { label: 'TIPO SERVICIO' },
-              { label: 'Pocedimiento Cantidad' },
-              { label: 'Pocedimiento Precio' },
-              { label: 'Pocedimiento Producto Softland' },
-              { label: '' },
+              { headerName: 'MODELO ACUERDO' },
+              { headerName: 'DESCRIPCIÓN' },
+              { headerName: 'TIPO SERVICIO' },
+              { headerName: 'Pocedimiento Cantidad' },
+              { headerName: 'Pocedimiento Precio' },
+              { headerName: 'Pocedimiento Producto Softland' },
+              { headerName: '' },
             ]}
             repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
             rowTemplate={row => (
