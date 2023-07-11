@@ -84,7 +84,7 @@ const contrato: IMenuItemGroup = {
         },
         {
           id: 'procedimientoProducto',
-          title: 'Procedimiento Producto',
+          title: 'Procedimiento Producto Softland',
           type: 'item',
           url: '/procedimiento-ps',
           breadcrumbs: false,
