@@ -34,10 +34,10 @@ const ConceptoAcuerdoDataGrid = () => {
     [_navigate, modeloAcuerdoId],
   );
 
-  //TODO:  Obtener el valor con el nombre de la entidad de una constante, 
+  //TODO:  Obtener el valor con el nombre de la entidad de una constante,
   const handleClickDelete = useCallback(
     (row: any) => {
-      console.log(ConceptoAcuerdoLabelAndPath)
+      console.log(ConceptoAcuerdoLabelAndPath);
       confirmDialog.open({
         entity: `${ConceptoAcuerdoLabelAndPath.label}`,
         identifier: `${row.modeloAcuerdo}`,
@@ -72,7 +72,7 @@ const ConceptoAcuerdoDataGrid = () => {
               { headerName: 'Pocedimiento Cantidad' },
               { headerName: 'Pocedimiento Precio' },
               { headerName: 'Pocedimiento Producto Softland' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
             rowTemplate={row => (

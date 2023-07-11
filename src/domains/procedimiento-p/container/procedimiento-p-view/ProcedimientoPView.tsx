@@ -76,6 +76,8 @@ const ProcedimientoPView = () => {
           </Col>
         </Row>
       </Form>
+      <Divider style={{ marginBottom: '1rem' }} />
+      <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo} />
     </Modal>
   );
 };

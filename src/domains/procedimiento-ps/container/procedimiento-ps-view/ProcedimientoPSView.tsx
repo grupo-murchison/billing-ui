@@ -6,8 +6,9 @@ import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 
-import { TextField } from '@mui/material';
+import { Divider, TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import { ProcedimientoPSIntervaloWithinProcedimientoPSRoutes } from '@domains/procedimiento-ps-intervalo/navigation';
 
 const ProcedimientoPSView = () => {
   const { procedimientoPSId } = useParams();
@@ -51,8 +52,8 @@ const ProcedimientoPSView = () => {
           </Col>
         </Row>
       </Form>
-      {/* <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} /> */}
+      <Divider style={{ marginBottom: '1rem' }} />
+      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} />
     </Modal>
   );
 };

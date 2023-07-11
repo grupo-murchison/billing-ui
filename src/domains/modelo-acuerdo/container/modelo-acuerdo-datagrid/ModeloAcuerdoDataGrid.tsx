@@ -63,7 +63,7 @@ const ModeloAcuerdoDataGrid = () => {
               { headerName: 'CÓDIGO' },
               { headerName: 'NOMBRE' },
               { headerName: 'DESCRIPCIÓN' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
             rowTemplate={row => (

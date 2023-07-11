@@ -67,7 +67,7 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
               { headerName: 'INTERVALO' },
               { headerName: 'VALOR INICIAL' },
               { headerName: 'VALOR FINAL' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
             rowTemplate={row => (

@@ -72,7 +72,7 @@ const ProcedimientoQDataGrid = () => {
               { headerName: 'Tipo Procedimiento Cantidad' },
               { headerName: 'Procedimiento Builtin' },
               { headerName: 'Procedimiento Custom' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
             rowTemplate={row => (

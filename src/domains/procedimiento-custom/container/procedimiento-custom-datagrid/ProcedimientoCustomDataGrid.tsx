@@ -65,7 +65,7 @@ const ProcedimientoCustomDataGrid = () => {
               { headerName: 'EVENTO' },
               { headerName: 'CAMPO' },
               { headerName: 'Expresión Filtro' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
             rowTemplate={row => (
