@@ -64,7 +64,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroCampoCode} = ${filtroValue}`,
+              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
             }
           : {
