@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -15,8 +15,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { DateLib } from '@libs';
 
-import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
+import Form from '@app/components/Form/Form';
 
 const ProductoSoftlandCreate = () => {
   const _navigate = useNavigate();
@@ -25,7 +26,7 @@ const ProductoSoftlandCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     setValue,
     formState: { errors: formErrors, isSubmitting },
@@ -40,15 +41,13 @@ const ProductoSoftlandCreate = () => {
     resolver: zodResolver(ProductoSoftlandCreateSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProductoSoftlandCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ProductoSoftlandCreateSchemaType> = useCallback(
+    async data => {
       const submitData = {
         ...data,
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
       };
-
       await ProductoSoftlandRepository.createProductoSoftland(submitData);
-
       mainDataGrid.reload();
       _navigate('/producto-softland');
     },
@@ -61,7 +60,7 @@ const ProductoSoftlandCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nuevo Producto Softland'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -117,17 +116,7 @@ const ProductoSoftlandCreate = () => {
             </FormGroup>
           </Col>
         </Row>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button  color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

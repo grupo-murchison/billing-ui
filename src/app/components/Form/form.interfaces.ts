@@ -1,19 +1,21 @@
 import { ReactNode } from 'react';
 import { Control } from 'react-hook-form';
-import { DropdownItemType } from '@app/utils/zod.util';
 
 export type FromProps = {
   children?: ReactNode;
-  onSubmit: any;
+  //TODO esto deberia ser opcional para las View? onSubmit y isSubmitting
+  onSubmit?: any;
   isSubmitting: boolean;
   handleClose: any;
   isUpdate?: boolean;
+  isView?: boolean;
 };
 
 export type ActionButtonsProps = {
   isSubmitting: boolean;
   handleClose: any;
   isUpdate?: boolean;
+  isView?: boolean;
 };
 
 export type DropdownProps = {

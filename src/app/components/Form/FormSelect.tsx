@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 

@@ -50,10 +50,6 @@ const ProcedimientoQEdit = () => {
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
 
-  const handleClose = useCallback(() => {
-    _navigate('/procedimiento-q');
-  }, [_navigate]);
-
   useEffect(() => {
     ProcedimientoQRepository.getProcedimientoQById(procedimientoQId || '').then(({ data }) => {
       reset(data);
@@ -70,8 +66,13 @@ const ProcedimientoQEdit = () => {
     [_navigate, mainDataGrid],
   );
 
+  const handleClose = useCallback(() => {
+    _navigate('/procedimiento-q');
+  }, [_navigate]);
+
   useEffect(() => {
     const value = watch('tipoProcedimientoQId');
+    //   //TODO habria que comparar con el "code" de las options que viene del back
     if (value === 1) {
       setValue('procedimientoCustomId', null);
       setDisablePBuiltin(false);
@@ -87,26 +88,6 @@ const ProcedimientoQEdit = () => {
       setDisablePCustom(true);
     }
   }, [watch('tipoProcedimientoQId')]);
-
-  const onChangeTipoProcedimientoCantidad = (data: any) => {
-    //TODO habria que comparar con el "code" de las options que viene del back
-    // const label: string = data.props.children;
-    // // setValue('tipoProcedimientoQId', data?.props?.value);
-    // if (label.includes('BUILT')) {
-    //   setValue('procedimientoCustomId', null);
-    //   setDisablePBuiltin(false);
-    //   setDisablePCustom(true);
-    // } else if (label.includes('CUST')) {
-    //   setValue('procedimientoBuiltinId', null);
-    //   setDisablePBuiltin(true);
-    //   setDisablePCustom(false);
-    // } else if (label.includes('EXT')) {
-    //   setValue('procedimientoBuiltinId', null);
-    //   setValue('procedimientoCustomId', null);
-    //   setDisablePBuiltin(true);
-    //   setDisablePCustom(true);
-    // }
-  };
 
   if (!isDataFetched) {
     return <></>;
@@ -150,7 +131,7 @@ const ProcedimientoQEdit = () => {
           </Col>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
-              onChange={onChangeTipoProcedimientoCantidad}
+              // onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}

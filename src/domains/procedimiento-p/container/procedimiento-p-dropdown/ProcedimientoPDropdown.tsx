@@ -4,17 +4,20 @@ import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import { FormSelectProps } from '@app/components/Form/form.interfaces';
+import FormSelect from '@app/components/Form/FormSelect';
 
 const ProcedimientoPDropdown = ({
-  id,
-  label,
-  disabled,
+  onChange,
+  control,
+  name,
   error,
+  disabled,
+  label,
   helperText,
-  value,
+  emptyOption,
   ...props
-}: ProcedimientoPDropdownProps) => {
+}: FormSelectProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -28,27 +31,18 @@ const ProcedimientoPDropdown = ({
   }, []);
 
   return (
-    <FormControl fullWidth error={error} disabled={disabled}>
-      <InputLabel>{label}</InputLabel>
-      <Select id={id} label={label} value={value} {...props}>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
+    <FormSelect
+      name={name}
+      control={control}
+      onChange={onChange}
+      options={items}
+      error={error}
+      disabled={disabled}
+      label={label}
+      helperText={helperText}
+      emptyOption={emptyOption}
+    />
   );
-};
-
-type ProcedimientoPDropdownProps = {
-  id?: string;
-  label: string;
-  error?: boolean;
-  helperText?: string;
-  disabled?: boolean;
-  value?: number | string;
 };
 
 export default ProcedimientoPDropdown;

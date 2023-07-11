@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -12,20 +12,21 @@ import type { ModeloAcuerdoEditSchemaType } from '@domains/modelo-acuerdo/contai
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
+import Form from '@app/components/Form/Form';
 
 const ModeloAcuerdoEdit = () => {
   const { modeloAcuerdoId } = useParams();
   const _navigate = useNavigate();
 
-  const { mainDataGrid } = useContext(ModeloAcuerdoContext)
+  const { mainDataGrid } = useContext(ModeloAcuerdoContext);
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     reset,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ModeloAcuerdoEditSchemaType>({
@@ -36,20 +37,13 @@ const ModeloAcuerdoEdit = () => {
     resolver: zodResolver(ModeloAcuerdoEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ModeloAcuerdoEditSchemaType) => {
-      const submitData = {
-        ...data,
-      };
-      //* el operador ! es porque estamos seguros q el valor existe TS18048
-      await ModeloAcuerdoRepository.updateModeloAcuerdo(submitData, +modeloAcuerdoId!);
-
+  const onSubmit: SubmitHandler<ModeloAcuerdoEditSchemaType> = useCallback(
+    async data => {
+      await ModeloAcuerdoRepository.updateModeloAcuerdo(data, +modeloAcuerdoId!);
       mainDataGrid.reload();
       _navigate('/modelo-acuerdo');
     },
-    [_navigate, 
-      mainDataGrid
-    ],
+    [_navigate, mainDataGrid],
   );
 
   const handleClose = useCallback(() => {
@@ -69,7 +63,7 @@ const ModeloAcuerdoEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Modelo Acuerdo'>
-      <form noValidate  onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={6}>
             <TextField
@@ -101,17 +95,7 @@ const ModeloAcuerdoEdit = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-            <Button variant='outlined' color='secondary' onClick={handleClose} disabled={isSubmitting}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };
