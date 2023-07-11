@@ -1,27 +1,14 @@
-import { DataGrid as MUIDataGrid, DataGridProps } from '@mui/x-data-grid';
+import { DataGridProvider } from './contexts';
+import { DataGridProps } from './contexts/types';
+import DataGridWithContext from './DataGridWithContext';
 
-const DataGrid = ({ rows, columns }: DataGridProps) => {
-  // Repartir el espacio en partes iguales
-  columns.forEach(col => {
-    col['flex'] = col?.flex ? col.flex : 1;
-  });
-
+const DataGrid = <T,>(props: DataGridProps<T>) => {
   return (
-    <>
-      <MUIDataGrid
-        rows={rows}
-        columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[10]}
-        autoHeight={true}
-        sx={{
-          '& .MuiDataGrid-row:hover': {
-            background: '#CCCED0',
-            // color: 'primary.main',
-          },
-        }}
-      />
-    </>
+    <DataGridProvider {...props}>
+      {/* <Toolbar /> */}
+
+      <DataGridWithContext />
+    </DataGridProvider>
   );
 };
 

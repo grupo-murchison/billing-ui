@@ -1,11 +1,8 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import type { ChangeEvent, ReactNode } from 'react';
+import type { ChangeEvent } from 'react';
+import { GridColDef } from '@mui/x-data-grid';
 
-import {
-  DataGridProviderProps,
-  DataGridColumnHeadProps,
-  DataGridRepositoryFuncParams,
-} from '@app/pro-components/DataGrid/utils/types';
+import { DataGridProviderProps, DataGridRepositoryFuncParams } from './types';
 
 const initialContext: InitialContext = {
   columnHeads: [],
@@ -22,7 +19,6 @@ const initialContext: InitialContext = {
   handlePrevPageChange: () => {
     return;
   },
-  rowTemplate: () => <></>,
   rows: [],
   rowsCount: 0,
   rowsPerPage: 50,
@@ -37,7 +33,6 @@ const DataGridProvider = <T,>({
   hookRef,
   columnHeads,
   onClickNew,
-  rowTemplate,
   repositoryFunc,
   children,
 }: DataGridProviderProps<T>) => {
@@ -121,7 +116,6 @@ const DataGridProvider = <T,>({
   useEffect(() => {
     hookRef.current = {
       load: config => {
-        console.log('useEffect hookRef.current load', hookRef.current);
         repositoryFuncParamsRef.current.filters = config?.fixedFilters;
         makeRequest();
       },
@@ -138,7 +132,6 @@ const DataGridProvider = <T,>({
         handleNextPageChange,
         handlePrevPageChange,
         onClickNew,
-        rowTemplate,
         rows,
         rowsCount,
         rowsPerPage,
@@ -153,13 +146,12 @@ const DataGridProvider = <T,>({
 };
 
 type InitialContext = {
-  columnHeads: DataGridColumnHeadProps[];
+  columnHeads: GridColDef[];
   currentPage: number;
   onClickNew?: () => void;
   handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleNextPageChange: () => void;
   handlePrevPageChange: () => void;
-  rowTemplate: (row: AnyValue) => ReactNode;
   rows: AnyValue[];
   rowsCount: number;
   rowsPerPage: number;
@@ -168,4 +160,4 @@ type InitialContext = {
   error: any;
 };
 
-export { DataGridContext, DataGridProvider };
+export { DataGridContext as DataGridContext, DataGridProvider };

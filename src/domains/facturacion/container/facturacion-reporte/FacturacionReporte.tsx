@@ -1,53 +1,22 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
-import { useConfirmDialog } from '@app/hooks';
+// import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { FacturacionRepository } from '@domains/facturacion/repository';
-import { FacturacionContext } from '@domains/facturacion/contexts';
+import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
-import { ContratoRowDataGridSchema } from '@domains/contrato/repository/contrato.schemas';
-import { ContartoLabelAndPath } from '@domains/contrato/constants';
 
 const FacturacionReporte = () => {
   const _navigate = useNavigate();
 
-  const { mainDataGrid } = useContext(FacturacionContext);
-
-  const confirmDialog = useConfirmDialog();
-
-  const handleClickCreate = useCallback(() => {
-    // _navigate('/contrato/create');
-  }, [_navigate]);
-
-  const handleClickEdit = useCallback(
-    (row: ContratoRowDataGridSchema) => {
-      _navigate(`/facturacion/${row.id}/edit`);
-    },
-    [_navigate],
-  );
-
-  const handleClickDelete = useCallback(
-    (row: ContratoRowDataGridSchema) => {
-      confirmDialog.open({
-        entity: `${ContartoLabelAndPath.label}`,
-        identifier: `${row.nroContrato}`,
-        async onClickYes() {
-          await FacturacionRepository.deleteFacturasById(row.id);
-          confirmDialog.close();
-          mainDataGrid.reload();
-        },
-      });
-    },
-    [confirmDialog],
-  );
+  const { mainDataGrid } = useContext(FacturacionReporteContext);
 
   useEffect(() => {
     mainDataGrid.load();
@@ -60,32 +29,13 @@ const FacturacionReporte = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Nº Secuencia Contrato' },
-              { label: 'Estado' },
-              { label: 'Contrato Descripcion' },
-              { label: 'Cliente Descripcion' },
-              { label: 'Facturacion Cabecera Estado' },
-              { label: '' },
+              { field: 'numeroSecuenciaContrato', headerName: 'Nº Secuencia Contrato' },
+              { field: 'estado', headerName: 'Estado' },
+              { field: 'contratoDescripcion', headerName: 'Contrato Descripcion' },
+              { field: 'clienteDescripcion', headerName: 'Cliente Descripcion' },
+              { field: 'facturacionCabeceraEstado', headerName: 'Facturacion Cabecera Estado' },
             ]}
-            onClickNew={handleClickCreate}
             repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-            rowTemplate={row => (
-              <>
-                {/* // TODO acá iria una funcion con row.map() que aplique rowSanitizer() a cada column y deberia recibir además un archivo de configuracion para ordenar las columnas*/}
-                <td>{rowSanitizer(row.numeroSecuenciaContrato)}</td>
-                <td>{rowSanitizer(row.estado)}</td>
-                <td>{rowSanitizer(row.contratoDescripcion)}</td>
-                <td>{rowSanitizer(row.clienteDescripcion)}</td>
-                <td>{rowSanitizer(row.facturacionCabeceraEstado)}</td>
-
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
           />
         </Col>
       </Row>
@@ -103,15 +53,3 @@ type TTowSanitizer = string | number | boolean | null | undefined | TFn;
 const rowSanitizer = (value: TTowSanitizer): string | any => {
   return value === null || value === undefined ? ' ' : value;
 };
-
-const fields = [
-  { label: 'Nº Secuencia Contrato', field: 'numeroSecuenciaContrato' },
-  { label: 'Estado', field: 'estado' },
-  { label: 'Contrato Descripcion', field: 'contratoDescripcion' },
-  { label: 'Cliente Descripcion', field: 'clienteDescripcion' },
-  { label: 'Facturacion Cabecera Estado', field: 'facturacionCabeceraEstado' },
-  { label: 'Acciones' },
-];
-
-
-
