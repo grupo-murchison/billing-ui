@@ -63,11 +63,11 @@ const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'INTERVALO' },
-              { label: 'VALOR INICIAL' },
-              { label: 'VALOR FINAL' },
-              { label: 'PRECIO' },
-              { label: '' },
+              { headerName: 'INTERVALO' },
+              { headerName: 'VALOR INICIAL' },
+              { headerName: 'VALOR FINAL' },
+              { headerName: 'PRECIO' },
+              { headerName: '' },
             ]}
             repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
             rowTemplate={row => (

@@ -8,3 +8,7 @@ export const FacturacionEditBreadcrumb: BreadcrumbItem[] = [
   { ...FacturacionLabelAndPath },
   { label: 'Editar Factura', path: `${FacturacionLabelAndPath.path}/edit` },
 ];
+
+export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Facturación Reporte', path: '/facturacion/reporte' },
+];

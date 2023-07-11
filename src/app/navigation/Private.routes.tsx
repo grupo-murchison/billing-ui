@@ -4,8 +4,6 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthContext, ThemeProvider } from '@app/contexts';
 
-import { MainLayout } from '@app/layouts';
-
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';
 import { ProcedimientoPRoutes } from '@domains/procedimiento-p/navigation';

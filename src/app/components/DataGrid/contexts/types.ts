@@ -1,6 +1,7 @@
 import type { ReactNode } from 'react';
 
 import type { AxiosResponse } from 'axios';
+import { GridColDef } from '@mui/x-data-grid';
 
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 
@@ -9,9 +10,8 @@ export type DataGridProps<T> = {
     load: (config?: { fixedFilters?: Record<string, AnyValue>; filters?: Record<string, AnyValue> }) => void;
     reload: () => void;
   }>;
-  columnHeads: DataGridColumnHeadProps[];
+  columnHeads: GridColDef[];
   onClickNew?: () => void;
-  rowTemplate: (row: T) => ReactNode;
   repositoryFunc: (params: DataGridRepositoryFuncParams) => Promise<
     AxiosResponse<{
       data: T[];
@@ -20,10 +20,6 @@ export type DataGridProps<T> = {
       };
     }>
   >;
-};
-
-export type DataGridColumnHeadProps = {
-  headerName: string;
 };
 
 export type DataGridRepositoryFuncParams = {

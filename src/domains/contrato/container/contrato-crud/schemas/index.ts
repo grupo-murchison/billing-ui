@@ -55,7 +55,8 @@ export const ContratoEditSchema = z
     nroContrato: z.boolean().optional(),
     contratoVariables: z.array(ContratoVariablesSchema),
     periodos: z.array(PlanFacturacionPeriodosSchema),
-    sociedadId: z.number({ required_error: 'El campo es requerido.' })
+    sociedadId: z.number({ required_error: 'El campo es requerido.' }),
+    conceptosAcuerdo: z.array(z.any())
   })
   .refine(schema => (schema.reglaFechaPeriodoId === 3 ? !!schema.diaPeriodo : true), {
     // FIXME schema.reglaFechaPeriodoId === 3 debe pasar a una constante compartida por ambos archivos (éste y CreateContratoV2)

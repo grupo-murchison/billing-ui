@@ -4,6 +4,7 @@ import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 import { MenuItemsNestedList } from './MenuItems/MenuItems';
 import menuItems from './MenuItems/menuItems.config';
+import { useSidebarContext } from './context/useSidebarContext';
 
 const drawerWidth = 260;
 
@@ -42,20 +43,21 @@ const Drawer = styled(MuiDrawer, {
   }),
 }));
 
-const Sidebar = ({ open }: { open: boolean }) => {
+const Sidebar = () => {
   const theme = useTheme();
+  const { isSidebarOpen } = useSidebarContext();
 
   return (
     <Drawer
       variant='permanent'
-      open={open}
+      open={isSidebarOpen}
       PaperProps={{
         sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white },
       }}
     >
       <Toolbar />
       <Box>
-        <MenuItemsNestedList menuItem={menuItems} open={open} />{' '}
+        <MenuItemsNestedList menuItems={menuItems} open={isSidebarOpen} />
       </Box>
     </Drawer>
   );

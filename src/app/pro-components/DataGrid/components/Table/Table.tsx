@@ -3,7 +3,7 @@ import { Head, Body } from '@app/pro-components/DataGrid/components/Table/compon
 
 import styles from '@app/pro-components/DataGrid/components/Table/Table.module.scss';
 import { DataGridContext } from '../../contexts';
-import { Box, CircularProgress, LinearProgress } from '@mui/material';
+import { Box, LinearProgress } from '@mui/material';
 
 const Table = () => {
   const { loading, error } = useContext(DataGridContext);

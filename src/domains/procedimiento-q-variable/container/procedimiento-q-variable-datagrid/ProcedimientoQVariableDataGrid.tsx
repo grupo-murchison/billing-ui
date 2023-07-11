@@ -61,11 +61,11 @@ const ProcedimientoQVariableDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'CÓDIGO' },
-              { label: 'NOMBRE' },
-              { label: 'TIPO' },
-              { label: 'DICCIONARIO' },
-              { label: '' },
+              { headerName: 'CÓDIGO' },
+              { headerName: 'NOMBRE' },
+              { headerName: 'TIPO' },
+              { headerName: 'DICCIONARIO' },
+              { headerName: '' },
             ]}
             repositoryFunc={ProcedimientoQVariableRepository.getAllProcedimientoQVariablePaginated}
             rowTemplate={row => (

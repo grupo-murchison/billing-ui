@@ -2,16 +2,16 @@ import { Divider, List } from '@mui/material';
 import MenuItemCollapse from './MenuItemCollapse';
 import MenuItem from './MenuItem';
 import { MenuItemError, ListSubHeader } from './MenuComponents';
-import { IMenuItem } from '../menu-items.interface';
+import { IMenuItemGroup } from '../menu-items.interface';
 
 const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
   // menu list collapse & items
   const items = item.children?.map(menu => {
     switch (menu.type) {
       case 'collapse':
-        return <MenuItemCollapse key={menu.id} menuItem={menu} level={1} open={open} />;
+        return <MenuItemCollapse key={menu.id} menuItem={menu} level={1} />;
       case 'item':
-        return <MenuItem key={menu.id} menuItem={menu} level={1} open={open} />;
+        return <MenuItem key={menu.id} menuItem={menu} level={1} isOpen={open} />;
       default:
         return <MenuItemError key={menu.id} message='Menu Items must be "item" or "collapse" type' />;
     }
@@ -38,7 +38,7 @@ const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
 };
 
 type Props = {
-  item: IMenuItem;
+  item: IMenuItemGroup;
   open: boolean;
 };
 

@@ -1,13 +1,7 @@
 import clsx from 'clsx';
 
-import {
-  Pagination,
-  Table,
-  Toolbar,
-  DeleteButton,
-  EditButton,
-  ViewButton,
-} from '@app/pro-components/DataGrid/components';
+import { Pagination, Table, Toolbar } from '@app/pro-components/DataGrid/components';
+// import { DataGridProvider } from '@app/pro-components/DataGrid/contexts';
 import { DataGridProvider } from '@app/pro-components/DataGrid/contexts';
 import { DataGridProps } from '@app/pro-components/DataGrid/utils/types';
 
@@ -28,9 +22,6 @@ const DataGrid = <T,>(props: DataGridProps<T>) => {
   );
 };
 
-// DataGrid.DeleteButton = DeleteButton;
-// DataGrid.EditButton = EditButton;
-// DataGrid.ViewButton = ViewButton;
 DataGrid.DeleteButton = DeleteIconButton;
 DataGrid.EditButton = EditIconButton;
 DataGrid.ViewButton = ViewIconButton;
