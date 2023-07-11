@@ -68,7 +68,7 @@ const ProcedimientoPDataGrid = () => {
               { headerName: 'CÓDIGO' },
               { headerName: 'DENOMINACIÓN' },
               { headerName: 'MONEDA' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoPRepository.getAllProcedimientoPPaginated}
             rowTemplate={row => (

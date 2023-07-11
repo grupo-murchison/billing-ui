@@ -65,7 +65,7 @@ const ProductoSoftlandDataGrid = () => {
               { headerName: 'DESCRIPCIÓN' },
               { headerName: 'ACTIVO' },
               { headerName: 'FECHA ACTIVO' },
-              { headerName: '' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
             rowTemplate={row => (
