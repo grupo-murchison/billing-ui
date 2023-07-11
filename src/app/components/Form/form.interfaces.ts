@@ -3,16 +3,19 @@ import { Control } from 'react-hook-form';
 
 export type FromProps = {
   children?: ReactNode;
-  onSubmit: any;
+  //TODO esto deberia ser opcional para las View? onSubmit y isSubmitting
+  onSubmit?: any;
   isSubmitting: boolean;
   handleClose: any;
   isUpdate?: boolean;
+  isView?: boolean;
 };
 
 export type ActionButtonsProps = {
   isSubmitting: boolean;
   handleClose: any;
   isUpdate?: boolean;
+  isView?: boolean;
 };
 
 export type DropdownProps = {

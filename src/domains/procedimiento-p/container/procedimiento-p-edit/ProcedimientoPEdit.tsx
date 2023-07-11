@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import { ProcedimientoPContext } from '@domains/procedimiento-p/contexts';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPEdit = () => {
   const { procedimientoPId } = useParams();
@@ -28,10 +29,10 @@ const ProcedimientoPEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
     reset,
-    watch,
     formState: { errors: formErrors, isSubmitting },
+    handleSubmit,
+    control,
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -40,21 +41,6 @@ const ProcedimientoPEdit = () => {
     resolver: zodResolver(ProcedimientoPEditSchema),
   });
 
-  const handleClose = useCallback(() => {
-    _navigate('/procedimiento-p');
-  }, [_navigate]);
-
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoPEditSchemaType) => {
-      await ProcedimientoPRepository.updateProcedimientoP(data);
-
-      mainDataGrid.reload();
-
-      _navigate('/procedimiento-p');
-    },
-    [_navigate, mainDataGrid],
-  );
-
   useEffect(() => {
     ProcedimientoPRepository.getProcedimientoPById(procedimientoPId || '').then(({ data }) => {
       reset(data);
@@ -62,13 +48,27 @@ const ProcedimientoPEdit = () => {
     });
   }, [procedimientoPId, reset]);
 
+  const handleClose = useCallback(() => {
+    _navigate('/procedimiento-p');
+  }, [_navigate]);
+
+  const onSubmit: SubmitHandler<ProcedimientoPEditSchemaType> = useCallback(
+    async data => {
+      await ProcedimientoPRepository.updateProcedimientoP({ ...data, id: Number(procedimientoPId) });
+      mainDataGrid.reload();
+      _navigate('/procedimiento-p');
+    },
+    [_navigate, mainDataGrid],
+  );
+
   if (!isDataFetched) {
     return <></>;
   }
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Procedimiento Precio'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+        {' '}
         <Row>
           <Col md={6}>
             <TextField
@@ -94,29 +94,16 @@ const ProcedimientoPEdit = () => {
         <Row>
           <Col md={6}>
             <MonedaDropdown
-              id='monedaId'
-              label='Moneda'
-              {...register('monedaId', {
-                valueAsNumber: true,
-              })}
-              value={watch('monedaId')}
+              control={control}
+              name='monedaId'
               error={!!formErrors.monedaId}
-              helperText={formErrors?.monedaId?.message}
               disabled={isSubmitting}
+              label='Moneda'
+              helperText={formErrors?.monedaId?.message}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

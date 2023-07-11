@@ -6,9 +6,8 @@ import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
 
-import { ProcedimientoPSIntervaloWithinProcedimientoPSRoutes } from '@domains/procedimiento-ps-intervalo/navigation';
-
-import { Divider, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPSView = () => {
   const { procedimientoPSId } = useParams();
@@ -32,9 +31,12 @@ const ProcedimientoPSView = () => {
     return <></>;
   }
 
+  // //TODO creo esta constante para que no rompa.
+  const isSubmitting = false;
+
   return (
     <Modal isOpen onClose={handleClose} title='Ver Procedimiento Producto Softland'>
-      <form noValidate autoComplete='off'>  
+      <Form handleClose={handleClose} isSubmitting={isSubmitting} isView>
         <Row>
           <Col md={6}>
             <TextField id='codigo' label='Código' defaultValue={procedimientoPSData.codigo} disabled />
@@ -48,9 +50,9 @@ const ProcedimientoPSView = () => {
             />
           </Col>
         </Row>
-      </form>
-      <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} />
+      </Form>
+      {/* <Divider style={{ marginBottom: '1rem' }} />
+      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} /> */}
     </Modal>
   );
 };
