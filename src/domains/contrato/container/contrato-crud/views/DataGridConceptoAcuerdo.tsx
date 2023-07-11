@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
-import DataGrid from '@app/components/DataGrid/DataGrid';
+import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
 const columns: GridColDef[] = [
   { field: 'tipoServicio', headerName: 'Tipo Servicio' },
@@ -29,7 +29,7 @@ export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: any }) => 
 
   return (
     <Box style={{ width: '100%' }}>
-      <DataGrid rows={_rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true} />
+      <DataGridBase rows={_rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true} />
     </Box>
   );
 };

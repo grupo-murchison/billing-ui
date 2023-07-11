@@ -1,4 +1,4 @@
-import DataGrid from '@app/components/DataGrid/DataGrid';
+import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { Box } from '@mui/material';
 import { GridColDef } from '@mui/x-data-grid';
 import { format, parseISO } from 'date-fns';
@@ -48,7 +48,7 @@ export const DataGridPlanFacturacion = ({ rows }: { id: string; rows: any[] }) =
   return (
     <>
       <Box style={{ width: '100%' }}>
-        <DataGrid rows={rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true} />
+        <DataGridBase rows={rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true} />
       </Box>
     </>
   );
