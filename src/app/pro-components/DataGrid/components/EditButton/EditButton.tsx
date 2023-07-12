@@ -1,21 +1,43 @@
 import clsx from 'clsx';
 
-import { Button } from '@app/components';
+import { Button as ButtonPaul } from '@app/components';
 
 import { EditOutlinedIcon } from '@assets/icons';
-import { IconButton } from '@mui/material';
+import { Button, IconButton, useTheme } from '@mui/material';
 
 const EditButton = ({ className, ...props }: EditButtonProps) => {
   return (
-    <Button color='primary' icon={<EditOutlinedIcon />} outlined className={clsx(className)} {...props}>
-      Editar
+    <Button color='secondary'>
+      <EditOutlinedIcon />
     </Button>
   );
 };
 
-export const EditIconButton = ({ ...props }) => {
+const EditButtonPaul = ({ className, ...props }: EditButtonProps) => {
   return (
-    <IconButton color='primary' aria-label='edit' {...props}>
+    <ButtonPaul color='primary' icon={<EditOutlinedIcon />} outlined className={clsx(className)} {...props}>
+      Editar
+    </ButtonPaul>
+  );
+};
+
+export const EditIconButton = ({ ...props }) => {
+  const theme = useTheme();
+  return (
+    <IconButton
+      color='primary'
+      aria-label='edit'
+      {...props}
+      sx={{
+        ':hover': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.common.white,
+          transition: 'ease-out',
+          transitionDuration: '0.3s',
+          // transitionDuration: theme.transitions.duration.standard,
+        },
+      }}
+    >
       <EditOutlinedIcon />
     </IconButton>
   );

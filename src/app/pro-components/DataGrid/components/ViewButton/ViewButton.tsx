@@ -3,7 +3,7 @@ import clsx from 'clsx';
 import { Button } from '@app/components';
 
 import { DeleteOutlineIcon, VisibilityOutlinedIcon } from '@assets/icons';
-import { IconButton } from '@mui/material';
+import { IconButton, useTheme } from '@mui/material';
 
 const ViewButton = ({ className, ...props }: ViewButtonProps) => {
   return (
@@ -14,8 +14,22 @@ const ViewButton = ({ className, ...props }: ViewButtonProps) => {
 };
 
 export const ViewIconButton = ({ ...props }) => {
+  const theme = useTheme();
   return (
-    <IconButton color='primary' aria-label='view' {...props}>
+    <IconButton
+      color='primary'
+      aria-label='view'
+      {...props}
+      sx={{
+        ':hover': {
+          backgroundColor: theme.palette.primary.main,
+          color: theme.palette.common.white,
+          transition: 'ease-out',
+          // transitionDuration: '0.3s',
+          transitionDuration: theme.transitions.duration.standard,
+        },
+      }}
+    >
       <VisibilityOutlinedIcon />
     </IconButton>
   );
