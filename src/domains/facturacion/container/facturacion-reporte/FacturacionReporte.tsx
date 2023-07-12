@@ -25,6 +25,7 @@ const FacturacionReporte = () => {
   return (
     <>
       <Row>
+        <Col md={12}>ToolBar</Col>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
