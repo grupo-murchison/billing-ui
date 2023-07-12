@@ -18,7 +18,7 @@ const DataGridBase = ({ rows, columns }: DataGridProps) => {
         rows={rows}
         columns={columns}
         pageSizeOptions={[10, 25, 50, 100]}
-        paginationModel={{ page, pageSize }}
+        // paginationModel={{ page, pageSize }}
         autoHeight={true}
         sx={{
           '& .MuiDataGrid-row:hover': {
