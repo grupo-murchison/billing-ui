@@ -1,6 +1,7 @@
 import { createTheme } from '@mui/material/styles';
 import { typography } from './typography';
 import { components } from './components';
+import { transitions } from './transitions';
 
 // A custom theme for this app
 const theme = createTheme({
@@ -18,6 +19,7 @@ const theme = createTheme({
   },
   typography: { ...typography },
   components: { ...components },
+  transitions: { ...transitions },
 });
 
 export default theme;
