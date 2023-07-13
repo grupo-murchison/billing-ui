@@ -7,7 +7,7 @@ import { transitions } from './transitions';
 const theme = createTheme({
   palette: {
     primary: { main: '#007749' }, // Verde Murchison
-    secondary: { main: '#505E70' }, // Gris Medio / texto secundario
+    secondary: { main: '#505E70' }, // Gris Medio - texto secundario
     error: { main: '#E41E2D' }, // Rojo AIT
     warning: { main: '#FF8200' }, // Naranja TZ
     info: { main: '#005C97' }, // Azul UTE
@@ -15,6 +15,11 @@ const theme = createTheme({
     background: {
       default: '#F3F6F9',
       paper: '#FFFFFF',
+    },
+    text: {
+      primary: '#38485C',
+      secondary: '#505E70', // Gris Medio - texto secundario'
+      disabled: '#9EAABB',
     },
   },
   typography: { ...typography },
