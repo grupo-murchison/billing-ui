@@ -9,13 +9,16 @@ const DataGridBase = ({ rows, columns }: DataGridProps) => {
     col['flex'] = col?.flex ? col.flex : 1;
   });
 
+  const pageSize = 10;
+  const page = 1;
+
   return (
     <>
       <MUIDataGrid
         rows={rows}
         columns={columns}
-        pageSize={5}
-        rowsPerPageOptions={[10]}
+        pageSizeOptions={[10, 25, 50, 100]}
+        // paginationModel={{ page, pageSize }}
         autoHeight={true}
         sx={{
           '& .MuiDataGrid-row:hover': {

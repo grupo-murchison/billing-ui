@@ -1,6 +1,6 @@
 import { createContext, useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import type { ChangeEvent } from 'react';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 
 import { DataGridProviderProps, DataGridRepositoryFuncParams } from './types';
 
@@ -39,7 +39,7 @@ const DataGridProvider = <T,>({
   const [currentPage, setCurrentPage] = useState<number>(initialContext.currentPage);
   const [rowsPerPage, setRowsPerPage] = useState<number>(initialContext.rowsPerPage);
   const [rowsTotalCount, setRowsTotalCount] = useState<number>(initialContext.rowsTotalCount);
-  const [rows, setRows] = useState<AnyValue[]>([]);
+  const [rows, setRows] = useState<GridRowsProp>([]);
   const [loading, setLoading] = useState<boolean>(initialContext.loading);
   const [error, setError] = useState<any>(initialContext.error);
 
@@ -61,7 +61,7 @@ const DataGridProvider = <T,>({
     })
       .then(response => {
         if (response.data) {
-          setRows(response.data.data);
+          setRows(response.data.data as GridRowsProp);
           setRowsTotalCount(response.data.meta.itemCount);
         }
       })
@@ -152,7 +152,7 @@ type InitialContext = {
   handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;
   handleNextPageChange: () => void;
   handlePrevPageChange: () => void;
-  rows: AnyValue[];
+  rows: GridRowsProp;
   rowsCount: number;
   rowsPerPage: number;
   rowsTotalCount: number;

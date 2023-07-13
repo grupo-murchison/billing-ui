@@ -1,0 +1,22 @@
+import { GridLocaleText } from '@mui/x-data-grid';
+
+// https://github.com/mui/mui-x/blob/HEAD/packages/grid/x-data-grid/src/constants/localeTextConstants.ts
+export const localeText: Partial<GridLocaleText> = {
+  // Column menu text
+  columnMenuLabel: 'Menu',
+  columnMenuShowColumns: 'Mostrar columnas',
+  columnMenuManageColumns: 'Administrar columnas',
+  columnMenuFilter: 'Filtro',
+  columnMenuHideColumn: 'Ocultar columna',
+  columnMenuUnsort: 'Desordenado',
+  columnMenuSortAsc: 'Ordenar ASC',
+  columnMenuSortDesc: 'Ordenar DESC',
+
+  // Columns panel text
+  columnsPanelTextFieldLabel: 'Buscar columna',
+  columnsPanelTextFieldPlaceholder: 'Nombre columna',
+  columnsPanelDragIconLabel: 'Reorder column',
+  columnsPanelShowAllButton: 'Mostrar todas',
+  columnsPanelHideAllButton: 'Ocultar todas',
+};
+
