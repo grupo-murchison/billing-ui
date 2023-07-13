@@ -1,17 +1,20 @@
 import clsx from 'clsx';
 
-import { Button } from '@app/components';
+// import { Button } from '@app/components';
 
 import { DeleteOutlineIcon } from '@assets/icons';
-import { IconButton, useTheme } from '@mui/material';
+import { Button, IconButton, useTheme } from '@mui/material';
 
-const DeleteButton = ({ className, ...props }: DeleteButtonProps) => {
-  return (
-    <Button color='primary' icon={<DeleteOutlineIcon />} outlined className={clsx(className)} {...props}>
-      Eliminar
-    </Button>
-  );
-};
+// const DeleteButton = ({ className, ...props }: DeleteButtonProps) => {
+//   return (
+//     // <Button color='primary' icon={<DeleteOutlineIcon />} outlined className={clsx(className)} {...props}>
+//     //   Eliminar
+//     // </Button>
+//     <Button color='secondary'>
+//       <DeleteOutlineIcon />
+//     </Button>
+//   );
+// };
 
 export const DeleteIconButton = ({ ...props }) => {
   const theme = useTheme();
@@ -35,6 +38,6 @@ export const DeleteIconButton = ({ ...props }) => {
   );
 };
 
-type DeleteButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+// type DeleteButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-export default DeleteButton;
+// export default DeleteButton;

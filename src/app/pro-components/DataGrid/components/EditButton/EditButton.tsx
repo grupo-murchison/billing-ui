@@ -1,25 +1,25 @@
 import clsx from 'clsx';
 
-import { Button as ButtonPaul } from '@app/components';
+// import { Button as ButtonPaul } from '@app/components';
 
 import { EditOutlinedIcon } from '@assets/icons';
 import { Button, IconButton, useTheme } from '@mui/material';
 
-const EditButton = ({ className, ...props }: EditButtonProps) => {
-  return (
-    <Button color='secondary'>
-      <EditOutlinedIcon />
-    </Button>
-  );
-};
+// const EditButton = () => {
+//   return (
+//     <Button color='secondary'>
+//       <EditOutlinedIcon />
+//     </Button>
+//   );
+// };
 
-const EditButtonPaul = ({ className, ...props }: EditButtonProps) => {
-  return (
-    <ButtonPaul color='primary' icon={<EditOutlinedIcon />} outlined className={clsx(className)} {...props}>
-      Editar
-    </ButtonPaul>
-  );
-};
+// // const EditButtonPaul = ({ className, ...props }: EditButtonProps) => {
+// //   return (
+// //     <ButtonPaul color='primary' icon={<EditOutlinedIcon />} outlined className={clsx(className)} {...props}>
+// //       Editar
+// //     </ButtonPaul>
+// //   );
+// // };
 
 export const EditIconButton = ({ ...props }) => {
   const theme = useTheme();
@@ -43,6 +43,6 @@ export const EditIconButton = ({ ...props }) => {
   );
 };
 
-type EditButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
+// type EditButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
 
-export default EditButton;
+// export default EditButton;
