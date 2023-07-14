@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { AppRoutes } from '@app/navigation';
 import { AuthProvider } from '@app/contexts';
 
@@ -9,6 +10,10 @@ import { CssBaseline } from '@mui/material';
 import customTheme from '@assets/theme';
 
 const App = () => {
+  useEffect(() => {
+    document.title = 'Murchison Billing';
+  }, []);
+
   return (
     <ThemeProvider theme={customTheme}>
       <AuthProvider>
