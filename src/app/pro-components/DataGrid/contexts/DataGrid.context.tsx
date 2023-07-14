@@ -121,7 +121,6 @@ const DataGridProvider = <T,>({
   useEffect(() => {
     hookRef.current = {
       load: config => {
-        console.log('useEffect hookRef.current load', hookRef.current);
         repositoryFuncParamsRef.current.filters = config?.fixedFilters;
         makeRequest();
       },
