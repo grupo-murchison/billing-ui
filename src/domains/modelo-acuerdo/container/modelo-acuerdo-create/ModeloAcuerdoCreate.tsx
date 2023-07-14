@@ -50,7 +50,7 @@ const ModeloAcuerdoCreate = () => {
   }, [_navigate]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Modelo'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Modelo Acuerdo'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
