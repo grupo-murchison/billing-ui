@@ -1,7 +1,7 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .table {
   width: 100%;
 
-  border: 1px solid VARS.$color-secondary;
+  border: 1px solid VARS.$secondaryMain;
 }

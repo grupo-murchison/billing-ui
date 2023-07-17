@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .total-count {
   > label {
@@ -14,6 +14,6 @@
   > span {
     // font-size: 0.875rem;
 
-    color: VARS.$color-secondary;
+    color: VARS.$secondaryMain;
   }
 }

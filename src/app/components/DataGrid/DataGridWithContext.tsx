@@ -19,8 +19,7 @@ const DataGridWithContext = () => {
   const sxHeader: SxProps = {
     '& .MuiDataGrid-columnHeader': {
       color: theme.palette.common.white,
-      // backgroundColor: theme.palette.secondary.light,
-      backgroundColor: '#9eaab8', // color-gray-disabled
+      backgroundColor: theme.palette.text.disabled,
     },
   };
 

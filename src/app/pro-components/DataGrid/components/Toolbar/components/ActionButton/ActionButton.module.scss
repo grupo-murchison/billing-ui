@@ -1,11 +1,11 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .action-button {
   background-color: transparent;
   outline: none;
   border: none;
 
-  border-left: 1px solid VARS.$color-secondary;
+  border-left: 1px solid VARS.$secondaryMain;
 
   padding: 4px 12px;
 
@@ -18,10 +18,10 @@
 
   width: 100px;
 
-  color: VARS.$color-gray-main;
+  color: VARS.$textPrimary;
 
   &--green {
-    color: VARS.$color-primary;
+    color: VARS.$primaryMain;
   }
 
   &:first-child {

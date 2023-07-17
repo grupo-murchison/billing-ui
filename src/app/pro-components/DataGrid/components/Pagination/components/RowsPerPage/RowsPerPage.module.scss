@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .rows-per-page {
   display: flex;
@@ -8,7 +8,7 @@
     font-weight: normal;
     // font-size: 0.875rem;
 
-    color: VARS.$color-secondary;
+    color: VARS.$secondaryMain;
 
     margin-right: 8px;
   }

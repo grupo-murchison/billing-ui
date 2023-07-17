@@ -1,4 +1,4 @@
-// @use 'src/assets/scss/variables.scss' as VARS;
+// @use 'src/assets/scss/variables.module.scss' as VARS;
 
 // .toolbar {
 //   display: flex;
@@ -6,6 +6,6 @@
 
 //   background-color: rgb(209, 216, 223);
 
-//   border: 1px solid VARS.$color-secondary;
+//   border: 1px solid VARS.$secondaryMain;
 //   border-bottom: none;
 // }

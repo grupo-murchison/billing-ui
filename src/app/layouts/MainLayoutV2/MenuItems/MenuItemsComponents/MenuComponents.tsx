@@ -1,8 +1,7 @@
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
-import { Typography, useTheme } from '@mui/material';
+import { SvgIcon, Typography, useTheme } from '@mui/material';
+import { SvgIconComponent } from '@mui/icons-material';
 import { IMenuItem } from '../menu-items.interface';
-
-// import { themeTypography } from "theme/typography";
 
 export function IconRender({
   icon,
@@ -10,22 +9,23 @@ export function IconRender({
   isActive,
   item,
 }: {
-  icon?: any;
+  icon?: SvgIconComponent;
   level?: number;
   isActive?: string[];
   item?: IMenuItem;
 }) {
   const theme = useTheme();
-  const Icon = icon;
+  const getIconSize = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 10 : 6);
 
   const iconRender = icon ? (
-    <Icon sx={{ color: theme.palette.common.white }} />
+    <SvgIcon component={icon} sx={{ color: theme.palette.common.white }} />
   ) : (
-    <FiberManualRecordIcon
+    <SvgIcon
+      component={FiberManualRecordIcon}
       sx={{
         color: theme.palette.common.white,
-        width: isActive && isActive.findIndex((id: any) => id === item?.id) > -1 ? 10 : 6,
-        height: isActive && isActive.findIndex((id: any) => id === item?.id) > -1 ? 10 : 6,
+        width: getIconSize(),
+        height: getIconSize(),
       }}
       fontSize={level > 0 ? 'inherit' : 'medium'}
     />
