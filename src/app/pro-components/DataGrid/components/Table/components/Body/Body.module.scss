@@ -18,11 +18,11 @@
     }
 
     &:nth-child(odd) {
-      background-color: VARS.$color-white;
+      background-color: VARS.$backgroundPaper;
     }
 
     &:hover {
-      background-color: #ccced0;
+      background-color: VARS.$backgroundRowHover;
     }
   }
 }

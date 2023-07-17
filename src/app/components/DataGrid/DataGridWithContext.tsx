@@ -48,7 +48,7 @@ const DataGridWithContext = () => {
   return (
     <>
       <MUIDataGrid
-        rows={rows}
+        rows={[]}
         columns={columns}
         pageSizeOptions={[10, 25, 50, 100]}
         // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
