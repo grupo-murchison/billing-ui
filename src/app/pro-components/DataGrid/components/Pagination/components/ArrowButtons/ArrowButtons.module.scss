@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .arrow-buttons {
   display: flex;
@@ -18,7 +18,7 @@
     > svg {
       font-size: 1.125rem;
 
-      color: VARS.$color-secondary;
+      color: VARS.$secondaryMain;
     }
   }
 }

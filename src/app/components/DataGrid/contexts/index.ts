@@ -1,1 +1,1 @@
-export { DataGridContext, DataGridProvider } from './DataGrid.context';
+export { DataGridContext, DataGridProvider } from './DataGridContext';

@@ -8,7 +8,7 @@ export const localeText: Partial<GridLocaleText> = {
   columnMenuManageColumns: 'Administrar columnas',
   columnMenuFilter: 'Filtro',
   columnMenuHideColumn: 'Ocultar columna',
-  columnMenuUnsort: 'Desordenado',
+  columnMenuUnsort: 'Sin Ordenar',
   columnMenuSortAsc: 'Ordenar ASC',
   columnMenuSortDesc: 'Ordenar DESC',
 
@@ -18,5 +18,12 @@ export const localeText: Partial<GridLocaleText> = {
   columnsPanelDragIconLabel: 'Reorder column',
   columnsPanelShowAllButton: 'Mostrar todas',
   columnsPanelHideAllButton: 'Ocultar todas',
-};
 
+  // Rows selected footer text
+  footerRowSelected: count =>
+    count !== 1 ? `${count.toLocaleString()} filas seleccionadas` : `${count.toLocaleString()} fila seleccionada`,
+
+  // Root
+  noRowsLabel: 'No se encontraron registros.',
+  noResultsOverlayLabel: 'No se encontraron resultados.',
+};

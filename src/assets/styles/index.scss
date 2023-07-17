@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables' as VARS;
+@use 'src/assets/scss/variables.module' as VARS;
 
 * {
   margin: 0;
@@ -8,12 +8,8 @@
 }
 
 span.muted {
-  color: VARS.$color-gray-disabled;
+  color: VARS.$textDisabled;
 }
-
-// body {
-//   background-color: VARS.$background-secondary;
-// }
 
 // Overrides
 

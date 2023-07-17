@@ -1,4 +1,4 @@
-// @use 'src/assets/scss/variables.scss' as VARS;
+// @use 'src/assets/scss/variables.module.scss' as VARS;
 
 // .button {
 //   display: flex;
@@ -16,50 +16,50 @@
 // }
 
 // .button--primary {
-//   border: 1px solid VARS.$color-primary;
+//   border: 1px solid VARS.$primaryMain;
 
-//   background-color: VARS.$color-primary;
+//   background-color: VARS.$primaryMain;
 
 //   color: VARS.$color-white;
 
 //   // &:hover {
 //   //   color: VARS.$color-white;
 
-//   //   background-color: VARS.$color-primary;
+//   //   background-color: VARS.$primaryMain;
 
-//   //   border-color: VARS.$color-primary;
+//   //   border-color: VARS.$primaryMain;
 //   // }
 // }
 
 // .button--primary-outlined {
-//   border: 1px solid VARS.$color-secondary;
+//   border: 1px solid VARS.$secondaryMain;
 
-//   color: VARS.$color-primary;
+//   color: VARS.$primaryMain;
 
 //   background-color: VARS.$color-white;
 
 //   &:hover {
 //     color: VARS.$color-white;
 
-//     background-color: VARS.$color-primary;
+//     background-color: VARS.$primaryMain;
 
-//     border-color: VARS.$color-primary;
+//     border-color: VARS.$primaryMain;
 //   }
 // }
 
 // .button--secondary-outlined {
-//   border: 1px solid VARS.$color-secondary;
+//   border: 1px solid VARS.$secondaryMain;
 
-//   color: VARS.$color-secondary;
+//   color: VARS.$secondaryMain;
 
 //   background-color: VARS.$color-white;
 
 //   &:hover {
 //     color: VARS.$color-white;
 
-//     background-color: VARS.$color-secondary;
+//     background-color: VARS.$secondaryMain;
 
-//     border-color: VARS.$color-secondary;
+//     border-color: VARS.$secondaryMain;
 //   }
 // }
 

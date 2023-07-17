@@ -5,7 +5,7 @@ import LinearProgress from '@mui/material/LinearProgress';
 import NoRowsContent from './NoRowsContent';
 
 import { DataGridContext } from './contexts';
-import { localeText } from './DataGrid.config';
+import { localeText } from './dataGrid.config';
 
 const DataGridWithContext = () => {
   const theme = useTheme();
@@ -19,16 +19,15 @@ const DataGridWithContext = () => {
   const sxHeader: SxProps = {
     '& .MuiDataGrid-columnHeader': {
       color: theme.palette.common.white,
-      // backgroundColor: theme.palette.secondary.light,
-      backgroundColor: '#9eaab8', // color-gray-disabled
+      backgroundColor: theme.palette.text.disabled,
     },
   };
 
   const sxRows: SxProps = {
-    '& .MuiDataGrid-row:nth-child(even)': {
+    '& .MuiDataGrid-row:nth-of-type(even)': {
       backgroundColor: theme.palette.background.default,
     },
-    '& .MuiDataGrid-row:nth-child(odd)': {
+    '& .MuiDataGrid-row:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.paper,
     },
     '& .MuiDataGrid-row:hover': {

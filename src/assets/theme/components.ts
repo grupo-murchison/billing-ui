@@ -17,4 +17,11 @@ export const components: Components = {
   //     }
   //   }
   // },
+  MuiGrid2:{
+    styleOverrides:{
+      root:{
+        
+      }
+    }
+  }
 };

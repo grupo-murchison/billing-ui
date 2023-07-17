@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables' as VARS;
+@use 'src/assets/scss/variables.module' as VARS;
 
 .portlet {
   background-color: VARS.$color-white;

@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .modal {
   position: fixed;
@@ -39,7 +39,7 @@
         flex-grow: 1;
         font-size: 1.5rem;
         font-weight: 600;
-        color: VARS.$color-primary;
+        color: VARS.$primaryMain;
       }
 
       .mch__closeButton {

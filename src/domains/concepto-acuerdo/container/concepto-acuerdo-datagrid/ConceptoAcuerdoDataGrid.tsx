@@ -37,7 +37,6 @@ const ConceptoAcuerdoDataGrid = () => {
   //TODO:  Obtener el valor con el nombre de la entidad de una constante,
   const handleClickDelete = useCallback(
     (row: any) => {
-      console.log(ConceptoAcuerdoLabelAndPath);
       confirmDialog.open({
         entity: `${ConceptoAcuerdoLabelAndPath.label}`,
         identifier: `${row.modeloAcuerdo}`,

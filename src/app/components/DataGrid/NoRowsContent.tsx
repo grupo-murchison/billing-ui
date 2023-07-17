@@ -1,6 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
+import { localeText } from './dataGrid.config';
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
   'display': 'flex',
@@ -56,7 +57,7 @@ function NoRowsContent() {
           </g>
         </g>
       </svg>
-      <Box sx={{ mt: 1 }}>No se encontraron registros.</Box>
+      <Box sx={{ mt: 1 }}>{localeText.noRowsLabel}</Box>
     </StyledGridOverlay>
   );
 }

@@ -9,7 +9,6 @@ import { getAllFacturasPaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
   static getAllFacturasPaginated = async (params: DataGridRepositoryFuncParams) => {
-    console.log('getAllFacturasPaginated');
     const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllFacturasPaginatedSchema),

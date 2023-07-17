@@ -58,9 +58,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
     row['valor'] = event.target.value;
 
     ContratoVariablesRepository.updateContratoVariable(row, id)
-      .then(({ status }) => {
-        console.log('status', status);
-      })
+      .then()
       .catch((error: any) => {
         // TODO falta un handlerError() que sustituya el console.log
         console.log('Error al actualizar variable:\n', error);
