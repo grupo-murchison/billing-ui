@@ -1,6 +1,6 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { useNavigate, Outlet } from 'react-router-dom';
+import { Outlet } from 'react-router-dom';
 
 import { Col, Row } from '@app/components';
 
@@ -13,8 +13,10 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
 
+import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+
 const FacturacionReporte = () => {
-  const _navigate = useNavigate();
+  // const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
@@ -25,18 +27,23 @@ const FacturacionReporte = () => {
   return (
     <>
       <Row>
-        <Col md={12}>ToolBar</Col>
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { field: 'numeroSecuenciaContrato', headerName: 'Nº Secuencia Contrato' },
-              { field: 'estado', headerName: 'Estado' },
-              { field: 'contratoDescripcion', headerName: 'Contrato Descripcion' },
-              { field: 'clienteDescripcion', headerName: 'Cliente Descripcion' },
+              { field: 'numeroSecuenciaContrato', headerName: 'Nº Secuencia Contrato', flex: 0.5 },
+              { field: 'estado', headerName: 'Estado', flex: 0.5 },
+              {
+                field: 'contratoDescripcion',
+                headerName: 'Contrato Descripcion',
+                flex: 2,
+                // renderCell: params => renderCellResolver('renderCellExpand', params),
+              },
+              { field: 'clienteDescripcion', headerName: 'Cliente Descripcion', flex: 1 },
               { field: 'facturacionCabeceraEstado', headerName: 'Facturacion Cabecera Estado' },
             ]}
             repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+            toolbar={toolbarMUI}
           />
         </Col>
       </Row>
