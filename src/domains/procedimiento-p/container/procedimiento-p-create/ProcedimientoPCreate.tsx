@@ -28,8 +28,6 @@ const ProcedimientoPCreate = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-    setValue,
-    watch,
   } = useForm<ProcedimientoPCreateSchemaType>({
     defaultValues: {
       codigo: '',

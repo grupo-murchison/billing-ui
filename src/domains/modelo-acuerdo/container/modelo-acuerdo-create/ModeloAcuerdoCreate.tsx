@@ -23,10 +23,8 @@ const ModeloAcuerdoCreate = () => {
 
   const {
     register,
-    control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-    setValue,
   } = useForm<ModeloAcuerdoCreateSchemaType>({
     defaultValues: {
       codigo: '',

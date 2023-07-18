@@ -4,6 +4,7 @@ import { useNavigate, Outlet } from 'react-router-dom';
 import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
+import { rowSanitizer } from '@app/components/DataGrid/helpers';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -101,11 +102,3 @@ const ContratoDataGrid = () => {
 };
 
 export default withBreadcrumb(ContratoDataGrid, ContratoDataGridBreadcrumb);
-
-type TFn = (value: any) => any;
-type TTowSanitizer = string | number | boolean | null | undefined | TFn;
-
-//* idea prototipo, se puede mejorar
-const rowSanitizer = (value: TTowSanitizer): string | any => {
-  return value === null || value === undefined ? ' ' : value;
-};

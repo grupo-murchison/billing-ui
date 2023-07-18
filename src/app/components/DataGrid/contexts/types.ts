@@ -1,7 +1,7 @@
-import type { ReactNode } from 'react';
+import type { ChangeEvent, JSXElementConstructor, ReactNode } from 'react';
 
 import type { AxiosResponse } from 'axios';
-import { GridColDef } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
 
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 
@@ -20,10 +20,27 @@ export type DataGridProps<T> = {
       };
     }>
   >;
+  toolbar?: JSXElementConstructor<any> | null | undefined;
 };
 
 export type DataGridRepositoryFuncParams = {
   take: number;
   page: number;
   filters?: Record<string, string>;
+};
+
+export type InitialContext = {
+  columnHeads: GridColDef[];
+  currentPage: number;
+  onClickNew?: () => void;
+  handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;
+  handleNextPageChange: () => void;
+  handlePrevPageChange: () => void;
+  rows: GridRowsProp;
+  rowsCount: number;
+  rowsPerPage: number;
+  rowsTotalCount: number;
+  loading: boolean;
+  error: any;
+  toolbar?: JSXElementConstructor<any> | null | undefined;
 };
