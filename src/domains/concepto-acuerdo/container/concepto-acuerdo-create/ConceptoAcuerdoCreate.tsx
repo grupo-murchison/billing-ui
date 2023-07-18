@@ -1,10 +1,10 @@
 import { useCallback, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
-import {  Modal, Row, Col } from '@app/components';
+import { Modal, Row, Col } from '@app/components';
 
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 import { ConceptoAcuerdoCreateSchema } from '@domains/concepto-acuerdo/container/concepto-acuerdo-create/schemas';
@@ -19,7 +19,8 @@ import { ProcedimientoPSDropdown } from '@domains/procedimiento-ps/container/pro
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ConceptoAcuerdoCreate = () => {
   const _navigate = useNavigate();
@@ -27,21 +28,19 @@ const ConceptoAcuerdoCreate = () => {
   const { mainDataGrid } = useContext(ConceptoAcuerdoContext);
 
   const {
+    control,
     register,
-    handleSubmit: rhfHandleSubmit,
-    watch,
+    handleSubmit,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ConceptoAcuerdoCreateSchemaType>({
     defaultValues: {},
     resolver: zodResolver(ConceptoAcuerdoCreateSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ConceptoAcuerdoCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ConceptoAcuerdoCreateSchemaType> = useCallback(
+    async data => {
       await ConceptoAcuerdoRepository.createConceptoAcuerdo(data);
-
       mainDataGrid.reload();
-
       _navigate('/concepto-acuerdo');
     },
     [_navigate, mainDataGrid],
@@ -53,19 +52,16 @@ const ConceptoAcuerdoCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nuevo Concepto Acuerdo'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={12}>
             <ModeloAcuerdoDropdown
-              id='modeloAcuerdo'
-              label='Modelo Acuerdo'
-              {...register('modeloAcuerdoId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='modeloAcuerdoId'
               error={!!formErrors.modeloAcuerdoId}
-              helperText={formErrors?.modeloAcuerdoId?.message}
               disabled={isSubmitting}
-              value={watch('modeloAcuerdoId')}
+              label='Modelo Acuerdo'
+              helperText={formErrors?.modeloAcuerdoId?.message}
             />
           </Col>
         </Row>
@@ -84,70 +80,48 @@ const ConceptoAcuerdoCreate = () => {
         <Row>
           <Col md={6}>
             <TipoServicioDropdown
-              id='tipoServicio'
-              label='Tipo Servicio'
-              {...register('tipoServicioId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='tipoServicioId'
               error={!!formErrors.tipoServicioId}
-              helperText={formErrors?.tipoServicioId?.message}
               disabled={isSubmitting}
-              value={watch('tipoServicioId')}
+              label='Tipo Servicio'
+              helperText={formErrors?.tipoServicioId?.message}
             />
           </Col>
           <Col md={6}>
             <ProcedimientoPSDropdown
-              id='procedimientoProductoSoftland'
-              label='Procedimiento Producto Softland'
-              {...register('procedimientoProductoSoftlandId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoProductoSoftlandId'
               error={!!formErrors.procedimientoProductoSoftlandId}
-              helperText={formErrors?.procedimientoProductoSoftlandId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoProductoSoftlandId')}
+              label='Procedimiento Producto Softland'
+              helperText={formErrors?.procedimientoProductoSoftlandId?.message}
             />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <ProcedimientoPDropdown
-              id='procedimientoP'
-              label='Procedimiento Precio'
-              {...register('procedimientoPId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoPId'
               error={!!formErrors.procedimientoPId}
-              helperText={formErrors?.procedimientoPId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoPId')}
+              label='Procedimiento Precio'
+              helperText={formErrors?.procedimientoPId?.message}
             />
           </Col>
           <Col md={6}>
             <ProcedimientoQDropdown
-              id='procedimientoQ'
-              label='Procedimiento Cantidad'
-              {...register('procedimientoQId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoQId'
               error={!!formErrors.procedimientoQId}
-              helperText={formErrors?.procedimientoQId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoQId')}
+              label='Procedimiento Cantidad'
+              helperText={formErrors?.procedimientoQId?.message}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

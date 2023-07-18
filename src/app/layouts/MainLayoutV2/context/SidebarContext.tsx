@@ -1,7 +1,7 @@
-import { createContext, useContext } from 'react';
+import { createContext } from 'react';
 
-import { initialState, ISideBarContext } from './constants';
+import { initialState, ISidebarContext } from './constants';
 
-const SideBarContext = createContext<ISideBarContext>({ ...initialState, dispatch: () => null });
+const SidebarContext = createContext<ISidebarContext>({ ...initialState, dispatch: () => null });
 
-export default SideBarContext;
+export default SidebarContext;

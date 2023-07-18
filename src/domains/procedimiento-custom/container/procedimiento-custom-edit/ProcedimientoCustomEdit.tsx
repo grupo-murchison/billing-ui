@@ -19,6 +19,7 @@ import { label } from '@domains/procedimiento-custom/constants';
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
 
 import { ACTION_TYPES } from '@domains/procedimiento-custom/contexts/procedimiento-custom.state';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
@@ -30,7 +31,7 @@ const ProcedimientoCustomEdit = () => {
   const {
     register,
     control,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     reset,
     formState: { errors: formErrors, isSubmitting },
@@ -102,7 +103,7 @@ const ProcedimientoCustomEdit = () => {
     });
   };
 
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async (data: ProcedimientoCustomEditSchemaType) => {
       const { funciones, eventos, eventosCampo, acciones } = state;
       const parseToNull = ({
@@ -121,7 +122,7 @@ const ProcedimientoCustomEdit = () => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroCampoCode} = ${filtroValue}`,
+              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
             }
           : {
@@ -153,7 +154,7 @@ const ProcedimientoCustomEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Editar ${label.procedimientoCustom}`}>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={4}>
             <TextField
@@ -278,17 +279,7 @@ const ProcedimientoCustomEdit = () => {
             </Col>
           </Row>
         </Box>
-        <Row>
-          <Col md={12} textAlign='right'>
-            <MuiButton color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </MuiButton>
-            <MuiButton variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </MuiButton>
-          </Col>
-        </Row>
-      </form>
+      </Form>
 
       {state.error && <Box>Error: {...state.error}</Box>}
     </Modal>

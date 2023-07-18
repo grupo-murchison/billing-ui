@@ -1,0 +1,47 @@
+$font-family: Roboto, 'Open Sans', 'Open Sans Variable', sans-serif;
+
+$color-white: #ffffff;
+
+$sidebar-width: 50px;
+$sidebar-width--open: calc(300px - $sidebar-width);
+
+$header-height: 60px;
+
+// ==============================|| MAIN COLORS ||============================== //
+
+$primaryMain: #007749;
+
+$secondaryMain: #505e70;
+
+$errorMain: #e41e2d;
+
+$infoMain: #005c97;
+
+$successMain: #003a76;
+
+$warningMain: #ff8200;
+
+$backgroundDefault: #f3f6f9;
+$backgroundPaper: #ffffff;
+
+$textPrimary: #38485c;
+$textSecondary: $secondaryMain;
+$textDisabled: #9eaabb;
+
+// ==============================|| JAVASCRIPT EXPORT ||============================== //
+:export {
+  backgroundDefault: $backgroundDefault;
+  backgroundPaper: $backgroundPaper;
+
+  primaryMain: $primaryMain;
+
+  secondaryMain: $secondaryMain;
+
+  errorMain: $errorMain;
+
+  infoMain: $infoMain;
+
+  successMain: $successMain;
+
+  warningMain: $warningMain;
+}

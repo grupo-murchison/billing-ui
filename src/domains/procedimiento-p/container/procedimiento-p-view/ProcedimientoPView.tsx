@@ -12,12 +12,30 @@ import { ProcedimientoPIntervaloWithinProcedimientoPRoutes } from '@domains/proc
 
 import { Divider, TextField } from '@mui/material';
 
-const ProcedimientoPEdit = () => {
+import { zodResolver } from '@hookform/resolvers/zod';
+
+import { useForm } from 'react-hook-form';
+import Form from '@app/components/Form/Form';
+import { ProcedimientoPEditSchema, ProcedimientoPEditSchemaType } from './schemas';
+
+const ProcedimientoPView = () => {
   const { procedimientoPId } = useParams();
   const _navigate = useNavigate();
 
   const [procedimientoPData, setProcedimientoPData] = useState<AnyValue>();
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
+
+  //TODO esto se podria ir, dado que no se editaria en esta pantalla?
+  const {
+    formState: { errors: formErrors, isSubmitting },
+    control,
+  } = useForm<ProcedimientoPEditSchemaType>({
+    defaultValues: {
+      codigo: '',
+      denominacion: '',
+    },
+    resolver: zodResolver(ProcedimientoPEditSchema),
+  });
 
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-p');
@@ -36,7 +54,7 @@ const ProcedimientoPEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Ver Procedimiento Precio'>
-      <form noValidate autoComplete='off'>
+      <Form handleClose={handleClose} isSubmitting={isSubmitting} isView>
         <Row>
           <Col md={6}>
             <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} disabled />
@@ -47,14 +65,21 @@ const ProcedimientoPEdit = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <MonedaDropdown id='monedaId' label='Moneda' defaultValue={procedimientoPData.monedaId} disabled />
+            <MonedaDropdown
+              control={control}
+              name='monedaId'
+              error={!!formErrors.monedaId}
+              disabled
+              label='Moneda'
+              helperText={formErrors?.monedaId?.message}
+            />
           </Col>
         </Row>
-      </form>
+      </Form>
       <Divider style={{ marginBottom: '1rem' }} />
-      <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo}/>
+      <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo} />
     </Modal>
   );
 };
 
-export default ProcedimientoPEdit;
+export default ProcedimientoPView;

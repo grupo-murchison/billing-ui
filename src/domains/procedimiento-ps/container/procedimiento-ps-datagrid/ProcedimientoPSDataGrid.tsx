@@ -64,7 +64,7 @@ const ProcedimientoPSDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[{ label: 'CÓDIGO' }, { label: 'DENOMINACIÓN' }, { label: '' }]}
+            columnHeads={[{ headerName: 'CÓDIGO' }, { headerName: 'DENOMINACIÓN' }, { headerName: 'ACCIONES' }]}
             repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
             rowTemplate={row => (
               <>

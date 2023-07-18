@@ -23,7 +23,7 @@ export type DataGridProps<T> = {
 };
 
 export type DataGridColumnHeadProps = {
-  label: string;
+  headerName: string;
 };
 
 export type DataGridRepositoryFuncParams = {

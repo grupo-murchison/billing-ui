@@ -58,14 +58,14 @@ const ProcedimientoCustomDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Código' },
-              { label: 'DENOMINACIÓN' },
-              { label: 'TIPO FUNCIÓN' },
-              { label: 'ACCIÓN' },
-              { label: 'EVENTO' },
-              { label: 'CAMPO' },
-              { label: 'Expresión Filtro' },
-              { label: '' },
+              { headerName: 'Código' },
+              { headerName: 'DENOMINACIÓN' },
+              { headerName: 'TIPO FUNCIÓN' },
+              { headerName: 'ACCIÓN' },
+              { headerName: 'EVENTO' },
+              { headerName: 'CAMPO' },
+              { headerName: 'Expresión Filtro' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
             rowTemplate={row => (

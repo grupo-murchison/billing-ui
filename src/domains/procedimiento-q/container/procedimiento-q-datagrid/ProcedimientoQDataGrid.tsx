@@ -66,13 +66,13 @@ const ProcedimientoQDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Código' },
-              { label: 'Denominación' },
-              // { label: 'Descripción' },
-              { label: 'Tipo Procedimiento Cantidad' },
-              { label: 'Procedimiento Builtin' },
-              { label: 'Procedimiento Custom' },
-              { label: '' },
+              { headerName: 'Código' },
+              { headerName: 'Denominación' },
+              // { headerName: 'Descripción' },
+              { headerName: 'Tipo Procedimiento Cantidad' },
+              { headerName: 'Procedimiento Builtin' },
+              { headerName: 'Procedimiento Custom' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
             rowTemplate={row => (

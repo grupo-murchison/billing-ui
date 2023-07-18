@@ -33,6 +33,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
 import { CardCrudActions } from './views';
+import Form from '@app/components/Form/Form';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -46,9 +47,10 @@ const ContratoCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     setValue,
+    control,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ContratoCreateSchemaType>({
     defaultValues: {
@@ -59,7 +61,7 @@ const ContratoCreate = () => {
     resolver: zodResolver(ContratoCreateSchema),
   });
 
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async (data: ContratoCreateSchemaType) => {
       const submitData = {
         ...data,
@@ -162,28 +164,22 @@ const ContratoCreate = () => {
       <Row>
         <Col md={6}>
           <ModeloAcuerdoDropdown
-            id='modeloAcuerdoId'
+            control={control}
+            name='modeloAcuerdoId'
             label='Modelo Acuerdo'
-            {...register('modeloAcuerdoId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.modeloAcuerdoId}
             helperText={formErrors?.modeloAcuerdoId?.message}
             disabled={isSubmitting}
-            value={watch('modeloAcuerdoId')}
           />
         </Col>
         <Col md={6}>
           <TipoContratoDropdown
-            id='tipoContratoId'
+            control={control}
+            name='tipoContratoId'
             label='Tipo Contrato'
-            {...register('tipoContratoId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.tipoContratoId}
             helperText={formErrors?.tipoContratoId?.message}
             disabled={isSubmitting}
-            value={watch('tipoContratoId')}
           />
         </Col>
       </Row>
@@ -286,8 +282,8 @@ const ContratoCreate = () => {
       <AlertInProgress />
 
       {/* <Paper sx={{p: 3}}> */}
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
-        <Card sx={{ p: 3 }}>
+      <Card sx={{ p: 3 }}>
+        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>
@@ -307,10 +303,8 @@ const ContratoCreate = () => {
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
-
-          <CardCrudActions labelSubmitButton='Crear' isSubmitting={isSubmitting} handleClose={handleClose} />
-        </Card>
-      </form>
+        </Form>
+      </Card>
       {/* </Paper> */}
     </>
   );

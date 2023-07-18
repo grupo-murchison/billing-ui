@@ -63,11 +63,11 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'PRODUCTO SOFTLAND' },
-              { label: 'INTERVALO' },
-              { label: 'VALOR INICIAL' },
-              { label: 'VALOR FINAL' },
-              { label: '' },
+              { headerName: 'PRODUCTO SOFTLAND' },
+              { headerName: 'INTERVALO' },
+              { headerName: 'VALOR INICIAL' },
+              { headerName: 'VALOR FINAL' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
             rowTemplate={row => (

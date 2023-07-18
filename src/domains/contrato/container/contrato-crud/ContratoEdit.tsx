@@ -39,6 +39,7 @@ import { CardCrudActions, DataGridPlanFacturacion, DataGridConceptoAcuerdo } fro
 import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
+import Form from '@app/components/Form/Form';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
@@ -52,8 +53,9 @@ const ContratoEdit = () => {
   const {
     register,
     reset,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
+    control,
     setValue,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ContratoEditSchemaType>({
@@ -65,7 +67,7 @@ const ContratoEdit = () => {
     resolver: zodResolver(ContratoEditSchema),
   });
 
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async (data: ContratoEditSchemaType) => {
       const submitData = {
         ...data,
@@ -168,28 +170,22 @@ const ContratoEdit = () => {
         <Col md={6}>
           {/* // TODO agregar Notificación con mensaje de de Alerta: Si cambia el Modelo Acuerdo, se eliminarán las variables del contrato y deberá cargar las nuevas manualmente. */}
           <ModeloAcuerdoDropdown
-            id='modeloAcuerdoId'
+            control={control}
+            name='modeloAcuerdoId'
             label='Modelo Acuerdo'
-            {...register('modeloAcuerdoId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.modeloAcuerdoId}
             helperText={formErrors?.modeloAcuerdoId?.message}
             disabled={isSubmitting}
-            value={watch('modeloAcuerdoId')}
           />
         </Col>
         <Col md={6}>
           <TipoContratoDropdown
-            id='tipoContratoId'
+            control={control}
+            name='tipoContratoId'
             label='Tipo Contrato'
-            {...register('tipoContratoId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.tipoContratoId}
             helperText={formErrors?.tipoContratoId?.message}
             disabled={isSubmitting}
-            value={watch('tipoContratoId')}
           />
         </Col>
       </Row>
@@ -305,8 +301,8 @@ const ContratoEdit = () => {
 
   return (
     <>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
-        <Card sx={{ p: 3 }}>
+      <Card sx={{ p: 3 }}>
+        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>
@@ -361,10 +357,8 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Interlocutores' />
 
           {interlocutores}
-
-          <CardCrudActions labelSubmitButton='Guardar' isSubmitting={isSubmitting} handleClose={handleClose} />
-        </Card>
-      </form>
+        </Form>
+      </Card>
     </>
   );
 };

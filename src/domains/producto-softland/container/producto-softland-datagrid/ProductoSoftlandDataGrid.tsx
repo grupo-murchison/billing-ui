@@ -60,12 +60,12 @@ const ProductoSoftlandDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'AGRUPACIÓN' },
-              { label: 'CÓDIGO' },
-              { label: 'DESCRIPCIÓN' },
-              { label: 'ACTIVO' },
-              { label: 'FECHA ACTIVO' },
-              { label: '' },
+              { headerName: 'AGRUPACIÓN' },
+              { headerName: 'CÓDIGO' },
+              { headerName: 'DESCRIPCIÓN' },
+              { headerName: 'ACTIVO' },
+              { headerName: 'FECHA ACTIVO' },
+              { headerName: 'ACCIONES' },
             ]}
             repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
             rowTemplate={row => (

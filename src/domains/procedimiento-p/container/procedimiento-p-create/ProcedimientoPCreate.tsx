@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate } from 'react-router-dom';
 
@@ -15,7 +15,8 @@ import type { ProcedimientoPCreateSchemaType } from '@domains/procedimiento-p/co
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPCreate = () => {
   const _navigate = useNavigate();
@@ -24,9 +25,11 @@ const ProcedimientoPCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
-    watch,
+    control,
+    handleSubmit,
     formState: { errors: formErrors, isSubmitting },
+    setValue,
+    watch,
   } = useForm<ProcedimientoPCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -36,12 +39,10 @@ const ProcedimientoPCreate = () => {
     resolver: zodResolver(ProcedimientoPCreateSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoPCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoPCreateSchemaType> = useCallback(
+    async data => {
       await ProcedimientoPRepository.createProcedimientoP(data);
-
       mainDataGrid.reload();
-
       _navigate('/procedimiento-p');
     },
     [_navigate, mainDataGrid],
@@ -53,7 +54,7 @@ const ProcedimientoPCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Precio'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -79,29 +80,17 @@ const ProcedimientoPCreate = () => {
         <Row>
           <Col md={6}>
             <MonedaDropdown
-              id='monedaId'
-              label='Moneda'
-              {...register('monedaId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='monedaId'
               error={!!formErrors.monedaId}
-              helperText={formErrors?.monedaId?.message}
               disabled={isSubmitting}
-              value={watch('monedaId')}
+              label='Moneda'
+              helperText={formErrors?.monedaId?.message}
+              emptyOption={false}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

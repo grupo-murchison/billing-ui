@@ -1,19 +1,16 @@
-// Su funcion es devolver un nuevo state
+import { ACTION_TYPES, IStateSidebar, TSidebarAction } from './constants';
 
-import { ACTION_TYPES, IStateSideBar, TAction } from './constants';
-
-// uso inferencia de tipos con typeof
-export const sideBarReducer = (state: IStateSideBar, action: TAction) => {
+export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => {
   switch (action.type) {
     case ACTION_TYPES.MENU_OPEN:
       return {
         ...state,
         isActive: [action.id],
       };
-    case ACTION_TYPES.SET_MENU:
+    case ACTION_TYPES.TOGGLE_SIDEBAR:
       return {
         ...state,
-        opened: action.opened,
+        isSidebarOpen: !state.isSidebarOpen,
       };
     default:
       return state;

@@ -60,12 +60,12 @@ const FacturacionDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Nº Secuencia Contrato' },
-              { label: 'Estado' },
-              { label: 'Contrato Descripcion' },
-              { label: 'Cliente Descripcion' },
-              { label: 'Facturacion Cabecera Estado' },
-              { label: '' },
+              { headerName: 'Nº Secuencia Contrato' },
+              { headerName: 'Estado' },
+              { headerName: 'Contrato Descripcion' },
+              { headerName: 'Cliente Descripcion' },
+              { headerName: 'Facturacion Cabecera Estado' },
+              { headerName: '' },
             ]}
             onClickNew={handleClickCreate}
             repositoryFunc={FacturacionRepository.getAllFacturasPaginated}

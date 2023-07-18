@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import { DateLib } from '@libs';
 
 import { Button, Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
+import Form from '@app/components/Form/Form';
 
 const ProductoSoftlandEdit = () => {
   const { id } = useParams();
@@ -28,7 +29,7 @@ const ProductoSoftlandEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     setValue,
     reset,
@@ -44,8 +45,8 @@ const ProductoSoftlandEdit = () => {
     resolver: zodResolver(ProductoSoftlandEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProductoSoftlandEditSchemaType) => {
+  const onSubmit: SubmitHandler<ProductoSoftlandEditSchemaType> = useCallback(
+    async data => {
       const submitData = {
         ...data,
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
@@ -79,7 +80,7 @@ const ProductoSoftlandEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Producto Softland'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={6}>
             <TextField
@@ -135,17 +136,7 @@ const ProductoSoftlandEdit = () => {
             </FormGroup>
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-          <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

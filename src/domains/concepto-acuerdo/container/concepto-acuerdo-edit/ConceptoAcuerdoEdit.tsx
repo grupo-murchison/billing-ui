@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -19,7 +19,8 @@ import { ProcedimientoPSDropdown } from '@domains/procedimiento-ps/container/pro
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ConceptoAcuerdoEdit = () => {
   const _navigate = useNavigate();
@@ -31,20 +32,25 @@ const ConceptoAcuerdoEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
+    control,
     reset,
-    watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ConceptoAcuerdoEditSchemaType>({
     resolver: zodResolver(ConceptoAcuerdoEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ConceptoAcuerdoEditSchemaType) => {
-      await ConceptoAcuerdoRepository.updateConceptoAcuerdo(data);
+  useEffect(() => {
+    ConceptoAcuerdoRepository.getConceptoAcuerdoById(conceptoAcuerdoId || '').then(({ data }) => {
+      reset(data);
+      setIsDataFetched(true);
+    });
+  }, [conceptoAcuerdoId, reset]);
 
+  const onSubmit: SubmitHandler<ConceptoAcuerdoEditSchemaType> = useCallback(
+    async data => {
+      await ConceptoAcuerdoRepository.updateConceptoAcuerdo({ ...data, id: Number(conceptoAcuerdoId) });
       mainDataGrid.reload();
-
       _navigate('/concepto-acuerdo');
     },
     [_navigate, mainDataGrid],
@@ -54,32 +60,22 @@ const ConceptoAcuerdoEdit = () => {
     _navigate('/concepto-acuerdo');
   }, [_navigate]);
 
-  useEffect(() => {
-    ConceptoAcuerdoRepository.getConceptoAcuerdoById(conceptoAcuerdoId || '').then(({ data }) => {
-      reset(data);
-      setIsDataFetched(true);
-    });
-  }, [conceptoAcuerdoId, reset]);
-
   if (!isDataFetched) {
     return <></>;
   }
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Concepto Acuerdo'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={12}>
             <ModeloAcuerdoDropdown
-              id='modeloAcuerdo'
+              control={control}
+              name='modeloAcuerdoId'
               label='Modelo Acuerdo'
-              {...register('modeloAcuerdoId', {
-                valueAsNumber: true,
-              })}
               error={!!formErrors.modeloAcuerdoId}
               helperText={formErrors?.modeloAcuerdoId?.message}
               disabled
-              value={watch('modeloAcuerdoId')}
             />
           </Col>
         </Row>
@@ -98,70 +94,48 @@ const ConceptoAcuerdoEdit = () => {
         <Row>
           <Col md={6}>
             <TipoServicioDropdown
-              id='tipoServicio'
-              label='Tipo Servicio'
-              {...register('tipoServicioId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='tipoServicioId'
               error={!!formErrors.tipoServicioId}
-              helperText={formErrors?.tipoServicioId?.message}
               disabled={isSubmitting}
-              value={watch('tipoServicioId')}
+              label='Tipo Servicio'
+              helperText={formErrors?.tipoServicioId?.message}
             />
           </Col>
           <Col md={6}>
             <ProcedimientoPSDropdown
-              id='procedimientoProductoSoftland'
-              label='Procedimiento Producto Softland'
-              {...register('procedimientoProductoSoftlandId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoProductoSoftlandId'
               error={!!formErrors.procedimientoProductoSoftlandId}
-              helperText={formErrors?.procedimientoProductoSoftlandId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoProductoSoftlandId')}
+              label='Procedimiento Producto Softland'
+              helperText={formErrors?.procedimientoProductoSoftlandId?.message}
             />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
             <ProcedimientoPDropdown
-              id='procedimientoP'
-              label='Procedimiento Precio'
-              {...register('procedimientoPId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoPId'
               error={!!formErrors.procedimientoPId}
-              helperText={formErrors?.procedimientoPId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoPId')}
+              label='Procedimiento Precio'
+              helperText={formErrors?.procedimientoPId?.message}
             />
           </Col>
           <Col md={6}>
             <ProcedimientoQDropdown
-              id='procedimientoQ'
-              label='Procedimiento Cantidad'
-              {...register('procedimientoQId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='procedimientoQId'
               error={!!formErrors.procedimientoQId}
-              helperText={formErrors?.procedimientoQId?.message}
               disabled={isSubmitting}
-              value={watch('procedimientoQId')}
+              label='Procedimiento Cantidad'
+              helperText={formErrors?.procedimientoQId?.message}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-          <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

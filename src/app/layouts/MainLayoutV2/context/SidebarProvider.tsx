@@ -1,12 +1,12 @@
 import { useReducer, ReactNode } from 'react';
 import { initialState } from './constants';
-import SideBarContext from './SidebarContext';
+import SidebarContext from './SidebarContext';
 import { sideBarReducer } from './sidebarReducer';
 
 const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(sideBarReducer, initialState);
 
-  return <SideBarContext.Provider value={{ isActive: state.isActive, opened: state.opened, dispatch }}>{children}</SideBarContext.Provider>;
+  return <SidebarContext.Provider value={{ ...state, dispatch }}>{children}</SidebarContext.Provider>;
 };
 
 export default SidebarProvider;

@@ -1,20 +1,29 @@
+import { SvgIconComponent } from '@mui/icons-material';
+
 type TMenuItem = 'collapse' | 'group' | 'item' | 'none';
 
-export interface IMenuItem {
-  id: string | number;
-  breadcrumbs?: boolean;
-  caption?: string;
-  children?: IMenuItem[];
+interface IMenuItemBase {
+  id: string;
   disabled?: boolean;
-  icon?: any;
-  url?: string;
   title?: string;
   type: TMenuItem;
-  // Especiales
-  external?: boolean; // si es un enlace a un sitio externo
-  target?: boolean; // atributo html <a> para abrir en nueva ventana
 }
 
-export interface IMenuItemsGroup {
-  items: IMenuItem[];
+export interface IMenuItem extends IMenuItemBase {
+  breadcrumbs?: boolean;
+  icon?: SvgIconComponent;
+  url?: string;
+  // Especiales
+  target?: boolean; // atributo html <a> para abrir en nueva ventana
+  external?: boolean; // si es un enlace a un sitio externo
+}
+
+export interface IMenuItemCollapse extends IMenuItemBase {
+  children: IMenuItem[];
+  icon: SvgIconComponent;
+}
+
+export interface IMenuItemGroup extends IMenuItemBase {
+  caption?: string;
+  children: IMenuItem[] | IMenuItemCollapse[];
 }

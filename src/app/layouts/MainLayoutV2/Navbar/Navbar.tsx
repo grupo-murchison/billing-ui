@@ -6,13 +6,11 @@ import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
 //TODO como puedo utilizar ruta absoluta
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
+import { useSidebarContext } from '../context/useSidebarContext';
+import { ACTION_TYPES } from '../context/constants';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
-}
-
-interface NavbarProps {
-  handleDrawerOpen: () => void;
 }
 
 const AppBar = styled(MuiAppBar, {
@@ -25,8 +23,13 @@ const AppBar = styled(MuiAppBar, {
   boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)', // TODO validar si esto les gusta o no
 }));
 
-const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
+const Navbar = () => {
   const theme = useTheme();
+  const { dispatch } = useSidebarContext();
+
+  const handleDrawerOpen = () => {
+    dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
+  };
 
   return (
     <AppBar position='fixed'>
@@ -67,7 +70,6 @@ const Navbar = ({ handleDrawerOpen }: NavbarProps) => {
               size='small'
               sx={{
                 border: '2px solid',
-
                 color: theme.palette.secondary.main,
               }}
             >

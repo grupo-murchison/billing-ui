@@ -39,7 +39,7 @@ const ContratoDataGrid = () => {
   const handleClickDelete = useCallback(
     (row: ContratoRowDataGridSchema) => {
       confirmDialog.open({
-        entity:`${ContartoLabelAndPath.label}`,
+        entity: `${ContartoLabelAndPath.label}`,
         identifier: `${row.nroContrato}`,
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
@@ -62,14 +62,14 @@ const ContratoDataGrid = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { label: 'Nº Contrato' },
-              { label: 'Descripción' },
-              { label: 'Tipo Contrato' },
-              { label: 'Modelo Acuerdo' },
-              { label: 'Cliente' },
-              { label: 'Fecha Inicio' },
-              { label: 'Fecha Fin' },
-              { label: '' },
+              { headerName: 'Nº Contrato' },
+              { headerName: 'Descripción' },
+              { headerName: 'Tipo Contrato' },
+              { headerName: 'Modelo Acuerdo' },
+              { headerName: 'Cliente' },
+              { headerName: 'Fecha Inicio' },
+              { headerName: 'Fecha Fin' },
+              { headerName: 'ACCIONES' },
             ]}
             onClickNew={handleClickCreate}
             repositoryFunc={ContratoRepository.getAllContratoPaginated}

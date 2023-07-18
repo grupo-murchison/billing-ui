@@ -2,21 +2,21 @@ import { Ref, forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
 import { ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery } from '@mui/material';
-import { useTheme } from '@mui/material/styles';
+import { SxProps, useTheme } from '@mui/material/styles';
 
 import { IconRender } from './MenuComponents';
 import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 import { ACTION_TYPES } from '../../context/constants';
 
-function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: number; sx?: any; open: boolean }) {
+function MenuItem({ menuItem, level, sx, isOpen }: MenuItemProps) {
   const theme = useTheme();
   const { isActive, dispatch } = useSidebarContext();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const itemHandler = (id: any) => {
+  const itemHandler = (id: string) => {
     dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
-    if (matchesSM) dispatch({ type: ACTION_TYPES.SET_MENU, opened: false });
+    if (matchesSM) dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
   };
 
   // active menu item on page load
@@ -50,7 +50,7 @@ function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: 
         sx={{
           ...sx,
           minHeight: 48,
-          justifyContent: open ? 'initial' : 'center',
+          justifyContent: isOpen ? 'initial' : 'center',
           px: 2.5,
           //   borderRadius: '12 px',
           //   mb: 0.5,
@@ -65,16 +65,26 @@ function MenuItem({ menuItem, level, sx, open }: { menuItem: IMenuItem; level?: 
         <ListItemIcon
           sx={{
             minWidth: 0,
-            mr: open ? 3 : 'auto',
+            mr: isOpen ? 3 : 'auto',
             justifyContent: 'center',
           }}
         >
           <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />
         </ListItemIcon>
-        <ListItemText primary={menuItem?.title || 'Generic'} sx={{ opacity: open ? 1 : 0, whiteSpace: 'normal' }} />
+        <ListItemText
+          primary={menuItem?.title || 'Generic Title'}
+          sx={{ opacity: isOpen ? 1 : 0, whiteSpace: 'normal' }}
+        />
       </ListItemButton>
     </ListItem>
   );
+}
+
+interface MenuItemProps {
+  menuItem: IMenuItem;
+  level?: number;
+  sx?: SxProps;
+  isOpen: boolean;
 }
 
 export default MenuItem;

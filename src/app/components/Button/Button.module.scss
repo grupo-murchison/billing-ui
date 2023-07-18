@@ -1,71 +1,71 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+// @use 'src/assets/scss/variables.module.scss' as VARS;
 
-.button {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+// .button {
+//   display: flex;
+//   align-items: center;
+//   justify-content: center;
 
-  padding: 2px 16px;
-  border-radius: 4px;
+//   padding: 2px 16px;
+//   border-radius: 4px;
 
-  font-weight: 500;
+//   font-weight: 500;
 
-  + .button {
-    margin-left: 8px;
-  }
-}
+//   + .button {
+//     margin-left: 8px;
+//   }
+// }
 
-.button--primary {
-  border: 1px solid VARS.$color-primary;
+// .button--primary {
+//   border: 1px solid VARS.$primaryMain;
 
-  background-color: VARS.$color-primary;
+//   background-color: VARS.$primaryMain;
 
-  color: VARS.$color-white;
+//   color: VARS.$color-white;
 
-  // &:hover {
-  //   color: VARS.$color-white;
+//   // &:hover {
+//   //   color: VARS.$color-white;
 
-  //   background-color: VARS.$color-primary;
+//   //   background-color: VARS.$primaryMain;
 
-  //   border-color: VARS.$color-primary;
-  // }
-}
+//   //   border-color: VARS.$primaryMain;
+//   // }
+// }
 
-.button--primary-outlined {
-  border: 1px solid VARS.$color-secondary;
+// .button--primary-outlined {
+//   border: 1px solid VARS.$secondaryMain;
 
-  color: VARS.$color-primary;
+//   color: VARS.$primaryMain;
 
-  background-color: VARS.$color-white;
+//   background-color: VARS.$color-white;
 
-  &:hover {
-    color: VARS.$color-white;
+//   &:hover {
+//     color: VARS.$color-white;
 
-    background-color: VARS.$color-primary;
+//     background-color: VARS.$primaryMain;
 
-    border-color: VARS.$color-primary;
-  }
-}
+//     border-color: VARS.$primaryMain;
+//   }
+// }
 
-.button--secondary-outlined {
-  border: 1px solid VARS.$color-secondary;
+// .button--secondary-outlined {
+//   border: 1px solid VARS.$secondaryMain;
 
-  color: VARS.$color-secondary;
+//   color: VARS.$secondaryMain;
 
-  background-color: VARS.$color-white;
+//   background-color: VARS.$color-white;
 
-  &:hover {
-    color: VARS.$color-white;
+//   &:hover {
+//     color: VARS.$color-white;
 
-    background-color: VARS.$color-secondary;
+//     background-color: VARS.$secondaryMain;
 
-    border-color: VARS.$color-secondary;
-  }
-}
+//     border-color: VARS.$secondaryMain;
+//   }
+// }
 
-.button--icon {
-  > svg {
-    margin-right: 4px;
-    font-size: 1.125rem;
-  }
-}
+// .button--icon {
+//   > svg {
+//     margin-right: 4px;
+//     font-size: 1.125rem;
+//   }
+// }

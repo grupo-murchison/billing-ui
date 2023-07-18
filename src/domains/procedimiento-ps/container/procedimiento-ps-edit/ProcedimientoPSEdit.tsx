@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useState, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,7 +14,8 @@ import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPSEdit = () => {
   const { procedimientoPSId } = useParams();
@@ -27,7 +28,7 @@ const ProcedimientoPSEdit = () => {
   const {
     register,
     reset,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPSEditSchemaType>({
     defaultValues: {
@@ -41,12 +42,10 @@ const ProcedimientoPSEdit = () => {
     _navigate('/procedimiento-ps');
   }, [_navigate]);
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoPSEditSchemaType) => {
-      await ProcedimientoPSRepository.updateProcedimientoPS(data);
-
+  const onSubmit: SubmitHandler<ProcedimientoPSEditSchemaType> = useCallback(
+    async data => {
+      await ProcedimientoPSRepository.updateProcedimientoPS({ ...data, id: Number(procedimientoPSId) });
       mainDataGrid.reload();
-
       _navigate('/procedimiento-ps');
     },
     [_navigate, mainDataGrid],
@@ -65,7 +64,7 @@ const ProcedimientoPSEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={6}>
             <TextField
@@ -88,17 +87,7 @@ const ProcedimientoPSEdit = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar 
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

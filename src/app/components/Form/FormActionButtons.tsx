@@ -1,10 +1,9 @@
 import { Button, Stack, CircularProgress } from '@mui/material';
 import { ActionButtonsProps } from './form.interfaces';
-import { margin } from '@mui/system';
 
-const FormActionButtons = ({ isSubmitting, isUpdate, handleClose }: ActionButtonsProps) => {
+const FormActionButtons = ({ isSubmitting, isUpdate, handleClose, isView }: ActionButtonsProps) => {
   return (
-    <Stack direction='row' justifyContent='end' gap={2}>
+    <Stack direction='row' justifyContent='end' gap={2} display={isView ? 'none' : 'flex'}>
       <Button
         color='secondary'
         variant='outlined'

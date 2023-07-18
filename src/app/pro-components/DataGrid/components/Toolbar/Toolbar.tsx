@@ -8,17 +8,28 @@ import { DataGridContext } from '@app/pro-components/DataGrid/contexts';
 import { ActionButton } from '@app/pro-components/DataGrid/components/Toolbar/components';
 
 import styles from '@app/pro-components/DataGrid/components/Toolbar/Toolbar.module.scss';
+import { Stack, useTheme } from '@mui/material';
 
 const Toolbar = ({ className }: ToolbarProps) => {
   const { onClickNew } = useContext(DataGridContext);
+  const theme = useTheme();
 
   return (
-    <div className={clsx(styles['toolbar'], className)}>
-      <ActionButton color='black' icon={<SearchIcon />} label='Buscar' />
-      <ActionButton color='black' icon={<FilterAltIcon />} label='Filtrar' />
-      <ActionButton color='green' icon={<AddIcon />} label='Alta' onClick={onClickNew} />
-      <ActionButton color='green' icon={<DownloadIcon />} label='Exportar' />
-    </div>
+    <Stack
+      direction='row'
+      justifyContent='flex-end'
+      sx={{
+        border: `1px solid ${theme.palette.secondary.main}`,
+        borderBottom: '0px',
+        backgroundColor: 'rgb(209, 216, 223)',
+      }}
+      //TODO revisar el backgroundColor
+    >
+      <ActionButton icon={<SearchIcon />} label='Buscar' />
+      <ActionButton icon={<FilterAltIcon />} label='Filtrar' />
+      <ActionButton colorPrimary icon={<AddIcon />} label='Alta' onClick={onClickNew} />
+      <ActionButton colorPrimary icon={<DownloadIcon />} label='Exportar' />
+    </Stack>
   );
 };
 

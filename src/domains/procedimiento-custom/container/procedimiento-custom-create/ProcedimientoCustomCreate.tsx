@@ -17,6 +17,7 @@ import { Button, Box, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import { Dropdown } from '@app/components/FormInputs/Dropdown';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoCustomCreate = forwardRef((_, ref) => {
   const _navigate = useNavigate();
@@ -26,7 +27,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
   const {
     register,
     control,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     watch,
     formState: { errors: formErrors, isSubmitting },
     setValue,
@@ -44,7 +45,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
     resolver: zodResolver(ProcedimientoCustomCreateSchema),
   });
 
-  const handleSubmit = useCallback(
+  const onSubmit = useCallback(
     async (data: ProcedimientoCustomCreateSchemaType) => {
       const { funciones, eventos, eventosCampo, acciones } = state;
       const parseToNull = ({
@@ -63,7 +64,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroCampoCode} = ${filtroValue}`,
+              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
             }
           : {
@@ -105,7 +106,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoCustom}`}>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={4}>
             <TextField
@@ -231,17 +232,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
             </Col>
           </Row>
         </Box>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button  color='primary' variant='contained'  type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 });
