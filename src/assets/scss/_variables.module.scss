@@ -28,10 +28,14 @@ $textPrimary: #38485c;
 $textSecondary: $secondaryMain;
 $textDisabled: #9eaabb;
 
+// DataGrid
+$backgroundRowHover: #ccced0;
+
 // ==============================|| JAVASCRIPT EXPORT ||============================== //
 :export {
   backgroundDefault: $backgroundDefault;
   backgroundPaper: $backgroundPaper;
+  backgroundRowHover: $backgroundRowHover;
 
   primaryMain: $primaryMain;
 

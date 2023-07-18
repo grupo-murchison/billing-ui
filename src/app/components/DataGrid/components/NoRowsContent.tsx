@@ -1,7 +1,7 @@
 import * as React from 'react';
 import Box from '@mui/material/Box';
 import { styled } from '@mui/material/styles';
-import { localeText } from './dataGrid.config';
+import { localeText } from '../constants/dataGrid.config';
 
 const StyledGridOverlay = styled('div')(({ theme }) => ({
   'display': 'flex',
@@ -16,10 +16,10 @@ const StyledGridOverlay = styled('div')(({ theme }) => ({
     fill: theme.palette.mode === 'light' ? '#f5f5f7' : '#595959',
   },
   '& .ant-empty-img-3': {
-    fill: theme.palette.mode === 'light' ? '#dce0e6' : '#434343',
+    fill: theme.palette.mode === 'light' ? theme.palette.text.disabled : '#434343',
   },
   '& .ant-empty-img-4': {
-    fill: theme.palette.mode === 'light' ? '#fff' : '#1c1c1c',
+    fill: theme.palette.mode === 'light' ? theme.palette.common.white : '#1c1c1c',
   },
   '& .ant-empty-img-5': {
     fillOpacity: theme.palette.mode === 'light' ? '0.8' : '0.08',

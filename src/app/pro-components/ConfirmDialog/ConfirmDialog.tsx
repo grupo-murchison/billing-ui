@@ -15,10 +15,10 @@ const centerDialogConfirm = {
   flexDirection: 'column',
   m: 'auto',
   width: 'fit-content',
-}
+};
 
 // TODO: Update is loading prop in order to show some loading animation.
-const ConfirmDialog = ({ message, title, identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
+const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -67,15 +67,27 @@ const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogIn
   </>
 );
 
-const DeleteDialog = ({ message, title, isLoading, identifier, entity, handleClickYes, handleClickNot }: ConfirmDialogInternalProps) => (
+const DeleteDialog = ({
+  isLoading,
+  identifier,
+  entity,
+  handleClickYes,
+  handleClickNot,
+}: ConfirmDialogInternalProps) => (
   //TODO: no usar estilos en linea, osea remplazar los existentes
   <>
-    <DialogTitle sx={centerDialogConfirm} >
-      <DeleteOutlineIcon color='error' fontSize='large'/>
-      </DialogTitle>
-    <DialogTitle  style={{fontWeight:'Bold'}} color='error' sx={centerDialogConfirm} >{`¿Eliminar ${entity}?` }</DialogTitle>
-    <DialogContent >
-      <DialogContentText >Se eliminará el registro {entity}: <span style={{fontWeight:'Bold'}}>{identifier}</span></DialogContentText> 
+    <DialogTitle sx={centerDialogConfirm}>
+      <DeleteOutlineIcon color='error' fontSize='large' />
+    </DialogTitle>
+    <DialogTitle
+      style={{ fontWeight: 'Bold' }}
+      color='error'
+      sx={centerDialogConfirm}
+    >{`¿Eliminar ${entity}?`}</DialogTitle>
+    <DialogContent>
+      <DialogContentText>
+        Se eliminará el registro {entity}: <span style={{ fontWeight: 'Bold' }}>{identifier}</span>
+      </DialogContentText>
     </DialogContent>
     <DialogActions>
       <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
@@ -91,11 +103,14 @@ const DeleteDialog = ({ message, title, isLoading, identifier, entity, handleCli
 // TODO: luego de corrobar el alcanze de estos componentes. reemplzar message y title por entity
 //* es la razon por la cual los atributos son opcionales
 
+type ConfirmDialogType = 'delete' | 'ok' | 'warning';
+
 type ConfirmDialogProps = {
   message?: string;
   title?: string;
   identifier: string;
   entity?: string;
+  type: ConfirmDialogType;
   onClickYes: () => void;
   onClickNot: () => void;
   onClose: () => void;
