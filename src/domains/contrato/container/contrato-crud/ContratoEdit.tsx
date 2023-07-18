@@ -35,7 +35,7 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
-import { CardCrudActions, DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
+import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
