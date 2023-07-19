@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables' as VARS;
+@use 'src/assets/scss/variables.module' as VARS;
 
 .auth-login {
   width: 100vw;
@@ -7,7 +7,7 @@
   align-items: center;
   justify-content: center;
 
-  background-color: VARS.$background-secondary;
+  background-color: VARS.$backgroundDefault;
 
   .login__card {
     padding: 20px;
@@ -44,7 +44,7 @@
       width: 100%;
       padding-top: 20px;
 
-      border-top: 1.25px solid VARS.$color-gray-disabled;
+      border-top: 1.25px solid VARS.$textDisabled;
 
       text-align: center;
     }

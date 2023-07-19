@@ -14,7 +14,7 @@ function MenuItem({ menuItem, level, sx, isOpen }: MenuItemProps) {
   const { isActive, dispatch } = useSidebarContext();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
-  const itemHandler = (id: number | string) => {
+  const itemHandler = (id: string) => {
     dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
     if (matchesSM) dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
   };

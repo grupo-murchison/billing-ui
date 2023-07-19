@@ -1,7 +1,4 @@
 import { DataGrid as MUIDataGrid, DataGridProps } from '@mui/x-data-grid';
-import { useContext } from 'react';
-
-import { DataGridContext } from '@app/pro-components/DataGrid/contexts';
 
 const DataGridBase = ({ rows, columns }: DataGridProps) => {
   // Repartir el espacio en partes iguales
@@ -22,7 +19,7 @@ const DataGridBase = ({ rows, columns }: DataGridProps) => {
         autoHeight={true}
         sx={{
           '& .MuiDataGrid-row:hover': {
-            background: '#CCCED0',
+            backgroundColor: '#CCCED0',
             // color: 'primary.main',
           },
         }}

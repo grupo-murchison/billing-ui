@@ -32,7 +32,6 @@ import { withBreadcrumb } from '@app/hocs';
 
 import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
-import { CardCrudActions } from './views';
 import Form from '@app/components/Form/Form';
 
 const ContratoCreate = () => {

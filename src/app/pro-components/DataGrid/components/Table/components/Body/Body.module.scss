@@ -1,4 +1,4 @@
-@use 'src/assets/scss/variables.scss' as VARS;
+@use 'src/assets/scss/variables.module.scss' as VARS;
 
 .body {
   tr {
@@ -10,19 +10,19 @@
 
       // font-size: 0.87rem;
 
-      color: VARS.$color-secondary;
+      color: VARS.$secondaryMain;
     }
 
     &:nth-child(even) {
-      background-color: VARS.$background-secondary;
+      background-color: VARS.$backgroundDefault;
     }
 
     &:nth-child(odd) {
-      background-color: VARS.$color-white;
+      background-color: VARS.$backgroundPaper;
     }
 
     &:hover {
-      background-color: #ccced0;
+      background-color: VARS.$backgroundRowHover;
     }
   }
 }

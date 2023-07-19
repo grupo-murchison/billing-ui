@@ -2,10 +2,10 @@ import { useContext } from 'react';
 import { SxProps, useTheme } from '@mui/material';
 import { DataGrid as MUIDataGrid } from '@mui/x-data-grid';
 import LinearProgress from '@mui/material/LinearProgress';
-import NoRowsContent from './NoRowsContent';
+import NoRowsContent from './components/NoRowsContent';
 
 import { DataGridContext } from './contexts';
-import { localeText } from './DataGrid.config';
+import { localeText } from './constants/dataGrid.config';
 
 const DataGridWithContext = () => {
   const theme = useTheme();
@@ -19,16 +19,15 @@ const DataGridWithContext = () => {
   const sxHeader: SxProps = {
     '& .MuiDataGrid-columnHeader': {
       color: theme.palette.common.white,
-      // backgroundColor: theme.palette.secondary.light,
-      backgroundColor: '#9eaab8', // color-gray-disabled
+      backgroundColor: theme.palette.text.disabled,
     },
   };
 
   const sxRows: SxProps = {
-    '& .MuiDataGrid-row:nth-child(even)': {
+    '& .MuiDataGrid-row:nth-of-type(even)': {
       backgroundColor: theme.palette.background.default,
     },
-    '& .MuiDataGrid-row:nth-child(odd)': {
+    '& .MuiDataGrid-row:nth-of-type(odd)': {
       backgroundColor: theme.palette.background.paper,
     },
     '& .MuiDataGrid-row:hover': {
@@ -36,7 +35,14 @@ const DataGridWithContext = () => {
     },
   };
 
-  const { columnHeads: columns, rows, loading, currentPage, rowsPerPage } = useContext(DataGridContext);
+  const {
+    columnHeads: columns,
+    rows,
+    loading,
+    currentPage,
+    rowsPerPage,
+    toolbar: Toolbar,
+  } = useContext(DataGridContext);
 
   // Repartir el espacio en partes iguales
   columns.forEach((col: any) => {
@@ -56,9 +62,11 @@ const DataGridWithContext = () => {
         autoHeight={true}
         loading={loading}
         localeText={{ ...localeText }}
+        checkboxSelection
         slots={{
           loadingOverlay: LinearProgress,
           noRowsOverlay: NoRowsContent,
+          toolbar: Toolbar,
         }}
         slotProps={{
           pagination: {
