@@ -25,11 +25,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Navbar = () => {
   const theme = useTheme();
-  const { dispatch } = useSidebarContext();
-
-  const handleDrawerOpen = () => {
-    dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
-  };
+  const { dispatch, toogleSidebar } = useSidebarContext();
 
   return (
     <AppBar position='fixed'>
@@ -49,7 +45,8 @@ const Navbar = () => {
               backgroundColor: theme.palette.primary.dark,
             },
           }}
-          onClick={handleDrawerOpen}
+          onMouseEnter={() => toogleSidebar(true)}
+          onMouseLeave={() => toogleSidebar(false)}
         >
           <MenuIcon />
         </IconButton>

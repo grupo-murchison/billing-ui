@@ -6,7 +6,6 @@ import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
 import { IconRender } from './MenuComponents';
-import ContextualMenu from './ContextualMenu';
 import { IMenuItemCollapse } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
@@ -20,27 +19,21 @@ function MenuItemCollapse({ menuItem, level }: { menuItem?: IMenuItemCollapse; l
 
   return (
     <ListItem disablePadding sx={{ display: 'block' }}>
-      {isSidebarOpen ? (
-        <>
-          <ListItemButton onClick={handleOnClick}>
-            <ListItemIcon>
-              <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
-            </ListItemIcon>
-            <ListItemText primary={menuItem?.title} />
-            {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
-          </ListItemButton>
+      <ListItemButton onClick={handleOnClick}>
+        <ListItemIcon>
+          <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
+        </ListItemIcon>
+        <ListItemText primary={menuItem?.title} />
+        {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+      </ListItemButton>
 
-          <Collapse in={expand} timeout='auto' unmountOnExit>
-            <List component='div' disablePadding>
-              {menuItem?.children?.map(item => (
-                <MenuItem key={item.id} menuItem={item} level={1} isOpen={isSidebarOpen} />
-              ))}
-            </List>
-          </Collapse>
-        </>
-      ) : (
-        <ContextualMenu menuItem={menuItem} />
-      )}
+      <Collapse in={expand} timeout='auto' unmountOnExit>
+        <List component='div' disablePadding>
+          {menuItem?.children?.map(item => (
+            <MenuItem key={item.id} menuItem={item} level={1} isOpen={isSidebarOpen} />
+          ))}
+        </List>
+      </Collapse>
     </ListItem>
   );
 }

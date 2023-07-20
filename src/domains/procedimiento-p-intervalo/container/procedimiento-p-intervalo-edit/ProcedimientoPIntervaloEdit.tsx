@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -14,6 +14,7 @@ import type { ProcedimientoPIntervaloEditSchemaType } from '@domains/procedimien
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPIntervaloEdit = () => {
   const _navigate = useNavigate();
@@ -25,19 +26,17 @@ const ProcedimientoPIntervaloEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     reset,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPIntervaloEditSchemaType>({
     resolver: zodResolver(ProcedimientoPIntervaloEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoPIntervaloEditSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoPIntervaloEditSchemaType> = useCallback(
+    async data => {
       await ProcedimientoPIntervaloRepository.updateProcedimientoPIntervalo(data);
-
       mainDataGrid.reload();
-
       _navigate(`/procedimiento-p/${procedimientoPId}`);
     },
     [_navigate, mainDataGrid, procedimientoPId],
@@ -62,8 +61,21 @@ const ProcedimientoPIntervaloEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
+          <Col md={6}>
+            <TextField
+              id='intervalo'
+              label='Intervalo'
+              type='number'
+              {...register('intervalo', {
+                valueAsNumber: true,
+              })}
+              error={!!formErrors.intervalo}
+              helperText={formErrors?.intervalo?.message}
+              disabled={isSubmitting}
+            />
+          </Col>
           <Col md={6}>
             <TextField
               id='valorInicial'
@@ -77,6 +89,8 @@ const ProcedimientoPIntervaloEdit = () => {
               disabled={isSubmitting}
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={6}>
             <TextField
               id='valorFinal'
@@ -87,21 +101,6 @@ const ProcedimientoPIntervaloEdit = () => {
               })}
               error={!!formErrors.valorFinal}
               helperText={formErrors?.valorFinal?.message}
-              disabled={isSubmitting}
-            />
-          </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
-            <TextField
-              id='intervalo'
-              label='Intervalo'
-              type='number'
-              {...register('intervalo', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.intervalo}
-              helperText={formErrors?.intervalo?.message}
               disabled={isSubmitting}
             />
           </Col>
@@ -119,17 +118,7 @@ const ProcedimientoPIntervaloEdit = () => {
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-            <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };
