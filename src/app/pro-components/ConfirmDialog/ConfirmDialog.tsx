@@ -17,6 +17,10 @@ const centerDialogConfirm = {
   width: 'fit-content',
 };
 
+const outlinedCancelButton = {
+  ['border-color']: 'red'
+}
+
 // TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
   const theme = useTheme();
@@ -76,8 +80,19 @@ const DeleteDialog = ({
 }: ConfirmDialogInternalProps) => (
   //TODO: no usar estilos en linea, osea remplazar los existentes
   <>
-    <DialogTitle sx={centerDialogConfirm}>
-      <DeleteOutlineIcon color='error' fontSize='large' />
+    <DialogTitle sx={centerDialogConfirm} >
+      <DeleteOutlineIcon color='secondary' fontSize='large' 
+        sx={{
+          color: '#FFFFFF',
+          backgroundColor: "#ff0000",
+          position: 'absolute',
+          borderRadius: 10,
+          marginLeft: 'auto',
+          marignRight: 'auto',
+          top: -20,
+          zIndex: 100
+        }}
+      />
     </DialogTitle>
     <DialogTitle
       style={{ fontWeight: 'Bold' }}
@@ -90,10 +105,10 @@ const DeleteDialog = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
+      <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined' sx={{...outlinedCancelButton, ...centerDialogConfirm}}>
         Cancelar
       </Button>
-      <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained'>
+      <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained' sx={centerDialogConfirm}>
         Eliminar
       </Button>
     </DialogActions>
