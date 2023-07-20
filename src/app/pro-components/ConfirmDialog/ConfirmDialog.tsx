@@ -85,11 +85,10 @@ const DeleteDialog = ({
         sx={{
           color: '#FFFFFF',
           backgroundColor: "#ff0000",
-          position: 'absolute',
+          position: 'relavite ',
           borderRadius: 10,
           marginLeft: 'auto',
           marignRight: 'auto',
-          top: -20,
           zIndex: 100
         }}
       />
