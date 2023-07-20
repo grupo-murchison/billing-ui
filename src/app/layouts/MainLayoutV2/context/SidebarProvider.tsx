@@ -6,8 +6,8 @@ import { sideBarReducer } from './sidebarReducer';
 const SidebarProvider = ({ children }: { children: ReactNode }) => {
   const [state, dispatch] = useReducer(sideBarReducer, initialState);
 
-  const toogleSidebar = () => {
-    dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
+  const toogleSidebar = (openSidebar: boolean) => {
+    dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR, openSidebar });
   };
 
   const toogleOpenMenu = (id: string) => {

@@ -45,7 +45,8 @@ const Navbar = () => {
               backgroundColor: theme.palette.primary.dark,
             },
           }}
-          onClick={toogleSidebar}
+          onMouseEnter={() => toogleSidebar(true)}
+          onMouseLeave={() => toogleSidebar(false)}
         >
           <MenuIcon />
         </IconButton>

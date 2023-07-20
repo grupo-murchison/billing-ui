@@ -54,8 +54,8 @@ const Sidebar = () => {
       PaperProps={{
         sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white },
       }}
-      onMouseEnter={toogleSidebar}
-      onMouseLeave={toogleSidebar}
+      onMouseEnter={() => toogleSidebar(true)}
+      onMouseLeave={() => toogleSidebar(false)}
     >
       <Toolbar />
       <Box>

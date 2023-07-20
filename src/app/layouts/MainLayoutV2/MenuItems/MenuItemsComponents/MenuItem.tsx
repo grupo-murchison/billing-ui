@@ -11,12 +11,12 @@ import { ACTION_TYPES } from '../../context/constants';
 
 function MenuItem({ menuItem, level, sx, isOpen }: MenuItemProps) {
   const theme = useTheme();
-  const { isActive, dispatch } = useSidebarContext();
+  const { isActive, dispatch, toogleSidebar } = useSidebarContext();
   const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
   const itemHandler = (id: string) => {
     dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
-    if (matchesSM) dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR });
+    if (matchesSM) toogleSidebar(true);
   };
 
   // active menu item on page load
