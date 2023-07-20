@@ -45,7 +45,7 @@ const Drawer = styled(MuiDrawer, {
 
 const Sidebar = () => {
   const theme = useTheme();
-  const { isSidebarOpen } = useSidebarContext();
+  const { isSidebarOpen, toogleSidebar } = useSidebarContext();
 
   return (
     <Drawer
@@ -54,6 +54,8 @@ const Sidebar = () => {
       PaperProps={{
         sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white },
       }}
+      onMouseEnter={toogleSidebar}
+      onMouseLeave={toogleSidebar}
     >
       <Toolbar />
       <Box>

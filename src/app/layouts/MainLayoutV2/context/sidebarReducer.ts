@@ -1,4 +1,5 @@
-import { ACTION_TYPES, IStateSidebar, TSidebarAction } from './constants';
+import { IStateSidebar, TSidebarAction } from '../interfaces/sidebar.interfaces';
+import { ACTION_TYPES } from './constants';
 
 export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => {
   switch (action.type) {
