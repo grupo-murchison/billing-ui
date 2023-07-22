@@ -115,15 +115,12 @@ const ContratoCreate = () => {
       <Row>
         <Col md={6}>
           <ClienteDropdown
-            id='clienteId'
+            name='clienteId'
             label='Cliente'
-            {...register('clienteId', {
-              valueAsNumber: true,
-            })}
+            control={control}
             error={!!formErrors.clienteId}
             helperText={formErrors?.clienteId?.message}
             disabled={isSubmitting}
-            value={watch('clienteId')}
           />
         </Col>
         <Col md={6}>
@@ -142,23 +139,6 @@ const ContratoCreate = () => {
       </Row>
       <Row>
         <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col>
-        {/* <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col> */}
-      </Row>
-      <Row>
-        {/* <Col md={6}>
-          <ClienteDropdown
-            id='destinatarioId'
-            label='Destinatario'
-            // {...register('destinatarioId', {
-            //   valueAsNumber: true,
-            // })}
-            // error={!!formErrors.destinatarioId}
-            // helperText={formErrors?.destinatarioId?.message}
-            // disabled={isSubmitting}
-            // value={watch('destinatarioId')}
-          />
-        </Col> */}
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
       </Row>
       <Row>
         <Col md={6}>

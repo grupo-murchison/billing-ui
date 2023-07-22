@@ -41,6 +41,7 @@ const ModeloAcuerdoDropdown = ({
       label={label}
       helperText={helperText}
       emptyOption={emptyOption}
+      {...props}
     />
   );
 };
