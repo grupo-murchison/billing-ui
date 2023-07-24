@@ -4,20 +4,9 @@ import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { ProcedimientoQRepository } from '@domains/procedimiento-q/repository';
 
-import FormSelect from '@app/components/Form/FormSelect';
-import { FormSelectProps } from '@app/components/Form/form.interfaces';
+import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
 
-const ProcedimientoQDropdown = ({
-  onChange,
-  control,
-  name,
-  error,
-  disabled,
-  label,
-  helperText,
-  emptyOption,
-  ...props
-}: FormSelectProps) => {
+const ProcedimientoQDropdown = ({ ...props }: ProcedimientoQDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -30,19 +19,11 @@ const ProcedimientoQDropdown = ({
       });
   }, []);
 
-  return (
-    <FormSelect
-      name={name}
-      control={control}
-      onChange={onChange}
-      options={items}
-      error={error}
-      disabled={disabled}
-      label={label}
-      helperText={helperText}
-      emptyOption={emptyOption}
-    />
-  );
+  return <FormSelect {...props} options={items} />;
 };
+
+interface ProcedimientoQDropdownProps extends Omit<FormSelectProps, 'options'> {
+  options?: undefined;
+}
 
 export default ProcedimientoQDropdown;

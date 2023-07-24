@@ -13,7 +13,7 @@ import type { ProcedimientoCustomCreateSchemaType } from '@domains/procedimiento
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, Box, TextField } from '@mui/material';
+import { Box, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import { Dropdown } from '@app/components/FormInputs/Dropdown';

@@ -18,7 +18,9 @@ import { Button, Stack } from '@mui/material';
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 // import Form from '@app/components/Form/Form';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import FormTextField from '@app/components/Form/FormTextField';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import { DateLib } from '@libs';
 // import AsyncAutocomplete from '@app/components/Form/FormAutocomplete';
 
 const FacturacionReporte = () => {
@@ -47,7 +49,7 @@ const FacturacionReporte = () => {
 
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
-      console.log(data);
+      console.log({ ...data, fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato) }); //
       // mainDataGrid.reload();
     },
     [mainDataGrid],
@@ -57,20 +59,44 @@ const FacturacionReporte = () => {
     <Stack>
       <form noValidate onSubmit={handleSubmit(onSubmit)} autoComplete='off'>
         <Row>
-          <Col md={12}>
-            <FormTextField name='nroContrato' control={control} label='Número de Contrato' />
+          <Col md={3}>
+            <FormTextField
+              control={control}
+              disabled={isSubmitting}
+              label='Número Cálculo de Facturación'
+              name='nroCalculoFacturacion'
+              type='number'
+            />
           </Col>
-          <Col md={12}>
-            <FormTextField name='nroCalculoFacturacion' control={control} label='Número Cálculo de Facturación' />
+          <Col md={3}>
+            <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
-          <Col md={12}>
+          <Col md={6}>
             <ClienteDropdown
               control={control}
+              disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              disabled={isSubmitting}
               error={!!formErrors.clienteId}
               // helperText={formErrors?.clienteId?.message}
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6}>
+            <FormDesktopDatePicker
+              control={control}
+              label='Fecha Inicio Contrato'
+              name='fechaInicioContrato'
+              disabled={isSubmitting}
+            />
+          </Col>
+          <Col md={6}>
+            <FormDesktopDatePicker
+              control={control}
+              label='Fecha Fin Contrato'
+              name='fechaInicioContrato'
+              disabled={isSubmitting}
             />
           </Col>
         </Row>

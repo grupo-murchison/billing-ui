@@ -7,9 +7,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Stack,
   TextField,
   Typography,
@@ -40,7 +37,7 @@ import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 import Form from '@app/components/Form/Form';
-import FormCheckbox from '@app/components/Form/FormCheckbox';
+import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number

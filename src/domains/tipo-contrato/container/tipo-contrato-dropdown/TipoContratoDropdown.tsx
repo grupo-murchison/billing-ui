@@ -4,20 +4,9 @@ import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
 
-import { FormSelectProps } from '@app/components/Form/form.interfaces';
-import FormSelect from '@app/components/Form/FormSelect';
+import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
 
-const TipoContratoDropdown = ({
-  onChange,
-  control,
-  name,
-  error,
-  disabled,
-  label,
-  helperText,
-  emptyOption,
-  ...props
-}: FormSelectProps) => {
+const TipoContratoDropdown = ({ ...props }: TipoContratoDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -30,19 +19,11 @@ const TipoContratoDropdown = ({
       });
   }, []);
 
-  return (
-    <FormSelect
-      name={name}
-      control={control}
-      onChange={onChange}
-      options={items}
-      error={error}
-      disabled={disabled}
-      label={label}
-      helperText={helperText}
-      emptyOption={emptyOption}
-    />
-  );
+  return <FormSelect {...props} options={items} />;
 };
+
+interface TipoContratoDropdownProps extends Omit<FormSelectProps, 'options'> {
+  options?: undefined;
+}
 
 export default TipoContratoDropdown;
