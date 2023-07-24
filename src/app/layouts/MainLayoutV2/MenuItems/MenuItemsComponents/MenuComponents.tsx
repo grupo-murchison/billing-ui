@@ -16,6 +16,7 @@ export function IconRender({
 }) {
   const theme = useTheme();
   const getIconSize = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 10 : 6);
+  // const getBackgroundColorNano = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 'red' : 'black');
 
   const iconRender = icon ? (
     <SvgIcon component={icon} sx={{ color: theme.palette.common.white }} />

@@ -11,7 +11,7 @@ export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => 
     case ACTION_TYPES.TOGGLE_SIDEBAR:
       return {
         ...state,
-        isSidebarOpen: !state.isSidebarOpen,
+        isSidebarOpen: action.openSidebar,
       };
     default:
       return state;

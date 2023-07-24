@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
@@ -12,6 +12,12 @@ import { useSidebarContext } from '../../context/useSidebarContext';
 function MenuItemCollapse({ menuItem, level }: { menuItem?: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen } = useSidebarContext();
   const [expand, setExpand] = useState(false);
+
+  useEffect(() => {
+    if (!isSidebarOpen) {
+      setExpand(false);
+    }
+  }, [isSidebarOpen]);
 
   const handleOnClick = () => {
     setExpand(!expand);
@@ -30,7 +36,7 @@ function MenuItemCollapse({ menuItem, level }: { menuItem?: IMenuItemCollapse; l
       <Collapse in={expand} timeout='auto' unmountOnExit>
         <List component='div' disablePadding>
           {menuItem?.children?.map(item => (
-            <MenuItem key={item.id} menuItem={item} level={1} isOpen={isSidebarOpen} />
+            <MenuItem key={item.id} menuItem={item} level={1} />
           ))}
         </List>
       </Collapse>

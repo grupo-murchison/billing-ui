@@ -4,14 +4,14 @@ import MenuItem from './MenuItem';
 import { MenuItemError, ListSubHeader } from './MenuComponents';
 import { IMenuItemGroup } from '../menu-items.interface';
 
-const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
+const MenuItemGroup = ({ item }: Props): JSX.Element => {
   // menu list collapse & items
   const items = item.children?.map(menu => {
     switch (menu.type) {
       case 'collapse':
         return <MenuItemCollapse key={menu.id} menuItem={menu} level={1} />;
       case 'item':
-        return <MenuItem key={menu.id} menuItem={menu} level={1} isOpen={open} />;
+        return <MenuItem key={menu.id} menuItem={menu} level={1} />;
       default:
         return <MenuItemError key={menu.id} message='Menu Items must be "item" or "collapse" type' />;
     }
@@ -39,7 +39,6 @@ const MenuItemGroup = ({ item, open }: Props): JSX.Element => {
 
 type Props = {
   item: IMenuItemGroup;
-  open: boolean;
 };
 
 export default MenuItemGroup;

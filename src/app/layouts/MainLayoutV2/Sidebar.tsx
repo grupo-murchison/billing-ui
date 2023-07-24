@@ -11,7 +11,7 @@ const drawerWidth = 260;
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidth,
   transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
+    easing: theme.transitions.easing.easeIn,
     duration: theme.transitions.duration.enteringScreen,
   }),
   overflowX: 'hidden',
@@ -19,7 +19,7 @@ const openedMixin = (theme: Theme): CSSObject => ({
 
 const closedMixin = (theme: Theme): CSSObject => ({
   transition: theme.transitions.create('width', {
-    easing: theme.transitions.easing.sharp,
+    easing: theme.transitions.easing.easeIn,
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
@@ -59,7 +59,7 @@ const Sidebar = () => {
     >
       <Toolbar />
       <Box>
-        <MenuItemsNestedList menuItems={menuItems} open={isSidebarOpen} />
+        <MenuItemsNestedList menuItems={menuItems} />
       </Box>
     </Drawer>
   );

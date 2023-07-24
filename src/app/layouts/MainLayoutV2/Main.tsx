@@ -6,7 +6,7 @@ import { Outlet } from 'react-router-dom';
 function Main({ children }: { children: ReactNode }) {
   return (
     <>
-      <Box component='main' sx={{ flexGrow: 1, p: 3, heigth: '100%' }}>
+      <Box component='main' sx={{ flexGrow: 1, p: 3, heigth: '100%', position: 'absolute', marginLeft: '50px' }}>
         <Toolbar />
         {children || <Outlet />}
       </Box>
