@@ -14,7 +14,7 @@ import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
 
 // import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
-import { Button, Stack } from '@mui/material';
+import { Button, Stack, SxProps, useTheme } from '@mui/material';
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
 // import Form from '@app/components/Form/Form';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -40,16 +40,23 @@ const FacturacionReporte = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<any>({
     defaultValues: {
-      clienteId: '',
-      nroCalculoFacturacion: '',
+      clienteId: '', // TODO debe buscar por descripcion, esto debe migrar a un field Async Autocomplete
+      facturacionCabeceraNumeroSecuenciaFacturacion: '',
       nroContrato: '',
+      fechaCalculoDesde: '',
+      fechaCalculoHasta: '',
     },
     // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
-      console.log({ ...data, fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato) }); //
+      console.log({
+        ...data,
+        fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
+        facturacionCabeceraNumeroSecuenciaFacturacion: String(data.facturacionCabeceraNumeroSecuenciaFacturacion),
+        nroContrato: String(data.nroContrato),
+      }); //
       // mainDataGrid.reload();
     },
     [mainDataGrid],
@@ -64,7 +71,7 @@ const FacturacionReporte = () => {
               control={control}
               disabled={isSubmitting}
               label='Número Cálculo de Facturación'
-              name='nroCalculoFacturacion'
+              name='facturacionCabeceraNumeroSecuenciaFacturacion'
               type='number'
             />
           </Col>
@@ -86,16 +93,16 @@ const FacturacionReporte = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Inicio Contrato'
-              name='fechaInicioContrato'
+              label='Fecha Cálculo Desde'
+              name='fechaCalculoDesde'
               disabled={isSubmitting}
             />
           </Col>
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Fin Contrato'
-              name='fechaInicioContrato'
+              label='Fecha Cálculo Hasta'
+              name='fechaCalculoHasta'
               disabled={isSubmitting}
             />
           </Col>
@@ -109,6 +116,45 @@ const FacturacionReporte = () => {
     </Stack>
   );
 
+  const CustomActions = () => {
+    const theme = useTheme();
+
+    const sxButton: SxProps = {
+      'fontSize': '0.75rem',
+      // mx: 1.5,
+      ':hover': {
+        backgroundColor: theme.palette.primary.light,
+        color: theme.palette.common.white,
+        transition: 'ease-out',
+        transitionDuration: '0.3s',
+        // transitionDuration: theme.transitions.duration.standard,
+      },
+    };
+
+    return (
+      <>
+        <Stack direction='row' justifyContent='center'>
+          <Button
+            color='primary'
+            variant='text'
+            // onClick={handleClose}
+            sx={{ ...sxButton }}
+          >
+            Ver Soporte
+          </Button>
+          <Button
+            color='primary'
+            variant='text'
+            // onClick={handleClose}
+            sx={{ ...sxButton }}
+          >
+            Ver Proforma
+          </Button>
+        </Stack>
+      </>
+    );
+  };
+
   return (
     <>
       {toolbar}
@@ -117,16 +163,26 @@ const FacturacionReporte = () => {
           <DataGrid
             hookRef={mainDataGrid.ref}
             columnHeads={[
-              { field: 'numeroSecuenciaContrato', headerName: 'Nº Secuencia Contrato', flex: 0.5 },
-              { field: 'estado', headerName: 'Estado', flex: 0.5 },
+              { field: 'facturacionCabeceraNumeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+              { field: 'fechaCalculoDesde', headerName: 'Fecha Facturación' },
+              { field: 'clienteId', headerName: 'Nro. Cliente', flex: 0.8 },
+              { field: 'denominación', headerName: 'Denominación' },
+              { field: 'numeroSecuenciaContrato', headerName: 'Nro. Contrato', flex: 0.9 },
               {
                 field: 'contratoDescripcion',
-                headerName: 'Contrato Descripcion',
+                headerName: 'Descripción Contrato',
                 flex: 2,
                 // renderCell: params => renderCellResolver('renderCellExpand', params),
               },
-              { field: 'clienteDescripcion', headerName: 'Cliente Descripcion' },
-              { field: 'facturacionCabeceraEstado', headerName: 'Facturacion Cabecera Estado' },
+              { field: 'periodo', headerName: 'Período' },
+              {
+                field: 'custom_actions_column',
+                headerName: 'Acciones',
+                headerAlign: 'center',
+                align: 'center',
+                renderCell: params => <CustomActions />,
+                flex: 1.5,
+              },
             ]}
             repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
             // toolbar={Toolbar}
