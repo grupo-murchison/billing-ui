@@ -9,7 +9,7 @@ import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const { isActive } = useSidebarContext();
+  const { isMenuActive } = useSidebarContext();
   // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
   // const itemHandler = (id: string) => {
@@ -21,10 +21,12 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
 
   // //TODO mmm esto???
   // useEffect(() => {
-  //   const currentIndex = document.location.pathname
-  //     .toString()
-  //     .split('/')
-  //     .findIndex(id => id === menuItem.id);
+  // const currentIndex = document.location.pathname
+  //   .toString()
+  //   .split('/')
+  //   .findIndex(id => id === menuItem.id);
+
+  // console.log('current', currentIndex);
   //   if (currentIndex > -1) {
   //     dispatch({ type: ACTION_TYPES.MENU_OPEN, id: menuItem.id });
   //   }
@@ -50,7 +52,13 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
         // selected={isActive.findIndex((id: string | number) => id === menuItem.id) > -1}
       >
         <ListItemIcon>
-          <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />
+          <IconRender
+            icon={menuItem?.icon}
+            level={level && level}
+            //TODO falta resolver el isActive (Nano)
+            isActive={isMenuActive === menuItem.id}
+            item={menuItem}
+          />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title || 'Generic Title'} sx={{ whiteSpace: 'normal' }} />
       </ListItemButton>

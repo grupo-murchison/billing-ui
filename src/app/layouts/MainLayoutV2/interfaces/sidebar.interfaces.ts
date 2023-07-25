@@ -1,14 +1,14 @@
 import { ACTION_TYPES } from '../context/constants';
 
 export interface IStateSidebar {
-  isActive: string[];
+  isMenuActive: string;
   isSidebarOpen: boolean;
 }
 
 export interface ISidebarContext extends IStateSidebar {
   dispatch: React.Dispatch<TSidebarAction>;
   toogleSidebar: (openSidebar: boolean) => void;
-  toogleOpenMenu?: (id: string) => void;
+  toogleOpenMenu: (id: string) => void;
 }
 
 export type TSidebarAction =

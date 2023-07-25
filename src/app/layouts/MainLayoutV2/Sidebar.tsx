@@ -51,7 +51,7 @@ const Sidebar = () => {
       variant='permanent'
       open={isSidebarOpen}
       PaperProps={{
-        sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white },
+        sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white, overflow: 'hidden' },
       }}
       onMouseEnter={() => toogleSidebar(true)}
       onMouseLeave={() => toogleSidebar(false)}

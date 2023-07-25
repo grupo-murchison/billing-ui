@@ -7,16 +7,16 @@ export function IconRender({
   icon,
   level = 0,
   isActive,
-  item,
-}: {
+}: // item,
+{
   icon?: SvgIconComponent;
   level?: number;
-  isActive?: string[];
+  isActive?: boolean;
   item?: IMenuItem;
 }) {
   const theme = useTheme();
-  const getIconSize = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 10 : 6);
-  // const getBackgroundColorNano = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 'red' : 'black');
+  const getIconSize = () => (isActive ? 10 : 6);
+  // const getBackgroundColor = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 'red' : 'black');
 
   const iconRender = icon ? (
     <SvgIcon component={icon} sx={{ color: theme.palette.common.white }} />

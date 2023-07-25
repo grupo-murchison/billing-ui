@@ -6,7 +6,7 @@ export enum ACTION_TYPES {
 }
 
 export const initialState: IStateSidebar = {
-  isActive: [''], // for active default menu
+  isMenuActive: '', // for active default menu
   isSidebarOpen: false,
 };
 

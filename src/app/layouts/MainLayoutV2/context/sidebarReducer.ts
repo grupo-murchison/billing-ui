@@ -4,9 +4,12 @@ import { ACTION_TYPES } from './constants';
 export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => {
   switch (action.type) {
     case ACTION_TYPES.MENU_OPEN:
+      if (action.id === state.isMenuActive) {
+        action.id = '';
+      }
       return {
         ...state,
-        isActive: [action.id],
+        isMenuActive: action.id,
       };
     case ACTION_TYPES.TOGGLE_SIDEBAR:
       return {
