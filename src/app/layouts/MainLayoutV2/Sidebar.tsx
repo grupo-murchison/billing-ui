@@ -5,11 +5,10 @@ import MuiDrawer from '@mui/material/Drawer';
 import { MenuItemsNestedList } from './MenuItems/MenuItems';
 import menuItems from './MenuItems/menuItems.config';
 import { useSidebarContext } from './context/useSidebarContext';
-
-const drawerWidth = 260;
+import { drawerWidthOpen, drawerWidthClosed } from './context/constants';
 
 const openedMixin = (theme: Theme): CSSObject => ({
-  width: drawerWidth,
+  width: drawerWidthOpen,
   transition: theme.transitions.create('width', {
     easing: theme.transitions.easing.easeIn,
     duration: theme.transitions.duration.enteringScreen,
@@ -23,13 +22,13 @@ const closedMixin = (theme: Theme): CSSObject => ({
     duration: theme.transitions.duration.leavingScreen,
   }),
   overflowX: 'hidden',
-  width: '50px',
+  width: drawerWidthClosed,
 });
 
 const Drawer = styled(MuiDrawer, {
   shouldForwardProp: prop => prop !== 'open',
 })(({ theme, open }) => ({
-  width: drawerWidth,
+  width: drawerWidthOpen,
   flexShrink: 0,
   whiteSpace: 'nowrap',
   boxSizing: 'border-box',

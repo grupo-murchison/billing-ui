@@ -7,7 +7,6 @@ import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 //TODO como puedo utilizar ruta absoluta
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 import { useSidebarContext } from '../context/useSidebarContext';
-import { ACTION_TYPES } from '../context/constants';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -25,7 +24,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Navbar = () => {
   const theme = useTheme();
-  const { dispatch, toogleSidebar } = useSidebarContext();
+  const { toogleSidebar } = useSidebarContext();
 
   return (
     <AppBar position='fixed'>

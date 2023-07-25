@@ -1,18 +1,16 @@
-import { Ref, forwardRef, useEffect } from 'react';
+import { Ref, forwardRef } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ListItem, ListItemButton, ListItemIcon, ListItemText, useMediaQuery } from '@mui/material';
-import { SxProps, useTheme } from '@mui/material/styles';
+import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { SxProps } from '@mui/material/styles';
 
 import { IconRender } from './MenuComponents';
 import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
-import { ACTION_TYPES } from '../../context/constants';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const theme = useTheme();
-  const { isActive, dispatch, toogleSidebar, isSidebarOpen } = useSidebarContext();
-  const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+  const { isActive } = useSidebarContext();
+  // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
   // const itemHandler = (id: string) => {
   //   dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
@@ -32,8 +30,6 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
   //   }
   //   // eslint-disable-next-line
   // }, []);
-
-  console.log('menuItem', menuItem);
 
   const itemTarget = menuItem.target ? '_blank' : '_self';
   const listItemProps = {
