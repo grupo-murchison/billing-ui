@@ -17,9 +17,6 @@ const centerDialogConfirm = {
   width: 'fit-content',
 };
 
-const outlinedCancelButton = {
-  ['border-color']: 'red'
-}
 
 // TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
@@ -104,7 +101,7 @@ const DeleteDialog = ({
       </DialogContentText>
     </DialogContent>
     <DialogActions>
-      <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined' sx={{...outlinedCancelButton, ...centerDialogConfirm}}>
+      <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined' sx={{ ...centerDialogConfirm}}>
         Cancelar
       </Button>
       <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained' sx={centerDialogConfirm}>
