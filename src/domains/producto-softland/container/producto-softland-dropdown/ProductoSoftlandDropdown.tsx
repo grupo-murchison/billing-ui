@@ -3,18 +3,9 @@ import { useEffect, useState } from 'react';
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
+import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
 
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
-
-const ProductoSoftlandDropdown = ({
-  id,
-  label,
-  disabled,
-  error,
-  helperText,
-  value,
-  ...props
-}: ProductoSoftlandDropdownProps) => {
+const ProductoSoftlandDropdown = ({ ...props }: ProductoSoftlandDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -27,28 +18,11 @@ const ProductoSoftlandDropdown = ({
       });
   }, []);
 
-  return (
-    <FormControl fullWidth error={error} disabled={disabled}>
-      <InputLabel>{label}</InputLabel>
-      <Select id={id} label={label} value={value} {...props}>
-        {items.map(item => (
-          <MenuItem key={item.value} value={item.value}>
-            {item.label}
-          </MenuItem>
-        ))}
-      </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
-  );
+  return <FormSelect {...props} options={items} />;
 };
 
-type ProductoSoftlandDropdownProps = {
-  id?: string;
-  label: string;
-  error?: boolean;
-  helperText?: string;
-  disabled?: boolean;
-  value?: number | string;
-};
+interface ProductoSoftlandDropdownProps extends Omit<FormSelectProps, 'options'> {
+  options?: undefined;
+}
 
 export default ProductoSoftlandDropdown;
