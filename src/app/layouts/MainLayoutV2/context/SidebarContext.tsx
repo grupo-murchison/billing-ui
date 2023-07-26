@@ -8,6 +8,7 @@ const SidebarContext = createContext<ISidebarContext>({
   dispatch: () => null,
   toogleSidebar: () => null,
   toogleOpenMenu: () => null,
+  toogleActiveMenu: () => null,
 });
 
 export default SidebarContext;

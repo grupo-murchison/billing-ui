@@ -10,8 +10,8 @@ import { IMenuItemCollapse } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
-  const { isSidebarOpen, isMenuActive, toogleOpenMenu } = useSidebarContext();
-
+  const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
+  console.log('menu', isMenuExpanded);
   useEffect(() => {
     if (!isSidebarOpen) {
       toogleOpenMenu('');
@@ -20,15 +20,23 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
 
   return (
     <ListItem disablePadding sx={{ display: 'block' }}>
-      <ListItemButton onClick={() => toogleOpenMenu(menuItem.id)}>
+      <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)}>
         <ListItemIcon>
           <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title} />
-        {isMenuActive == menuItem.id ? <ExpandLessIcon /> : <ExpandMoreIcon />}
+        {isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1 ? (
+          <ExpandLessIcon />
+        ) : (
+          <ExpandMoreIcon />
+        )}
       </ListItemButton>
 
-      <Collapse in={isMenuActive == menuItem.id} timeout='auto' unmountOnExit>
+      <Collapse
+        in={isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1}
+        timeout='auto'
+        unmountOnExit
+      >
         <List component='div' disablePadding>
           {menuItem?.children?.map(item => (
             <MenuItem key={item.id} menuItem={item} level={1} />

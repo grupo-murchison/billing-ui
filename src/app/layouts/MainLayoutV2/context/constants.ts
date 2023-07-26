@@ -3,11 +3,13 @@ import { IStateSidebar } from '../interfaces/sidebar.interfaces';
 export enum ACTION_TYPES {
   MENU_OPEN,
   TOGGLE_SIDEBAR,
+  MENU_ACTIVE = 2,
 }
 
 export const initialState: IStateSidebar = {
-  isMenuActive: '', // for active default menu
+  isActive: [''],
   isSidebarOpen: false,
+  isMenuExpanded: [''],
 };
 
 export const drawerWidthOpen = 260;

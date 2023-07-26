@@ -14,8 +14,12 @@ const SidebarProvider = ({ children }: { children: ReactNode }) => {
     dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
   };
 
+  const toogleActiveMenu = (id: string) => {
+    dispatch({ type: ACTION_TYPES.MENU_ACTIVE, id });
+  };
+
   return (
-    <SidebarContext.Provider value={{ ...state, dispatch, toogleSidebar, toogleOpenMenu }}>
+    <SidebarContext.Provider value={{ ...state, dispatch, toogleSidebar, toogleOpenMenu, toogleActiveMenu }}>
       {children}
     </SidebarContext.Provider>
   );
