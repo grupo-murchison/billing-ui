@@ -11,6 +11,14 @@ import { useSidebarContext } from '../../context/useSidebarContext';
 function MenuItem({ menuItem, level }: MenuItemProps) {
   const { isActive, toogleActiveMenu } = useSidebarContext();
 
+  // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
+
+  useEffect(() => {
+    if (document.location.pathname === menuItem.url) {
+      toogleActiveMenu(menuItem?.id);
+    }
+  }, []);
+
   const itemTarget = menuItem.target ? '_blank' : '_self';
   const listItemProps = {
     component: menuItem?.external
