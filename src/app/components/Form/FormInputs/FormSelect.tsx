@@ -1,5 +1,6 @@
 import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
+import { FormInputsCommonProps } from '../form.interfaces';
 
 function FormSelect({
   control,
@@ -13,9 +14,9 @@ function FormSelect({
   onChange: onChangeProp,
   emptyOption,
 }: FormSelectProps) {
-  const fullOptions = emptyOption
-    ? [{ value: null, label: 'Ninguno', disabled: disabledEmpty }].concat(options)
-    : options;
+  const emptyValues = [{ value: null, label: 'Ninguno', disabled: disabledEmpty }];
+
+  const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
   const inputLabel = label || name;
 
@@ -48,17 +49,11 @@ function FormSelect({
   );
 }
 
-type FormSelectProps = {
+export interface FormSelectProps extends FormInputsCommonProps {
   control: Control<any>;
-  name: string;
   options: any[];
-  disabled?: boolean;
   disabledEmpty?: boolean;
-  label?: string;
-  helperText?: string;
-  error?: boolean;
-  onChange?: any;
   emptyOption?: boolean;
-};
+}
 
 export default FormSelect;

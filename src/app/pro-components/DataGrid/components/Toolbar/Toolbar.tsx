@@ -1,13 +1,10 @@
 import { useContext } from 'react';
 
-import clsx from 'clsx';
-
 import { SearchIcon, AddIcon, FilterAltIcon, DownloadIcon } from '@assets/icons';
 
 import { DataGridContext } from '@app/pro-components/DataGrid/contexts';
 import { ActionButton } from '@app/pro-components/DataGrid/components/Toolbar/components';
 
-import styles from '@app/pro-components/DataGrid/components/Toolbar/Toolbar.module.scss';
 import { Stack, useTheme } from '@mui/material';
 
 const Toolbar = ({ className }: ToolbarProps) => {

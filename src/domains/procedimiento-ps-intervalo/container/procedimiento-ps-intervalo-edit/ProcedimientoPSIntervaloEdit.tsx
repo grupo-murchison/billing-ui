@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -15,7 +15,8 @@ import { ProductoSoftlandDropdown } from '@domains/producto-softland/container/p
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoPSIntervaloEdit = () => {
   const _navigate = useNavigate();
@@ -27,20 +28,19 @@ const ProcedimientoPSIntervaloEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
     reset,
+    control,
     watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
     resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoPSIntervaloEditSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoPSIntervaloEditSchemaType> = useCallback(
+    async data => {
       await ProcedimientoPSIntervaloRepository.updateProcedimientoPSIntervalo(data);
-
       mainDataGrid.reload();
-
       _navigate(`/procedimiento-ps/${procedimientoPSId}`);
     },
     [_navigate, mainDataGrid, procedimientoPSId],
@@ -65,21 +65,8 @@ const ProcedimientoPSIntervaloEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
-          <Col md={6}>
-            <ProductoSoftlandDropdown
-              id='productoSoftland'
-              label='Producto Softland'
-              {...register('productoSoftlandId', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.productoSoftlandId}
-              helperText={formErrors?.productoSoftlandId?.message}
-              disabled={isSubmitting}
-              value={watch('productoSoftlandId')}
-            />
-          </Col>
           <Col md={6}>
             <TextField
               id='intervalo'
@@ -93,8 +80,6 @@ const ProcedimientoPSIntervaloEdit = () => {
               disabled={isSubmitting}
             />
           </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <TextField
               id='valorInicial'
@@ -108,6 +93,8 @@ const ProcedimientoPSIntervaloEdit = () => {
               disabled={isSubmitting}
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={6}>
             <TextField
               id='valorFinal'
@@ -121,18 +108,19 @@ const ProcedimientoPSIntervaloEdit = () => {
               disabled={isSubmitting}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-          <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar
-            </Button>
+          <Col md={6}>
+            <ProductoSoftlandDropdown
+              control={control}
+              name='productoSoftland'
+              error={!!formErrors.productoSoftlandId}
+              disabled={isSubmitting}
+              label='Producto Softland'
+              helperText={formErrors?.productoSoftlandId?.message}
+              emptyOption
+            />
           </Col>
         </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

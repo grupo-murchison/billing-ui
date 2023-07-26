@@ -1,17 +1,5 @@
-import clsx from 'clsx';
-
-// import { Button } from '@app/components';
-
 import { VisibilityOutlinedIcon } from '@assets/icons';
 import { IconButton, useTheme } from '@mui/material';
-
-// const ViewButton = ({ className, ...props }: ViewButtonProps) => {
-//   return (
-//     // <Button color='primary' icon={<VisibilityOutlinedIcon />} outlined className={clsx(className)} {...props}>
-//     //   Ver
-//     // </Button>
-//   );
-// };
 
 export const ViewIconButton = ({ ...props }) => {
   const theme = useTheme();
@@ -34,7 +22,3 @@ export const ViewIconButton = ({ ...props }) => {
     </IconButton>
   );
 };
-
-// type ViewButtonProps = React.DetailedHTMLProps<React.ButtonHTMLAttributes<HTMLButtonElement>, HTMLButtonElement>;
-
-// export default ViewButton;

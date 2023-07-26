@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { Control } from 'react-hook-form';
+import { Control, FieldValues } from 'react-hook-form';
 
 export type FromProps = {
   children?: ReactNode;
@@ -40,4 +40,13 @@ export type FormSelectProps = {
   error?: boolean;
   onChange?: any;
   emptyOption?: boolean;
+};
+
+export type FormInputsCommonProps = {
+  disabled?: boolean;
+  error?: boolean;
+  label: string;
+  helperText?: string;
+  name: string;
+  onChange?: any;
 };

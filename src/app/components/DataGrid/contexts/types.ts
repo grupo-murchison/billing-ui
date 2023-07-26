@@ -1,7 +1,7 @@
 import type { ChangeEvent, JSXElementConstructor, ReactNode } from 'react';
 
 import type { AxiosResponse } from 'axios';
-import { GridColDef, GridRowsProp } from '@mui/x-data-grid';
+import { GridColDef, GridRowsProp, DataGridProps as MUIDataGridProps } from '@mui/x-data-grid';
 
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 

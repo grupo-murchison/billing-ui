@@ -10,18 +10,16 @@ export const components: Components = {
       },
     },
   },
-  // MuiListItemButton:{
-  //   styleOverrides:{
-  //     root:{
-  //       padding: '13px'
-  //     }
-  //   }
-  // },
-  MuiGrid2:{
-    styleOverrides:{
-      root:{
-        
-      }
-    }
-  }
+  MuiListItemButton: {
+    styleOverrides: {
+      root: {
+        padding: '13px',
+      },
+    },
+  },
+  MuiGrid2: {
+    styleOverrides: {
+      root: {},
+    },
+  },
 };

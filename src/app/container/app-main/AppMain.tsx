@@ -11,7 +11,7 @@ import customTheme from '@assets/theme';
 
 const App = () => {
   useEffect(() => {
-    document.title = 'Murchison Billing';
+    document.title = 'Billing';
   }, []);
 
   return (

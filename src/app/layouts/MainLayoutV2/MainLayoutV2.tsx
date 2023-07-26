@@ -11,9 +11,7 @@ function MainLayoutV2({ children }: { children?: ReactNode }) {
       <Box sx={{ display: 'flex' }}>
         <SidebarProvider>
           <Navbar />
-          {/* SIDEBAR */}
           <Sidebar />
-          {/* MAIN */}
           <Main>{children}</Main>
         </SidebarProvider>
       </Box>
