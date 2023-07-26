@@ -23,9 +23,7 @@ import { DivisorProvisorio } from '@app/components/Divider';
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoEditSchema } from '@domains/contrato/container/contrato-crud/schemas';
 import { ContratoContext } from '@domains/contrato/contexts';
-import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
-import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-acuerdo-dropdown';
-import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
+
 import { FacturacionEditBreadcrumb } from '@domains/facturacion/constants';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
@@ -37,7 +35,6 @@ import { withBreadcrumb } from '@app/hocs';
 import { DateLib } from '@libs';
 import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
-import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 
 const FacturacionEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
@@ -115,89 +112,6 @@ const FacturacionEdit = () => {
   if (!isDataFetched) {
     return <></>;
   }
-
-  const formHeader = (
-    <CardContent>
-      <Row>
-        <Col md={6}>
-          <ClienteDropdown
-            id='clienteId'
-            label='Cliente'
-            {...register('clienteId', {
-              valueAsNumber: true,
-            })}
-            error={!!formErrors.clienteId}
-            helperText={formErrors?.clienteId?.message}
-            disabled={isSubmitting}
-            value={watch('clienteId')}
-          />
-        </Col>
-        <Col md={6}>
-          <SociedadDropdown
-            id='sociedadId'
-            label='Sociedad'
-            {...register('sociedadId', {
-              valueAsNumber: true,
-            })}
-            error={!!formErrors.sociedadId}
-            helperText={formErrors?.sociedadId?.message}
-            disabled={isSubmitting}
-            value={watch('sociedadId')}
-          />
-        </Col>
-      </Row>
-      <Row>
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-        {/* <Col md={6}>
-          <ClienteDropdown
-            id='destinatarioId'
-            label='Destinatario'
-            // {...register('destinatarioId', {
-            //   valueAsNumber: true,
-            // })}
-            // error={!!formErrors.destinatarioId}
-            // helperText={formErrors?.destinatarioId?.message}
-            // disabled={isSubmitting}
-            // value={watch('destinatarioId')}
-          />
-        </Col> */}
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-      </Row>
-      <Row>
-        <Col md={6}>
-          {/* // TODO agregar Notificación con mensaje de de Alerta: Si cambia el Modelo Acuerdo, se eliminarán las variables del contrato y deberá cargar las nuevas manualmente. */}
-          <ModeloAcuerdoDropdown
-            id='modeloAcuerdoId'
-            label='Modelo Acuerdo'
-            {...register('modeloAcuerdoId', {
-              valueAsNumber: true,
-            })}
-            error={!!formErrors.modeloAcuerdoId}
-            helperText={formErrors?.modeloAcuerdoId?.message}
-            disabled={isSubmitting}
-            value={watch('modeloAcuerdoId')}
-          />
-        </Col>
-        <Col md={6}>
-          <TipoContratoDropdown
-            id='tipoContratoId'
-            label='Tipo Contrato'
-            {...register('tipoContratoId', {
-              valueAsNumber: true,
-            })}
-            error={!!formErrors.tipoContratoId}
-            helperText={formErrors?.tipoContratoId?.message}
-            disabled={isSubmitting}
-            value={watch('tipoContratoId')}
-          />
-        </Col>
-      </Row>
-      {/* <Row>
-        <Col md={6}>{modeloAcuerdo && <JsonViewerProvisorio object={modeloAcuerdo} label='Modelo Acuerdo' />}</Col>
-        <Col md={6}>{tipoContrato && <JsonViewerProvisorio object={tipoContrato} label='Tipo Contrato' />}</Col>
-      </Row> */}
-    </CardContent>
-  );
 
   const datosContractuales = (
     <CardContent>
@@ -331,8 +245,6 @@ const FacturacionEdit = () => {
               </Col>
             </Row>
           </CardContent>
-
-          {formHeader}
 
           <DivisorProvisorio label='Datos Contractuales' />
 
