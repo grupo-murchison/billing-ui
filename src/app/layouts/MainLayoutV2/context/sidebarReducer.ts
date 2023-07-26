@@ -6,12 +6,17 @@ export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => 
     case ACTION_TYPES.MENU_OPEN:
       return {
         ...state,
-        isActive: [action.id],
+        isMenuExpanded: [action.id],
       };
     case ACTION_TYPES.TOGGLE_SIDEBAR:
       return {
         ...state,
-        isSidebarOpen: !state.isSidebarOpen,
+        isSidebarOpen: action.openSidebar,
+      };
+    case ACTION_TYPES.MENU_ACTIVE:
+      return {
+        ...state,
+        isActive: [action.id],
       };
     default:
       return state;

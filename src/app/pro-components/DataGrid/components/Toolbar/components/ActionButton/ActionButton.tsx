@@ -22,20 +22,6 @@ const ActionButton = ({ icon, label, onClick, colorPrimary }: ActionButtonProps)
   );
 };
 
-// const ActionButtonPaul = ({ color, icon, label, onClick }: ActionButtonProps) => {
-//   return (
-//     <button
-//       className={clsx(styles['action-button'], {
-//         [styles['action-button--green']]: color === 'green',
-//       })}
-//       onClick={onClick}
-//     >
-//       {icon}
-//       <span>{label}</span>
-//     </button>
-//   );
-// };
-
 type ActionButtonProps = {
   icon: ReactNode;
   label: string;
