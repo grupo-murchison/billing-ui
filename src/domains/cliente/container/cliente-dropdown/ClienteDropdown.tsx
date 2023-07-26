@@ -4,47 +4,26 @@ import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { ClienteRepository } from '@domains/cliente/repository';
 
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText } from '@mui/material';
+import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
 
-const ClienteDropdown = ({ id, label, disabled, error, helperText, value, ...props }: ClienteDropdownProps) => {
-  const [items, setItems] = useState<DropdownSchemaType>([]);
+const ClienteDropdown = ({ ...props }: ClienteDropdownProps) => {
+  const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
     ClienteRepository.getAllClienteAsDropdown()
       .then(({ data }) => {
-        setItems(data);
+        setOptions(data);
       })
       .catch(() => {
-        setItems([]);
+        setOptions([]);
       });
   }, []);
 
-  return (
-    <>
-      {items.length > 0 && (
-        <FormControl fullWidth error={error} disabled={disabled}>
-          <InputLabel>{label}</InputLabel>
-          <Select id={id} label={label} value={value} {...props}>
-            {items.map(item => (
-              <MenuItem key={item.value} value={item.value}>
-                {item.label}
-              </MenuItem>
-            ))}
-          </Select>
-          {helperText && <FormHelperText>{helperText}</FormHelperText>}
-        </FormControl>
-      )}
-    </>
-  );
+  return <FormSelect {...props} options={options} />;
 };
 
-type ClienteDropdownProps = {
-  id?: string;
-  label: string;
-  error?: boolean;
-  helperText?: string;
-  disabled?: boolean;
-  value?: number | string;
-};
+interface ClienteDropdownProps extends Omit<FormSelectProps, 'options'> {
+  options?: undefined;
+}
 
 export default ClienteDropdown;

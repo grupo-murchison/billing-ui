@@ -1,4 +1,4 @@
-import type { AxiosError, AxiosPromise, AxiosResponse } from 'axios';
+import type { AxiosError, AxiosResponse } from 'axios';
 import { from, lastValueFrom, map } from 'rxjs';
 
 import z from 'zod';

@@ -7,9 +7,6 @@ import {
   Card,
   CardContent,
   CardHeader,
-  Checkbox,
-  FormControlLabel,
-  FormGroup,
   Stack,
   TextField,
   Typography,
@@ -40,6 +37,7 @@ import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
 import Form from '@app/components/Form/Form';
+import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
@@ -124,15 +122,12 @@ const ContratoEdit = () => {
       <Row>
         <Col md={6}>
           <ClienteDropdown
-            id='clienteId'
+            name='clienteId'
             label='Cliente'
-            {...register('clienteId', {
-              valueAsNumber: true,
-            })}
+            control={control}
             error={!!formErrors.clienteId}
             helperText={formErrors?.clienteId?.message}
             disabled={isSubmitting}
-            value={watch('clienteId')}
           />
         </Col>
         <Col md={6}>
@@ -239,7 +234,7 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={4}>
-          <FormGroup sx={{ display: 'flex', alignItems: 'flex-start' }}>
+          {/* <FormGroup sx={{ display: 'flex', alignItems: 'flex-start' }}>
             <FormControlLabel
               id='pausado'
               labelPlacement='start'
@@ -248,7 +243,8 @@ const ContratoEdit = () => {
               checked={watch('pausado') || false}
               value={watch('pausado')}
             />
-          </FormGroup>
+          </FormGroup> */}
+          <FormCheckbox control={control} name='pausado' label='Pausado' />
         </Col>
       </Row>
       <Row>
