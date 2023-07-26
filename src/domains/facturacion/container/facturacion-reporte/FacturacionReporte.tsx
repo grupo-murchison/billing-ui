@@ -21,6 +21,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
+import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 // import AsyncAutocomplete from '@app/components/Form/FormAutocomplete';
 
 const FacturacionReporte = () => {
@@ -180,7 +181,7 @@ const FacturacionReporte = () => {
                 headerName: 'Acciones',
                 headerAlign: 'center',
                 align: 'center',
-                renderCell: params => <CustomActions />,
+                renderCell: params => <IconMenu />,
                 flex: 1.5,
               },
             ]}

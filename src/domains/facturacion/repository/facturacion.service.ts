@@ -10,7 +10,7 @@ const BASE_PATH = 'v1/facturaciones';
 class FacturacionService {
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/all/pagination`, { params }),
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
     );
 
     return [response, error];
