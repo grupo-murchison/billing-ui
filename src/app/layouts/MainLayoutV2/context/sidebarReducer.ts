@@ -14,7 +14,6 @@ export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => 
         isSidebarOpen: action.openSidebar,
       };
     case ACTION_TYPES.MENU_ACTIVE:
-      console.log('action', action);
       return {
         ...state,
         isActive: [action.id],

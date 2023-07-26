@@ -15,9 +15,7 @@ export function IconRender({
   item?: IMenuItem;
 }) {
   const theme = useTheme();
-  console.log('isSelected', isActive);
   const getIconSize = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 10 : 6);
-  // const getBackgroundColor = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 'red' : 'black');
 
   const iconRender = icon ? (
     <SvgIcon component={icon} sx={{ color: theme.palette.common.white }} />

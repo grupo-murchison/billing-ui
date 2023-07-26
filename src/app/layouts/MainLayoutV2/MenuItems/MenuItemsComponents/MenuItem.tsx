@@ -7,31 +7,9 @@ import { SxProps } from '@mui/material/styles';
 import { IconRender } from './MenuComponents';
 import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
-import menuItems from '../menuItems.config';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const { isMenuExpanded, isActive, toogleOpenMenu } = useSidebarContext();
-  // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
-
-  // const itemHandler = (id: string) => {
-  //   dispatch({ type: ACTION_TYPES.MENU_OPEN, id });
-  //   if (matchesSM) toogleSidebar(true);
-  // };
-
-  // active menu item on page load
-
-  // //TODO mmm esto???
-  // useEffect(() => {
-  //   const currentIndex = document.location.pathname
-  //     .toString()
-  //     .split('/')
-  //     .findIndex(id => id === menuItem.id);
-
-  //   if (currentIndex > -1) {
-  //     toogleOpenMenu(menuItem.id);
-  //   }
-  //   // eslint-disable-next-line
-  // }, []);
+  const { isActive, toogleActiveMenu } = useSidebarContext();
 
   const itemTarget = menuItem.target ? '_blank' : '_self';
   const listItemProps = {
@@ -50,6 +28,7 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
         {...listItemProps}
         disabled={menuItem?.disabled}
         selected={isActive.findIndex((id: string) => id === menuItem.id) > -1}
+        onClick={() => toogleActiveMenu(menuItem?.id)}
       >
         <ListItemIcon>
           <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />

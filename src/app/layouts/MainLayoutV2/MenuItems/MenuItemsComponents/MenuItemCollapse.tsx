@@ -11,7 +11,7 @@ import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
-  console.log('menu', isMenuExpanded);
+
   useEffect(() => {
     if (!isSidebarOpen) {
       toogleOpenMenu('');
