@@ -17,6 +17,7 @@ import { label } from '@domains/procedimiento-q/constants';
 import { TipoProcedimientoQDropdown } from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown';
 import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown';
 import { ProcedimientoBuiltinDropdown } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoQEdit = () => {
   const { procedimientoQId } = useParams();
@@ -44,9 +45,12 @@ const ProcedimientoQEdit = () => {
     return <></>;
   }
 
+  // //TODO creo esta constante para que no rompa.
+  const isSubmitting = false;
+
   return (
     <Modal isOpen onClose={handleClose} title={label.procedimientoQ}>
-      <form noValidate autoComplete='off'>
+      <Form handleClose={handleClose} isSubmitting={isSubmitting} isView>
         <Row>
           <Col md={6}>
             <TextField
@@ -113,7 +117,7 @@ const ProcedimientoQEdit = () => {
             />
           </Col>
         </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };
