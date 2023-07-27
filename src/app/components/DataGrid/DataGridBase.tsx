@@ -26,6 +26,7 @@ const DataGridBase = ({
     '& .MuiDataGrid-columnHeader': {
       color: theme.palette.common.white,
       backgroundColor: theme.palette.text.disabled,
+      fontSize: theme.typography.h6.fontSize
     },
   };
 
@@ -68,6 +69,10 @@ const DataGridBase = ({
         slotProps={{
           pagination: {
             labelRowsPerPage: 'Filas por página:',
+            labelDisplayedRows: props => {
+              const { from, to, count } = props;
+              return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
+            },
           },
         }}
         sx={{

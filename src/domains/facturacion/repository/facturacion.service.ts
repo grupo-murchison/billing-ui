@@ -1,6 +1,6 @@
 import { ApiProvider } from '@providers';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { DataGridRepositoryFuncParams2 } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
@@ -8,7 +8,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 const BASE_PATH = 'v1/facturaciones';
 
 class FacturacionService {
-  static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
+  static getAllPaginated = async (params: DataGridRepositoryFuncParams2): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
     );
