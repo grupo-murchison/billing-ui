@@ -1,6 +1,6 @@
 import { useCallback, useContext } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -17,6 +17,7 @@ import { DiccionarioDropdown } from '@domains/diccionario/container/diccionario-
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Button, TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoQVariableCreate = () => {
   const _navigate = useNavigate();
@@ -26,8 +27,8 @@ const ProcedimientoQVariableCreate = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
-    watch,
+    handleSubmit,
+    control,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoQVariableCreateSchemaType>({
     defaultValues: {
@@ -36,12 +37,10 @@ const ProcedimientoQVariableCreate = () => {
     resolver: zodResolver(ProcedimientoQVariableCreateSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoQVariableCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ProcedimientoQVariableCreateSchemaType> = useCallback(
+    async data => {
       await ProcedimientoQVariableRepository.createProcedimientoQVariable(data);
-
       mainDataGrid.reload();
-
       _navigate(`/procedimiento-q/${procedimientoQId}`);
     },
     [_navigate, mainDataGrid, procedimientoQId],
@@ -53,7 +52,7 @@ const ProcedimientoQVariableCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nueva Variable'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField
@@ -79,42 +78,28 @@ const ProcedimientoQVariableCreate = () => {
         <Row>
           <Col md={6}>
             <TipoDatoDropdown
-              id='tipo'
-              label='Tipo'
-              {...register('tipoId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='tipoId'
               error={!!formErrors.tipoId}
-              helperText={formErrors?.tipoId?.message}
               disabled={isSubmitting}
-              value={watch('tipoId')}
+              label='Tipo'
+              helperText={formErrors?.tipoId?.message}
+              emptyOption={false}
             />
           </Col>
           <Col md={6}>
             <DiccionarioDropdown
-              id='diccionario'
-              label='Diccionario'
-              {...register('diccionarioId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='diccionarioId'
               error={!!formErrors.diccionarioId}
-              helperText={formErrors?.diccionarioId?.message}
               disabled={isSubmitting}
-              value={watch('diccionarioId')}
+              label='Diccionario'
+              helperText={formErrors?.diccionarioId?.message}
+              emptyOption={false}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} className='d-flex jc-end'>
-            <Button color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button  color='primary' variant='contained' type='submit' disabled={isSubmitting}>
-              Crear
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };

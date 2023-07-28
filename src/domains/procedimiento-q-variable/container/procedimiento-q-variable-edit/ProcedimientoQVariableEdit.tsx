@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useForm } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 
 import { useNavigate, useParams } from 'react-router-dom';
 
@@ -16,7 +16,8 @@ import { DiccionarioDropdown } from '@domains/diccionario/container/diccionario-
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
+import Form from '@app/components/Form/Form';
 
 const ProcedimientoQVariableEdit = () => {
   const _navigate = useNavigate();
@@ -28,20 +29,18 @@ const ProcedimientoQVariableEdit = () => {
 
   const {
     register,
-    handleSubmit: rhfHandleSubmit,
+    handleSubmit,
+    control,
     reset,
-    watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoQVariableEditSchemaType>({
     resolver: zodResolver(ProcedimientoQVariableEditSchema),
   });
 
-  const handleSubmit = useCallback(
-    async (data: ProcedimientoQVariableEditSchemaType) => {
-      await ProcedimientoQVariableRepository.updateProcedimientoQVariable(data);
-
+  const onSubmit: SubmitHandler<ProcedimientoQVariableEditSchemaType> = useCallback(
+    async data => {
+      await ProcedimientoQVariableRepository.updateProcedimientoQVariable({ ...data, id: Number(procedimientoQId) });
       mainDataGrid.reload();
-
       _navigate(`/procedimiento-q/${procedimientoQId}`);
     },
     [_navigate, mainDataGrid, procedimientoQId],
@@ -64,7 +63,7 @@ const ProcedimientoQVariableEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Variable'>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
         <Row>
           <Col md={6}>
             <TextField
@@ -90,42 +89,28 @@ const ProcedimientoQVariableEdit = () => {
         <Row>
           <Col md={6}>
             <TipoDatoDropdown
-              id='tipo'
-              label='Tipo'
-              {...register('tipoId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='tipoId'
               error={!!formErrors.tipoId}
-              helperText={formErrors?.tipoId?.message}
               disabled={isSubmitting}
-              value={watch('tipoId')}
+              label='Tipo'
+              helperText={formErrors?.tipoId?.message}
+              emptyOption={false}
             />
           </Col>
           <Col md={6}>
             <DiccionarioDropdown
-              id='diccionario'
-              label='Diccionario'
-              {...register('diccionarioId', {
-                valueAsNumber: true,
-              })}
+              control={control}
+              name='diccionarioId'
               error={!!formErrors.diccionarioId}
-              helperText={formErrors?.diccionarioId?.message}
               disabled={isSubmitting}
-              value={watch('diccionarioId')}
+              label='Diccionario'
+              helperText={formErrors?.diccionarioId?.message}
+              emptyOption={false}
             />
           </Col>
         </Row>
-        <Row>
-          <Col md={12} textAlign='right'>
-          <Button  color='secondary' variant='outlined' disabled={isSubmitting} onClick={handleClose}>
-              Cancelar
-            </Button>
-            <Button variant='contained' type='submit' disabled={isSubmitting}>
-              Actualizar 
-            </Button>
-          </Col>
-        </Row>
-      </form>
+      </Form>
     </Modal>
   );
 };
