@@ -41,7 +41,7 @@ const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: 
   // TODO agregar una prop para indicar como un type y que reciba los valores por ejemplo "deleteDialog", "okDialog"
   // y en funcion de ese type renderizar la ventana <OkDialog/> <DeleteDialog />
   return (
-    <Dialog fullScreen={fullScreen} open onClose={onClose}>
+    <Dialog fullScreen={fullScreen} open onClose={onClose} PaperProps={{ sx: { borderRadius: '8px' } }}>
       <DeleteDialog
         entity={entity}
         isLoading={isLoading}
