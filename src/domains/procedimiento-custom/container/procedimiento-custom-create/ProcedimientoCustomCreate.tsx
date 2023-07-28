@@ -16,8 +16,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Box, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
-import { Dropdown } from '@app/components/FormInputs/Dropdown';
 import Form from '@app/components/Form/Form';
+import FormSelect from '@app/components/Form/FormInputs/FormSelect';
+import { DropdownSchemaType } from '@app/utils/zod.util';
 
 const ProcedimientoCustomCreate = forwardRef((_, ref) => {
   const _navigate = useNavigate();
@@ -104,6 +105,16 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
     _navigate('/procedimiento-custom');
   }, [_navigate]);
 
+  const mapearParametros = (estados: DropdownSchemaType) => {
+    return estados.map(data => {
+      return {
+        code: data.value,
+        label: `${data.code} - ${data.label}`,
+        value: data.code,
+      };
+    });
+  };
+
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoCustom}`}>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
@@ -132,38 +143,40 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         </Row>
         <Row>
           <Col md={4}>
-            <Dropdown
-              labelDisplay='Función'
+            <FormSelect
+              label='Función'
               name='funcionCode'
               control={control}
               error={!!formErrors.funcionCode}
               helperText={formErrors?.funcionCode?.message}
               disabled={isSubmitting}
-              options={state.funciones}
+              options={mapearParametros(state.funciones)}
             />
           </Col>
           <Col md={4}>
-            <Dropdown
-              labelDisplay='Evento'
+            <FormSelect
+              label='Evento'
               name='eventoCode'
               control={control}
               error={!!formErrors.eventoCode}
               helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
-              options={state.eventos}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
+              options={mapearParametros(state.eventos)}
+              emptyOption={true}
             />
           </Col>
           <Col md={4}>
-            <Dropdown
-              labelDisplay='Campo'
+            <FormSelect
+              label='Campo'
               name='eventoCampoCode'
               control={control}
               error={!!formErrors.eventoCampoCode}
               helperText={formErrors?.eventoCampoCode?.message}
               disabled={isSubmitting || watch('funcionCode') === 'C'}
-              options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
-              emptyOption={{ value: '', label: 'Ninguno', code: '', disabled: false }}
+              options={mapearParametros(
+                state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
+              )}
+              emptyOption={true}
             />
           </Col>
         </Row>
@@ -196,27 +209,29 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
           </Box>
           <Row>
             <Col md={4}>
-              <Dropdown
-                labelDisplay='Acción'
+              <FormSelect
+                label='Acción'
                 name='accionCode'
                 control={control}
                 error={!!formErrors.accionCode}
                 helperText={formErrors?.accionCode?.message}
                 disabled={isSubmitting}
-                options={state.acciones}
-                emptyOption={{ value: '', label: 'Ninguno', code: '' }}
+                options={mapearParametros(state.acciones)}
+                emptyOption={true}
               />
             </Col>
             <Col md={4}>
-              <Dropdown
-                labelDisplay='Campo'
+              <FormSelect
+                label='Campo'
                 name='filtroCampoCode'
                 control={control}
                 error={!!formErrors.filtroCampoCode}
                 helperText={formErrors?.filtroCampoCode?.message}
                 disabled={isSubmitting || !watch('accionCode')}
-                options={state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode'))}
-                emptyOption={{ value: '', label: 'Ninguno', code: '' }}
+                options={mapearParametros(
+                  state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
+                )}
+                emptyOption={true}
               />
             </Col>
             <Col md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
