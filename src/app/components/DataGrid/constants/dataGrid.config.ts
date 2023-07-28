@@ -26,4 +26,8 @@ export const localeText: Partial<GridLocaleText> = {
   // Root
   noRowsLabel: 'No se encontraron registros.',
   noResultsOverlayLabel: 'No se encontraron resultados.',
+
+  // Total visible row amount footer text
+  footerTotalVisibleRows: (visibleCount, totalCount) =>
+    `${visibleCount.toLocaleString()} de ${totalCount.toLocaleString()}`,
 };

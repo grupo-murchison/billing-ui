@@ -7,7 +7,6 @@ import { TextField, Typography, Card, CardContent, CardHeader } from '@mui/mater
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
-import { AlertInProgress } from '@app/components/Alerts';
 import { DivisorProvisorio } from '@app/components/Divider';
 import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 
@@ -258,8 +257,6 @@ const ContratoCreate = () => {
 
   return (
     <>
-      <AlertInProgress />
-
       {/* <Paper sx={{p: 3}}> */}
       <Card sx={{ p: 3 }}>
         <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
