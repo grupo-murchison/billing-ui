@@ -3,7 +3,7 @@ import MenuItem from '@mui/material/MenuItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import Typography from '@mui/material/Typography';
-import { IconButton, Menu } from '@mui/material';
+import { IconButton, Menu, useTheme } from '@mui/material';
 import { GridMoreVertIcon } from '@mui/x-data-grid';
 
 const options = [
@@ -12,7 +12,8 @@ const options = [
   { label: 'Eliminar', icon: '', caption: '' },
 ];
 
-export default function IconMenu() {
+export default function IconMenu({ options: optionsProp }: { options?: IMenuOptions[] }) {
+  const theme = useTheme();
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -24,6 +25,7 @@ export default function IconMenu() {
   };
 
   const ITEM_HEIGHT = 48;
+  const _options = optionsProp ? optionsProp : options;
 
   return (
     <div>
@@ -35,8 +37,14 @@ export default function IconMenu() {
         aria-haspopup='true'
         onClick={handleClick}
         sx={{
-          backgroundColor: '#FFF',
-          border: 'solid 0.8px'
+          'backgroundColor': theme.palette.common.white,
+          'boxShadow': '0px 0px 4px 0px rgba(0, 0, 0, 0.32)',
+          ':hover': {
+            backgroundColor: theme.palette.primary.main,
+            color: theme.palette.common.white,
+            transition: 'ease-out',
+            transitionDuration: '0.3s',
+          },
         }}
       >
         <GridMoreVertIcon />
@@ -56,7 +64,7 @@ export default function IconMenu() {
           },
         }}
       >
-        {options.map((option, index) => (
+        {_options.map((option, index) => (
           <MenuItem
             key={index}
             //   selected={option === 'Pyxis'}
@@ -111,4 +119,10 @@ export default function IconMenu() {
       </MenuList> */}
     </div>
   );
+}
+
+interface IMenuOptions {
+  label: string;
+  icon?: string;
+  caption?: string;
 }

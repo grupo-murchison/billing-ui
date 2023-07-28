@@ -12,7 +12,7 @@ export type DataGridProps<T> = {
   }>;
   columnHeads: GridColDef[];
   onClickNew?: () => void;
-  repositoryFunc: (params: DataGridRepositoryFuncParams) => Promise<
+  repositoryFunc: (params: Record<string, unknown>) => Promise<
     AxiosResponse<{
       data: T[];
       meta: {
@@ -28,6 +28,8 @@ export type DataGridRepositoryFuncParams = {
   page: number;
   filters?: Record<string, string>;
 };
+
+export type DataGridRepositoryFuncParams2 = Record<'take' | 'page', number> | Record<string, unknown>;
 
 export type InitialContext = {
   columnHeads: GridColDef[];

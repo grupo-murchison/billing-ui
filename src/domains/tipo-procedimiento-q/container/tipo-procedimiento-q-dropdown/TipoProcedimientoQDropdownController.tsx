@@ -23,7 +23,7 @@ const TipoProcedimientoQDropdownController = ({ ...props }: TipoProcedimientoQDr
 };
 
 interface TipoProcedimientoQDropdownProps extends Omit<FormSelectProps, 'options'> {
-  options: undefined
+  options?: undefined;
 }
 
 export default TipoProcedimientoQDropdownController;
