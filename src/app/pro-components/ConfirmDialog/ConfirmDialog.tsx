@@ -9,14 +9,15 @@ import DialogContentText from '@mui/material/DialogContentText';
 import useMediaQuery from '@mui/material/useMediaQuery';
 import { useTheme } from '@mui/material/styles';
 import { DeleteOutlineIcon } from '@assets/icons';
+import { Stack } from '@mui/material';
 
-const centerDialogConfirm = {
-  display: 'flex',
-  flexDirection: 'column',
-  m: 'auto',
-  width: 'fit-content',
-};
-
+//TODO: lo dejo comentado por ahora porque no lo estoy usando (Nano)
+// const centerDialogConfirm = {
+//   display: 'flex',
+//   flexDirection: 'column',
+//   m: 'auto',
+//   width: 'fit-content',
+// };
 
 // TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
@@ -40,7 +41,7 @@ const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: 
   // TODO agregar una prop para indicar como un type y que reciba los valores por ejemplo "deleteDialog", "okDialog"
   // y en funcion de ese type renderizar la ventana <OkDialog/> <DeleteDialog />
   return (
-    <Dialog fullScreen={fullScreen} open onClose={onClose}>
+    <Dialog fullScreen={fullScreen} open onClose={onClose} PaperProps={{ sx: { borderRadius: '8px' } }}>
       <DeleteDialog
         entity={entity}
         isLoading={isLoading}
@@ -74,42 +75,39 @@ const DeleteDialog = ({
   entity,
   handleClickYes,
   handleClickNot,
-}: ConfirmDialogInternalProps) => (
-  //TODO: no usar estilos en linea, osea remplazar los existentes
-  <>
-    <DialogTitle sx={centerDialogConfirm} >
-      <DeleteOutlineIcon color='secondary' fontSize='large' 
+}: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <DeleteOutlineIcon
         sx={{
-          color: '#FFFFFF',
-          backgroundColor: "#ff0000",
-          position: 'relavite ',
-          borderRadius: 10,
-          marginLeft: 'auto',
-          marignRight: 'auto',
-          zIndex: 100
+          color: theme.palette.common.white,
+          backgroundColor: theme.palette.error.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
         }}
       />
-    </DialogTitle>
-    <DialogTitle
-      style={{ fontWeight: 'Bold' }}
-      color='error'
-      sx={centerDialogConfirm}
-    >{`¿Eliminar ${entity}?`}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>
-        Se eliminará el registro {entity}: <span style={{ fontWeight: 'Bold' }}>{identifier}</span>
-      </DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined' sx={{ ...centerDialogConfirm}}>
-        Cancelar
-      </Button>
-      <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained' sx={centerDialogConfirm}>
-        Eliminar
-      </Button>
-    </DialogActions>
-  </>
-);
+      <DialogTitle variant='h3' color={theme.palette.error.main}>{`¿Eliminar ${entity}?`}</DialogTitle>
+      <DialogContent>
+        <DialogContentText>
+          Se eliminará el registro {entity}: <span style={{ fontWeight: 'Bold' }}>{identifier}</span>
+        </DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
+          Cancelar
+        </Button>
+        <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained'>
+          Eliminar
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
 
 // TODO: luego de corrobar el alcanze de estos componentes. reemplzar message y title por entity
 //* es la razon por la cual los atributos son opcionales
