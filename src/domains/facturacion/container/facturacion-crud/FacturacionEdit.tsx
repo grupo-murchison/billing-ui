@@ -18,6 +18,7 @@ import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
 import { DivisorProvisorio } from '@app/components/Divider';
+import Form from '@app/components/Form/Form';
 // import { JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
@@ -33,7 +34,6 @@ import type { ContratoEditSchemaType } from '@domains/contrato/container/contrat
 import { withBreadcrumb } from '@app/hocs';
 
 import { DateLib } from '@libs';
-import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 
 const FacturacionEdit = () => {
@@ -197,7 +197,6 @@ const FacturacionEdit = () => {
         </Col>
 
         <Col md={4}>
-          {/* // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select */}
           <TextField
             id='diaPeriodo'
             label='Día Periodo'
@@ -214,11 +213,9 @@ const FacturacionEdit = () => {
     </CardContent>
   );
 
-  const interlocutores = <AlertInProgress message='Próximamente, aquí estará sección "Interlocutores".' />;
-
   return (
     <>
-      <form noValidate onSubmit={rhfHandleSubmit(handleSubmit)} autoComplete='off'>
+      <Form onSubmit={rhfHandleSubmit(handleSubmit)} isSubmitting={isSubmitting} isSearch>
         <Card sx={{ p: 3 }}>
           <CardHeader
             title={
@@ -268,13 +265,8 @@ const FacturacionEdit = () => {
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <DataGridContratoVariables contratoId={contratoId} />
           </Stack>
-
-          <DivisorProvisorio label='Interlocutores' />
-
-          {interlocutores}
-
         </Card>
-      </form>
+      </Form>
     </>
   );
 };

@@ -1,8 +1,11 @@
+import { RepositoryParams } from '@app/components/DataGrid/contexts/types';
 import { useCallback, useRef } from 'react';
+
+type LoadConfig = { fixedFilters?: RepositoryParams; filters?: RepositoryParams };
 
 const useDataGrid = () => {
   const ref = useRef<{
-    load: (config?: { fixedFilters?: Record<string, AnyValue>; filters?: Record<string, AnyValue> }) => void;
+    load: (config?: LoadConfig) => void;
     reload: () => void;
   }>({
     load() {
@@ -13,12 +16,9 @@ const useDataGrid = () => {
     },
   });
 
-  const load = useCallback(
-    (config?: { fixedFilters?: Record<string, AnyValue>; filters?: Record<string, AnyValue> }) => {
-      ref.current.load(config);
-    },
-    [],
-  );
+  const load = useCallback((config?: LoadConfig) => {
+    ref.current.load(config);
+  }, []);
 
   const reload = useCallback(() => {
     ref.current.reload();
