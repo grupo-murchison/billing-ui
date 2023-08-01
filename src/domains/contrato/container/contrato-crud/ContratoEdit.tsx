@@ -3,14 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  Stack,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
@@ -35,7 +28,7 @@ import { DateLib } from '@libs';
 import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import { AlertInProgress } from '@app/components/Alerts';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
-import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
+import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 
@@ -132,15 +125,12 @@ const ContratoEdit = () => {
         </Col>
         <Col md={6}>
           <SociedadDropdown
-            id='sociedadId'
+            control={control}
+            name='sociedadId'
             label='Sociedad'
-            {...register('sociedadId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.sociedadId}
             helperText={formErrors?.sociedadId?.message}
             disabled={isSubmitting}
-            value={watch('sociedadId')}
           />
         </Col>
       </Row>

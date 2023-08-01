@@ -26,7 +26,7 @@ const DataGridBase = ({
     '& .MuiDataGrid-columnHeader': {
       color: theme.palette.common.white,
       backgroundColor: theme.palette.text.disabled,
-      fontSize: theme.typography.h6.fontSize
+      fontSize: theme.typography.h6.fontSize,
     },
   };
 
@@ -58,7 +58,7 @@ const DataGridBase = ({
         columns={columns}
         pageSizeOptions={pageSizeOptions || [10, 25, 50, 100]}
         // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
-        autoHeight={true}
+        autoHeight={rows.length > 0 ? true : false}
         loading={loading}
         localeText={{ ...localeText }}
         slots={{
@@ -76,6 +76,7 @@ const DataGridBase = ({
           },
         }}
         sx={{
+          height: rows.length > 0 ? undefined : '380px',
           ...sxTable,
           ...sxHeader,
           ...sxRows,

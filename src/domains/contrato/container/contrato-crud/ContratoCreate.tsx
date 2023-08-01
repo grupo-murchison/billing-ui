@@ -22,7 +22,7 @@ import { ModeloAcuerdoDropdown } from '@domains/modelo-acuerdo/container/modelo-
 import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
-import { SociedadDropdown } from '@domains/sociedad/container/cliente-dropdown';
+import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
@@ -124,15 +124,12 @@ const ContratoCreate = () => {
         </Col>
         <Col md={6}>
           <SociedadDropdown
-            id='sociedadId'
+            control={control}
+            name='sociedadId'
             label='Sociedad'
-            {...register('sociedadId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.sociedadId}
             helperText={formErrors?.sociedadId?.message}
             disabled={isSubmitting}
-            value={watch('sociedadId')}
           />
         </Col>
       </Row>
