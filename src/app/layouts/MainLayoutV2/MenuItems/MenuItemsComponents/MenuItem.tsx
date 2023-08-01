@@ -9,7 +9,7 @@ import { IMenuItem } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const { isActive, toogleActiveMenu } = useSidebarContext();
+  const { isActive, toogleActiveMenu, toogleSidebar } = useSidebarContext();
 
   // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -30,20 +30,25 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
         )),
   };
 
+  const handleClick = (dataItem: string) => {
+    toogleSidebar(false);
+    toogleActiveMenu(dataItem);
+  };
+
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
+    <>
       <ListItemButton
         {...listItemProps}
         disabled={menuItem?.disabled}
         selected={isActive.findIndex((id: string) => id === menuItem.id) > -1}
-        onClick={() => toogleActiveMenu(menuItem?.id)}
+        onClick={() => handleClick(menuItem?.id)}
       >
         <ListItemIcon>
           <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title || 'Generic Title'} sx={{ whiteSpace: 'normal' }} />
       </ListItemButton>
-    </ListItem>
+    </>
   );
 }
 

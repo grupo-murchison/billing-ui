@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
@@ -11,6 +11,16 @@ import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
+  const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
+
+  useEffect(() => {
+    setIsMenuActive(false);
+    menuItem.children.map(data => {
+      if (document.location.pathname === data.url) {
+        setIsMenuActive(true);
+      }
+    });
+  }, [document.location.pathname]);
 
   useEffect(() => {
     if (!isSidebarOpen) {
@@ -19,8 +29,8 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
   }, [isSidebarOpen]);
 
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)}>
+    <>
+      <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)} selected={isMenuActive}>
         <ListItemIcon>
           <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
         </ListItemIcon>
@@ -43,7 +53,7 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
           ))}
         </List>
       </Collapse>
-    </ListItem>
+    </>
   );
 }
 
