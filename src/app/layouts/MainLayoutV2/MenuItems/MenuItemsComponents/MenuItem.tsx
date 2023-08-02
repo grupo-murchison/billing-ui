@@ -1,7 +1,7 @@
 import { Ref, forwardRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 
-import { ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { SxProps } from '@mui/material/styles';
 
 import { IconRender } from './MenuComponents';
@@ -30,20 +30,21 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
         )),
   };
 
+  const handleClick = () => {
+    toogleActiveMenu(menuItem?.id);
+  };
+
+  const isSelected = isActive.findIndex((id: string) => id === menuItem.id) > -1;
+
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <ListItemButton
-        {...listItemProps}
-        disabled={menuItem?.disabled}
-        selected={isActive.findIndex((id: string) => id === menuItem.id) > -1}
-        onClick={() => toogleActiveMenu(menuItem?.id)}
-      >
+    <>
+      <ListItemButton {...listItemProps} disabled={menuItem?.disabled} selected={isSelected} onClick={handleClick}>
         <ListItemIcon>
-          <IconRender icon={menuItem?.icon} level={level && level} isActive={isActive} item={menuItem} />
+          <IconRender icon={menuItem?.icon} level={level && level} isSelected={isSelected} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title || 'Generic Title'} sx={{ whiteSpace: 'normal' }} />
       </ListItemButton>
-    </ListItem>
+    </>
   );
 }
 
