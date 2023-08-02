@@ -1,21 +1,11 @@
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { SvgIcon, Typography, useTheme } from '@mui/material';
-import { SvgIconComponent } from '@mui/icons-material';
-import { IMenuItem } from '../menu-items.interface';
+import { TIconRender } from '../menu-items.interface';
 
-export function IconRender({
-  icon,
-  level = 0,
-  isActive,
-  item,
-}: {
-  icon?: SvgIconComponent;
-  level?: number;
-  isActive?: string[];
-  item?: IMenuItem;
-}) {
+export function IconRender({ icon, level = 0, isSelected }: TIconRender) {
   const theme = useTheme();
-  const getIconSize = () => (isActive && isActive.findIndex(id => id === item?.id) > -1 ? 10 : 6);
+
+  const getIconSize = () => (isSelected ? 10 : 6);
 
   const iconRender = icon ? (
     <SvgIcon component={icon} sx={{ color: theme.palette.common.white }} />

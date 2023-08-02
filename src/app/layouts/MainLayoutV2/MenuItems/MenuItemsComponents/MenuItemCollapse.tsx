@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -9,6 +9,7 @@ import { IconRender } from './MenuComponents';
 import { IMenuItemCollapse } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
+let render = 0;
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
   const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
@@ -22,31 +23,20 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
     });
   }, [document.location.pathname]);
 
-  useEffect(() => {
-    if (!isSidebarOpen) {
-      toogleOpenMenu('');
-    }
-  }, [isSidebarOpen]);
+  const expand = isSidebarOpen && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1;
+  console.log('render', render++);
 
   return (
     <>
       <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)} selected={isMenuActive}>
         <ListItemIcon>
-          <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
+          <IconRender icon={menuItem?.icon || InboxIcon} level={level} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title} />
-        {isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1 ? (
-          <ExpandLessIcon />
-        ) : (
-          <ExpandMoreIcon />
-        )}
+        {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItemButton>
 
-      <Collapse
-        in={isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1}
-        timeout='auto'
-        unmountOnExit
-      >
+      <Collapse in={expand} timeout={800} unmountOnExit>
         <List component='div' disablePadding>
           {menuItem?.children?.map(item => (
             <MenuItem key={item.id} menuItem={item} level={1} />

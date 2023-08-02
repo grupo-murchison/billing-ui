@@ -27,3 +27,9 @@ export interface IMenuItemGroup extends IMenuItemBase {
   caption?: string;
   children: IMenuItem[] | IMenuItemCollapse[];
 }
+
+export type TIconRender = {
+  icon?: SvgIconComponent;
+  level?: number;
+  isSelected?: boolean;
+};
