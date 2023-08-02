@@ -15,6 +15,15 @@ class ClienteRepository {
     return response;
   };
 
+  static getAllClienteAsDropdownAutoComplete = async (filter: Partial<Record<'filter', string>>) => {
+    const response$ = from(ClienteService.getAllAsDropdownAutocomplete(filter)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static getClienteById = async (id: string) => {
     const response$ = from(ClienteService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);

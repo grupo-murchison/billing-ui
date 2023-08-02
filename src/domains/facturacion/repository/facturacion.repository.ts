@@ -1,6 +1,6 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import { DataGridRepositoryFuncParams2 } from '@app/components/DataGrid';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
 
@@ -8,7 +8,7 @@ import { FacturacionService } from './facturacion.service';
 import { getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
-  static getAllFacturasPaginated = async (params: DataGridRepositoryFuncParams2) => {
+  static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllFacturasReportePaginatedSchema),

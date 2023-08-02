@@ -23,7 +23,7 @@ import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { ViewIcon } from '@assets/icons';
 
-const FacturacionReporte = () => {
+const FacturacionReversion = () => {
   // const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
@@ -50,7 +50,7 @@ const FacturacionReporte = () => {
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
       const filters = {
-        clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
+        clienteId: data.clienteId ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
@@ -183,7 +183,7 @@ const FacturacionReporte = () => {
               field: 'numeroSecuenciaContrato',
               headerName: 'Nro. Contrato',
               flex: 0.9,
-              valueGetter: params => params.row.contratos[0]?.contratoNro || '',
+              valueGetter: params => params.row.contratos[0]?.numeroSecuenciaContrato || '',
             },
             {
               field: 'contratoDescripcion',
@@ -237,4 +237,4 @@ const FacturacionReporte = () => {
   );
 };
 
-export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
+export default withBreadcrumb(FacturacionReversion, FacturacionReporteBreadcrumb);

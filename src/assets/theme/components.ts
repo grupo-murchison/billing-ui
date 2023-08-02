@@ -6,7 +6,6 @@ export const components: Components = {
     styleOverrides: {
       // Name of the slot
       root: {
-        borderRadius: '6px',
         padding: '5px 20px',
       },
     },
