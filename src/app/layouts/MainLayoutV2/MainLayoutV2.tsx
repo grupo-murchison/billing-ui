@@ -12,8 +12,8 @@ function MainLayoutV2({ children }: { children?: ReactNode }) {
         <SidebarProvider>
           <Navbar />
           <Sidebar />
-          <Main>{children}</Main>
         </SidebarProvider>
+        <Main>{children}</Main>
       </Box>
     </>
   );

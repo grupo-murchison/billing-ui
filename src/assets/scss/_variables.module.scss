@@ -2,14 +2,15 @@ $font-family: Roboto, 'Open Sans', 'Open Sans Variable', sans-serif;
 
 $color-white: #ffffff;
 
-$sidebar-width: 50px;
-$sidebar-width--open: calc(300px - $sidebar-width);
+// $sidebar-width: 50px;
+// $sidebar-width--open: calc(300px - $sidebar-width);
 
-$header-height: 60px;
+// $header-height: 60px;
 
 // ==============================|| MAIN COLORS ||============================== //
 
 $primaryMain: #007749;
+$primaryLight: #429a78;
 
 $secondaryMain: #505e70;
 
@@ -39,6 +40,8 @@ $backgroundRowHover: #ccced0;
 
   primaryMain: $primaryMain;
 
+  primaryLight: $primaryLight;
+
   secondaryMain: $secondaryMain;
 
   errorMain: $errorMain;
@@ -48,4 +51,8 @@ $backgroundRowHover: #ccced0;
   successMain: $successMain;
 
   warningMain: $warningMain;
+
+  textPrimary: $textPrimary;
+  textSecondary: $textSecondary;
+  textDisabled: $textDisabled;
 }

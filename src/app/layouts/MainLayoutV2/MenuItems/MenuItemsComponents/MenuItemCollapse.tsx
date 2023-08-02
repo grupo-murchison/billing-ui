@@ -1,5 +1,5 @@
-import { useEffect } from 'react';
-import { Collapse, List, ListItem, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import InboxIcon from '@mui/icons-material/MoveToInbox';
 
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
@@ -11,39 +11,41 @@ import { useSidebarContext } from '../../context/useSidebarContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
+  const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
 
   useEffect(() => {
-    if (!isSidebarOpen) {
-      toogleOpenMenu('');
-    }
-  }, [isSidebarOpen]);
+    setIsMenuActive(false);
+    menuItem.children.map(data => {
+      if (document.location.pathname === data.url) {
+        setIsMenuActive(true);
+      }
+    });
+  }, [document.location.pathname]);
+
+  const expand = isSidebarOpen && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1;
+
+  const handleMouseEnter = () => {
+    !expand && toogleOpenMenu(menuItem.id);
+  };
 
   return (
-    <ListItem disablePadding sx={{ display: 'block' }}>
-      <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)}>
+    <>
+      <ListItemButton onMouseEnter={handleMouseEnter} selected={isMenuActive}>
         <ListItemIcon>
-          <IconRender icon={menuItem?.icon || InboxIcon} level={level} item={menuItem} />
+          <IconRender icon={menuItem?.icon || InboxIcon} level={level} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title} />
-        {isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1 ? (
-          <ExpandLessIcon />
-        ) : (
-          <ExpandMoreIcon />
-        )}
+        {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}
       </ListItemButton>
 
-      <Collapse
-        in={isMenuExpanded && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1}
-        timeout='auto'
-        unmountOnExit
-      >
+      <Collapse in={expand} timeout={800} unmountOnExit>
         <List component='div' disablePadding>
           {menuItem?.children?.map(item => (
             <MenuItem key={item.id} menuItem={item} level={1} />
           ))}
         </List>
       </Collapse>
-    </ListItem>
+    </>
   );
 }
 

@@ -46,6 +46,14 @@ const Sidebar = () => {
   const theme = useTheme();
   const { isSidebarOpen, toogleSidebar } = useSidebarContext();
 
+  const handleSidebar = (res: boolean) => {
+    if (res) {
+      !isSidebarOpen && toogleSidebar(true);
+    } else {
+      isSidebarOpen && toogleSidebar(false);
+    }
+  };
+
   return (
     <Drawer
       variant='permanent'
@@ -53,8 +61,8 @@ const Sidebar = () => {
       PaperProps={{
         sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white, overflow: 'hidden' },
       }}
-      onMouseEnter={() => toogleSidebar(true)}
-      onMouseLeave={() => toogleSidebar(false)}
+      onMouseEnter={() => handleSidebar(true)}
+      onMouseLeave={() => handleSidebar(false)}
     >
       <Toolbar />
       <Box>

@@ -1,4 +1,5 @@
-import { Components } from '@mui/material';
+import { Components, darken, alpha } from '@mui/material';
+import { colors } from './pallete';
 
 export const components: Components = {
   MuiButton: {
@@ -12,7 +13,17 @@ export const components: Components = {
   MuiListItemButton: {
     styleOverrides: {
       root: {
-        padding: '13px',
+        'padding': '13px',
+        '&.Mui-selected': {
+          'backgroundColor': alpha(colors.primary.light, 0.85),
+          'borderLeft': '5px white solid',
+          '&:hover': {
+            backgroundColor: darken(colors.primary.main, 0.2),
+          },
+        },
+        '&:hover': {
+          backgroundColor: darken(colors.primary.main, 0.2),
+        },
       },
     },
   },
