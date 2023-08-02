@@ -9,7 +9,6 @@ import { IconRender } from './MenuComponents';
 import { IMenuItemCollapse } from '../menu-items.interface';
 import { useSidebarContext } from '../../context/useSidebarContext';
 
-let render = 0;
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
   const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
@@ -24,11 +23,14 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
   }, [document.location.pathname]);
 
   const expand = isSidebarOpen && isMenuExpanded.findIndex((id: string) => id === menuItem.id) > -1;
-  console.log('render', render++);
+
+  const handleMouseEnter = () => {
+    !expand && toogleOpenMenu(menuItem.id);
+  };
 
   return (
     <>
-      <ListItemButton onMouseEnter={() => toogleOpenMenu(menuItem.id)} selected={isMenuActive}>
+      <ListItemButton onMouseEnter={handleMouseEnter} selected={isMenuActive}>
         <ListItemIcon>
           <IconRender icon={menuItem?.icon || InboxIcon} level={level} />
         </ListItemIcon>
