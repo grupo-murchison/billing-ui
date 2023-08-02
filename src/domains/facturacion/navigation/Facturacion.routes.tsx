@@ -1,10 +1,9 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { FacturacionEdit } from '@domains/facturacion/container/facturacion-crud';
-
 import { FacturacionProvider, FacturacionReporteProvider } from '@domains/facturacion/contexts';
-import { FacturacionDataGrid } from '@domains/facturacion/container/facturacion-datagrid';
+import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
+import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
 
 const FacturacionRoutes = () => {
   return (
@@ -13,11 +12,11 @@ const FacturacionRoutes = () => {
         path='/facturacion'
         element={
           <FacturacionProvider>
-            <FacturacionDataGrid />
+            <Facturacion />
           </FacturacionProvider>
         }
       ></Route>
-      <Route path='/facturacion/:facturaId/edit' element={<FacturacionEdit />} />
+      <Route path='/facturacion/:facturaId/edit' element={<FacturacionReversion />} />
       <Route
         path='/facturacion/reporte'
         element={

@@ -1,38 +1,23 @@
 import { ReactNode } from 'react';
-import { Control, FieldValues } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 
-export type FromProps = {
+export type FromProps = ActionButtonsProps & {
   children?: ReactNode;
-  //TODO esto deberia ser opcional para las View? onSubmit y isSubmitting
-  onSubmit?: any;
-  isSubmitting: boolean;
-  handleClose: any;
-  isUpdate?: boolean;
-  isView?: boolean;
+  onSubmit?: () => void;
 };
 
 export type ActionButtonsProps = {
   isSubmitting: boolean;
-  handleClose: any;
+  handleClose?: () => void;
   isUpdate?: boolean;
   isView?: boolean;
-};
-
-export type DropdownProps = {
-  onChange?: any;
-  control: Control<any>;
-  name: string;
-  error?: boolean;
-  disabled?: boolean;
-  label: string;
-  helperText?: string;
-  emptyOption?: boolean;
+  isSearch?: boolean;
 };
 
 export type FormSelectProps = {
   control: Control<any>;
   name: string;
-  options?: any[]; //TODO estas options deberian ser opcionales?
+  options?: any[];
   disabled?: boolean;
   disabledEmpty?: boolean;
   label?: string;
