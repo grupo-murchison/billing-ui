@@ -9,6 +9,7 @@ import type { HandlePromise } from '@app/utils/axios.util';
 const BASE_PATH = 'v1/contratos';
 
 class ContratoService {
+  //==============================  Endpoints Para Patalla Contrato
   static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/all/pagination`, { params }),
@@ -59,9 +60,18 @@ class ContratoService {
     return [response, error];
   };
 
+  //==============================  Endpoints Para Patalla Facturación
   static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
+    );
+
+    return [response, error];
+  };
+
+  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/periodos/filter`, { params }),
     );
 
     return [response, error];
