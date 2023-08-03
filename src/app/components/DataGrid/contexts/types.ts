@@ -10,7 +10,7 @@ export type DataGridProps<T> = {
     load: (config?: { fixedFilters?: RepositoryParams; filters?: RepositoryParams }) => void;
     reload: () => void;
   }>;
-  columnHeads: GridColDef[];
+  columns: GridColDef[];
   onClickNew?: () => void;
   repositoryFunc: (params: Record<string, unknown>) => Promise<
     AxiosResponse<{
@@ -32,7 +32,7 @@ export type RepositoryFuncParamsPaginated = Record<'take' | 'page', number> | Re
 export type RepositoryParams = Record<string, unknown>; // Record<string, AnyValue> || Record<string, string> => es un objeto par key-valor
 
 export type InitialContext = {
-  columnHeads: GridColDef[];
+  columns: GridColDef[];
   currentPage: number;
   onClickNew?: () => void;
   handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;

@@ -16,6 +16,7 @@ const ContratoRowDataGridSchema = z.object({
 const ContratoFacturacionRowDataGridSchema = z.object({
   id: z.number(),
   cliente: z.string().nullish(),
+  estado: z.string().nullish(),
   descripcion: z.string().nullish(),
   fechaInicioContrato: z.string().nullish(),
   fechaFinContrato: z.string().nullish(),
