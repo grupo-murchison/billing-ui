@@ -1,8 +1,8 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Paper } from '@mui/material';
+import { Divider, Paper } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -24,11 +24,14 @@ import { DateLib } from '@libs';
 
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
+import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
 
   const { mainDataGrid, estadoOptions } = useContext(FacturacionContext);
+  const [planFacturacion, setPlanFacturacion] = useState<any>(null);
+  const [contratoId, setContratoId] = useState<number>();
 
   useEffect(() => {
     mainDataGrid.load();
@@ -63,9 +66,16 @@ const Facturacion = () => {
     [mainDataGrid],
   );
 
-  const onClickAbrirPlanFacturacion = (params: any) => {
-    console.log(params);
-  };
+  const onClickAbrirPlanFacturacion = (params: any) => setContratoId(params.id);
+
+  useEffect(() => {
+    if (contratoId) {
+      ContratoRepository.getPlanFacturacionPeriodos({ contratoId }).then(data => {
+        // console.log('data', data.data.data[0]); // TODO por qué son dos datas anidados ?
+        setPlanFacturacion(data.data.data[0]);
+      });
+    }
+  }, [contratoId]);
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
@@ -117,7 +127,7 @@ const Facturacion = () => {
       <Paper>
         <DataGrid
           hookRef={mainDataGrid.ref}
-          columnHeads={[
+          columns={[
             {
               field: 'nroContrato',
               headerName: 'Nro. Contrato',
@@ -165,6 +175,65 @@ const Facturacion = () => {
             },
           ]}
           repositoryFunc={ContratoRepository.getAllContratoFacturacionPaginated}
+        />
+      </Paper>
+      <Divider sx={{ my: 4 }} />
+      <Paper>
+        <DataGridBase
+          rows={planFacturacion?.periodos || []}
+          columns={[
+            {
+              field: 'periodo',
+              headerName: 'Periodo',
+              flex: 0.5,
+            },
+            {
+              field: 'liquidacionDesde',
+              headerName: 'Desde',
+              type: 'date',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+            },
+            {
+              field: 'liquidacionHasta',
+              headerName: 'Hasta',
+              type: 'date',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+            },
+            {
+              field: 'fechaFacturacion',
+              headerName: 'Fecha Facturacion',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+              type: 'date',
+            },
+            {
+              field: 'estado',
+              headerName: 'Estado',
+            },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={1}
+                  icon={<ViewIcon />}
+                  label='Log'
+                  onClick={() => onClickAbrirPlanFacturacion(params)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={2}
+                  icon={<ViewIcon />}
+                  label='Facturar'
+                  onClick={() => onClickAbrirPlanFacturacion(params)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
         />
       </Paper>
     </>

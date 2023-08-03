@@ -60,11 +60,18 @@ class ContratoRepository {
   };
 
   static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated) => {
-    console.log('getAllContratoFacturacionPaginated');
-    
     const response$ = from(ContratoService.getAllContratoFacturacionPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>) => {
+    const response$ = from(ContratoService.getPlanFacturacionPeriodos(params)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
     );
     const response = await lastValueFrom(response$);
     return response;

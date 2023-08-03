@@ -160,7 +160,7 @@ const FacturacionReversion = () => {
       <Paper>
         <DataGrid
           hookRef={mainDataGrid.ref}
-          columnHeads={[
+          columns={[
             { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
             {
               field: 'fechaEjecucion',

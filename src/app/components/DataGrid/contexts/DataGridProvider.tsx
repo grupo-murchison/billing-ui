@@ -8,7 +8,7 @@ import { initialContext } from '../constants';
 
 const DataGridProvider = <T,>({
   hookRef,
-  columnHeads,
+  columns,
   onClickNew,
   repositoryFunc,
   children,
@@ -106,7 +106,7 @@ const DataGridProvider = <T,>({
   return (
     <DataGridContext.Provider
       value={{
-        columnHeads,
+        columns,
         currentPage,
         handleChangeRowsPerPage,
         handleNextPageChange,

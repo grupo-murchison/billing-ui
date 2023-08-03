@@ -4,12 +4,7 @@ import { DataGridContext } from './contexts';
 import DataGridBase from './DataGridBase';
 
 const DataGridWithContext = () => {
-  const {
-    columnHeads: columns,
-    rows,
-    loading,
-    toolbar: Toolbar,
-  } = useContext(DataGridContext);
+  const { columns, rows, loading, toolbar: Toolbar, ...props } = useContext(DataGridContext);
 
   // Repartir el espacio en partes iguales
   columns.forEach((col: any) => {
@@ -18,7 +13,7 @@ const DataGridWithContext = () => {
 
   return (
     <>
-      <DataGridBase rows={rows} columns={columns} pageSizeOptions={[10, 25, 50, 100]} loading={loading} />
+      <DataGridBase rows={rows} columns={columns} pageSizeOptions={[10, 25, 50, 100]} loading={loading} {...props} />
     </>
   );
 };

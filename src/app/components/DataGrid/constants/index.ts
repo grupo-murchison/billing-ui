@@ -1,7 +1,7 @@
 import { InitialContext } from '../contexts/types';
 
 export const initialContext: InitialContext = {
-  columnHeads: [],
+  columns: [],
   currentPage: 0,
   onClickNew: () => {
     return;
