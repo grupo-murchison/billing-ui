@@ -2,16 +2,15 @@ import { from, lastValueFrom } from 'rxjs';
 
 import { RepositoryUtils } from '@app/utils';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { ProcedimientoCustomService } from '@domains/procedimiento-custom/repository/procedimiento-custom.service';
 import {
   getAllProcedimientoCustomPaginatedSchema,
   getAllProcedimientoCustomAsDropdownSchema,
 } from '@domains/procedimiento-custom/repository/procedimiento-custom.schemas';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ProcedimientoCustomRepository {
-  static getAllProcedimientoCustomPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllProcedimientoCustomPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ProcedimientoCustomService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProcedimientoCustomPaginatedSchema),
@@ -36,13 +35,17 @@ class ProcedimientoCustomRepository {
   };
 
   static createProcedimientoCustom = async (procedimientoCustom: AnyValue) => {
-    const response$ = from(ProcedimientoCustomService.post(procedimientoCustom)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(ProcedimientoCustomService.post(procedimientoCustom)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static updateProcedimientoCustom = async (procedimientoCustom: AnyValue) => {
-    const response$ = from(ProcedimientoCustomService.patch(procedimientoCustom)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response$ = from(ProcedimientoCustomService.patch(procedimientoCustom)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
     const response = await lastValueFrom(response$);
     return response;
   };

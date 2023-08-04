@@ -1,12 +1,11 @@
 import { ApiProvider } from '@providers';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ProductoSoftlandService {
-  static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
+  static getAllPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>('v1/productos-softland/all/pagination', { params }),
     );

@@ -1,7 +1,5 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { RepositoryUtils } from '@app/utils';
 
 import { ProductoSoftlandService } from '@domains/producto-softland/repository/producto-softland.service';
@@ -9,9 +7,10 @@ import {
   getAllProductoSoftlandPaginatedSchema,
   getAllProductoSoftlandAsDropdownSchema,
 } from '@domains/producto-softland/repository/producto-softland.schemas';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ProductoSoftlandRepository {
-  static getAllProductoSoftlandPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllProductoSoftlandPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ProductoSoftlandService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProductoSoftlandPaginatedSchema),

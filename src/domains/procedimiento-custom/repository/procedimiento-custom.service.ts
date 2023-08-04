@@ -1,9 +1,8 @@
 import { ApiProvider } from '@providers';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ProcedimientoCustomService {
   private static BASE_PATH = 'v1/procedimiento-custom';
@@ -16,7 +15,7 @@ class ProcedimientoCustomService {
     return [response, error];
   };
 
-  static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
+  static getAllPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${this.BASE_PATH}/all/pagination`, { params }),
     );
@@ -47,7 +46,9 @@ class ProcedimientoCustomService {
   };
 
   static deleteById = async (id: number): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.delete<AnyValue>(`${this.BASE_PATH}/crud/${id}`));
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.delete<AnyValue>(`${this.BASE_PATH}/crud/${id}`),
+    );
 
     return [response, error];
   };

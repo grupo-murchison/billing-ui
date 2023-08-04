@@ -1,14 +1,13 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { RepositoryUtils } from '@app/utils';
 
 import { ConceptoAcuerdoService } from '@domains/concepto-acuerdo/repository/concepto-acuerdo.service';
 import { getAllConceptoAcuerdoPaginatedSchema } from '@domains/concepto-acuerdo/repository/concepto-acuerdo.schemas';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ConceptoAcuerdoRepository {
-  static getAllConceptoAcuerdoPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllConceptoAcuerdoPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ConceptoAcuerdoService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllConceptoAcuerdoPaginatedSchema),

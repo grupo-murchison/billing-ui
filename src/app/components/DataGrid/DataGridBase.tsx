@@ -1,4 +1,4 @@
-import { DataGrid as MUIDataGrid, DataGridProps } from '@mui/x-data-grid';
+import { DataGrid as MUIDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
 import { SxProps, useTheme } from '@mui/material';
 
 import LinearProgress from '@mui/material/LinearProgress';
@@ -11,7 +11,7 @@ const DataGridBase = ({
   columns,
   loading,
   pageSizeOptions,
-  // toolbar: Toolbar,
+  //  toolbar: Toolbar,
   ...props
 }: DataGridProps) => {
   const theme = useTheme();
@@ -64,7 +64,7 @@ const DataGridBase = ({
         slots={{
           loadingOverlay: LinearProgress,
           noRowsOverlay: NoRowsContent,
-          // toolbar: Toolbar,
+          toolbar: GridToolbar,
         }}
         slotProps={{
           pagination: {
