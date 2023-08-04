@@ -1,20 +1,20 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandDataGridBreadcrumb, labelAndPath } from '@domains/producto-softland/constants';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib } from '@libs';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
@@ -53,40 +53,60 @@ const ProductoSoftlandDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'AGRUPACIÓN' },
-              { headerName: 'CÓDIGO' },
-              { headerName: 'DESCRIPCIÓN' },
-              { headerName: 'ACTIVO' },
-              { headerName: 'FECHA ACTIVO' },
-              { headerName: 'ACCIONES' },
-            ]}
-            repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.agrupacion}</td>
-                <td>{row.codigo}</td>
-                <td>{row.descripcion}</td>
-                <td>{row.activo ? 'SI' : 'NO'}</td>
-                <td>{DateLib.beautifyDBString(row.fechaCambioEstado)}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-            onClickNew={handleClickCreate}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          columns={[
+            { field: 'agrupacion', headerName: 'AGRUPACIÓN' },
+            { field: 'codigo', headerName: 'CÓDIGO' },
+            { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+            { field: 'activo', headerName: 'ACTIVO', valueGetter: params => (params.value ? 'SI' : 'NO') },
+            {
+              field: 'fechaCambioEstado',
+              headerName: 'FECHA ACTIVO',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+              type: 'date',
+            },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ProductoSoftlandRepository.getAllProductoSoftlandPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

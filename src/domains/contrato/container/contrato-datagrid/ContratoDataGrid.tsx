@@ -1,15 +1,12 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
-import { rowSanitizer } from '@app/components/DataGrid/helpers';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
@@ -18,6 +15,8 @@ import { ContratoRowDataGridSchema } from '@domains/contrato/repository/contrato
 import { ContartoLabelAndPath } from '@domains/contrato/constants';
 
 import { DateLib } from '@libs';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();
@@ -56,46 +55,67 @@ const ContratoDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'Nº Contrato' },
-              { headerName: 'Descripción' },
-              { headerName: 'Tipo Contrato' },
-              { headerName: 'Modelo Acuerdo' },
-              { headerName: 'Cliente' },
-              { headerName: 'Fecha Inicio' },
-              { headerName: 'Fecha Fin' },
-              { headerName: 'ACCIONES' },
-            ]}
-            onClickNew={handleClickCreate}
-            repositoryFunc={ContratoRepository.getAllContratoPaginated}
-            rowTemplate={row => (
-              <>
-                {/* // TODO acá iria una funcion con row.map() que aplique rowSanitizer() a cada column y deberia recibir además un archivo de configuracion para ordenar las columnas*/}
-                <td>{rowSanitizer(row.nroContrato)}</td>
-                <td>{rowSanitizer(row.descripcion)}</td>
-                <td>{rowSanitizer(row.tipoContrato)}</td>
-                <td>{rowSanitizer(row.modeloAcuerdo)}</td>
-                <td>{rowSanitizer(row.cliente)}</td>
-                <td>{rowSanitizer(row.fechaInicioContrato && DateLib.beautifyDBString(row.fechaInicioContrato))}</td>
-                <td>{rowSanitizer(row.fechaFinContrato && DateLib.beautifyDBString(row.fechaFinContrato))}</td>
-
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          columns={[
+            { field: 'nroContrato', headerName: 'Nº Contrato' },
+            { field: 'descripcion', headerName: 'Descripción' },
+            { field: 'tipoContrato', headerName: 'Tipo Contrato' },
+            { field: 'modeloAcuerdo', headerName: 'Modelo Acuerdo' },
+            { field: 'cliente', headerName: 'Cliente' },
+            {
+              field: 'fechaInicioContrato',
+              headerName: 'Fecha Inicio',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+              type: 'date',
+            },
+            {
+              field: 'fechaFinContrato',
+              headerName: 'Fecha Fin',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
+              type: 'date',
+            },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ContratoRepository.getAllContratoPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

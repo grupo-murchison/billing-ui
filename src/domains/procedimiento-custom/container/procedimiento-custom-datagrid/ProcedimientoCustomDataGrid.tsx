@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/repository';
 import { ProcedimientoCustomDataGridBreadcrumb, label } from '@domains/procedimiento-custom/constants';
 import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoCustomDataGrid = () => {
   const _navigate = useNavigate();
@@ -51,44 +51,57 @@ const ProcedimientoCustomDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'Código' },
-              { headerName: 'DENOMINACIÓN' },
-              { headerName: 'TIPO FUNCIÓN' },
-              { headerName: 'ACCIÓN' },
-              { headerName: 'EVENTO' },
-              { headerName: 'CAMPO' },
-              { headerName: 'Expresión Filtro' },
-              { headerName: 'ACCIONES' },
-            ]}
-            repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.codigo}</td>
-                <td>{row.denominacion}</td>
-                <td>{row.funcion}</td>
-                <td>{row.accion}</td>
-                <td>{row.evento}</td>
-                <td>{row.eventoCampo}</td>
-                <td>{row.expresionFiltro}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-            onClickNew={handleClickCreate}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          columns={[
+            { field: 'codigo', headerName: 'Código' },
+            { field: 'denominacion', headerName: 'DENOMINACIÓN' },
+            { field: 'funcion', headerName: 'TIPO FUNCIÓN' },
+            { field: 'accion', headerName: 'ACCIÓN' },
+            { field: 'evento', headerName: 'EVENTO' },
+            { field: 'eventoCampo', headerName: 'CAMPO' },
+            { field: 'expresionFiltro', headerName: 'Expresión Filtro' },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ProcedimientoCustomRepository.getAllProcedimientoCustomPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

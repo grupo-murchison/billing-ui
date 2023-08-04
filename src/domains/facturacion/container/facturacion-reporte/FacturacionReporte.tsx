@@ -7,7 +7,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
-// import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 
@@ -230,7 +230,7 @@ const FacturacionReporte = () => {
             },
           ]}
           repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-          // toolbar={Toolbar}
+          toolbar={toolbarMUI}
         />
       </Paper>
     </>
