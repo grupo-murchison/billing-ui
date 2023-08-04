@@ -27,6 +27,10 @@ const DataGridBase = ({
       color: theme.palette.common.white,
       backgroundColor: theme.palette.text.disabled,
       fontSize: theme.typography.h6.fontSize,
+      textTransform: 'lowercase',
+    },
+    '& .MuiDataGrid-columnHeader :first-letter': {
+      textTransform: 'capitalize',
     },
   };
 
