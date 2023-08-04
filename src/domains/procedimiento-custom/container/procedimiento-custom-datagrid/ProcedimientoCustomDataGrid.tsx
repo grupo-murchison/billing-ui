@@ -12,7 +12,7 @@ import { ProcedimientoCustomRepository } from '@domains/procedimiento-custom/rep
 import { ProcedimientoCustomDataGridBreadcrumb, label } from '@domains/procedimiento-custom/constants';
 import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoCustomDataGrid = () => {
   const _navigate = useNavigate();
@@ -54,7 +54,8 @@ const ProcedimientoCustomDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );

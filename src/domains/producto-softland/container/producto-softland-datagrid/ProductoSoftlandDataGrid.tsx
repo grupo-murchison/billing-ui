@@ -14,7 +14,7 @@ import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 
 import { DateLib } from '@libs';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ProductoSoftlandDataGrid = () => {
   const _navigate = useNavigate();
@@ -56,7 +56,8 @@ const ProductoSoftlandDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );

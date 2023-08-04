@@ -12,7 +12,7 @@ import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { ModeloAcuerdoDataGridBreadcrumb, ModeloAcuerdoLabelAndPath } from '@domains/modelo-acuerdo/constants';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
+import { EditOutlinedIcon, DeleteOutlineIcon, AddIcon } from '@assets/icons';
 
 const ModeloAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -55,7 +55,8 @@ const ModeloAcuerdoDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );

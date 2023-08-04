@@ -64,7 +64,7 @@ const DataGridBase = ({
         slots={{
           loadingOverlay: LinearProgress,
           noRowsOverlay: NoRowsContent,
-          toolbar: GridToolbar,
+          // toolbar: GridToolbar,
         }}
         slotProps={{
           pagination: {

@@ -13,7 +13,7 @@ import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/con
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 import { ConceptoAcuerdoLabelAndPath } from '@domains/concepto-acuerdo/constants';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ConceptoAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -61,7 +61,8 @@ const ConceptoAcuerdoDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );

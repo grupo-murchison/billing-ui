@@ -13,7 +13,7 @@ import { ProcedimientoQDataGridBreadcrumb } from '@domains/procedimiento-q/const
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
 import { label } from '@domains/procedimiento-q/constants';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoQDataGrid = () => {
   const _navigate = useNavigate();
@@ -62,7 +62,8 @@ const ProcedimientoQDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );

@@ -12,7 +12,7 @@ import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository'
 import { ProcedimientoPSDataGridBreadcrumb, labelAndPath } from '@domains/procedimiento-ps/constants';
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoPSDataGrid = () => {
   const _navigate = useNavigate();
@@ -61,7 +61,8 @@ const ProcedimientoPSDataGrid = () => {
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
       <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        Crear
+        <AddIcon />
+        Alta
       </Button>
     </Stack>
   );
