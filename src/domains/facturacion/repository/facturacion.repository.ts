@@ -40,6 +40,12 @@ class FacturacionRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static facturacionManual = async (contratoId: number) => {
+    const response$ = from(FacturacionService.facturacionManual(contratoId)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default FacturacionRepository;
