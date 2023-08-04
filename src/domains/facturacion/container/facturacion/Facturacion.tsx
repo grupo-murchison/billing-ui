@@ -2,12 +2,12 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Divider, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
-import { Col, Row } from '@app/components';
+import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
-// import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
@@ -24,14 +24,15 @@ import { DateLib } from '@libs';
 
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
-import DataGridBase from '@app/components/DataGrid/DataGridBase';
+import PlanDeFacturacion from './views/PlanDeFacturacion';
+import LogFacturacion from './views/LogFacturacion';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
 
-  const { mainDataGrid, estadoOptions } = useContext(FacturacionContext);
-  const [planFacturacion, setPlanFacturacion] = useState<any>(null);
+  const { mainDataGrid, estadosContrato } = useContext(FacturacionContext);
   const [contratoId, setContratoId] = useState<number>();
+  const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
     mainDataGrid.load();
@@ -66,16 +67,10 @@ const Facturacion = () => {
     [mainDataGrid],
   );
 
-  const onClickAbrirPlanFacturacion = (params: any) => setContratoId(params.id);
-
-  useEffect(() => {
-    if (contratoId) {
-      ContratoRepository.getPlanFacturacionPeriodos({ contratoId }).then(data => {
-        // console.log('data', data.data.data[0]); // TODO por qué son dos datas anidados ?
-        setPlanFacturacion(data.data.data[0]);
-      });
-    }
-  }, [contratoId]);
+  const onClickAbrirPlanFacturacion = (params: any) => {
+    setContratoId(params.id);
+    setOpenModal(true);
+  };
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
@@ -114,7 +109,7 @@ const Facturacion = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
-            <FormSelect control={control} label='Estado' name='estadoEnum' options={estadoOptions} emptyOption />
+            <FormSelect control={control} label='Estado' name='estadoEnum' options={estadosContrato} emptyOption />
           </Col>
         </Row>
       </Form>
@@ -146,15 +141,15 @@ const Facturacion = () => {
               field: 'fechaInicioContrato',
               headerName: 'Fecha Inicio',
               flex: 0.5,
-              valueGetter: params => DateLib.parseFromDBString(params.value),
               type: 'date',
+              valueGetter: ({ value }) => DateLib.parseFromDBString(value),
             },
             {
               field: 'fechaFinContrato',
               headerName: 'Fecha Fin',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
               flex: 0.5,
+              type: 'date',
+              valueGetter: params => DateLib.parseFromDBString(params.value),
             },
             {
               field: 'actions',
@@ -177,65 +172,16 @@ const Facturacion = () => {
           repositoryFunc={ContratoRepository.getAllContratoFacturacionPaginated}
         />
       </Paper>
-      <Divider sx={{ my: 4 }} />
-      <Paper>
-        <DataGridBase
-          rows={planFacturacion?.periodos || []}
-          columns={[
-            {
-              field: 'periodo',
-              headerName: 'Periodo',
-              flex: 0.5,
-            },
-            {
-              field: 'liquidacionDesde',
-              headerName: 'Desde',
-              type: 'date',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-            },
-            {
-              field: 'liquidacionHasta',
-              headerName: 'Hasta',
-              type: 'date',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-            },
-            {
-              field: 'fechaFacturacion',
-              headerName: 'Fecha Facturacion',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
-            },
-            {
-              field: 'estado',
-              headerName: 'Estado',
-            },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={1}
-                  icon={<ViewIcon />}
-                  label='Log'
-                  onClick={() => onClickAbrirPlanFacturacion(params)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Facturar'
-                  onClick={() => onClickAbrirPlanFacturacion(params)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-        />
-      </Paper>
+
+      {/* <Divider sx={{ my: 4 }}>
+        <Typography variant='h3'>Plan De Facturación</Typography>
+      </Divider> */}
+
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Plan De Facturación'>
+        <PlanDeFacturacion contratoId={contratoId} />
+
+        <LogFacturacion />
+      </Modal>
     </>
   );
 };

@@ -11,6 +11,7 @@
   visibility: hidden;
   transform: scale(1.1);
   transition: visibility 0s linear 0.25s, opacity 0.25s 0s, transform 0.25s;
+  z-index: 1300;
 
   &.modal--open {
     opacity: 1;
@@ -28,6 +29,8 @@
     padding: 1rem 1.5rem;
     border-radius: 0.5rem;
     width: min(1200px, 120vw);
+    max-height: calc(100vh - 60px);
+    overflow-y: auto;
 
     .modal-content__header {
       display: flex;
