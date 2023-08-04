@@ -1,4 +1,4 @@
-import { DataGrid as MUIDataGrid, DataGridProps } from '@mui/x-data-grid';
+import { DataGrid as MUIDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
 import { SxProps, useTheme } from '@mui/material';
 
 import LinearProgress from '@mui/material/LinearProgress';
@@ -11,7 +11,7 @@ const DataGridBase = ({
   columns,
   loading,
   pageSizeOptions,
-  // toolbar: Toolbar,
+  //  toolbar: Toolbar,
   ...props
 }: DataGridProps) => {
   const theme = useTheme();
@@ -27,6 +27,10 @@ const DataGridBase = ({
       color: theme.palette.common.white,
       backgroundColor: theme.palette.text.disabled,
       fontSize: theme.typography.h6.fontSize,
+      textTransform: 'lowercase',
+    },
+    '& .MuiDataGrid-columnHeader :first-letter': {
+      textTransform: 'capitalize',
     },
   };
 
@@ -64,7 +68,7 @@ const DataGridBase = ({
         slots={{
           loadingOverlay: LinearProgress,
           noRowsOverlay: NoRowsContent,
-          // toolbar: Toolbar,
+          // toolbar: GridToolbar,
         }}
         slotProps={{
           pagination: {

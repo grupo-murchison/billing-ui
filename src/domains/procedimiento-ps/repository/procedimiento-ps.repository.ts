@@ -1,7 +1,5 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
-
 import { RepositoryUtils } from '@app/utils';
 
 import { ProcedimientoPSService } from '@domains/procedimiento-ps/repository/procedimiento-ps.service';
@@ -9,9 +7,10 @@ import {
   getAllProcedimientoPSPaginatedSchema,
   getAllProcedimientoPSAsDropdownSchema,
 } from '@domains/procedimiento-ps/repository/procedimiento-ps.schemas';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ProcedimientoPSRepository {
-  static getAllProcedimientoPSPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllProcedimientoPSPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ProcedimientoPSService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProcedimientoPSPaginatedSchema),

@@ -9,9 +9,10 @@ import {
   getAllModeloAcuerdoPaginatedSchema,
   getAllModeloAcuerdoAsDropdownSchema,
 } from '@domains/modelo-acuerdo/repository/modelo-acuerdo.schemas';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ModeloAcuerdoRepository {
-  static getAllModeloAcuerdoPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllModeloAcuerdoPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ModeloAcuerdoService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllModeloAcuerdoPaginatedSchema),

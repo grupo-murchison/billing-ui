@@ -1,6 +1,5 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import { DataGridRepositoryFuncParams } from '@app/pro-components';
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
@@ -12,7 +11,7 @@ import {
 } from '@domains/contrato/repository/contrato.schemas';
 
 class ContratoRepository {
-  static getAllContratoPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllContratoPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ContratoService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllContratoPaginatedSchema),
