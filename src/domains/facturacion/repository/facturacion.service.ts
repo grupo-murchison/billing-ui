@@ -1,4 +1,4 @@
-import { ApiProvider } from '@providers';
+import { ApiProvider, ApiProviderBilligProcessor } from '@providers';
 
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
@@ -53,6 +53,14 @@ class FacturacionService {
   static postVariablesPorContratoProcedimientoQ = async (contratoId: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.post<AnyValue>(`${BASE_PATH}/variablesPorContratoProcedimientoQ`, contratoId),
+    );
+
+    return [response, error];
+  };
+
+  static facturacionManual = async (contratoId: number): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/facturacion/manual`, { contratoId: contratoId }),
     );
 
     return [response, error];

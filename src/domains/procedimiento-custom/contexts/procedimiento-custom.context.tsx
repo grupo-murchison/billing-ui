@@ -1,4 +1,4 @@
-import { createContext, useReducer, Dispatch, useEffect  } from 'react';
+import { createContext, useReducer, Dispatch, useEffect } from 'react';
 import type { ReactNode } from 'react';
 
 import { useDataGrid } from '@app/hooks';

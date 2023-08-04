@@ -10,7 +10,9 @@ export const parseFromDBString = (inputDateStr: string) => {
   return parse(inputDateStr, 'yyyyMMdd', new Date());
 };
 
-export const beautifyDBString = (inputDateStr: string) => {
+export const beautifyDBString = (inputDateStr?: Nullable<string>) => {
+  if (!inputDateStr) return undefined;
+
   const parsedDate = parseFromDBString(inputDateStr);
   return format(parsedDate, 'dd-MM-yyyy');
 };

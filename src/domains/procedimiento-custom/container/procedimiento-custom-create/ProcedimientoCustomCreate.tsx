@@ -109,7 +109,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
     return estados.map(data => {
       return {
         code: data.value,
-        label: `${data.code} - ${data.label}`,
+        label: data.label,
         value: data.code,
       };
     });

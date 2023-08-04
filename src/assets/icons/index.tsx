@@ -48,6 +48,8 @@ export {
 
   // S
   Search as SearchIcon,
+  Send as SendIcon,
+  ScheduleSend as ScheduleSendIcon,
   Settings as SetttingsIcon,
   SettingsOutlined as SettingsOutlinedIcon,
 
