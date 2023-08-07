@@ -7,7 +7,7 @@ export type FromProps = ActionButtonsProps & {
 };
 
 export type ActionButtonsProps = {
-  isSubmitting: boolean;
+  isSubmitting?: boolean;
   handleClose?: () => void;
   isUpdate?: boolean;
   isView?: boolean;

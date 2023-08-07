@@ -25,12 +25,11 @@ import { DateLib } from '@libs';
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
-import LogFacturacion from './views/LogFacturacion';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
 
-  const { mainDataGrid, estadosContrato } = useContext(FacturacionContext);
+  const { mainDataGrid, estadosContrato, isContratoActivo } = useContext(FacturacionContext);
   const [contratoId, setContratoId] = useState<number>();
   const [openModal, setOpenModal] = useState(false);
 
@@ -165,6 +164,7 @@ const Facturacion = () => {
                   label='Ver Plan de Facturación'
                   onClick={() => onClickAbrirPlanFacturacion(params)}
                   showInMenu
+                  disabled={!isContratoActivo(params?.row?.estado)}
                 />,
               ],
             },
@@ -173,14 +173,8 @@ const Facturacion = () => {
         />
       </Paper>
 
-      {/* <Divider sx={{ my: 4 }}>
-        <Typography variant='h3'>Plan De Facturación</Typography>
-      </Divider> */}
-
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Plan De Facturación'>
         <PlanDeFacturacion contratoId={contratoId} />
-
-        <LogFacturacion />
       </Modal>
     </>
   );

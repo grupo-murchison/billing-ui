@@ -134,7 +134,7 @@ const ProcedimientoCustomEdit = () => {
       const apiPayload = parseToNull(data);
 
       ProcedimientoCustomRepository.updateProcedimientoCustom(apiPayload)
-        .then(x => {
+        .then(() => {
           mainDataGrid.reload();
           _navigate('/procedimiento-custom');
         })
@@ -175,6 +175,7 @@ const ProcedimientoCustomEdit = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={8}>
@@ -185,6 +186,7 @@ const ProcedimientoCustomEdit = () => {
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -282,7 +284,16 @@ const ProcedimientoCustomEdit = () => {
               />
             </Col>
             <Col md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Box sx={{ paddingTop: 'calc(1rem - 0.2rem)', fontSize: '1.2rem', marginRight: '0.5rem' }}>=</Box>
+              <Box
+                sx={{
+                  paddingTop: 'calc(1rem - 0.2rem)',
+                  fontSize: '1.2rem',
+                  marginLeft: '-0.8rem',
+                  marginRight: '0.75rem',
+                }}
+              >
+                =
+              </Box>
               <TextField
                 id='filtroValue'
                 label='Valor'
@@ -290,6 +301,7 @@ const ProcedimientoCustomEdit = () => {
                 error={!!formErrors.filtroValue}
                 helperText={formErrors?.filtroValue?.message}
                 disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                fullWidth
               />
             </Col>
           </Row>

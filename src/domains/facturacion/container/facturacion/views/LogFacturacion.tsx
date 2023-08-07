@@ -1,228 +1,226 @@
 import { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 
-import {
-  Alert,
-  Box,
-  Card,
-  CardContent,
-  CardHeader,
-  Divider as DividerMUI,
-  Paper,
-  Snackbar,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Divider as DividerMUI, Paper, TextField, Typography } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-import { DateLib } from '@libs';
-import { DivisorProvisorio } from '@app/components/Divider';
+import { FacturacionRepository } from '@domains/facturacion/repository';
 
-function LogFacturacion() {
-  const [planFacturacion, setPlanFacturacion] = useState<any>();
+import { DateLib } from '@libs';
+
+import Form from '@app/components/Form/Form';
+
+function LogFacturacion({
+  periodo,
+  facturacionContratoConceptoId = '199',
+}: {
+  facturacionContratoConceptoId?: string;
+  periodo: any;
+}) {
+  const [eventos, setEventos] = useState<any>();
   const [loading, setLoading] = useState(false);
 
+  const { register } = useForm({ defaultValues: { periodo: periodo?.periodo } });
 
-  // useEffect(() => {
-  //   if (contratoId) {
-  //     setLoading(true);
-  //     ContratoRepository.getPlanFacturacionPeriodos({ contratoId })
-  //       .then(data => {
-  //         // console.log('data', data.data.data[0]); // TODO por qué son dos datas anidados ?
-  //         setPlanFacturacion(data.data.data[0]);
-  //       })
-  //       .catch()
-  //       .finally(() => setLoading(false));
-  //   }
-  // }, [contratoId]);
+  useEffect(() => {
+    if (facturacionContratoConceptoId) {
+      setLoading(true);
+      FacturacionRepository.getEventos(facturacionContratoConceptoId)
+        .then(({ data }) => {
+          // setEventos(data[0]?.facturacionContratoConcepto);
+          setEventos(data[0]?.eventos);
+        })
+        .catch()
+        .finally(() => setLoading(false));
+    }
+  }, [facturacionContratoConceptoId]);
 
   return (
     <>
       <DividerMUI sx={{ my: 4 }}>
         <Typography variant='h3'>Log Facturación</Typography>
       </DividerMUI>
+      <Form isView>
+        <Row>
+          <Col sm={12} md={6}>
+            <TextField
+              label={'Nro Facturación'}
+              name='nroFacturacion'
+              value={12564}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+          <Col sm={12} md={6}>
+            <TextField
+              label={'Fecha Facturación'}
+              name='fechaFacturacion'
+              value={DateLib.beautifyDBString(periodo?.fechaFacturacion)}
+              inputProps={{ readOnly: true, shrink: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12} md={6}>
+            <TextField
+              label={'Sociedad'}
+              name='sociedad'
+              value={'Murchison Uruguay S.A'}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12} md={4}>
+            <TextField
+              label={'Periodo'}
+              id='periodo'
+              // value={periodo?.periodo}
+              inputProps={{ readOnly: true, shrink: true }}
+              fullWidth
+              {...register('periodo')}
+            />
+          </Col>
+          <Col sm={2} />
+          <Col sm={12} md={3}>
+            <TextField
+              label={'Desde'}
+              name='fechaFacturacion'
+              // value={DateLib.beautifyDBString(DateLib.parseFromDBString(periodo?.liquidacionDesde))}
+              value={DateLib.beautifyDBString(periodo?.liquidacionDesde)}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+          <Col sm={12} md={3}>
+            <TextField
+              label={'Hasta'}
+              name='sociedad'
+              value={DateLib.beautifyDBString(periodo?.liquidacionHasta)}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
+        <Box my={4}>
+          <Typography variant='h6' component='div'>
+            Proforma
+          </Typography>
+        </Box>
+        <Row>
+          <Col sm={12} md={6}>
+            <TextField label={'Nro. Proforma'} name='nroProforma' value={3} inputProps={{ readOnly: true }} fullWidth />
+          </Col>
 
-      {/* <Card sx={{ p: 3 }}>
-        <CardHeader
-          title={
-            <Typography variant='h3' component='h2'>
-              Log Facturación
-            </Typography>
-          }
+          <Col sm={12} md={6}>
+            <TextField
+              label={'Cliente'}
+              name='cliente'
+              value={'1000547 - KMUCORP S.A.'}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12} md={6}>
+            <TextField label={'Nro. Contrato'} name='nroContrato' value={2} inputProps={{ readOnly: true }} fullWidth />
+          </Col>
+          <Col sm={12} md={6}>
+            <TextField
+              label={'Descripción Contrato'}
+              name='cliente'
+              value={'Contrato KIA paraalmacenaje por bloques'}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
+      </Form>
+      <Paper>
+        <DataGridBase
+          loading={loading}
+          rows={[]}
+          columns={[
+            {
+              field: 'productoSoftland',
+              headerName: 'ProductoSoftland',
+            },
+            {
+              field: 'descripcion',
+              headerName: 'Descripcion',
+            },
+            {
+              field: 'cantidadTotal',
+              headerName: 'Cantidad Total',
+            },
+            {
+              field: 'precioUnitario',
+              headerName: 'Precio Unitario',
+            },
+            {
+              field: 'total',
+              headerName: 'Total',
+            },
+            {
+              field: 'moneda',
+              headerName: 'Moneda',
+            },
+            {
+              field: 'cantidadItemVIN',
+              headerName: 'Cantidad Item VIN',
+            },
+          ]}
         />
+      </Paper>
 
-        <CardContent> */}
-          <Row>
-            <Col sm={12} md={6}>
-              <TextField
-                label={'Nro Facturación'}
-                name='nroFacturacion'
-                value={12564}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-            <Col sm={12} md={6}>
-              <TextField
-                label={'Fecha Facturación'}
-                name='fechaFacturacion'
-                value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12} md={6}>
-              <TextField
-                label={'Sociedad'}
-                name='sociedad'
-                value={'Murchison Uruguay S.A'}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12} md={4}>
-              <TextField label={'Periodo'} name='periodo' value={5} inputProps={{ readOnly: true }} />
-            </Col>
-            <Col sm={2} />
-            <Col sm={12} md={3}>
-              <TextField
-                label={'Desde'}
-                name='fechaFacturacion'
-                value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-            <Col sm={12} md={3}>
-              <TextField
-                label={'Hasta'}
-                name='sociedad'
-                value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-          </Row>
-          <Box my={4}>
-            {/* <DivisorProvisorio label='Proforma' chip />*/}
-            <Typography variant='h6' component='div'>
-              Proforma
-            </Typography>
-          </Box>
-          <Row>
-            <Col sm={12} md={6}>
-              <TextField label={'Nro. Proforma'} name='nroProforma' value={3} inputProps={{ readOnly: true }} />
-            </Col>
+      <Box mt={3} mb={1}>
+        <Typography variant='h6' component='div'>
+          Soporte
+        </Typography>
+      </Box>
 
-            <Col sm={12} md={6}>
-              <TextField
-                label={'Cliente'}
-                name='cliente'
-                value={'1000547 - KMUCORP S.A.'}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-          </Row>
-          <Row>
-            <Col sm={12} md={6}>
-              <TextField label={'Nro. Contrato'} name='nroContrato' value={2} inputProps={{ readOnly: true }} />
-            </Col>
-            <Col sm={12} md={6}>
-              <TextField
-                label={'Descripción Contrato'}
-                name='cliente'
-                value={'Contrato KIA paraalmacenaje por bloques'}
-                inputProps={{ readOnly: true }}
-              />
-            </Col>
-          </Row>
-          <Paper>
-            <DataGridBase
-              rows={[]}
-              columns={[
-                {
-                  field: 'periodo',
-                  headerName: 'ProductoSoftland',
-                },
-                {
-                  field: 'liquidacionDesde',
-                  headerName: 'Descripcion',
-                  type: 'date',
-                  valueGetter: params => DateLib.parseFromDBString(params.value),
-                },
-                {
-                  field: 'liquidacionHasta',
-                  headerName: 'CantidadTotal',
-                  type: 'date',
-                  valueGetter: params => DateLib.parseFromDBString(params.value),
-                },
-                {
-                  field: 'fechaFacturacion',
-                  headerName: 'Precio Unitario',
-                  valueGetter: params => DateLib.parseFromDBString(params.value),
-                  type: 'date',
-                },
-                {
-                  field: 'estado',
-                  headerName: 'Total',
-                },
-                {
-                  field: 'estado',
-                  headerName: 'Moneda',
-                },
-                {
-                  field: 'estado',
-                  headerName: 'Cantidad Item VIN',
-                },
-              ]}
-            />
-          </Paper>
-
-          <Box mt={3} mb={1}>
-            <Typography variant='h6' component='div'>
-              Soporte
-            </Typography>
-          </Box>
-
-          <Paper>
-            <DataGridBase
-              rows={[]}
-              columns={[
-                {
-                  field: 'periodo',
-                  headerName: 'VIN',
-                },
-                {
-                  field: 'liquidacionDesde',
-                  headerName: 'Tipo Evento',
-                },
-                {
-                  field: 'liquidacionHasta',
-                  headerName: 'Fecha',
-                  type: 'date',
-                  valueGetter: params => DateLib.parseFromDBString(params.value),
-                },
-                {
-                  field: 'fechaFacturacion',
-                  headerName: 'DUA',
-                },
-                {
-                  field: 'modelo',
-                  headerName: 'Modelo',
-                },
-                {
-                  field: 'patio',
-                  headerName: 'Patio',
-                },
-                {
-                  field: 'tipoEmbarque',
-                  headerName: 'Tipo Embarque',
-                },
-              ]}
-            />
-          </Paper>
-        {/* </CardContent>
-      </Card> */}
+      <Paper>
+        <DataGridBase
+          loading={loading}
+          rows={eventos || []}
+          columns={[
+            {
+              field: 'genDestinoId',
+              headerName: 'VIN',
+            },
+            {
+              field: 'genEventoTipoId',
+              headerName: 'Tipo Evento',
+            },
+            {
+              field: 'genEventoFechaCreacion',
+              headerName: 'Fecha',
+              valueGetter: params => DateLib.beautifyISO(params?.value),
+            },
+            {
+              field: 'evDUA',
+              headerName: 'DUA',
+            },
+            {
+              field: 'evModelo',
+              headerName: 'Modelo',
+            },
+            {
+              field: 'genPatio',
+              headerName: 'Patio',
+            },
+            {
+              field: 'evTipoEmbarque',
+              headerName: 'Tipo Embarque',
+            },
+          ]}
+        />
+      </Paper>
     </>
   );
 }

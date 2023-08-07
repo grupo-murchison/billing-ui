@@ -57,8 +57,7 @@ const ContratoDataGrid = () => {
 
   const toolbar = (
     <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
-      <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        <AddIcon />
+      <Button onClick={handleClickCreate} color='primary' variant='contained' startIcon={<AddIcon />}>
         Alta
       </Button>
     </Stack>

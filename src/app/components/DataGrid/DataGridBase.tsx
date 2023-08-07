@@ -78,6 +78,7 @@ const DataGridBase = ({
               return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
             },
           },
+          // filterPanel: { sx: { maxWidth: '100vw' } },
         }}
         sx={{
           height: rows.length > 0 ? undefined : '380px',

@@ -78,6 +78,7 @@ const ProcedimientoPSIntervaloEdit = () => {
               error={!!formErrors.intervalo}
               helperText={formErrors?.intervalo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -91,6 +92,7 @@ const ProcedimientoPSIntervaloEdit = () => {
               error={!!formErrors.valorInicial}
               helperText={formErrors?.valorInicial?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -106,6 +108,7 @@ const ProcedimientoPSIntervaloEdit = () => {
               error={!!formErrors.valorFinal}
               helperText={formErrors?.valorFinal?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>

@@ -2,7 +2,6 @@ import { createContext } from 'react';
 import type { ReactNode } from 'react';
 
 import { useDataGrid } from '@app/hooks';
-import { truncate } from 'fs/promises';
 
 const estadosContrato = [
   { value: 'ACTIVO', label: 'Activo' },
@@ -14,6 +13,7 @@ const estadosPeriodos = [
   { value: 'ABIERTO', label: 'Abierto' },
   { value: 'ANULADO', label: 'Anulado' },
   { value: 'FACTURADO', label: 'Facturado' },
+  { value: 'REVERTIDO', label: 'Revertido' }, // TODO revertido es lo mismo que anulado ?
 ];
 
 const initialContext: InitialContext = {
@@ -22,6 +22,7 @@ const initialContext: InitialContext = {
   estadosPeriodos,
   isContratoActivo: () => false,
   isPeriodoFacturado: () => false,
+  handleEnableFacturar: () => false,
 };
 
 const FacturacionContext = createContext(initialContext);
@@ -47,9 +48,22 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
     return estado === 'FACTURADO' ? true : false;
   };
 
+  const handleEnableFacturar = (params: any, rows: any) => {
+    // console.log('handleEnableFacturar, params:', params); // TODO periodo anterior al seleccionado debe estar en estado facturado a no ser que sea el primer periodo a facturar.
+    // console.log('handleEnableFacturar, rows  :', rows);
+    return false;
+  };
+
   return (
     <FacturacionContext.Provider
-      value={{ mainDataGrid, estadosContrato, estadosPeriodos, isContratoActivo, isPeriodoFacturado }}
+      value={{
+        mainDataGrid,
+        estadosContrato,
+        estadosPeriodos,
+        isContratoActivo,
+        isPeriodoFacturado,
+        handleEnableFacturar,
+      }}
     >
       {children}
     </FacturacionContext.Provider>
@@ -66,6 +80,7 @@ type InitialContext = {
   estadosPeriodos: Record<'value' | 'label', string>[];
   isContratoActivo: (estado: string) => boolean;
   isPeriodoFacturado: (estado: string) => boolean;
+  handleEnableFacturar: (params: any, rows: any) => boolean;
 };
 
 export { FacturacionContext, FacturacionProvider };

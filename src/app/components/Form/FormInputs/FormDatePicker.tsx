@@ -15,7 +15,7 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: 
             {...field}
             label={label}
             inputFormat={inputFormat || 'dd-MM-yyyy'}
-            renderInput={params => <TextField {...params} />}
+            renderInput={params => <TextField {...params} fullWidth />}
             {...props}
           />
         )}
