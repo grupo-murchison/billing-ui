@@ -13,7 +13,7 @@ import { DateLib } from '@libs';
 
 import { ScheduleSendIcon, ViewIcon } from '@assets/icons';
 import { FacturacionContext } from '@domains/facturacion/contexts';
-import LogFacturacion from './LogFacturacion';
+import DetalleFacturacion from './DetalleFacturacion';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [planFacturacion, setPlanFacturacion] = useState<any>();
@@ -31,7 +31,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     setOpenSackbar(false);
   };
 
-  const { isPeriodoFacturado, handleEnableFacturar } = useContext(FacturacionContext);
+  const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
   useEffect(() => {
     if (contratoId) {
@@ -124,7 +124,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
                 <GridActionsCellItem
                   key={1}
                   icon={<ViewIcon />}
-                  label='Log'
+                  label='Detalle'
                   onClick={() => onClickLog(params)}
                   showInMenu
                 />
@@ -138,7 +138,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
                   label='Facturar'
                   onClick={onClickFacturar}
                   showInMenu
-                  disabled={handleEnableFacturar(params, planFacturacion?.periodos)} // TODO periodo anterior al seleccionado debe estar en estado facturado o no ser que sea el primer periodo a facturar.
+                  disabled={handleDisableFacturar(params.row, planFacturacion?.periodos)}
                 />
               ) : (
                 <></>
@@ -148,7 +148,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
         ]}
       />
 
-      {periodo && <LogFacturacion periodo={periodo} />}
+      {periodo && <DetalleFacturacion periodo={periodo} />}
 
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={openBackdrop}>
         <CircularProgress color='inherit' />

@@ -12,9 +12,9 @@ import { DateLib } from '@libs';
 
 import Form from '@app/components/Form/Form';
 
-function LogFacturacion({
+function DetalleFacturacion({
   periodo,
-  facturacionContratoConceptoId = '199',
+  facturacionContratoConceptoId = '199', // TODO este dato de donde sale ? en el flujo de pantallas deberia llegar con el Plan de Facturacion
 }: {
   facturacionContratoConceptoId?: string;
   periodo: any;
@@ -40,7 +40,7 @@ function LogFacturacion({
   return (
     <>
       <DividerMUI sx={{ my: 4 }}>
-        <Typography variant='h3'>Log Facturación</Typography>
+        <Typography variant='h3'>Detalle Facturación</Typography>
       </DividerMUI>
 
       <Form isView>
@@ -49,7 +49,7 @@ function LogFacturacion({
             <TextField
               label={'Nro Facturación'}
               name='nroFacturacion'
-              value={12564}
+              value={' '}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -223,4 +223,4 @@ function LogFacturacion({
   );
 }
 
-export default LogFacturacion;
+export default DetalleFacturacion;

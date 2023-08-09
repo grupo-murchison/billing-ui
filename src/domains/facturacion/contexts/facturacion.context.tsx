@@ -22,7 +22,7 @@ const initialContext: InitialContext = {
   estadosPeriodos,
   isContratoActivo: () => false,
   isPeriodoFacturado: () => false,
-  handleEnableFacturar: () => false,
+  handleDisableFacturar: () => false,
 };
 
 const FacturacionContext = createContext(initialContext);
@@ -31,7 +31,7 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
   const mainDataGrid = useDataGrid();
 
   /**
-   * La acción  "Abrir Plan Facturacion" (“Facturar”) aparecerá si hay contratos con estado “ACTIVO”
+   * La acción  "Abrir Plan Facturacion" aparecerá si hay contratos con estado “ACTIVO”
    * @param estado
    * @returns
    */
@@ -48,10 +48,20 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
     return estado === 'FACTURADO' ? true : false;
   };
 
-  const handleEnableFacturar = (params: any, rows: any) => {
-    // console.log('handleEnableFacturar, params:', params); // TODO periodo anterior al seleccionado debe estar en estado facturado a no ser que sea el primer periodo a facturar.
-    // console.log('handleEnableFacturar, rows  :', rows);
-    return false;
+  /**
+   * El periodo anterior al seleccionado debe estar en estado 'FACTURADO' a no ser que sea el primer periodo a facturar.
+   * @param row Periodo a evaluar ( fila actual)
+   * @param rows todos los periodos
+   * @returns boolean
+   */
+  const handleDisableFacturar = (row: any, rows: any[]) => {
+    let periodo = row;
+
+    if (periodo?.periodo !== 1) {
+      periodo = rows.find(periodoAnterior => periodoAnterior.periodo === periodo.periodo - 1);
+    }
+
+    return isPeriodoFacturado(periodo?.estado) ? false : true;
   };
 
   return (
@@ -62,7 +72,7 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
         estadosPeriodos,
         isContratoActivo,
         isPeriodoFacturado,
-        handleEnableFacturar,
+        handleDisableFacturar,
       }}
     >
       {children}
@@ -80,7 +90,7 @@ type InitialContext = {
   estadosPeriodos: Record<'value' | 'label', string>[];
   isContratoActivo: (estado: string) => boolean;
   isPeriodoFacturado: (estado: string) => boolean;
-  handleEnableFacturar: (params: any, rows: any) => boolean;
+  handleDisableFacturar: (row: any, rows: any) => boolean;
 };
 
 export { FacturacionContext, FacturacionProvider };
