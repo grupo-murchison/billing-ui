@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -12,7 +11,7 @@ import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository'
 import { ProcedimientoPSDataGridBreadcrumb, labelAndPath } from '@domains/procedimiento-ps/constants';
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoPSDataGrid = () => {
   const _navigate = useNavigate();
@@ -58,58 +57,49 @@ const ProcedimientoPSDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
-  const toolbar = (
-    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
-      <Button onClick={handleClickCreate} color='primary' variant='contained' startIcon={<AddIcon />}>
-        Alta
-      </Button>
-    </Stack>
-  );
-
   return (
     <>
-      {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            { field: 'codigo', headerName: 'CÓDIGO' },
-            { field: 'denominacion', headerName: 'DENOMINACIÓN' },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={1}
-                  icon={<ViewIcon />}
-                  label='Vista'
-                  onClick={() => handleClickView(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={2}
-                  icon={<EditOutlinedIcon />}
-                  label='Editar'
-                  onClick={() => handleClickEdit(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<DeleteOutlineIcon />}
-                  label='Eliminar'
-                  onClick={() => handleClickDelete(params.row)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-          repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
-        />
-      </Paper>
+      <DataGrid
+        onClickNew={handleClickCreate}
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'codigo', headerName: 'CÓDIGO' },
+          { field: 'denominacion', headerName: 'DENOMINACIÓN' },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={1}
+                icon={<ViewIcon />}
+                label='Vista'
+                onClick={() => handleClickView(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={2}
+                icon={<EditOutlinedIcon />}
+                label='Editar'
+                onClick={() => handleClickEdit(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<DeleteOutlineIcon />}
+                label='Eliminar'
+                onClick={() => handleClickDelete(params.row)}
+                showInMenu
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={ProcedimientoPSRepository.getAllProcedimientoPSPaginated}
+      />
+
       <Outlet />
     </>
   );

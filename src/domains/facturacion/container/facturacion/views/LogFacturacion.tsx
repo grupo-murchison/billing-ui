@@ -42,6 +42,7 @@ function LogFacturacion({
       <DividerMUI sx={{ my: 4 }}>
         <Typography variant='h3'>Log Facturación</Typography>
       </DividerMUI>
+
       <Form isView>
         <Row>
           <Col sm={12} md={6}>
@@ -141,42 +142,41 @@ function LogFacturacion({
           </Col>
         </Row>
       </Form>
-      <Paper>
-        <DataGridBase
-          loading={loading}
-          rows={[]}
-          columns={[
-            {
-              field: 'productoSoftland',
-              headerName: 'ProductoSoftland',
-            },
-            {
-              field: 'descripcion',
-              headerName: 'Descripcion',
-            },
-            {
-              field: 'cantidadTotal',
-              headerName: 'Cantidad Total',
-            },
-            {
-              field: 'precioUnitario',
-              headerName: 'Precio Unitario',
-            },
-            {
-              field: 'total',
-              headerName: 'Total',
-            },
-            {
-              field: 'moneda',
-              headerName: 'Moneda',
-            },
-            {
-              field: 'cantidadItemVIN',
-              headerName: 'Cantidad Item VIN',
-            },
-          ]}
-        />
-      </Paper>
+
+      <DataGridBase
+        loading={loading}
+        rows={[]}
+        columns={[
+          {
+            field: 'productoSoftland',
+            headerName: 'ProductoSoftland',
+          },
+          {
+            field: 'descripcion',
+            headerName: 'Descripcion',
+          },
+          {
+            field: 'cantidadTotal',
+            headerName: 'Cantidad Total',
+          },
+          {
+            field: 'precioUnitario',
+            headerName: 'Precio Unitario',
+          },
+          {
+            field: 'total',
+            headerName: 'Total',
+          },
+          {
+            field: 'moneda',
+            headerName: 'Moneda',
+          },
+          {
+            field: 'cantidadItemVIN',
+            headerName: 'Cantidad Item VIN',
+          },
+        ]}
+      />
 
       <Box mt={3} mb={1}>
         <Typography variant='h6' component='div'>
@@ -184,43 +184,41 @@ function LogFacturacion({
         </Typography>
       </Box>
 
-      <Paper>
-        <DataGridBase
-          loading={loading}
-          rows={eventos || []}
-          columns={[
-            {
-              field: 'genDestinoId',
-              headerName: 'VIN',
-            },
-            {
-              field: 'genEventoTipoId',
-              headerName: 'Tipo Evento',
-            },
-            {
-              field: 'genEventoFechaCreacion',
-              headerName: 'Fecha',
-              valueGetter: params => DateLib.beautifyISO(params?.value),
-            },
-            {
-              field: 'evDUA',
-              headerName: 'DUA',
-            },
-            {
-              field: 'evModelo',
-              headerName: 'Modelo',
-            },
-            {
-              field: 'genPatio',
-              headerName: 'Patio',
-            },
-            {
-              field: 'evTipoEmbarque',
-              headerName: 'Tipo Embarque',
-            },
-          ]}
-        />
-      </Paper>
+      <DataGridBase
+        loading={loading}
+        rows={eventos || []}
+        columns={[
+          {
+            field: 'genDestinoId',
+            headerName: 'VIN',
+          },
+          {
+            field: 'genEventoTipoId',
+            headerName: 'Tipo Evento',
+          },
+          {
+            field: 'genEventoFechaCreacion',
+            headerName: 'Fecha',
+            valueGetter: params => DateLib.beautifyISO(params?.value),
+          },
+          {
+            field: 'evDUA',
+            headerName: 'DUA',
+          },
+          {
+            field: 'evModelo',
+            headerName: 'Modelo',
+          },
+          {
+            field: 'genPatio',
+            headerName: 'Patio',
+          },
+          {
+            field: 'evTipoEmbarque',
+            headerName: 'Tipo Embarque',
+          },
+        ]}
+      />
     </>
   );
 }

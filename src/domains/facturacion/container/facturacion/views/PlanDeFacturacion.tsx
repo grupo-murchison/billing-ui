@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Alert, Backdrop, CircularProgress, Paper, Snackbar, TextField } from '@mui/material';
+import { Alert, Backdrop, CircularProgress, Snackbar, TextField } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -82,75 +82,73 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
         </Col>
       </Row>
 
-      <Paper>
-        <DataGridBase
-          rows={planFacturacion?.periodos || []}
-          loading={loading}
-          columns={[
-            {
-              field: 'periodo',
-              headerName: 'Periodo',
-            },
-            {
-              field: 'liquidacionDesde',
-              headerName: 'Desde',
-              type: 'date',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-            },
-            {
-              field: 'liquidacionHasta',
-              headerName: 'Hasta',
-              type: 'date',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-            },
-            {
-              field: 'fechaFacturacion',
-              headerName: 'Fecha Facturacion',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
-            },
-            {
-              field: 'estado',
-              headerName: 'Estado',
-            },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                isPeriodoFacturado(params?.row?.estado) ? (
-                  <GridActionsCellItem
-                    key={1}
-                    icon={<ViewIcon />}
-                    label='Log'
-                    onClick={() => onClickLog(params)}
-                    showInMenu
-                  />
-                ) : (
-                  <></>
-                ),
-                !isPeriodoFacturado(params?.row?.estado) ? (
-                  <GridActionsCellItem
-                    key={2}
-                    icon={<ScheduleSendIcon />}
-                    label='Facturar'
-                    onClick={onClickFacturar}
-                    showInMenu
-                    disabled={handleEnableFacturar(params, planFacturacion?.periodos)} // TODO periodo anterior al seleccionado debe estar en estado facturado o no ser que sea el primer periodo a facturar.
-                  />
-                ) : (
-                  <></>
-                ),
-              ],
-            },
-          ]}
-        />
-      </Paper>
+      <DataGridBase
+        rows={planFacturacion?.periodos || []}
+        loading={loading}
+        columns={[
+          {
+            field: 'periodo',
+            headerName: 'Periodo',
+          },
+          {
+            field: 'liquidacionDesde',
+            headerName: 'Desde',
+            type: 'date',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+          },
+          {
+            field: 'liquidacionHasta',
+            headerName: 'Hasta',
+            type: 'date',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+          },
+          {
+            field: 'fechaFacturacion',
+            headerName: 'Fecha Facturacion',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+            type: 'date',
+          },
+          {
+            field: 'estado',
+            headerName: 'Estado',
+          },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              isPeriodoFacturado(params?.row?.estado) ? (
+                <GridActionsCellItem
+                  key={1}
+                  icon={<ViewIcon />}
+                  label='Log'
+                  onClick={() => onClickLog(params)}
+                  showInMenu
+                />
+              ) : (
+                <></>
+              ),
+              !isPeriodoFacturado(params?.row?.estado) ? (
+                <GridActionsCellItem
+                  key={2}
+                  icon={<ScheduleSendIcon />}
+                  label='Facturar'
+                  onClick={onClickFacturar}
+                  showInMenu
+                  disabled={handleEnableFacturar(params, planFacturacion?.periodos)} // TODO periodo anterior al seleccionado debe estar en estado facturado o no ser que sea el primer periodo a facturar.
+                />
+              ) : (
+                <></>
+              ),
+            ],
+          },
+        ]}
+      />
 
-      <LogFacturacion periodo={periodo} />
+      {periodo && <LogFacturacion periodo={periodo} />}
 
       <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={openBackdrop}>
         <CircularProgress color='inherit' />

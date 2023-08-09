@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -12,7 +11,7 @@ import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { ModeloAcuerdoDataGridBreadcrumb, ModeloAcuerdoLabelAndPath } from '@domains/modelo-acuerdo/constants';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { EditOutlinedIcon, DeleteOutlineIcon, AddIcon } from '@assets/icons';
+import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
 
 const ModeloAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -52,53 +51,43 @@ const ModeloAcuerdoDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
-  const toolbar = (
-    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
-      <Button onClick={handleClickCreate} color='primary' variant='contained' startIcon={<AddIcon />}>
-        Alta
-      </Button>
-    </Stack>
-  );
-
   return (
     <>
-      {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          // onClickNew={handleClickCreate}
-          columns={[
-            { field: 'codigo', headerName: 'CÓDIGO' },
-            { field: 'nombre', headerName: 'NOMBRE' },
-            { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<EditOutlinedIcon />}
-                  label='Editar'
-                  onClick={() => handleClickEdit(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<DeleteOutlineIcon />}
-                  label='Eliminar'
-                  onClick={() => handleClickDelete(params.row)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-          repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
-        />
-      </Paper>
+      <DataGrid
+        onClickNew={handleClickCreate}
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'codigo', headerName: 'CÓDIGO' },
+          { field: 'nombre', headerName: 'NOMBRE' },
+          { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<EditOutlinedIcon />}
+                label='Editar'
+                onClick={() => handleClickEdit(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<DeleteOutlineIcon />}
+                label='Eliminar'
+                onClick={() => handleClickDelete(params.row)}
+                showInMenu
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
+      />
+
       <Outlet />
     </>
   );
