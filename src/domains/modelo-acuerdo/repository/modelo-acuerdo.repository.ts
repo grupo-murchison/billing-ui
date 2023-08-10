@@ -1,6 +1,6 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
 
@@ -9,7 +9,6 @@ import {
   getAllModeloAcuerdoPaginatedSchema,
   getAllModeloAcuerdoAsDropdownSchema,
 } from '@domains/modelo-acuerdo/repository/modelo-acuerdo.schemas';
-import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class ModeloAcuerdoRepository {
   static getAllModeloAcuerdoPaginated = async (params: RepositoryFuncParamsPaginated) => {

@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { TextField, Typography, Card, CardContent, CardHeader } from '@mui/material';
@@ -12,9 +12,11 @@ import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
+
 import { ContratoCreateSchema } from '@domains/contrato/container/contrato-crud/schemas';
 import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
 
+import { withBreadcrumb } from '@app/hocs';
 import { DateLib } from '@libs';
 
 import { ClienteDropdown } from '@domains/cliente/container/cliente-dropdown';
@@ -27,11 +29,11 @@ import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown'
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { TipoContratoRepository } from '@domains/tipo-contrato/repository';
 import { ClienteRepository } from '@domains/cliente/repository';
-import { withBreadcrumb } from '@app/hocs';
 
 import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -49,20 +51,30 @@ const ContratoCreate = () => {
     watch,
     setValue,
     control,
+    resetField,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ContratoCreateSchemaType>({
     defaultValues: {
+      clienteId: '',
       descripcion: '',
+      diaPeriodo: '',
       fechaInicioContrato: null,
       fechaFinContrato: null,
+      modeloAcuerdoId: '',
+      reglaFechaPeriodoId: '',
+      sociedadId: '',
+      tipoContratoId: '',
+      tipoPlanFacturacionId: '',
     },
     resolver: zodResolver(ContratoCreateSchema),
+    // resolver: (data, context, options) => ZodUtils.debugSchema(data, context, options, contratoCreateSchema), // * para debuggear el schema de validación
   });
 
-  const onSubmit = useCallback(
-    async (data: ContratoCreateSchemaType) => {
+  const onSubmit: SubmitHandler<ContratoCreateSchemaType> = useCallback(
+    async data => {
       const submitData = {
         ...data,
+        diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
         fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
         fechaFinContrato: DateLib.parseToDBString(data.fechaFinContrato),
       };
@@ -104,8 +116,9 @@ const ContratoCreate = () => {
   }, [watch('clienteId')]);
 
   useEffect(() => {
-    const diaFijoPosteriorAlperiodoId = 3; // id en la Tabla de base de datos
+    const diaFijoPosteriorAlperiodoId = 3; // FIXME id en la Tabla de base de datos, debemos cambiarlo para validar por el campo code (codigo)
     const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
+    resetField('diaPeriodo');
     reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
   }, [watch('reglaFechaPeriodoId')]);
 
@@ -176,7 +189,7 @@ const ContratoCreate = () => {
             helperText={formErrors?.descripcion?.message}
             disabled={isSubmitting}
             multiline
-            // variant='standard'
+            fullWidth
             {...register('descripcion')}
           />
         </Col>
@@ -186,7 +199,7 @@ const ContratoCreate = () => {
             inputFormat='dd-MM-yyyy'
             value={watch('fechaInicioContrato')}
             onChange={newValue => setValue('fechaInicioContrato', newValue)}
-            renderInput={params => <TextField {...params} />}
+            renderInput={params => <TextField {...params} fullWidth />}
             disabled={isSubmitting}
           />
         </Col>
@@ -196,7 +209,7 @@ const ContratoCreate = () => {
             inputFormat='dd-MM-yyyy'
             value={watch('fechaFinContrato')}
             onChange={newValue => setValue('fechaFinContrato', newValue)}
-            renderInput={params => <TextField {...params} />}
+            renderInput={params => <TextField {...params} fullWidth />}
             disabled={isSubmitting}
           />
         </Col>
@@ -209,43 +222,35 @@ const ContratoCreate = () => {
       <Row>
         <Col md={4}>
           <TipoPlanFacturacionDropdown
-            id='tipoPlanFacturacionId'
+            control={control}
+            name='tipoPlanFacturacionId'
             label='Tipo Plan Facturación'
-            {...register('tipoPlanFacturacionId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.tipoPlanFacturacionId}
             helperText={formErrors?.tipoPlanFacturacionId?.message}
             disabled={isSubmitting}
-            value={watch('tipoPlanFacturacionId')}
           />
         </Col>
         <Col md={4}>
           <ReglaFechaPeriodoDropdown
-            id='reglaFechaPeriodoId'
+            control={control}
+            name='reglaFechaPeriodoId'
             label='Regla Fecha Periodo'
-            {...register('reglaFechaPeriodoId', {
-              valueAsNumber: true,
-            })}
             error={!!formErrors.reglaFechaPeriodoId}
             helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
-            value={watch('reglaFechaPeriodoId')}
           />
         </Col>
 
         <Col md={4}>
-          {/* // BUG falta pulir, si elijo reglaFechaPeriodoId === 3 por error y luego elijo otro valor, diaPeriodo se deshabilita pero no se limpia el error el Select */}
-          <TextField
-            id='diaPeriodo'
+          <FormTextField
+            name='diaPeriodo'
+            control={control}
             label='Día Periodo'
             error={!!formErrors.diaPeriodo}
             helperText={formErrors?.diaPeriodo?.message}
             disabled={isSubmitting || !enableDiaPeriodo}
             type='number'
-            {...register('diaPeriodo', {
-              valueAsNumber: true,
-            })}
+            inputProps={{ min: 1 }}
           />
         </Col>
       </Row>
@@ -254,7 +259,6 @@ const ContratoCreate = () => {
 
   return (
     <>
-      {/* <Paper sx={{p: 3}}> */}
       <Card sx={{ p: 3 }}>
         <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
           <CardHeader
@@ -278,7 +282,6 @@ const ContratoCreate = () => {
           {planFacturacion}
         </Form>
       </Card>
-      {/* </Paper> */}
     </>
   );
 };

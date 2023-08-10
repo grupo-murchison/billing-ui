@@ -1,8 +1,10 @@
-import { DataGrid as MUIDataGrid, DataGridProps, GridToolbar } from '@mui/x-data-grid';
-import { SxProps, useTheme } from '@mui/material';
-
+import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI, GridToolbar } from '@mui/x-data-grid';
+import { Button, Paper, Stack, SxProps, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
+
 import NoRowsContent from './components/NoRowsContent';
+
+import { AddIcon } from '@assets/icons';
 
 import { localeText } from './constants/dataGrid.config';
 
@@ -11,6 +13,7 @@ const DataGridBase = ({
   columns,
   loading,
   pageSizeOptions,
+  onClickNew,
   //  toolbar: Toolbar,
   ...props
 }: DataGridProps) => {
@@ -56,38 +59,51 @@ const DataGridBase = ({
 
   return (
     <>
-      <MUIDataGrid
-        {...props}
-        rows={rows}
-        columns={columns}
-        pageSizeOptions={pageSizeOptions || [10, 25, 50, 100]}
-        // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
-        autoHeight={rows.length > 0 ? true : false}
-        loading={loading}
-        localeText={{ ...localeText }}
-        slots={{
-          loadingOverlay: LinearProgress,
-          noRowsOverlay: NoRowsContent,
-          // toolbar: GridToolbar,
-        }}
-        slotProps={{
-          pagination: {
-            labelRowsPerPage: 'Filas por página:',
-            labelDisplayedRows: props => {
-              const { from, to, count } = props;
-              return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
+      {onClickNew && (
+        <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2, paddingTop: 3 }} direction='row'>
+          <Button onClick={onClickNew} color='primary' variant='contained' startIcon={<AddIcon />}>
+            Alta
+          </Button>
+        </Stack>
+      )}
+
+      <Paper>
+        <MUIDataGrid
+          {...props}
+          rows={rows}
+          columns={columns}
+          pageSizeOptions={pageSizeOptions || [10, 25, 50, 100]}
+          // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
+          autoHeight={rows.length > 0 ? true : false}
+          loading={loading}
+          localeText={{ ...localeText }}
+          slots={{
+            loadingOverlay: LinearProgress,
+            noRowsOverlay: NoRowsContent,
+            // toolbar: GridToolbar,
+          }}
+          slotProps={{
+            pagination: {
+              labelRowsPerPage: 'Filas por página:',
+              labelDisplayedRows: props => {
+                const { from, to, count } = props;
+                return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
+              },
             },
-          },
-        }}
-        sx={{
-          height: rows.length > 0 ? undefined : '380px',
-          ...sxTable,
-          ...sxHeader,
-          ...sxRows,
-        }}
-      />
+            // filterPanel: { sx: { maxWidth: '100vw' } },
+          }}
+          sx={{
+            height: rows.length > 0 ? undefined : '380px',
+            ...sxTable,
+            ...sxHeader,
+            ...sxRows,
+          }}
+        />
+      </Paper>
     </>
   );
 };
 
 export default DataGridBase;
+
+type DataGridProps = DataGridPropsMUI & { onClickNew?: () => void };

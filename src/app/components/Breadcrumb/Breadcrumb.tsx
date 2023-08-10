@@ -1,31 +1,42 @@
-import { Link } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
-import { Typography } from '@mui/material';
-
-import styles from '@app/components/Breadcrumb/Breadcrumb.module.scss';
+import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
+import NavigateNextIcon from '@mui/icons-material/NavigateNext';
 
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
+  const breadcrumbs = [{ label: 'Inicio', path: '/' }].concat(items);
+
   return (
-    <div className={styles['breadcrumb']}>
-      <Link to='/'>
-        <span className={""}>Inicio</span>
-      </Link>
-      <span>&#62;</span>
-      {items.map((x, k) => {
-        return k !== items.length - 1 ? (
-          <>
-            <Link key={k} to={x.path}>
-              {x.label}
-            </Link>
-            <span>&#62;</span>
-          </>
-        ) : (
-          <Typography key={k} color='text.primary'>
-            {x.label}
-          </Typography>
-        );
-      })}
-    </div>
+    <Stack spacing={2} marginBottom={2}>
+      <Breadcrumbs
+        separator={<NavigateNextIcon fontSize='medium' sx={{ color: 'text.primary' }} />}
+        aria-label='breadcrumb'
+      >
+        {breadcrumbs.map((item, index) => {
+          if ((breadcrumbs.length > 1 && index === 0) || index !== breadcrumbs.length - 1) {
+            return (
+              <Link
+                key={index}
+                component={RouterLink}
+                to={item.path}
+                underline='hover'
+                variant='h4'
+                color='text.primary'
+                sx={{ fontWeight: 900 }}
+              >
+                {item.label}
+              </Link>
+            );
+          } else {
+            return (
+              <Typography key={index} variant='h4' color='text.secondary' sx={{ fontWeight: 600 }}>
+                {item.label}
+              </Typography>
+            );
+          }
+        })}
+      </Breadcrumbs>
+    </Stack>
   );
 };
 

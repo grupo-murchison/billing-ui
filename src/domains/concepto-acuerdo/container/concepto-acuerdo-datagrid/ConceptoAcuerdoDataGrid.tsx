@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
-import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -13,7 +12,7 @@ import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/con
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 import { ConceptoAcuerdoLabelAndPath } from '@domains/concepto-acuerdo/constants';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ConceptoAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -58,56 +57,46 @@ const ConceptoAcuerdoDataGrid = () => {
     });
   }, [mainDataGrid, modeloAcuerdoId]);
 
-  const toolbar = (
-    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
-      <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        <AddIcon />
-        Alta
-      </Button>
-    </Stack>
-  );
-
   return (
     <>
-      {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            { field: 'modeloAcuerdo', headerName: 'MODELO ACUERDO' },
-            { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
-            { field: 'tipoServicio', headerName: 'TIPO SERVICIO' },
-            { field: 'procedimientoQ', headerName: 'Pocedimiento Cantidad' },
-            { field: 'procedimientoP', headerName: 'Pocedimiento Precio' },
-            { field: 'procedimientoProductoSoftland', headerName: 'Pocedimiento Producto Softland' },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<EditOutlinedIcon />}
-                  label='Editar'
-                  onClick={() => handleClickEdit(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<DeleteOutlineIcon />}
-                  label='Eliminar'
-                  onClick={() => handleClickDelete(params.row)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-          repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
-        />
-      </Paper>
+      {/* {toolbar} */}
+      <DataGrid
+        onClickNew={handleClickCreate}
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'modeloAcuerdo', headerName: 'MODELO ACUERDO' },
+          { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+          { field: 'tipoServicio', headerName: 'TIPO SERVICIO' },
+          { field: 'procedimientoQ', headerName: 'Pocedimiento Cantidad' },
+          { field: 'procedimientoP', headerName: 'Pocedimiento Precio' },
+          { field: 'procedimientoProductoSoftland', headerName: 'Pocedimiento Producto Softland' },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<EditOutlinedIcon />}
+                label='Editar'
+                onClick={() => handleClickEdit(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<DeleteOutlineIcon />}
+                label='Eliminar'
+                onClick={() => handleClickDelete(params.row)}
+                showInMenu
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
+      />
       <Outlet />
     </>
   );

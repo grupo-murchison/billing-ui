@@ -45,10 +45,12 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
   const [refreshData, setRefreshData] = useState(false);
 
   useEffect(() => {
-    ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId }).then(({ data }) => {
-      setRows(data);
-      setLoading(false);
-    });
+    ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId })
+      .then(({ data }) => {
+        setRows(data);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => setLoading(false));
   }, [contratoId, refreshData]);
 
   const handleCellEdit = (params: any, event: any) => {
@@ -75,8 +77,6 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
         autoHeight={true}
         rows={rows}
         columns={columns}
-        pageSize={10}
-        rowsPerPageOptions={[10]}
         loading={loading}
         onCellEditStop={handleCellEdit}
       />

@@ -25,12 +25,11 @@ import { DateLib } from '@libs';
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
-import LogFacturacion from './views/LogFacturacion';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
 
-  const { mainDataGrid, estadosContrato } = useContext(FacturacionContext);
+  const { mainDataGrid, estadosContrato, isContratoActivo } = useContext(FacturacionContext);
   const [contratoId, setContratoId] = useState<number>();
   const [openModal, setOpenModal] = useState(false);
 
@@ -119,68 +118,62 @@ const Facturacion = () => {
   return (
     <>
       {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            {
-              field: 'nroContrato',
-              headerName: 'Nro. Contrato',
-              flex: 0.5,
-            },
-            { field: 'descripcion', headerName: 'Descripción Contrato', flex: 2 },
-            {
-              field: 'cliente',
-              headerName: 'Cliente',
-            },
-            {
-              field: 'sociedadDenominacion',
-              headerName: 'Sociedad',
-            },
-            {
-              field: 'fechaInicioContrato',
-              headerName: 'Fecha Inicio',
-              flex: 0.5,
-              type: 'date',
-              valueGetter: ({ value }) => DateLib.parseFromDBString(value),
-            },
-            {
-              field: 'fechaFinContrato',
-              headerName: 'Fecha Fin',
-              flex: 0.5,
-              type: 'date',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-            },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Plan de Facturación'
-                  onClick={() => onClickAbrirPlanFacturacion(params)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-          repositoryFunc={ContratoRepository.getAllContratoFacturacionPaginated}
-        />
-      </Paper>
 
-      {/* <Divider sx={{ my: 4 }}>
-        <Typography variant='h3'>Plan De Facturación</Typography>
-      </Divider> */}
+      <DataGrid
+        hookRef={mainDataGrid.ref}
+        columns={[
+          {
+            field: 'nroContrato',
+            headerName: 'Nro. Contrato',
+            flex: 0.5,
+          },
+          { field: 'descripcion', headerName: 'Descripción Contrato', flex: 2 },
+          {
+            field: 'cliente',
+            headerName: 'Cliente',
+          },
+          {
+            field: 'sociedadDenominacion',
+            headerName: 'Sociedad',
+          },
+          {
+            field: 'fechaInicioContrato',
+            headerName: 'Fecha Inicio',
+            flex: 0.5,
+            type: 'date',
+            valueGetter: ({ value }) => DateLib.parseFromDBString(value),
+          },
+          {
+            field: 'fechaFinContrato',
+            headerName: 'Fecha Fin',
+            flex: 0.5,
+            type: 'date',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+          },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<ViewIcon />}
+                label='Ver Plan de Facturación'
+                onClick={() => onClickAbrirPlanFacturacion(params)}
+                showInMenu
+                disabled={!isContratoActivo(params?.row?.estado)}
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={ContratoRepository.getAllContratoFacturacionPaginated}
+      />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Plan De Facturación'>
         <PlanDeFacturacion contratoId={contratoId} />
-
-        <LogFacturacion />
       </Modal>
     </>
   );
