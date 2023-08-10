@@ -16,13 +16,13 @@ import { FacturacionContext } from '@domains/facturacion/contexts';
 import DetalleFacturacion from './DetalleFacturacion';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
-  const [planFacturacion, setPlanFacturacion] = useState<any>();
+  const [planFacturacion, setPlanFacturacion] = useState<any>(null);
   const [loading, setLoading] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
-  const [periodo, setPeriodo] = useState<any>();
+  const [periodo, setPeriodo] = useState<any>(null);
 
   const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
@@ -62,9 +62,8 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     }
   };
 
-  const onClickLog = (params: any) => {
-    console.log(params.row);
-    setPeriodo(params.row);
+  const onClickVerDetalle = (row: any) => {
+    setPeriodo(row);
   };
 
   return (
@@ -125,7 +124,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
                   key={1}
                   icon={<ViewIcon />}
                   label='Detalle'
-                  onClick={() => onClickLog(params)}
+                  onClick={() => onClickVerDetalle(params.row)}
                   showInMenu
                 />
               ) : (

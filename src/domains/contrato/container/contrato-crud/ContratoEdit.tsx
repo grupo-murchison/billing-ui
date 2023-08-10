@@ -69,8 +69,6 @@ const ContratoEdit = () => {
     resolver: zodResolver(ContratoEditSchema),
   });
 
-  console.log(formErrors);
-
   const onSubmit: SubmitHandler<ContratoEditSchemaType> = useCallback(
     async data => {
       const submitData = {

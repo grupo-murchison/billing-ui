@@ -24,7 +24,7 @@ const ClienteDropdown = ({ ...props }: ClienteDropdownProps) => {
 };
 
 const ClienteDropdownAutoComplete = ({ ...props }: ClienteDropdownProps) => {
-  return <FormAutocomplete {...props} />;
+  return <FormAutocomplete {...props} repositoryFunc={ClienteRepository.getAllClienteAsDropdownAutoComplete} />;
 };
 
 interface ClienteDropdownProps extends Omit<FormSelectProps, 'options'> {

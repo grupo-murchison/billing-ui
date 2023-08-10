@@ -6,14 +6,9 @@ import DataGridBase from './DataGridBase';
 const DataGridWithContext = () => {
   const { columns, rows, loading, toolbar: Toolbar, ...props } = useContext(DataGridContext);
 
-  // Repartir el espacio en partes iguales
-  columns.forEach((col: any) => {
-    col['flex'] = col?.flex ? col.flex : 1;
-  });
-
   return (
     <>
-      <DataGridBase rows={rows} columns={columns} pageSizeOptions={[10, 25, 50, 100]} loading={loading} {...props} />
+      <DataGridBase rows={rows} columns={columns} loading={loading} {...props} />
     </>
   );
 };
