@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ModeloAcuerdoRepository } from '@domains/modelo-acuerdo/repository';
 import { ModeloAcuerdoDataGridBreadcrumb, ModeloAcuerdoLabelAndPath } from '@domains/modelo-acuerdo/constants';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { EditOutlinedIcon, DeleteOutlineIcon, AddIcon } from '@assets/icons';
 
 const ModeloAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -52,36 +52,54 @@ const ModeloAcuerdoDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            onClickNew={handleClickCreate}
-            columnHeads={[
-              { headerName: 'CÓDIGO' },
-              { headerName: 'NOMBRE' },
-              { headerName: 'DESCRIPCIÓN' },
-              { headerName: 'ACCIONES' },
-            ]}
-            repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.codigo}</td>
-                <td>{row.nombre}</td>
-                <td>{row.descripcion}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          // onClickNew={handleClickCreate}
+          columns={[
+            { field: 'codigo', headerName: 'CÓDIGO' },
+            { field: 'nombre', headerName: 'NOMBRE' },
+            { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ModeloAcuerdoRepository.getAllModeloAcuerdoPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

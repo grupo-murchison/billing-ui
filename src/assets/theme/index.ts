@@ -10,6 +10,7 @@ const theme = createTheme({
   typography: { ...typography },
   components: { ...components },
   transitions: { ...transitions },
+  shape: { borderRadius: 8 },
 });
 
 export default theme;

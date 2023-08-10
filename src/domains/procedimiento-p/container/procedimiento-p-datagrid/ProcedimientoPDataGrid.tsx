@@ -1,18 +1,18 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 import { ProcedimientoPDataGridBreadcrumb, labelAndPath } from '@domains/procedimiento-p/constants';
 import { ProcedimientoPContext } from '@domains/procedimiento-p/contexts';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoPDataGrid = () => {
   const _navigate = useNavigate();
@@ -58,37 +58,60 @@ const ProcedimientoPDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'CÓDIGO' },
-              { headerName: 'DENOMINACIÓN' },
-              { headerName: 'MONEDA' },
-              { headerName: 'ACCIONES' },
-            ]}
-            repositoryFunc={ProcedimientoPRepository.getAllProcedimientoPPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.codigo}</td>
-                <td>{row.denominacion}</td>
-                <td>{row.moneda}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.ViewButton onClick={() => handleClickView(row.id)} />
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-            onClickNew={handleClickCreate}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          columns={[
+            { field: 'codigo', headerName: 'CÓDIGO' },
+            { field: 'denominacion', headerName: 'DENOMINACIÓN' },
+            { field: 'moneda', headerName: 'MONEDA' },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={1}
+                  icon={<ViewIcon />}
+                  label='Vista'
+                  onClick={() => handleClickView(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ProcedimientoPRepository.getAllProcedimientoPPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

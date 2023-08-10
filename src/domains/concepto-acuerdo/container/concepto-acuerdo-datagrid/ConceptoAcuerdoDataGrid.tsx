@@ -1,19 +1,19 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
-
-import { Col, Row } from '@app/components';
+import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { ConceptoAcuerdoContext } from '@domains/concepto-acuerdo/contexts';
 import { ConceptoAcuerdoDataGridBreadcrumb } from '@domains/concepto-acuerdo/constants';
 import { ConceptoAcuerdoRepository } from '@domains/concepto-acuerdo/repository';
 import { ConceptoAcuerdoLabelAndPath } from '@domains/concepto-acuerdo/constants';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ConceptoAcuerdoDataGrid = () => {
   const _navigate = useNavigate();
@@ -58,42 +58,56 @@ const ConceptoAcuerdoDataGrid = () => {
     });
   }, [mainDataGrid, modeloAcuerdoId]);
 
+  const toolbar = (
+    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
+      <Button onClick={handleClickCreate} color='primary' variant='contained'>
+        <AddIcon />
+        Alta
+      </Button>
+    </Stack>
+  );
+
   return (
     <>
-      <Row>
-        <Col md={12}>
-          <DataGrid
-            hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'MODELO ACUERDO' },
-              { headerName: 'DESCRIPCIÓN' },
-              { headerName: 'TIPO SERVICIO' },
-              { headerName: 'Pocedimiento Cantidad' },
-              { headerName: 'Pocedimiento Precio' },
-              { headerName: 'Pocedimiento Producto Softland' },
-              { headerName: 'ACCIONES' },
-            ]}
-            repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.modeloAcuerdo}</td>
-                <td>{row.descripcion}</td>
-                <td>{row.tipoServicio}</td>
-                <td>{row.procedimientoQ}</td>
-                <td>{row.procedimientoP}</td>
-                <td>{row.procedimientoProductoSoftland}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
-            onClickNew={handleClickCreate}
-          />
-        </Col>
-      </Row>
+      {toolbar}
+      <Paper>
+        <DataGrid
+          hookRef={mainDataGrid.ref}
+          columns={[
+            { field: 'modeloAcuerdo', headerName: 'MODELO ACUERDO' },
+            { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+            { field: 'tipoServicio', headerName: 'TIPO SERVICIO' },
+            { field: 'procedimientoQ', headerName: 'Pocedimiento Cantidad' },
+            { field: 'procedimientoP', headerName: 'Pocedimiento Precio' },
+            { field: 'procedimientoProductoSoftland', headerName: 'Pocedimiento Producto Softland' },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                <GridActionsCellItem
+                  key={2}
+                  icon={<EditOutlinedIcon />}
+                  label='Editar'
+                  onClick={() => handleClickEdit(params.row.id)}
+                  showInMenu
+                />,
+                <GridActionsCellItem
+                  key={3}
+                  icon={<DeleteOutlineIcon />}
+                  label='Eliminar'
+                  onClick={() => handleClickDelete(params.row)}
+                  showInMenu
+                />,
+              ],
+            },
+          ]}
+          repositoryFunc={ConceptoAcuerdoRepository.getAllConceptoAcuerdoPaginated}
+        />
+      </Paper>
       <Outlet />
     </>
   );

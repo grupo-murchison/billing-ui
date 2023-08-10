@@ -1,6 +1,6 @@
 import { ApiProvider } from '@providers';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
@@ -8,7 +8,8 @@ import type { HandlePromise } from '@app/utils/axios.util';
 const BASE_PATH = 'v1/contratos';
 
 class ContratoService {
-  static getAllPaginated = async (params: DataGridRepositoryFuncParams): Promise<HandlePromise> => {
+  //==============================  Endpoints Para Patalla Contrato
+  static getAllPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/all/pagination`, { params }),
     );
@@ -29,7 +30,9 @@ class ContratoService {
   };
 
   static post = async (contrato: AnyValue): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(ApiProvider.post<AnyValue>(`${BASE_PATH}/crud`, contrato));
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.post<AnyValue>(`${BASE_PATH}/crud`, contrato),
+    );
 
     return [response, error];
   };
@@ -51,6 +54,23 @@ class ContratoService {
   static postVariablesPorContratoProcedimientoQ = async (contratoId: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.post<AnyValue>(`${BASE_PATH}/variablesPorContratoProcedimientoQ`, contratoId),
+    );
+
+    return [response, error];
+  };
+
+  //==============================  Endpoints Para Patalla Facturación
+  static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
+    );
+
+    return [response, error];
+  };
+
+  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/periodos/filter`, { params }),
     );
 
     return [response, error];

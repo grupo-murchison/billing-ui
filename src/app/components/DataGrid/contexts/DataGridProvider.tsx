@@ -3,12 +3,12 @@ import type { ChangeEvent } from 'react';
 import { GridRowsProp } from '@mui/x-data-grid';
 
 import { DataGridContext } from './DataGridContext';
-import { DataGridProviderProps, DataGridRepositoryFuncParams } from './types';
+import { DataGridProviderProps, DataGridRepositoryFuncParams, RepositoryParams } from './types';
 import { initialContext } from '../constants';
 
 const DataGridProvider = <T,>({
   hookRef,
-  columnHeads,
+  columns,
   onClickNew,
   repositoryFunc,
   children,
@@ -31,12 +31,12 @@ const DataGridProvider = <T,>({
     return rows.length;
   }, [rows]);
 
-  const makeRequest = useCallback((config?: { filters?: Record<string, AnyValue> }) => {
+  const makeRequest = useCallback((config?: { filters?: RepositoryParams }) => {
     loading !== true && setLoading(true);
-    const { filters, ...rest } = repositoryFuncParamsRef.current;
+    const { filters: currentFilters, ...rest } = repositoryFuncParamsRef.current;
     repositoryFunc({
       ...rest,
-      ...filters,
+      ...currentFilters,
       ...config?.filters,
     })
       .then(response => {
@@ -106,7 +106,7 @@ const DataGridProvider = <T,>({
   return (
     <DataGridContext.Provider
       value={{
-        columnHeads,
+        columns,
         currentPage,
         handleChangeRowsPerPage,
         handleNextPageChange,

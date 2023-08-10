@@ -5,8 +5,6 @@ import DataGridWithContext from './DataGridWithContext';
 const DataGrid = <T,>(props: DataGridProps<T>) => {
   return (
     <DataGridProvider {...props}>
-      {/* <Toolbar /> */}
-
       <DataGridWithContext />
     </DataGridProvider>
   );

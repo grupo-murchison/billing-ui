@@ -19,7 +19,7 @@ const FacturasRowDataGridSchema = z.object({
 const contratoSchema = z
   .object({
     contratoId: z.number().nullish(),
-    numeroSecuenciaContrato: z.string().nullish(),
+    contratoNro: z.string().nullish(),
     contratoClienteDescripcion: z.string().nullish(),
     contratoClienteNumero: z.string().nullish(),
     periodoNumero: z.number().nullish(),

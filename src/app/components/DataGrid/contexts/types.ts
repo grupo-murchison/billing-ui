@@ -7,10 +7,10 @@ export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T
 
 export type DataGridProps<T> = {
   hookRef: React.MutableRefObject<{
-    load: (config?: { fixedFilters?: Record<string, AnyValue>; filters?: Record<string, AnyValue> }) => void;
+    load: (config?: { fixedFilters?: RepositoryParams; filters?: RepositoryParams }) => void;
     reload: () => void;
   }>;
-  columnHeads: GridColDef[];
+  columns: GridColDef[];
   onClickNew?: () => void;
   repositoryFunc: (params: Record<string, unknown>) => Promise<
     AxiosResponse<{
@@ -23,16 +23,16 @@ export type DataGridProps<T> = {
   toolbar?: JSXElementConstructor<any> | null | undefined;
 };
 
-export type DataGridRepositoryFuncParams = {
-  take: number;
-  page: number;
-  filters?: Record<string, string>;
+export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {
+  filters?: RepositoryParams;
 };
 
-export type DataGridRepositoryFuncParams2 = Record<'take' | 'page', number> | Record<string, unknown>;
+export type RepositoryFuncParamsPaginated = Record<'take' | 'page', number> | RepositoryParams;
+
+export type RepositoryParams = Record<string, unknown>; // Record<string, AnyValue> || Record<string, string> => es un objeto par key-valor
 
 export type InitialContext = {
-  columnHeads: GridColDef[];
+  columns: GridColDef[];
   currentPage: number;
   onClickNew?: () => void;
   handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;

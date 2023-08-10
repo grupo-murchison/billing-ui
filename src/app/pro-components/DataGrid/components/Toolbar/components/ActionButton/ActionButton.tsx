@@ -12,7 +12,7 @@ const ActionButton = ({ icon, label, onClick, colorPrimary }: ActionButtonProps)
         width: '130px',
         paddingX: '24px',
         paddingY: '8px',
-        borderRight: `1px solid ${theme.palette.secondary.main}`,
+        // borderRight: `1px solid ${theme.palette.secondary.main}`,
         borderRadius: 0,
       }}
     >

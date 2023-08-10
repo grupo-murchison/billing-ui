@@ -1,14 +1,17 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
 
 import { ContratoService } from '@domains/contrato/repository/contrato.service';
-import { getAllContratoPaginatedSchema } from '@domains/contrato/repository/contrato.schemas';
+import {
+  getAllContratoFacturacionPaginated,
+  getAllContratoPaginatedSchema,
+} from '@domains/contrato/repository/contrato.schemas';
 
 class ContratoRepository {
-  static getAllContratoPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllContratoPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ContratoService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllContratoPaginatedSchema),
@@ -50,6 +53,24 @@ class ContratoRepository {
   static variablesPorContratoProcedimientoQ = async (Contrato: AnyValue) => {
     const response$ = from(ContratoService.postVariablesPorContratoProcedimientoQ(Contrato)).pipe(
       RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated) => {
+    const response$ = from(ContratoService.getAllContratoFacturacionPaginated(params)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>) => {
+    const response$ = from(ContratoService.getPlanFacturacionPeriodos(params)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
     );
     const response = await lastValueFrom(response$);
     return response;

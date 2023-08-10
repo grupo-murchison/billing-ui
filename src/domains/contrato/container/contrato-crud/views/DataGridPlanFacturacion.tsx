@@ -48,7 +48,7 @@ export const DataGridPlanFacturacion = ({ rows }: { id: string; rows: any[] }) =
   return (
     <>
       <Box style={{ width: '100%' }}>
-        <DataGridBase rows={rows} columns={columns} pageSize={5} rowsPerPageOptions={[10]} autoHeight={true} />
+        <DataGridBase rows={rows} columns={columns} autoHeight={true} />
       </Box>
     </>
   );

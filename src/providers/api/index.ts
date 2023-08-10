@@ -3,6 +3,7 @@ import type { AxiosRequestHeaders, AxiosInstance, AxiosRequestConfig, AxiosPromi
 
 const BASE_URL = import.meta.env.VITE_API_HOST;
 const PREFIX_ENDPOINTS = 'billing-services/api';
+
 class ApiProvider {
   private instance: Undefined<AxiosInstance>;
 
