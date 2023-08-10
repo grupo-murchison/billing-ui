@@ -1,6 +1,6 @@
 import { from, lastValueFrom } from 'rxjs';
 
-import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
 
@@ -8,7 +8,7 @@ import { ProcedimientoPIntervaloService } from '@domains/procedimiento-p-interva
 import { getAllProcedimientoPIntervaloPaginatedSchema } from '@domains/procedimiento-p-intervalo/repository/procedimiento-p-intervalo.schemas';
 
 class ProcedimientoPIntervaloRepository {
-  static getAllProcedimientoPIntervaloPaginated = async (params: DataGridRepositoryFuncParams) => {
+  static getAllProcedimientoPIntervaloPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(ProcedimientoPIntervaloService.getAllPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllProcedimientoPIntervaloPaginatedSchema),

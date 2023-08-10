@@ -14,12 +14,13 @@ import Form from '@app/components/Form/Form';
 
 function DetalleFacturacion({
   periodo,
-  facturacionContratoConceptoId = '199', // TODO este dato de donde sale ? en el flujo de pantallas deberia llegar con el Plan de Facturacion
+  facturacionContratoConceptoId, // TODO este dato de donde sale ? en el flujo de pantallas deberia llegar con el Plan de Facturacion
 }: {
   facturacionContratoConceptoId?: string;
   periodo: any;
 }) {
   const [eventos, setEventos] = useState<any>();
+  const [detalle, setDetalle] = useState<any>();
   const [loading, setLoading] = useState(false);
 
   const { register } = useForm({ defaultValues: { periodo: periodo?.periodo } });
@@ -31,6 +32,21 @@ function DetalleFacturacion({
         .then(({ data }) => {
           // setEventos(data[0]?.facturacionContratoConcepto);
           setEventos(data[0]?.eventos);
+        })
+        .catch()
+        .finally(() => setLoading(false));
+    }
+  }, [facturacionContratoConceptoId]);
+
+  useEffect(() => {
+    if (facturacionContratoConceptoId) {
+      setLoading(true);
+      FacturacionRepository.getDetallePeriodo(facturacionContratoConceptoId)
+        .then(({ data }) => {
+          // setEventos(data[0]?.facturacionContratoConcepto);
+          console.log('getDetallePeriodo', data);
+
+          // setEventos(data[0]?.eventos);
         })
         .catch()
         .finally(() => setLoading(false));

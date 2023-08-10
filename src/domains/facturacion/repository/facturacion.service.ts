@@ -31,6 +31,14 @@ class FacturacionService {
 
     return [response, error];
   };
+
+  static getDetallePeriodo = async (facturacionContratoId: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/conceptoByFacturacionContrato/${facturacionContratoId}`),
+    );
+
+    return [response, error];
+  };
 }
 
 export { FacturacionService };

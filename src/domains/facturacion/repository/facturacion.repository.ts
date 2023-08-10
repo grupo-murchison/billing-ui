@@ -29,6 +29,14 @@ class FacturacionRepository {
     );
     const response = await lastValueFrom(response$);
     return response;
+  };  
+  
+  static getDetallePeriodo = async (facturacionContratoConceptoId: string) => {
+    const response$ = from(FacturacionService.getDetallePeriodo(facturacionContratoConceptoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
   };
 }
 
