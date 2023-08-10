@@ -4,6 +4,7 @@ import { FacturacionProvider, FacturacionReporteProvider } from '@domains/factur
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
+import { EventoClientes } from '../cliente-eventos';
 
 const FacturacionRoutes = () => {
   return (
@@ -22,6 +23,14 @@ const FacturacionRoutes = () => {
         element={
           <FacturacionReporteProvider>
             <FacturacionReporte />
+          </FacturacionReporteProvider>
+        }
+      />
+      <Route
+        path='/eventos-cliente'
+        element={
+          <FacturacionReporteProvider>
+            <EventoClientes />
           </FacturacionReporteProvider>
         }
       />
