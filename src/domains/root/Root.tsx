@@ -5,6 +5,4 @@ function RootLayout() {
   return <></>;
 }
 
-const RootBreadcrumb: BreadcrumbItem[] = [{ label: '', path: '/' }];
-
-export default withBreadcrumb(RootLayout, RootBreadcrumb);
+export default withBreadcrumb(RootLayout);

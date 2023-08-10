@@ -3,8 +3,8 @@ import { Control, Controller } from 'react-hook-form';
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { FormInputsCommonProps } from '../../form.interfaces';
 import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
-import { ClienteRepository } from '@domains/cliente/repository';
 import AutocompleteRenderInput from './AutoCompleteRenderInput';
+import { AxiosResponse } from 'axios';
 
 export default function AsyncAutocomplete({
   options: optionsProps,
@@ -12,8 +12,9 @@ export default function AsyncAutocomplete({
   name,
   label,
   error,
+  repositoryFunc,
   ...props
-}: FormAsyncAutocomplete) {
+}: FormAsyncAutocomplete<DropdownItemType>) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<DropdownSchemaType>([]);
   const [value, setValue] = React.useState<DropdownItemType>({ code: '', label: '', value: '' });
@@ -32,7 +33,7 @@ export default function AsyncAutocomplete({
         filter: inputValue ? inputValue : '*',
       };
 
-      ClienteRepository.getAllClienteAsDropdownAutoComplete({ ...params }) // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
+      repositoryFunc({ ...params }) // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
         .then(({ data }) => {
           if (active) {
             setOptions(data);
@@ -94,8 +95,8 @@ export default function AsyncAutocomplete({
   );
 }
 
-export interface FormAsyncAutocomplete extends FormInputsCommonProps {
+export interface FormAsyncAutocomplete<T> extends FormInputsCommonProps {
   control: Control<any>;
   options?: any[];
-  // repositoryFunc: () => void // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
+  repositoryFunc: (params?: Partial<Record<string, unknown>>) => Promise<AxiosResponse<T[]>>;
 }

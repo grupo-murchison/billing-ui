@@ -1,21 +1,16 @@
 @use 'src/assets/scss/variables.module' as VARS;
 
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  // font-family: VARS.$font-family !important;
-}
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+// }
 
 span.muted {
   color: VARS.$textDisabled;
 }
 
 // Overrides
-
-.MuiFormControl-root {
-  width: 100% !important;
-}
 
 .MuiModal-root {
   display: flex;

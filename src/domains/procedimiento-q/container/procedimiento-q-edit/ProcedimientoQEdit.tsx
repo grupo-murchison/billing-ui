@@ -105,6 +105,7 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -115,6 +116,7 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -127,6 +129,7 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={12}>

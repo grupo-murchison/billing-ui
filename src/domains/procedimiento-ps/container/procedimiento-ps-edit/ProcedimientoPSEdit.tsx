@@ -74,6 +74,7 @@ const ProcedimientoPSEdit = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -84,6 +85,7 @@ const ProcedimientoPSEdit = () => {
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>

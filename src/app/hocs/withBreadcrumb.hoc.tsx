@@ -5,12 +5,12 @@ import type { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
 
 const withBreadcrumb = <TProps,>(
   Component: ComponentType<TProps & JSX.IntrinsicAttributes>,
-  breadcrumb: BreadcrumbItem[],
+  breadcrumb?: BreadcrumbItem[],
 ) => {
   return (props: TProps & JSX.IntrinsicAttributes) => {
     return (
       <>
-        <Breadcrumb items={breadcrumb} />
+        <Breadcrumb items={breadcrumb || []} />
 
         <Component {...props} />
       </>

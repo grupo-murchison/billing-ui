@@ -58,6 +58,7 @@ const ProcedimientoPSCreate = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -68,6 +69,7 @@ const ProcedimientoPSCreate = () => {
               error={!!formErrors.denominacion}
               helperText={formErrors?.denominacion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
