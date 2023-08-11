@@ -57,10 +57,10 @@ const ProcedimientoPView = () => {
       <Form handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
-            <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} disabled />
+            <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} fullWidth disabled />
           </Col>
           <Col md={6}>
-            <TextField id='denominacion' label='Denominación' defaultValue={procedimientoPData.denominacion} disabled />
+            <TextField id='denominacion' label='Denominación' defaultValue={procedimientoPData.denominacion} fullWidth disabled />
           </Col>
         </Row>
         <Row>

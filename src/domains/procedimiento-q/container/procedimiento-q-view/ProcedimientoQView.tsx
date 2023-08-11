@@ -59,6 +59,7 @@ const ProcedimientoQEdit = () => {
               {...register('codigo')}
               disabled
               defaultValue={procedimientoQ.codigo}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -68,6 +69,7 @@ const ProcedimientoQEdit = () => {
               {...register('denominacion')}
               disabled
               defaultValue={procedimientoQ.denominacion}
+              fullWidth
             />
           </Col>
         </Row>
@@ -79,6 +81,7 @@ const ProcedimientoQEdit = () => {
               {...register('descripcion')}
               disabled
               defaultValue={procedimientoQ.descripcion}
+              fullWidth
             />
           </Col>
           <Col md={6}>

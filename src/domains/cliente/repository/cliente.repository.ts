@@ -15,7 +15,7 @@ class ClienteRepository {
     return response;
   };
 
-  static getAllClienteAsDropdownAutoComplete = async (filter: Partial<Record<'filter', string>>) => {
+  static getAllClienteAsDropdownAutoComplete = async (filter?: Partial<Record<'filter', string>>) => {
     const response$ = from(ClienteService.getAllAsDropdownAutocomplete(filter)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),

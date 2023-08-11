@@ -59,6 +59,7 @@ const ModeloAcuerdoCreate = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -69,6 +70,7 @@ const ModeloAcuerdoCreate = () => {
               error={!!formErrors.nombre}
               helperText={formErrors?.nombre?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -81,6 +83,7 @@ const ModeloAcuerdoCreate = () => {
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>

@@ -16,7 +16,7 @@ import { DiccionarioDropdown } from '@domains/diccionario/container/diccionario-
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
 
 const ProcedimientoQVariableCreate = () => {
@@ -62,6 +62,7 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -72,6 +73,7 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.nombre}
               helperText={formErrors?.nombre?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>

@@ -73,6 +73,7 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
               disabled={isSubmitting}
+              fullWidth
               {...register('descripcion')}
             />
           </Col>

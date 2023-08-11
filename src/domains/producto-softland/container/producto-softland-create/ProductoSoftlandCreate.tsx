@@ -70,6 +70,7 @@ const ProductoSoftlandCreate = () => {
               error={!!formErrors.agrupacion}
               helperText={formErrors?.agrupacion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -80,6 +81,7 @@ const ProductoSoftlandCreate = () => {
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -92,6 +94,7 @@ const ProductoSoftlandCreate = () => {
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -102,7 +105,7 @@ const ProductoSoftlandCreate = () => {
               inputFormat='dd-MM-yyyy'
               value={watch('fechaCambioEstado')}
               onChange={newValue => setValue('fechaCambioEstado', newValue)}
-              renderInput={params => <TextField {...params} />}
+              renderInput={params => <TextField {...params} fullWidth />}
               disabled={isSubmitting}
             />
           </Col>

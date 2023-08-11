@@ -40,7 +40,7 @@ const ProcedimientoPSView = () => {
       <Form handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
-            <TextField id='codigo' label='Código' defaultValue={procedimientoPSData.codigo} disabled />
+            <TextField id='codigo' label='Código' defaultValue={procedimientoPSData.codigo} fullWidth disabled />
           </Col>
           <Col md={6}>
             <TextField
@@ -48,6 +48,7 @@ const ProcedimientoPSView = () => {
               label='Denominación'
               defaultValue={procedimientoPSData.denominacion}
               disabled
+              fullWidth
             />
           </Col>
         </Row>

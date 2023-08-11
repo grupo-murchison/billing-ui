@@ -72,6 +72,7 @@ const ModeloAcuerdoEdit = () => {
               {...register('codigo')}
               error={!!formErrors.codigo}
               helperText={formErrors?.codigo?.message}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -81,6 +82,7 @@ const ModeloAcuerdoEdit = () => {
               {...register('nombre')}
               error={!!formErrors.nombre}
               helperText={formErrors?.nombre?.message}
+              fullWidth
             />
           </Col>
         </Row>
@@ -92,6 +94,7 @@ const ModeloAcuerdoEdit = () => {
               {...register('descripcion')}
               error={!!formErrors.descripcion}
               helperText={formErrors?.descripcion?.message}
+              fullWidth
             />
           </Col>
         </Row>

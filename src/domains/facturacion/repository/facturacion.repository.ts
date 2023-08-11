@@ -17,30 +17,6 @@ class FacturacionRepository {
     return response;
   };
 
-  static getFacturasById = async (id: string) => {
-    const response$ = from(FacturacionService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-
-  static getFacturasByIdAndContratoVariables = async (id: string) => {
-    const response$ = from(FacturacionService.getByIdFull(id)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-
-  static updateFacturas = async (contrato: AnyValue) => {
-    const response$ = from(FacturacionService.patch(contrato)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-
-  static deleteFacturasById = async (id: number) => {
-    const response$ = from(FacturacionService.deleteById(id)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-
   static facturacionManual = async (contratoId: number) => {
     const response$ = from(FacturacionService.facturacionManual(contratoId)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
@@ -49,6 +25,14 @@ class FacturacionRepository {
 
   static facturacionMasiva = async (data: FacturacionMasivaSchema) => {
     const response$ = from(FacturacionService.facturacionMasiva(data)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getEventos = async (facturacionContratoConceptoId: string) => {
+    const response$ = from(FacturacionService.getEventos(facturacionContratoConceptoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
     const response = await lastValueFrom(response$);
     return response;
   };

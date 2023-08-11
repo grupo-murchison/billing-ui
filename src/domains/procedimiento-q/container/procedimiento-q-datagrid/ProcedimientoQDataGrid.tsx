@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
-import { Button, Paper, Stack } from '@mui/material';
 
 import { withBreadcrumb } from '@app/hocs';
 import { useConfirmDialog } from '@app/hooks';
@@ -13,7 +12,7 @@ import { ProcedimientoQDataGridBreadcrumb } from '@domains/procedimiento-q/const
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
 import { label } from '@domains/procedimiento-q/constants';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { AddIcon, DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 const ProcedimientoQDataGrid = () => {
   const _navigate = useNavigate();
@@ -59,63 +58,53 @@ const ProcedimientoQDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
-  const toolbar = (
-    <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2 }} direction='row'>
-      <Button onClick={handleClickCreate} color='primary' variant='contained'>
-        <AddIcon />
-        Alta
-      </Button>
-    </Stack>
-  );
-
   return (
     <>
-      {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            { field: 'codigo', headerName: 'Código' },
-            { field: 'denominacion', headerName: 'Denominación' },
-            // { headerName: 'Descripción' },
-            { field: 'tipoProcedimientoQ', headerName: 'Tipo Procedimiento Cantidad' },
-            { field: 'procedimientoBuiltin', headerName: 'Procedimiento Builtin' },
-            { field: 'procedimientoCustom', headerName: 'Procedimiento Custom' },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={1}
-                  icon={<ViewIcon />}
-                  label='Vista'
-                  onClick={() => handleClickView(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={2}
-                  icon={<EditOutlinedIcon />}
-                  label='Editar'
-                  onClick={() => handleClickEdit(params.row.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<DeleteOutlineIcon />}
-                  label='Eliminar'
-                  onClick={() => handleClickDelete(params.row)}
-                  showInMenu
-                />,
-              ],
-            },
-          ]}
-          repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
-        />
-      </Paper>
+      <DataGrid
+        onClickNew={handleClickCreate}
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'codigo', headerName: 'Código' },
+          { field: 'denominacion', headerName: 'Denominación' },
+          // { headerName: 'Descripción' },
+          { field: 'tipoProcedimientoQ', headerName: 'Tipo Procedimiento Cantidad' },
+          { field: 'procedimientoBuiltin', headerName: 'Procedimiento Builtin' },
+          { field: 'procedimientoCustom', headerName: 'Procedimiento Custom' },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={1}
+                icon={<ViewIcon />}
+                label='Vista'
+                onClick={() => handleClickView(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={2}
+                icon={<EditOutlinedIcon />}
+                label='Editar'
+                onClick={() => handleClickEdit(params.row.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<DeleteOutlineIcon />}
+                label='Eliminar'
+                onClick={() => handleClickDelete(params.row)}
+                showInMenu
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={ProcedimientoQRepository.getAllProcedimientoQPaginated}
+      />
+
       <Outlet />
     </>
   );

@@ -63,6 +63,7 @@ const ProcedimientoPIntervaloCreate = () => {
               error={!!formErrors.intervalo}
               helperText={formErrors?.intervalo?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -76,6 +77,7 @@ const ProcedimientoPIntervaloCreate = () => {
               error={!!formErrors.valorInicial}
               helperText={formErrors?.valorInicial?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
@@ -91,6 +93,7 @@ const ProcedimientoPIntervaloCreate = () => {
               error={!!formErrors.valorFinal}
               helperText={formErrors?.valorFinal?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
           <Col md={6}>
@@ -104,6 +107,7 @@ const ProcedimientoPIntervaloCreate = () => {
               error={!!formErrors.precio}
               helperText={formErrors?.precio?.message}
               disabled={isSubmitting}
+              fullWidth
             />
           </Col>
         </Row>
