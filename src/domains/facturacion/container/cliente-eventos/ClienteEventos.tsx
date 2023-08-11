@@ -21,10 +21,12 @@ import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 import { GridActionsCellItem } from "@mui/x-data-grid";
 import { ViewIcon } from "@assets/icons";
 
-// import { withBreadcrumb } from '@app/hocs';
+import { withBreadcrumb } from '@app/hocs';
 
 // import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
+import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
+
 // import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 // import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
 
@@ -53,8 +55,8 @@ const EventoClientes = () => {
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
-      nroContrato: '',
-      numeroSecuenciaFacturacion: '',
+      cantidad: '',
+      eventos: '',
     },
     // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
   });
@@ -65,8 +67,8 @@ const EventoClientes = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        nroContrato: data.nroContrato ? data.nroContrato : undefined,
-        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        cantidad: data.nroContrato ? data.nroContrato : undefined,
+        eventos: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
       };
 
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -224,4 +226,4 @@ const EventoClientes = () => {
 
 
 // export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
-export default EventoClientes;
+export default withBreadcrumb(EventoClientes, ClienteEventosBreadcrumb);

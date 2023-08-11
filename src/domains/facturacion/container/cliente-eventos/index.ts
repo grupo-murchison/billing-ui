@@ -1,1 +1,1 @@
-export { default as EventoClientes } from './CleinteEventos';
+export { default as EventoClientes } from './ClienteEventos';

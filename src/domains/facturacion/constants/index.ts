@@ -13,3 +13,6 @@ export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
 ];
 
 // TODO: agregar para el bredeacrum de EVENTO CLIENTES
+export const ClienteEventosBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Cliente Eventos', path: '/facturacion/reporte' },
+];
