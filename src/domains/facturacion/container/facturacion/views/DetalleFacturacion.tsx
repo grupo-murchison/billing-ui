@@ -59,7 +59,7 @@ function DetalleFacturacion({
         <Typography variant='h3'>Detalle Facturación</Typography>
       </DividerMUI>
 
-      <Form isView>
+      <Form>
         <Row>
           <Col sm={12} md={6}>
             <TextField

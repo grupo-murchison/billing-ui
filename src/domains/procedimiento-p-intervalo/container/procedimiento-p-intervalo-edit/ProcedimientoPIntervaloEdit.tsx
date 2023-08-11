@@ -61,7 +61,7 @@ const ProcedimientoPIntervaloEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
             <TextField

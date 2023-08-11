@@ -62,6 +62,7 @@ const FacturacionReporte = () => {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
       };
 
+      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
       setRows(mainDataGrid.getRows());
     },
@@ -77,7 +78,7 @@ const FacturacionReporte = () => {
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} isSearch isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col md={3}>
             <FormTextField

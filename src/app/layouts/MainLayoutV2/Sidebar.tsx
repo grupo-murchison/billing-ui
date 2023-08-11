@@ -59,7 +59,15 @@ const Sidebar = () => {
       variant='permanent'
       open={isSidebarOpen}
       PaperProps={{
-        sx: { backgroundColor: theme.palette.primary.main, color: theme.palette.common.white, overflow: 'hidden' },
+        sx: {
+          'backgroundColor': theme.palette.primary.main,
+          'color': theme.palette.common.white,
+          'overflow': 'hidden',
+          'overflowY': 'auto',
+          '&::-webkit-scrollbar': {
+            width: '0',
+          },
+        },
       }}
       onMouseEnter={() => handleSidebar(true)}
       onMouseLeave={() => handleSidebar(false)}

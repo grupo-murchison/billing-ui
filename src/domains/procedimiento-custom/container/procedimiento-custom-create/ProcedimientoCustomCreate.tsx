@@ -117,7 +117,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoCustom}`}>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={4}>
             <TextField

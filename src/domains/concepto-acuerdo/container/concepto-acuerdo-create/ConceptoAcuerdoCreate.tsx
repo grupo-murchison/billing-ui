@@ -52,7 +52,7 @@ const ConceptoAcuerdoCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nuevo Concepto Acuerdo'>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={12}>
             <ModeloAcuerdoDropdown
