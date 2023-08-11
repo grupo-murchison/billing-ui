@@ -1,10 +1,9 @@
 import { ApiProvider } from '@providers';
 
-// import type { DataGridRepositoryFuncParams } from '@app/pro-components';
+import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
-import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 const BASE_PATH = 'v1/modelos-acuerdo';
 

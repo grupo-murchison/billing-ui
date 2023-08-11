@@ -1,11 +1,11 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import { Paper } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
-import { Col, Row } from '@app/components';
+import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 
@@ -15,6 +15,7 @@ import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
+import { DetalleFacturacion } from '@domains/facturacion/container/facturacion';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
@@ -26,11 +27,15 @@ import { ViewIcon } from '@assets/icons';
 const FacturacionReporte = () => {
   // const _navigate = useNavigate();
 
+  const [openModal, setOpenModal] = useState(false);
+  const [rows, setRows] = useState<any>();
+  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<any>(null);
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
   useEffect(() => {
     mainDataGrid.load();
-  }, [mainDataGrid]);
+    setRows(mainDataGrid.getRows());
+  }, [mainDataGrid.load]);
 
   const {
     control,
@@ -57,14 +62,23 @@ const FacturacionReporte = () => {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
       };
 
+      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
+      setRows(mainDataGrid.getRows());
     },
     [mainDataGrid],
   );
 
+  const onClickVerSoporte = (row: any) => {
+    console.log('onClickVerSoporte    :', row);
+    console.log('mainDataGrid.getRows :', rows);
+    setFacturacionContratoConceptoId(113);
+    setOpenModal(true);
+  };
+
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} isSearch isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col md={3}>
             <FormTextField
@@ -157,82 +171,86 @@ const FacturacionReporte = () => {
   return (
     <>
       {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
-            {
-              field: 'fechaEjecucion',
-              headerName: 'Fecha Facturación',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
-            },
-            {
-              field: 'clienteId',
-              headerName: 'Nro. Cliente',
-              flex: 0.8,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
-            },
-            {
-              field: 'denominación',
-              headerName: 'Denominación',
-              valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
-            },
-            {
-              field: 'numeroSecuenciaContrato',
-              headerName: 'Nro. Contrato',
-              flex: 0.9,
-              valueGetter: params => params.row.contratos[0]?.contratoNro || '',
-            },
-            {
-              field: 'contratoDescripcion',
-              headerName: 'Descripción Contrato',
-              flex: 2,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
-            },
-            {
-              field: 'periodo',
-              headerName: 'Período',
-              valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
-              flex: 0.5,
-            },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Soporte'
-                  // onClick={toggleAdmin(params.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<ViewIcon />}
-                  label='Ver Proforma'
-                  // onClick={duplicateUser(params.id)}
-                  showInMenu
-                />,
-                // <IconMenu
-                //   key={4}
-                //   options={[
-                //     { label: 'Ver Soporte', icon: '', caption: '' },
-                //     { label: 'Ver Proforma', icon: '', caption: '' },
-                //   ]}
-                // />,
-              ],
-            },
-          ]}
-          repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-          toolbar={toolbarMUI}
-        />
-      </Paper>
+
+      <DataGrid
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+          {
+            field: 'fechaEjecucion',
+            headerName: 'Fecha Facturación',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+            type: 'date',
+          },
+          {
+            field: 'contratoClienteNumero',
+            headerName: 'Nro. Cliente',
+            flex: 0.8,
+            valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
+          },
+          {
+            field: 'denominación',
+            headerName: 'Denominación',
+            valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
+          },
+          {
+            field: 'numeroSecuenciaContrato',
+            headerName: 'Nro. Contrato',
+            flex: 0.9,
+            valueGetter: params => params.row.contratos[0]?.contratoNro || '',
+          },
+          {
+            field: 'contratoDescripcion',
+            headerName: 'Descripción Contrato',
+            flex: 2,
+            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
+          },
+          {
+            field: 'periodo',
+            headerName: 'Período',
+            valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
+            flex: 0.5,
+          },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<ViewIcon />}
+                label='Ver Soporte'
+                onClick={() => onClickVerSoporte(params.row)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<ViewIcon />}
+                label='Ver Proforma'
+                // onClick={duplicateUser(params.id)}
+                showInMenu
+              />,
+              // <IconMenu
+              //   key={4}
+              //   options={[
+              //     { label: 'Ver Soporte', icon: '', caption: '' },
+              //     { label: 'Ver Proforma', icon: '', caption: '' },
+              //   ]}
+              // />,
+            ],
+          },
+        ]}
+        repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+        toolbar={toolbarMUI}
+        getRows={rows => console.log('rows', rows)}
+      />
+
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>
+        <DetalleFacturacion periodo={null} facturacionContratoConceptoId={facturacionContratoConceptoId} />
+      </Modal>
     </>
   );
 };

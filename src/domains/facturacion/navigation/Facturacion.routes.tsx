@@ -5,6 +5,8 @@ import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
 import { EventoClientes } from '../container/cliente-eventos';
+import { FacturacionMasiva } from '@domains/facturacion/container/facturacion-masiva';
+import { FacturacionLog } from '../container/facturacion-log';
 
 const FacturacionRoutes = () => {
   return (
@@ -34,6 +36,9 @@ const FacturacionRoutes = () => {
           </ClienteEventosProvider>
         }
       />
+      <Route path='/facturacion/masiva' element={<FacturacionMasiva />} />
+      <Route path='/facturacion/log' element={<FacturacionLog />} />
+
       <Route path='/facturacion/*' element={<Navigate to='/' replace />} />
     </Routes>
   );

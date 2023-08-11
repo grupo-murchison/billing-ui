@@ -50,7 +50,7 @@ const ProcedimientoQEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={label.procedimientoQ}>
-      <Form handleClose={handleClose} isSubmitting={isSubmitting} isView>
+      <Form handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField

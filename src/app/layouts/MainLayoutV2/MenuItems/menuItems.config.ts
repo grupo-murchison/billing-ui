@@ -127,10 +127,17 @@ const facturaciones: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
-          id: 'facturacionLogMasiva',
-          title: 'Log Facturación Masiva',
+          id: 'facturacionMasiva',
+          title: 'Masiva',
           type: 'item',
-          url: '/log-masiva',
+          url: 'facturacion/masiva',
+          breadcrumbs: false,
+        },
+        {
+          id: 'facturacionLog',
+          title: 'Log de Facturación',
+          type: 'item',
+          url: 'facturacion/log',
           breadcrumbs: false,
         },
         {

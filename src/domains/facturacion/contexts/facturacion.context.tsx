@@ -57,11 +57,12 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
   const handleDisableFacturar = (row: any, rows: any[]) => {
     let periodo = row;
 
-    if (periodo?.periodo !== 1) {
+    if (periodo?.periodo === 1 && !isPeriodoFacturado(periodo?.estado)) {
+      return false;
+    } else {
       periodo = rows.find(periodoAnterior => periodoAnterior.periodo === periodo.periodo - 1);
+      return isPeriodoFacturado(periodo?.estado) ? false : true;
     }
-
-    return isPeriodoFacturado(periodo?.estado) ? false : true;
   };
 
   return (

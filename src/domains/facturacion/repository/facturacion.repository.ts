@@ -5,7 +5,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 import { RepositoryUtils } from '@app/utils';
 
 import { FacturacionService } from './facturacion.service';
-import { getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
+import { FacturacionMasivaSchema, getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
   static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {
@@ -23,8 +23,22 @@ class FacturacionRepository {
     return response;
   };
 
+  static facturacionMasiva = async (data: FacturacionMasivaSchema) => {
+    const response$ = from(FacturacionService.facturacionMasiva(data)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
   static getEventos = async (facturacionContratoConceptoId: string) => {
     const response$ = from(FacturacionService.getEventos(facturacionContratoConceptoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getDetallePeriodo = async (facturacionContratoConceptoId: string) => {
+    const response$ = from(FacturacionService.getDetallePeriodo(facturacionContratoConceptoId)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
     const response = await lastValueFrom(response$);
