@@ -165,7 +165,7 @@ const ProcedimientoCustomEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Editar ${label.procedimientoCustom}`}>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={4}>
             <TextField

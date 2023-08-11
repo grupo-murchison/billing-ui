@@ -288,7 +288,7 @@ const ContratoEdit = () => {
   return (
     <>
       <Card sx={{ p: 3 }}>
-        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>

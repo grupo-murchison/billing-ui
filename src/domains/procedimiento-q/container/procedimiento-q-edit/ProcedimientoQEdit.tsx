@@ -95,7 +95,7 @@ const ProcedimientoQEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Editar ${label.procedimientoQ}`}>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
             <TextField

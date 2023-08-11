@@ -66,7 +66,7 @@ const ConceptoAcuerdoEdit = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Concepto Acuerdo'>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} isUpdate>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={12}>
             <ModeloAcuerdoDropdown

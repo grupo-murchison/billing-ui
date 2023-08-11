@@ -1,9 +1,9 @@
 import { Button, Stack, CircularProgress } from '@mui/material';
 import { ActionButtonsProps } from './form.interfaces';
 
-const FormActionButtons = ({ isSubmitting, isUpdate, handleClose, isView, isSearch }: ActionButtonsProps) => {
+const FormActionButtons = ({ isSubmitting, handleClose, label }: ActionButtonsProps) => {
   return (
-    <Stack direction='row' justifyContent='end' gap={2} display={isView ? 'none' : 'flex'}>
+    <Stack direction='row' justifyContent='end' gap={2} display={!label ? 'none' : 'flex'}>
       {handleClose && (
         <Button
           color='secondary'
@@ -18,7 +18,13 @@ const FormActionButtons = ({ isSubmitting, isUpdate, handleClose, isView, isSear
 
       <ActionButton
         isSubmitting={isSubmitting}
-        label={(isUpdate && 'Actualizar') || (isSearch && 'Buscar') || 'Crear'}
+        label={
+          (label === 'update' && 'Actualizar') ||
+          (label === 'search' && 'Buscar') ||
+          (label === 'create' && 'Crear') ||
+          label ||
+          ''
+        }
       />
     </Stack>
   );

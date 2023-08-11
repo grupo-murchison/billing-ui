@@ -52,7 +52,7 @@ const ProcedimientoPCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Precio'>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
             <TextField

@@ -81,7 +81,7 @@ const ProcedimientoQCreate = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
-      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
             <TextField

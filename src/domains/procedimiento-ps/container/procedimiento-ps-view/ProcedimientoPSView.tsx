@@ -37,7 +37,7 @@ const ProcedimientoPSView = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Ver Procedimiento Producto Softland'>
-      <Form handleClose={handleClose} isSubmitting={isSubmitting} isView>
+      <Form handleClose={handleClose} isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField id='codigo' label='Código' defaultValue={procedimientoPSData.codigo} disabled />

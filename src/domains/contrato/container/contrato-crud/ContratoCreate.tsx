@@ -256,7 +256,7 @@ const ContratoCreate = () => {
     <>
       {/* <Paper sx={{p: 3}}> */}
       <Card sx={{ p: 3 }}>
-        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting}>
+        <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
           <CardHeader
             title={
               <Typography variant='h2' component='h2'>

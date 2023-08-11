@@ -11,3 +11,9 @@ export const FacturacionEditBreadcrumb: BreadcrumbItem[] = [
 export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
   { label: 'Facturación Reporte', path: '/facturacion/reporte' },
 ];
+
+export const FacturacionMasivaBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Facturación Masiva', path: '/facturacion/masiva' },
+];
+
+export const FacturacionLogBreadcrumb: BreadcrumbItem[] = [{ label: 'Log de Facturación', path: '/facturacion/log' }];
