@@ -22,6 +22,8 @@ const contratoSchema = z
     contratoNro: z.string().nullish(),
     contratoClienteDescripcion: z.string().nullish(),
     contratoClienteNumero: z.string().nullish(),
+    estado: z.string().nullish(),
+    id: z.number().nullish(),
     periodoNumero: z.number().nullish(),
     sociedadDenominacion: z.string().nullish(),
   })

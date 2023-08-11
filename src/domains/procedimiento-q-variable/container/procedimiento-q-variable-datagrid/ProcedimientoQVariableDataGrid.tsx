@@ -7,10 +7,12 @@ import { Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import { DataGrid } from '@app/components/DataGrid';
 
 import { ProcedimientoQVariableContext } from '@domains/procedimiento-q-variable/contexts';
 import { ProcedimientoQVariableRepository } from '@domains/procedimiento-q-variable/repository';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ProcedimientoQVariableDataGrid = () => {
   const _navigate = useNavigate();
@@ -60,28 +62,37 @@ const ProcedimientoQVariableDataGrid = () => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'CÓDIGO' },
-              { headerName: 'NOMBRE' },
-              { headerName: 'TIPO' },
-              { headerName: 'DICCIONARIO' },
-              { headerName: '' },
+            columns={[
+              { field: 'codigo', headerName: 'Código' },
+              { field: 'nombre', headerName: 'Nombre' },
+              { field: 'tipo', headerName: 'Tipo' },
+              { field: 'diccionario', headerName: 'Diccionario' },
+              {
+                field: 'acciones',
+                type: 'actions',
+                headerName: 'Acciones',
+                headerAlign: 'center',
+                align: 'center',
+                flex: 0.5,
+                getActions: params => [
+                  <GridActionsCellItem
+                    key={2}
+                    icon={<EditOutlinedIcon />}
+                    label='Editar'
+                    onClick={() => handleClickEdit(params.row.id)}
+                    // showInMenu
+                  />,
+                  <GridActionsCellItem
+                    key={3}
+                    icon={<DeleteOutlineIcon />}
+                    label='Eliminar'
+                    onClick={() => handleClickDelete(params.row)}
+                    // showInMenu
+                  />,
+                ],
+              },
             ]}
             repositoryFunc={ProcedimientoQVariableRepository.getAllProcedimientoQVariablePaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.codigo}</td>
-                <td>{row.nombre}</td>
-                <td>{row.tipo}</td>
-                <td>{row.diccionario}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
             onClickNew={handleClickCreate}
           />
         </Col>

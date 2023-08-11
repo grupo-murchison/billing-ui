@@ -157,82 +157,81 @@ const FacturacionReversion = () => {
   return (
     <>
       {toolbar}
-      <Paper>
-        <DataGrid
-          hookRef={mainDataGrid.ref}
-          columns={[
-            { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
-            {
-              field: 'fechaEjecucion',
-              headerName: 'Fecha Facturación',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
-            },
-            {
-              field: 'clienteId',
-              headerName: 'Nro. Cliente',
-              flex: 0.8,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
-            },
-            {
-              field: 'denominación',
-              headerName: 'Denominación',
-              valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
-            },
-            {
-              field: 'numeroSecuenciaContrato',
-              headerName: 'Nro. Contrato',
-              flex: 0.9,
-              valueGetter: params => params.row.contratos[0]?.numeroSecuenciaContrato || '',
-            },
-            {
-              field: 'contratoDescripcion',
-              headerName: 'Descripción Contrato',
-              flex: 2,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
-            },
-            {
-              field: 'periodo',
-              headerName: 'Período',
-              valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
-              flex: 0.5,
-            },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Soporte'
-                  // onClick={toggleAdmin(params.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<ViewIcon />}
-                  label='Ver Proforma'
-                  // onClick={duplicateUser(params.id)}
-                  showInMenu
-                />,
-                // <IconMenu
-                //   key={4}
-                //   options={[
-                //     { label: 'Ver Soporte', icon: '', caption: '' },
-                //     { label: 'Ver Proforma', icon: '', caption: '' },
-                //   ]}
-                // />,
-              ],
-            },
-          ]}
-          repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-          // toolbar={Toolbar}
-        />
-      </Paper>
+
+      <DataGrid
+        hookRef={mainDataGrid.ref}
+        columns={[
+          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+          {
+            field: 'fechaEjecucion',
+            headerName: 'Fecha Facturación',
+            valueGetter: params => DateLib.parseFromDBString(params.value),
+            type: 'date',
+          },
+          {
+            field: 'clienteId',
+            headerName: 'Nro. Cliente',
+            flex: 0.8,
+            valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
+          },
+          {
+            field: 'denominación',
+            headerName: 'Denominación',
+            valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
+          },
+          {
+            field: 'numeroSecuenciaContrato',
+            headerName: 'Nro. Contrato',
+            flex: 0.9,
+            valueGetter: params => params.row.contratos[0]?.numeroSecuenciaContrato || '',
+          },
+          {
+            field: 'contratoDescripcion',
+            headerName: 'Descripción Contrato',
+            flex: 2,
+            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
+          },
+          {
+            field: 'periodo',
+            headerName: 'Período',
+            valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
+            flex: 0.5,
+          },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<ViewIcon />}
+                label='Ver Soporte'
+                // onClick={toggleAdmin(params.id)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={3}
+                icon={<ViewIcon />}
+                label='Ver Proforma'
+                // onClick={duplicateUser(params.id)}
+                showInMenu
+              />,
+              // <IconMenu
+              //   key={4}
+              //   options={[
+              //     { label: 'Ver Soporte', icon: '', caption: '' },
+              //     { label: 'Ver Proforma', icon: '', caption: '' },
+              //   ]}
+              // />,
+            ],
+          },
+        ]}
+        repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+        // toolbar={Toolbar}
+      />
     </>
   );
 };

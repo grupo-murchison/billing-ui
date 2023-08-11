@@ -1,17 +1,18 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import { DataGrid } from '@app/components/DataGrid';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
 import { label } from '@domains/procedimiento-p-intervalo/contexts/constants';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
 
 const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
   const _navigate = useNavigate();
@@ -62,28 +63,37 @@ const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'INTERVALO' },
-              { headerName: 'VALOR INICIAL' },
-              { headerName: 'VALOR FINAL' },
-              { headerName: 'PRECIO' },
-              { headerName: 'ACCIONES' },
+            columns={[
+              { field: 'intervalo', headerName: 'Intervalo' },
+              { field: 'valorInicial', headerName: 'Valor Inicial' },
+              { field: 'valorFinal', headerName: 'Valor Final' },
+              { field: 'precio', headerName: 'Precio' },
+              {
+                field: 'acciones',
+                type: 'actions',
+                headerName: 'Acciones',
+                headerAlign: 'center',
+                align: 'center',
+                flex: 0.5,
+                getActions: params => [
+                  <GridActionsCellItem
+                    key={2}
+                    icon={<EditOutlinedIcon />}
+                    label='Editar'
+                    onClick={() => handleClickEdit(params.row.id)}
+                    // showInMenu
+                  />,
+                  <GridActionsCellItem
+                    key={3}
+                    icon={<DeleteOutlineIcon />}
+                    label='Eliminar'
+                    onClick={() => handleClickDelete(params.row)}
+                    // showInMenu
+                  />,
+                ],
+              },
             ]}
             repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.intervalo}</td>
-                <td>{row.valorInicial}</td>
-                <td>{row.valorFinal}</td>
-                <td>{row.precio}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row)} />
-                  </Stack>
-                </td>
-              </>
-            )}
             onClickNew={handleClickCreate}
           />
         </Col>
