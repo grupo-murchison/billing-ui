@@ -73,7 +73,7 @@ const Facturacion = () => {
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} isSearch isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete
