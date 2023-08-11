@@ -1,6 +1,6 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
-import { FacturacionProvider, FacturacionReporteProvider } from '@domains/facturacion/contexts';
+import { FacturacionProvider, FacturacionReporteProvider, ClienteEventosProvider } from '@domains/facturacion/contexts';
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
@@ -29,9 +29,9 @@ const FacturacionRoutes = () => {
       <Route
         path='/eventos-cliente'
         element={
-          <FacturacionReporteProvider>
+          <ClienteEventosProvider>
             <EventoClientes />
-          </FacturacionReporteProvider>
+          </ClienteEventosProvider>
         }
       />
       <Route path='/facturacion/*' element={<Navigate to='/' replace />} />

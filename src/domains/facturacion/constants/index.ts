@@ -11,3 +11,5 @@ export const FacturacionEditBreadcrumb: BreadcrumbItem[] = [
 export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
   { label: 'Facturación Reporte', path: '/facturacion/reporte' },
 ];
+
+// TODO: agregar para el bredeacrum de EVENTO CLIENTES

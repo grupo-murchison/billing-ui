@@ -89,6 +89,7 @@ const EventoClientes = () => {
               // helperText={formErrors?.clienteId?.message}
             />
           </Col>
+          {/* TODO: cambiar a EVENTOS y que sea un selector multiple */}
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete
               control={control}
@@ -122,6 +123,7 @@ const EventoClientes = () => {
           </Col>
         </Row>
         <Row>
+          {/* TODO: cambiar a Cantidad. valor numerico minimo 1  */}
           <Col md={12}>
             <FormDesktopDatePicker
               control={control}
@@ -138,9 +140,9 @@ const EventoClientes = () => {
 
   return (
     <>
-    <h1>hola mundo</h1>
     {toolbar}
     <Paper>
+      {/* TODO: Adaptar a los campos segun el word */}
     <DataGrid
           hookRef={mainDataGrid.ref}
           columns={[
