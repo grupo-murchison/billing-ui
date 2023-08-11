@@ -4,7 +4,7 @@ import { FacturacionProvider, FacturacionReporteProvider } from '@domains/factur
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
-import { EventoClientes } from '../cliente-eventos';
+import { EventoClientes } from '../container/cliente-eventos';
 
 const FacturacionRoutes = () => {
   return (
