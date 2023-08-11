@@ -7,11 +7,13 @@ import { Col, Row } from '@app/components';
 
 import { useConfirmDialog } from '@app/hooks';
 
-import { DataGrid } from '@app/pro-components';
+import { DataGrid } from '@app/components/DataGrid';
 
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
 import { label } from '@domains/procedimiento-ps-intervalo/contexts/constans';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
 const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
   const _navigate = useNavigate();
@@ -62,28 +64,37 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
         <Col md={12}>
           <DataGrid
             hookRef={mainDataGrid.ref}
-            columnHeads={[
-              { headerName: 'PRODUCTO SOFTLAND' },
-              { headerName: 'INTERVALO' },
-              { headerName: 'VALOR INICIAL' },
-              { headerName: 'VALOR FINAL' },
-              { headerName: 'ACCIONES' },
+            columns={[
+              { field: 'productoSoftland', headerName: 'Producto Softland' },
+              { field: 'intervalo', headerName: 'Intervalo' },
+              { field: 'valorInicial', headerName: 'Valor Inicial' },
+              { field: 'valorFinal', headerName: 'Valor Final' },
+              {
+                field: 'acciones',
+                type: 'actions',
+                headerName: 'Acciones',
+                headerAlign: 'center',
+                align: 'center',
+                flex: 0.5,
+                getActions: params => [
+                  <GridActionsCellItem
+                    key={2}
+                    icon={<EditOutlinedIcon />}
+                    label='Editar'
+                    onClick={() => handleClickEdit(params.row.id)}
+                    // showInMenu
+                  />,
+                  <GridActionsCellItem
+                    key={3}
+                    icon={<DeleteOutlineIcon />}
+                    label='Eliminar'
+                    onClick={() => handleClickDelete(params.row.id)}
+                    // showInMenu
+                  />,
+                ],
+              },
             ]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
-            rowTemplate={row => (
-              <>
-                <td>{row.productoSoftland}</td>
-                <td>{row.intervalo}</td>
-                <td>{row.valorInicial}</td>
-                <td>{row.valorFinal}</td>
-                <td align='center'>
-                  <Stack direction='row' justifyContent='center' spacing={1}>
-                    <DataGrid.EditButton onClick={() => handleClickEdit(row.id)} />
-                    <DataGrid.DeleteButton onClick={() => handleClickDelete(row.id)} />
-                  </Stack>
-                </td>
-              </>
-            )}
             onClickNew={handleClickCreate}
           />
         </Col>

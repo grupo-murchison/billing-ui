@@ -13,6 +13,7 @@ const DataGridProvider = <T,>({
   repositoryFunc,
   children,
   toolbar,
+  getRows,
 }: DataGridProviderProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(initialContext.currentPage);
   const [rowsPerPage, setRowsPerPage] = useState<number>(initialContext.rowsPerPage);
@@ -39,10 +40,10 @@ const DataGridProvider = <T,>({
       ...currentFilters,
       ...config?.filters,
     })
-      .then(response => {
-        if (response.data) {
-          setRows(response.data.data as GridRowsProp);
-          setRowsTotalCount(response.data.meta.itemCount);
+      .then(({ data }) => {
+        if (data) {
+          setRows(data.data as GridRowsProp);
+          setRowsTotalCount(data.meta.itemCount);
         }
       })
       .catch(err => {
@@ -100,8 +101,11 @@ const DataGridProvider = <T,>({
         makeRequest();
       },
       reload: makeRequest,
+      getRows: () => [...rows], // TODO funciona a veces, hay que revisar bien si es viable y mejorarlo
     };
   }, [makeRequest]);
+
+  getRows && getRows(rows);
 
   return (
     <DataGridContext.Provider

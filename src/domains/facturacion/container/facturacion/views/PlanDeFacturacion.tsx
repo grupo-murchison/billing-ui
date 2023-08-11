@@ -119,29 +119,29 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
             align: 'center',
             flex: 0.5,
             getActions: params => [
-              isPeriodoFacturado(params?.row?.estado) ? (
-                <GridActionsCellItem
-                  key={1}
-                  icon={<ViewIcon />}
-                  label='Detalle'
-                  onClick={() => onClickVerDetalle(params.row)}
-                  showInMenu
-                />
-              ) : (
-                <></>
-              ),
-              !isPeriodoFacturado(params?.row?.estado) ? (
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ScheduleSendIcon />}
-                  label='Facturar'
-                  onClick={onClickFacturar}
-                  showInMenu
-                  disabled={handleDisableFacturar(params.row, planFacturacion?.periodos)}
-                />
-              ) : (
-                <></>
-              ),
+              // isPeriodoFacturado(params?.row?.estado) ? (
+              //   <GridActionsCellItem
+              //     key={1}
+              //     icon={<ViewIcon />}
+              //     label='Detalle'
+              //     onClick={() => onClickVerDetalle(params.row)}
+              //     showInMenu
+              //   />
+              // ) : (
+              //   <></>
+              // ),
+              // !isPeriodoFacturado(params?.row?.estado) ? (
+              <GridActionsCellItem
+                key={2}
+                icon={<ScheduleSendIcon />}
+                label='Facturar'
+                onClick={onClickFacturar}
+                showInMenu
+                disabled={handleDisableFacturar(params.row, planFacturacion?.periodos)}
+              />,
+              // ) : (
+              // <></>
+              // ),
             ],
           },
         ]}
