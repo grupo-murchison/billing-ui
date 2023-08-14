@@ -4,7 +4,7 @@ import { FacturacionProvider, FacturacionReporteProvider, ClienteEventosProvider
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
-import { EventoClientes } from '../container/cliente-eventos';
+import { EventoClientes } from '../../evento-cliente/container/index';
 import { FacturacionMasiva } from '@domains/facturacion/container/facturacion-masiva';
 import { FacturacionLog } from '../container/facturacion-log';
 

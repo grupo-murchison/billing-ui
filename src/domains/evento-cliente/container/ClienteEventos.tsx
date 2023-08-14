@@ -7,10 +7,10 @@ import FormTextField from "@app/components/Form/FormInputs/FormTextField";
 import { ClienteDropdownAutoComplete } from "@domains/cliente/container/cliente-dropdown";
 import { DateLib } from "@libs";
 import { Paper } from "@mui/material";
-import { useCallback, useContext } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { FacturacionReporteContext } from "../../contexts";
+import { ClienteEventosContext, FacturacionReporteContext } from "../../facturacion/contexts";
 
 // import { Paper } from '@mui/material';
 // import { GridActionsCellItem } from '@mui/x-data-grid';
@@ -26,6 +26,7 @@ import { withBreadcrumb } from '@app/hocs';
 // import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
+import { EventoClienteRepository } from "../repository";
 
 // import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 // import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
@@ -40,11 +41,13 @@ import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
 const EventoClientes = () => {
 //   // const _navigate = useNavigate();
 
-  const { mainDataGrid } = useContext(FacturacionReporteContext);
+  const [rows, setRows] = useState<any>();
 
-  // useEffect(() => {
-  //   mainDataGrid.load();
-  // }, [mainDataGrid]);
+  const { mainDataGrid } = useContext(ClienteEventosContext);
+
+  useEffect(() => {
+    mainDataGrid.load();
+  }, [mainDataGrid]);
 
   const {
     control,
@@ -63,6 +66,7 @@ const EventoClientes = () => {
 
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
+      console.log("🚀 ~ file: ClienteEventos.tsx:69 ~ EventoClientes ~ data:", data)
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
@@ -71,14 +75,18 @@ const EventoClientes = () => {
         eventos: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
       };
 
+
+      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
+      setRows(mainDataGrid.getRows());
     },
     [mainDataGrid],
+    
   );
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} isSearch isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)}  label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete
@@ -127,10 +135,10 @@ const EventoClientes = () => {
         <Row>
           {/* TODO: cambiar a Cantidad. valor numerico minimo 1  */}
           <Col md={12}>
-            <FormDesktopDatePicker
+            <FormTextField
               control={control}
               label='Cantidad'
-              name='fechaDesde'
+              name='cantidad'
               disabled={isSubmitting}
               // error={!!formErrors.fechaDesde}
             />
@@ -148,42 +156,49 @@ const EventoClientes = () => {
     <DataGrid
           hookRef={mainDataGrid.ref}
           columns={[
-            { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
-            {
-              field: 'fechaEjecucion',
-              headerName: 'Fecha Facturación',
-              valueGetter: params => DateLib.parseFromDBString(params.value),
-              type: 'date',
-            },
-            {
-              field: 'clienteId',
-              headerName: 'Nro. Cliente',
-              flex: 0.8,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
-            },
-            {
-              field: 'denominación',
-              headerName: 'Denominación',
-              valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
-            },
-            {
-              field: 'numeroSecuenciaContrato',
-              headerName: 'Nro. Contrato',
-              flex: 0.9,
-              valueGetter: params => params.row.contratos[0]?.contratoNro || '',
-            },
-            {
-              field: 'contratoDescripcion',
-              headerName: 'Descripción Contrato',
-              flex: 2,
-              valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
-            },
-            {
-              field: 'periodo',
-              headerName: 'Período',
-              valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
-              flex: 0.5,
-            },
+            { field: 'id', headerName: 'id' },
+            { field: 'clienteId', headerName: 'clienteId' },
+            { field: 'eventoId', headerName: 'eventoId' },
+            { field: 'eventoCodigo', headerName: 'eventoCodigo' },
+            { field: 'eventoDenominacion', headerName: 'eventoDenominacion' },
+            { field: 'eventoDescripcion', headerName: 'eventoDescripcion' },
+            { field: 'clienteCodigo', headerName: 'clienteCodigo' },
+            { field: 'clienteDescripcion', headerName: 'clienteDescripcion' },
+            { field: 'genEventoOrigenId', headerName: 'genEventoOrigenId' },
+            { field: 'genEventoTipoId', headerName: 'genEventoTipoId' },
+            { field: 'genEventoFechaCreacion', headerName: 'genEventoFechaCreacion' },
+            { field: 'genEventoFechaModificacion', headerName: 'genEventoFechaModificacion' },
+            { field: 'genEventoFechaEnvio', headerName: 'genEventoFechaEnvio' },
+            { field: 'genCompania', headerName: 'genCompania' },
+            { field: 'genSistema', headerName: 'genSistema' },
+            { field: 'genClienteId', headerName: 'genClienteId' },
+            { field: 'genDestinoTipo', headerName: 'genDestinoTipo' },
+            { field: 'genDestinoId', headerName: 'genDestinoId' },
+            { field: 'genTerminalId', headerName: 'genTerminalId' },
+            { field: 'genPatio', headerName: 'genPatio' },
+            { field: 'genZona', headerName: 'genZona' },
+            { field: 'genTarea', headerName: 'genTarea' },
+            { field: 'genOrdenCompra', headerName: 'genOrdenCompra' },
+            { field: 'evCantidadLitros', headerName: 'evCantidadLitros' },
+            { field: 'evTipoCombustible', headerName: 'evTipoCombustible' },
+            { field: 'evConcesionario', headerName: 'evConcesionario' },
+            { field: 'evModelo', headerName: 'evModelo' },
+            { field: 'evColor', headerName: 'evColor' },
+            { field: 'evDaño', headerName: 'evDaño' },
+            { field: 'evTipoDaño', headerName: 'evTipoDaño' },
+            { field: 'evCategorizacion', headerName: 'evCategorizacion' },
+            { field: 'evPieza', headerName: 'evPieza' },
+            { field: 'evEstado', headerName: 'evEstado' },
+            { field: 'evDUA', headerName: 'evDUA' },
+            { field: 'evTipoEmbarque', headerName: 'evTipoEmbarque' },
+            { field: 'evDimension', headerName: 'evDimension' },
+            { field: 'evDestino', headerName: 'evDestino' },
+            { field: 'evCiudadDestino', headerName: 'evCiudadDestino' },
+            { field: 'evTipoServicio', headerName: 'evTipoServicio' },
+            { field: 'evDocumentoSalida', headerName: 'evDocumentoSalida' },
+            { field: 'evDiaHabil', headerName: 'evDiaHabil' },
+            { field: 'evAlmacen', headerName: 'evAlmacen' },
+            { field: 'evHallazgos', headerName: 'evHallazgos' },
             {
               field: 'actions',
               type: 'actions',
@@ -216,8 +231,9 @@ const EventoClientes = () => {
               ],
             },
           ]}
-          repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+          repositoryFunc={EventoClienteRepository.getAllEventDetails}
           toolbar={toolbarMUI}
+          // getRows={rows => console.log('rows', rows) }
         />
       </Paper>
     </>
