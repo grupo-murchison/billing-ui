@@ -18,7 +18,7 @@ const FacturacionRoutes = () => {
           </FacturacionProvider>
         }
       ></Route>
-      <Route path='/facturacion/:facturaId/edit' element={<FacturacionReversion />} />
+      <Route path='/facturacion/reversion' element={<FacturacionReversion />} />
       <Route
         path='/facturacion/reporte'
         element={

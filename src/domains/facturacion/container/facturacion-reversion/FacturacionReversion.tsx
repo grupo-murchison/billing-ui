@@ -7,14 +7,13 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
-// import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
-import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
+import { FacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
@@ -62,9 +61,22 @@ const FacturacionReversion = () => {
     [mainDataGrid],
   );
 
+  const handleRevertir = (row: any) => {
+    const cantidadContratos = 10;
+    const numeroFacturacion = 10;
+
+    console.log(
+      `Se procederá a realizar la reversión de ${cantidadContratos} contratos asociados al número de facturación ${numeroFacturacion}`,
+    );
+
+    console.log(
+      `Se procederá a realizar la reversión de ${cantidadContratos} contratos asociados al número de facturación ${numeroFacturacion}`,
+    );
+  };
+
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} isSearch isSubmitting={isSubmitting}>
+      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col md={3}>
             <FormTextField
@@ -77,14 +89,14 @@ const FacturacionReversion = () => {
             />
           </Col>
           <Col md={3}>
-            <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
+            <FormTextField control={control} label='Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
               label='Cliente'
-              name='clienteId'
+              name='contrao'
               error={!!formErrors.clienteId}
               // emptyOption
               // helperText={formErrors?.clienteId?.message}
@@ -114,45 +126,6 @@ const FacturacionReversion = () => {
       </Form>
     </Paper>
   );
-
-  // const CustomActions = () => {
-  //   const theme = useTheme();
-
-  //   const sxButton: SxProps = {
-  //     'fontSize': '0.75rem',
-  //     // mx: 1.5,
-  //     ':hover': {
-  //       backgroundColor: theme.palette.primary.light,
-  //       color: theme.palette.common.white,
-  //       transition: 'ease-out',
-  //       transitionDuration: '0.3s',
-  //       // transitionDuration: theme.transitions.duration.standard,
-  //     },
-  //   };
-
-  //   return (
-  //     <>
-  //       <Stack direction='row' justifyContent='center'>
-  //         <Button
-  //           color='primary'
-  //           variant='text'
-  //           // onClick={handleClose}
-  //           sx={{ ...sxButton }}
-  //         >
-  //           Ver Soporte
-  //         </Button>
-  //         <Button
-  //           color='primary'
-  //           variant='text'
-  //           // onClick={handleClose}
-  //           sx={{ ...sxButton }}
-  //         >
-  //           Ver Proforma
-  //         </Button>
-  //       </Stack>
-  //     </>
-  //   );
-  // };
 
   return (
     <>
@@ -208,32 +181,17 @@ const FacturacionReversion = () => {
               <GridActionsCellItem
                 key={2}
                 icon={<ViewIcon />}
-                label='Ver Soporte'
-                // onClick={toggleAdmin(params.id)}
+                label='Revertir'
+                onClick={() => handleRevertir(params.row)}
                 showInMenu
               />,
-              <GridActionsCellItem
-                key={3}
-                icon={<ViewIcon />}
-                label='Ver Proforma'
-                // onClick={duplicateUser(params.id)}
-                showInMenu
-              />,
-              // <IconMenu
-              //   key={4}
-              //   options={[
-              //     { label: 'Ver Soporte', icon: '', caption: '' },
-              //     { label: 'Ver Proforma', icon: '', caption: '' },
-              //   ]}
-              // />,
             ],
           },
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-        // toolbar={Toolbar}
       />
     </>
   );
 };
 
-export default withBreadcrumb(FacturacionReversion, FacturacionReporteBreadcrumb);
+export default withBreadcrumb(FacturacionReversion, FacturacionReversionBreadcrumb);
