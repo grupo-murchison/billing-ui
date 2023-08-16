@@ -37,7 +37,7 @@ export const ContratoCreateSchema = z
   .superRefine((values, ctx) => {
     if (values.reglaFechaPeriodoId === 3 && values.diaPeriodo === '') {
       ctx.addIssue({
-        message: 'El campo es requeridosss.',
+        message: 'El campo es requeridos.',
         code: 'custom',
         path: ['diaPeriodo'],
       });

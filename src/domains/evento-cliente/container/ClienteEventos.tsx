@@ -27,6 +27,9 @@ import { withBreadcrumb } from '@app/hocs';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
 import { EventoClienteRepository } from "../repository";
+import { EventosDropdownAutoComplete } from "./cliente-dropdown copy/EventosDropdown";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ConceptoAcuerdoCreateSchema } from "@domains/concepto-acuerdo/container/concepto-acuerdo-create/schemas";
 
 // import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 // import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
@@ -47,7 +50,8 @@ const EventoClientes = () => {
 
   useEffect(() => {
     mainDataGrid.load();
-  }, [mainDataGrid]);
+    setRows(mainDataGrid.getRows());
+  }, [mainDataGrid.load]);
 
   const {
     control,
@@ -71,8 +75,8 @@ const EventoClientes = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        cantidad: data.nroContrato ? data.nroContrato : undefined,
-        eventos: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        take: data.cantidad ? data.cantidad : undefined,
+        eventos: data.eventos ? data.eventos : undefined,
       };
 
 
@@ -101,12 +105,12 @@ const EventoClientes = () => {
           </Col>
           {/* TODO: cambiar a EVENTOS y que sea un selector multiple */}
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete
+            <EventosDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
               label='Evento'
-              name='clienteId'
-              error={!!formErrors.clienteId}
+              name='eventos'
+              error={!!formErrors.eventos}
               // emptyOption
               // helperText={formErrors?.clienteId?.message}
             />
@@ -156,49 +160,50 @@ const EventoClientes = () => {
     <DataGrid
           hookRef={mainDataGrid.ref}
           columns={[
-            { field: 'id', headerName: 'id' },
-            { field: 'clienteId', headerName: 'clienteId' },
-            { field: 'eventoId', headerName: 'eventoId' },
-            { field: 'eventoCodigo', headerName: 'eventoCodigo' },
-            { field: 'eventoDenominacion', headerName: 'eventoDenominacion' },
-            { field: 'eventoDescripcion', headerName: 'eventoDescripcion' },
-            { field: 'clienteCodigo', headerName: 'clienteCodigo' },
-            { field: 'clienteDescripcion', headerName: 'clienteDescripcion' },
-            { field: 'genEventoOrigenId', headerName: 'genEventoOrigenId' },
-            { field: 'genEventoTipoId', headerName: 'genEventoTipoId' },
-            { field: 'genEventoFechaCreacion', headerName: 'genEventoFechaCreacion' },
-            { field: 'genEventoFechaModificacion', headerName: 'genEventoFechaModificacion' },
-            { field: 'genEventoFechaEnvio', headerName: 'genEventoFechaEnvio' },
-            { field: 'genCompania', headerName: 'genCompania' },
-            { field: 'genSistema', headerName: 'genSistema' },
-            { field: 'genClienteId', headerName: 'genClienteId' },
-            { field: 'genDestinoTipo', headerName: 'genDestinoTipo' },
-            { field: 'genDestinoId', headerName: 'genDestinoId' },
-            { field: 'genTerminalId', headerName: 'genTerminalId' },
-            { field: 'genPatio', headerName: 'genPatio' },
-            { field: 'genZona', headerName: 'genZona' },
-            { field: 'genTarea', headerName: 'genTarea' },
-            { field: 'genOrdenCompra', headerName: 'genOrdenCompra' },
-            { field: 'evCantidadLitros', headerName: 'evCantidadLitros' },
-            { field: 'evTipoCombustible', headerName: 'evTipoCombustible' },
-            { field: 'evConcesionario', headerName: 'evConcesionario' },
-            { field: 'evModelo', headerName: 'evModelo' },
-            { field: 'evColor', headerName: 'evColor' },
-            { field: 'evDaño', headerName: 'evDaño' },
-            { field: 'evTipoDaño', headerName: 'evTipoDaño' },
-            { field: 'evCategorizacion', headerName: 'evCategorizacion' },
-            { field: 'evPieza', headerName: 'evPieza' },
-            { field: 'evEstado', headerName: 'evEstado' },
-            { field: 'evDUA', headerName: 'evDUA' },
-            { field: 'evTipoEmbarque', headerName: 'evTipoEmbarque' },
-            { field: 'evDimension', headerName: 'evDimension' },
-            { field: 'evDestino', headerName: 'evDestino' },
-            { field: 'evCiudadDestino', headerName: 'evCiudadDestino' },
-            { field: 'evTipoServicio', headerName: 'evTipoServicio' },
-            { field: 'evDocumentoSalida', headerName: 'evDocumentoSalida' },
-            { field: 'evDiaHabil', headerName: 'evDiaHabil' },
-            { field: 'evAlmacen', headerName: 'evAlmacen' },
-            { field: 'evHallazgos', headerName: 'evHallazgos' },
+            // { field: 'id', headerName: 'id' },
+            // { field: 'clienteId', headerName: 'clienteId' },
+
+            // { field: 'eventoCodigo', headerName: 'eventoCodigo' },
+            // { field: 'eventoDenominacion', headerName: 'eventoDenominacion' },
+            // { field: 'eventoDescripcion', headerName: 'eventoDescripcion' },
+            // { field: 'clienteCodigo', headerName: 'clienteCodigo' },
+            // { field: 'clienteDescripcion', headerName: 'clienteDescripcion' },
+            { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115},
+            { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
+            { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125 },
+            // { field: 'genEventoFechaModificacion', headerName: 'genEventoFechaModificacion' },
+            { field: 'genCompania', headerName: 'Compania', minWidth: 100  },
+            { field: 'genSistema', headerName: 'Sistema', minWidth: 80  },
+            { field: 'genClienteId', headerName: 'Cliente', minWidth: 80  },
+            { field: 'genDestinoTipo', headerName: 'Tipo Destino', minWidth: 110  },
+            { field: 'genDestinoId', headerName: 'Identificador Destino', minWidth: 160  },
+            { field: 'genTerminalId', headerName: 'Terminal', minWidth: 100  },
+            { field: 'genPatio', headerName: 'Patio', minWidth: 70  },
+            // { field: 'genZona', headerName: 'genZona' },
+            { field: 'genTarea', headerName: 'Tarea', minWidth: 150 },
+            { field: 'genOrdenCompra', headerName: 'Orden Compra', minWidth: 125  },
+            { field: 'evCantidadLitros', headerName: 'Cantidad Litros', minWidth: 125  },
+            { field: 'evTipoCombustible', headerName: 'Tipo Combustible', minWidth: 135  },
+            { field: 'evConcesionario', headerName: 'Concesionario', minWidth: 125  },
+            { field: 'evModelo', headerName: 'Modelo', minWidth: 180  },
+            { field: 'evDaño', headerName: 'Daño', minWidth: 115  },
+            { field: 'evTipoDaño', headerName: 'Tipo Daño', minWidth: 115  },
+            { field: 'evCategorizacion', headerName: 'Categorizacion', minWidth: 130  },
+            { field: 'evPieza', headerName: 'Pieza', minWidth: 100 },
+            { field: 'evEstado', headerName: 'Estado', minWidth: 115  },
+            { field: 'evDUA', headerName: 'DUA', minWidth: 115  },
+            { field: 'evTipoEmbarque', headerName: 'Tipo Embarque', minWidth: 130  },
+            { field: 'evColor', headerName: 'Color', minWidth: 130  },
+            { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135  },
+            { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135  },
+            // { field: 'evDimension', headerName: 'Dimension' },
+            // { field: 'evDestino', headerName: 'evDestino' },
+            // { field: 'evCiudadDestino', headerName: 'evCiudadDestino' },
+            // { field: 'evTipoServicio', headerName: 'evTipoServicio' },
+            // { field: 'evDocumentoSalida', headerName: 'evDocumentoSalida' },
+            // { field: 'evDiaHabil', headerName: 'evDiaHabil' },
+            // { field: 'evAlmacen', headerName: 'evAlmacen' },
+            // { field: 'evHallazgos', headerName: 'evHallazgos' },
             {
               field: 'actions',
               type: 'actions',
@@ -206,6 +211,7 @@ const EventoClientes = () => {
               headerAlign: 'center',
               align: 'center',
               flex: 0.5,
+              minWidth: 115, 
               getActions: params => [
                 <GridActionsCellItem
                   key={2}
@@ -233,7 +239,7 @@ const EventoClientes = () => {
           ]}
           repositoryFunc={EventoClienteRepository.getAllEventDetails}
           toolbar={toolbarMUI}
-          // getRows={rows => console.log('rows', rows) }
+          getRows={rows => console.log('rows', rows) }
         />
       </Paper>
     </>
