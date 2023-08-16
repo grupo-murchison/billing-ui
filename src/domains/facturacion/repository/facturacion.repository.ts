@@ -37,8 +37,24 @@ class FacturacionRepository {
     return response;
   };
 
-  static getDetallePeriodo = async (facturacionContratoConceptoId: string) => {
-    const response$ = from(FacturacionService.getDetallePeriodo(facturacionContratoConceptoId)).pipe(
+  static getDetallePeriodo = async (facturacionContratoId: string) => {
+    const response$ = from(FacturacionService.getDetallePeriodo(facturacionContratoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static revertirFacturacion = async (facturacionContratoId: string) => {
+    const response$ = from(FacturacionService.revertirFacturacion(facturacionContratoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static anularFacturacion = async (facturacionContratoId: string) => {
+    const response$ = from(FacturacionService.anularFacturacion(facturacionContratoId)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
     const response = await lastValueFrom(response$);

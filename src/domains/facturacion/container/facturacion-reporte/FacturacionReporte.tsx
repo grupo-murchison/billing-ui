@@ -28,7 +28,7 @@ const FacturacionReporte = () => {
   // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
-  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<any>(null);
+  const [facturacionContratoId, setFacturacionContratoId] = useState<any>(null);
   const [periodo, setPeriodo] = useState<any>();
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
@@ -67,7 +67,7 @@ const FacturacionReporte = () => {
   );
 
   const onClickVerSoporte = (row: any) => {
-    setFacturacionContratoConceptoId(row.contratos[0]?.id);
+    setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
     setPeriodo(row);
     setOpenModal(true);
   };
@@ -245,7 +245,7 @@ const FacturacionReporte = () => {
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>
-        <DetalleFacturacion periodo={periodo} facturacionContratoConceptoId={facturacionContratoConceptoId} />
+        <DetalleFacturacion periodo={periodo} facturacionContratoId={facturacionContratoId} />
       </Modal>
     </>
   );

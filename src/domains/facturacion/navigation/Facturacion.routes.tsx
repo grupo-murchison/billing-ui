@@ -18,7 +18,14 @@ const FacturacionRoutes = () => {
           </FacturacionProvider>
         }
       ></Route>
-      <Route path='/facturacion/reversion' element={<FacturacionReversion />} />
+      <Route
+        path='/facturacion/reversion'
+        element={
+          <FacturacionReporteProvider>
+            <FacturacionReversion />
+          </FacturacionReporteProvider>
+        }
+      />
       <Route
         path='/facturacion/reporte'
         element={

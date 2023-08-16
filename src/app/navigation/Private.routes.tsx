@@ -4,6 +4,8 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthContext, ComponentInjectorProvider } from '@app/contexts';
 
+import MainLayout from '@app/layouts/MainLayout';
+
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';
 import { ProcedimientoPRoutes } from '@domains/procedimiento-p/navigation';
@@ -14,7 +16,6 @@ import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
 import { FacturacionRoutes } from '@domains/facturacion/navigation';
 import RootRoute from '@domains/root/Root.route';
-import MainLayoutV2 from '@app/layouts/MainLayoutV2/MainLayoutV2';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -27,7 +28,7 @@ const PrivateRoutes = () => {
 
   return (
     <ComponentInjectorProvider>
-      <MainLayoutV2>
+      <MainLayout>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
         <ProcedimientoPRoutes />
@@ -38,7 +39,7 @@ const PrivateRoutes = () => {
         <ContratoRoutes />
         <FacturacionRoutes />
         <RootRoute />
-      </MainLayoutV2>
+      </MainLayout>
     </ComponentInjectorProvider>
   );
 };
