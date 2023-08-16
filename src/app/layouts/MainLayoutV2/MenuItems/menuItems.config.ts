@@ -116,7 +116,7 @@ const facturaciones: IMenuItemGroup = {
           id: 'facturacionReversion',
           title: 'Reversión',
           type: 'item',
-          url: '/reversion',
+          url: '/facturacion/reversion',
           breadcrumbs: false,
         },
         {

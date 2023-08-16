@@ -8,6 +8,7 @@ import { DeleteIconButton } from './components/DeleteButton/DeleteButton';
 import { ViewIconButton } from './components/ViewButton/ViewButton';
 import { Stack } from '@mui/material';
 
+/** @deprecated  import DataGrid form "@app/components/DataGrid instead"  */
 const DataGrid = <T,>(props: DataGridProps<T>) => {
   return (
     <DataGridProvider {...props}>

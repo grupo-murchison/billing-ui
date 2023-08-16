@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
@@ -322,19 +322,27 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Resumen Posiciones/Concepto Acuerdo' />
 
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={watch('conceptosAcuerdo')} />
+            <Box style={{ width: '100%' }}>
+              <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={watch('conceptosAcuerdo')} />
+            </Box>
           </Stack>
 
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
+          
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
+            <Box style={{ width: '100%' }}>
+              <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
+            </Box>
           </Stack>
 
           <DivisorProvisorio label='Variables Contrato' />
+
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <DataGridContratoVariables contratoId={contratoId} />
+            <Box style={{ width: '100%' }}>
+              <DataGridContratoVariables contratoId={contratoId} />
+            </Box>
           </Stack>
 
           <DivisorProvisorio label='Interlocutores' />

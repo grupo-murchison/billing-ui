@@ -28,14 +28,13 @@ const FacturacionReporte = () => {
   // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
-  const [rows, setRows] = useState<any>();
   const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<any>(null);
+  const [periodo, setPeriodo] = useState<any>();
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
   useEffect(() => {
     mainDataGrid.load();
-    setRows(mainDataGrid.getRows());
-  }, [mainDataGrid.load]);
+  }, [mainDataGrid]);
 
   const {
     control,
@@ -62,17 +61,14 @@ const FacturacionReporte = () => {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
       };
 
-      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
-      setRows(mainDataGrid.getRows());
     },
     [mainDataGrid],
   );
 
   const onClickVerSoporte = (row: any) => {
-    console.log('onClickVerSoporte    :', row);
-    console.log('mainDataGrid.getRows :', rows);
-    setFacturacionContratoConceptoId(113);
+    setFacturacionContratoConceptoId(row.contratos[0]?.id);
+    setPeriodo(row);
     setOpenModal(true);
   };
 
@@ -245,11 +241,11 @@ const FacturacionReporte = () => {
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
         toolbar={toolbarMUI}
-        getRows={rows => console.log('rows', rows)}
+        // getRows={rows => console.log('rows', rows)}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>
-        <DetalleFacturacion periodo={null} facturacionContratoConceptoId={facturacionContratoConceptoId} />
+        <DetalleFacturacion periodo={periodo} facturacionContratoConceptoId={facturacionContratoConceptoId} />
       </Modal>
     </>
   );

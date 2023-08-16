@@ -4,8 +4,8 @@ export const FacturacionLabelAndPath = { label: 'Facturación', path: '/facturac
 
 export const FacturacionDataGridBreadcrumb: BreadcrumbItem[] = [{ ...FacturacionLabelAndPath }];
 
-export const FacturacionEditBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Facturación Reversión', path: `${FacturacionLabelAndPath.path}/edit` },
+export const FacturacionReversionBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Facturación Reversión', path: `${FacturacionLabelAndPath.path}/reversion` },
 ];
 
 export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
