@@ -1,10 +1,10 @@
 import { useCallback, useContext } from 'react';
 
-import { ConfirmDialog } from '@app/pro-components';
-import { ThemeContext } from '@app/contexts';
+import { ConfirmDialog } from '@app/components/ConfirmDialog';
+import { ComponentInjectorContext } from '@app/contexts';
 
 const useConfirmDialog = () => {
-  const { setDialogNode } = useContext(ThemeContext);
+  const { setDialogNode } = useContext(ComponentInjectorContext);
 
   const destroyDialog = useCallback(() => {
     setDialogNode(undefined);
@@ -21,6 +21,7 @@ const useConfirmDialog = () => {
           onClickYes={onClickYes}
           onClickNot={onClickNot || destroyDialog}
           onClose={destroyDialog}
+          type='delete'
         />,
       );
     },
@@ -30,6 +31,13 @@ const useConfirmDialog = () => {
   return { open: openDialog, close: destroyDialog };
 };
 
-type OpenDialog = (params: { message?: string; title?: string, identifier: string, entity: string, onClickYes: () => void; onClickNot?: () => void }) => void;
+type OpenDialog = (params: {
+  message?: string;
+  title?: string;
+  identifier: string;
+  entity: string;
+  onClickYes: () => void;
+  onClickNot?: () => void;
+}) => void;
 
 export default useConfirmDialog;

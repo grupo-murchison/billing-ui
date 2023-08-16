@@ -2,7 +2,7 @@ import { useContext } from 'react';
 
 import { Navigate } from 'react-router-dom';
 
-import { AuthContext, ThemeProvider } from '@app/contexts';
+import { AuthContext, ComponentInjectorProvider } from '@app/contexts';
 
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';
@@ -26,7 +26,7 @@ const PrivateRoutes = () => {
   //TODO estaria bueno migrar a useRoutes de mantis
 
   return (
-    <ThemeProvider>
+    <ComponentInjectorProvider>
       <MainLayoutV2>
         <ProductoSoftlandRoutes />
         <ProcedimientoPSRoutes />
@@ -39,7 +39,7 @@ const PrivateRoutes = () => {
         <FacturacionRoutes />
         <RootRoute />
       </MainLayoutV2>
-    </ThemeProvider>
+    </ComponentInjectorProvider>
   );
 };
 

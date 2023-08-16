@@ -7,20 +7,14 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { useTheme } from '@mui/material/styles';
-import { DeleteOutlineIcon } from '@assets/icons';
 import { Stack } from '@mui/material';
 
-//TODO: lo dejo comentado por ahora porque no lo estoy usando (Nano)
-// const centerDialogConfirm = {
-//   display: 'flex',
-//   flexDirection: 'column',
-//   m: 'auto',
-//   width: 'fit-content',
-// };
+import { useTheme } from '@mui/material/styles';
+
+import { DeleteOutlineIcon } from '@assets/icons';
 
 // TODO: Update is loading prop in order to show some loading animation.
-const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: ConfirmDialogProps) => {
+const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose, type }: ConfirmDialogProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -38,19 +32,21 @@ const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose }: 
     setIsLoading(false);
   }, [onClickYes]);
 
-  // TODO agregar una prop para indicar como un type y que reciba los valores por ejemplo "deleteDialog", "okDialog"
-  // y en funcion de ese type renderizar la ventana <OkDialog/> <DeleteDialog />
   return (
-    <Dialog fullScreen={fullScreen} open onClose={onClose} PaperProps={{ sx: { borderRadius: '8px' } }}>
-      <DeleteDialog
-        entity={entity}
-        isLoading={isLoading}
-        identifier={identifier}
-        handleClickYes={handleClickYes}
-        handleClickNot={handleClickNot}
-      />
+    <Dialog fullScreen={fullScreen} open onClose={onClose} PaperProps={{ sx: { borderRadius: '8px', minHeight: 300 } }}>
+      {type === 'delete' && (
+        <DeleteDialog
+          entity={entity}
+          isLoading={isLoading}
+          identifier={identifier}
+          handleClickYes={handleClickYes}
+          handleClickNot={handleClickNot}
+        />
+      )}
 
-      {/* <OkDialog message={message} title={title} isLoading={isLoading} handleClickYes={handleClickYes} /> */}
+      {type !== 'delete' && (
+        <OkDialog message={'Demo'} title={'Demo'} isLoading={isLoading} handleClickYes={handleClickYes} />
+      )}
     </Dialog>
   );
 };
@@ -109,9 +105,6 @@ const DeleteDialog = ({
   );
 };
 
-// TODO: luego de corrobar el alcanze de estos componentes. reemplzar message y title por entity
-//* es la razon por la cual los atributos son opcionales
-
 type ConfirmDialogType = 'delete' | 'ok' | 'warning';
 
 type ConfirmDialogProps = {
@@ -129,7 +122,7 @@ type ConfirmDialogInternalProps = {
   message?: string;
   title?: string;
   isLoading: boolean;
-  identifier: string;
+  identifier?: string;
   entity?: string;
   handleClickYes: () => void;
   handleClickNot?: () => void;
