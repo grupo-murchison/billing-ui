@@ -17,7 +17,7 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
     if (document.location.pathname === menuItem.url) {
       toogleActiveMenu(menuItem?.id);
     }
-  }, []);
+  }, [document.location.pathname]);
 
   const itemTarget = menuItem.target ? '_blank' : '_self';
   const listItemProps = {

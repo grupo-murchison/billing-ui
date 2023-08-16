@@ -1,46 +1,11 @@
 import { useEffect, useState } from 'react';
-import { GridColDef } from '@mui/x-data-grid';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
-import { Box } from '@mui/material';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import ContratoVariablesRepository from './repository/contrato-variables.repository';
 
-const columns: GridColDef[] = [
-  {
-    field: 'procedimientoQ.conceptoAcuerdo.descripcion',
-    headerName: 'Nombre del Concepto Acuerdo',
-    description: 'This column has some type value.',
-    sortable: false,
-    valueGetter: (params: any) => {
-      return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
-    },
-  },
-  {
-    field: 'procedimientoQ.denominacion',
-    headerName: 'Nombre Procedimiento Cantidad',
-    valueGetter: (params: any) => {
-      return params.row.procedimientoQ?.denominacion || ' ';
-    },
-  },
-  { field: 'codigo', headerName: 'Codigo Variable' },
-  {
-    field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
-    headerName: 'Nombre Variable',
-    valueGetter: (params: any) => {
-      return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
-    },
-  },
-  {
-    field: 'valor',
-    headerName: 'Valor',
-    type: 'string',
-    editable: true,
-  },
-];
-
 export const DataGridContratoVariables = ({ contratoId }: { contratoId: string | undefined }) => {
-  const [rows, setRows] = useState<any>([]); // TODO tipar
+  const [rows, setRows] = useState<any>([]);
   const [loading, setLoading] = useState(true);
   const [refreshData, setRefreshData] = useState(false);
 
@@ -49,7 +14,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
       .then(({ data }) => {
         setRows(data);
       })
-      .catch((error) => console.log(error))
+      .catch(error => console.log(error))
       .finally(() => setLoading(false));
   }, [contratoId, refreshData]);
 
@@ -72,14 +37,42 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
   };
 
   return (
-    <Box style={{ width: '100%' }}>
-      <DataGridBase
-        autoHeight={true}
-        rows={rows}
-        columns={columns}
-        loading={loading}
-        onCellEditStop={handleCellEdit}
-      />
-    </Box>
+    <DataGridBase
+      rows={rows}
+      columns={[
+        {
+          field: 'procedimientoQ.conceptoAcuerdo.descripcion',
+          headerName: 'Nombre del Concepto Acuerdo',
+          description: 'This column has some type value.',
+          sortable: false,
+          valueGetter: (params: any) => {
+            return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
+          },
+        },
+        {
+          field: 'procedimientoQ.denominacion',
+          headerName: 'Nombre Procedimiento Cantidad',
+          valueGetter: (params: any) => {
+            return params.row.procedimientoQ?.denominacion || ' ';
+          },
+        },
+        { field: 'codigo', headerName: 'Codigo Variable' },
+        {
+          field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
+          headerName: 'Nombre Variable',
+          valueGetter: (params: any) => {
+            return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
+          },
+        },
+        {
+          field: 'valor',
+          headerName: 'Valor',
+          type: 'string',
+          editable: true,
+        },
+      ]}
+      loading={loading}
+      onCellEditStop={handleCellEdit}
+    />
   );
 };
