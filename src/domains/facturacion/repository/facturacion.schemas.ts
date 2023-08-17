@@ -49,11 +49,10 @@ const FacturacionMasivaSchema = z.object({
   sinMensajesLogInfo: z.boolean(),
 });
 
-const FacturacionMasivaLogSchema = z.object({
+const FacturacionLogSchema = z.object({
   numeroSecuenciaFacturacion: z.number().nullish(),
   nroContrato: z.number().nullish(),
-  clienteId: z.number().nullish(),
-  cantidad: z.number().nullish(),
+  clienteId: z.any(),
   fechaDesde: z.string().nullish(),
   fechaHasta: z.string().nullish(),
 });
@@ -66,4 +65,4 @@ export const getAllFacturasAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;
 export type FacturasRowDataGridSchema = z.infer<typeof FacturasRowDataGridSchema>;
 export type FacturasReporteDataGridSchema = z.infer<typeof FacturasReporteDataGridSchema>;
 export type FacturacionMasivaSchema = z.infer<typeof FacturacionMasivaSchema>;
-export type FacturacionMasivaLogSchema = z.infer<typeof FacturacionMasivaLogSchema>;
+export type FacturacionLogSchema = z.infer<typeof FacturacionLogSchema>;

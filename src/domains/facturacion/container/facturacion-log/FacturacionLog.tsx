@@ -1,10 +1,10 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Alert, Checkbox, FormControlLabel, FormGroup, Paper, Snackbar } from '@mui/material';
+import { Alert, Checkbox, FormControlLabel, FormGroup, Paper, Snackbar, TextField } from '@mui/material';
 
-import { Col, Row } from '@app/components';
+import { Col, Modal, Row } from '@app/components';
 
 import { withBreadcrumb } from '@app/hocs';
 
@@ -14,67 +14,65 @@ import { FacturacionLogBreadcrumb } from '@domains/facturacion/constants';
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
-import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
-import {
-  FacturacionMasivaLogSchema,
-  FacturacionMasivaSchema,
-} from '@domains/facturacion/repository/facturacion.schemas';
+import { FacturacionLogSchema } from '@domains/facturacion/repository/facturacion.schemas';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { DataGrid } from '@app/components/DataGrid';
+import { FacturacionLogContext } from '@domains/facturacion/contexts/facturacion.log.context';
+import { GridActionsCellItem } from '@mui/x-data-grid';
+import { ViewIcon } from '@assets/icons';
+import DetalleFacturacionLog from './views/DetalleFacturacionLog';
 
 const FacturacionLog = () => {
-  const [openSackbar, setOpenSackbar] = useState(false);
-  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('Datos enviados');
+  const { mainDataGrid } = useContext(FacturacionLogContext);
+  const [facturacionData, setFacturacionData] = useState({});
+  const [openModal, setOpenModal] = useState(false);
+
+  useEffect(() => {
+    mainDataGrid.load({ fixedFilters: { clienteId: 1 } });
+  }, [mainDataGrid]);
 
   const {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-    watch,
-    setValue,
-  } = useForm<FacturacionMasivaLogSchema>({
+  } = useForm<any>({
     defaultValues: {
-      numeroSecuenciaFacturacion: undefined,
-      nroContrato: undefined,
-      clienteId: undefined,
-      cantidad: undefined,
-      fechaDesde: undefined,
-      fechaHasta: undefined,
+      numeroSecuenciaFacturacion: '',
+      nroContrato: '',
+      // clienteId: { value: 1, code: '', label: '1' },
+      clienteId: '',
+      fechaDesde: null,
+      fechaHasta: null,
     },
   });
 
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSackbar(false);
-  };
+  const onSubmit: SubmitHandler<any> = useCallback(
+    async data => {
+      const filters: FacturacionLogSchema = {
+        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        nroContrato: data.nroContrato ? data.nroContrato : undefined,
+        clienteId: data.clienteId.value ? data.clienteId.value : undefined,
+        fechaDesde: data.fechaDesde && DateLib.parseToDBString(data.fechaDesde),
+        fechaHasta: data.fechaHasta && DateLib.parseToDBString(data.fechaHasta),
+      };
 
-  const onSubmit: SubmitHandler<any> = useCallback(async data => {
-    // const filters: FacturacionMasivaSchema = {
-    //   sociedadId: data.sociedadId ? data.sociedadId : undefined,
-    //   fechaHastaFacturacion: data.fechaHastaFacturacion && DateLib.parseToDBString(data.fechaHastaFacturacion),
-    //   sinMensajesLogOk: data.sinMensajesLogOk,
-    //   sinMensajesLogInfo: data.sinMensajesLogInfo,
-    // };
-    // console.log('filters', filters);
-    // FacturacionRepository.facturacionMasiva(filters)
-    //   .then(({ data }) => {
-    //     setOpenSackbar(true);
-    //     setSnackbarMessage(data);
-    //   })
-    //   .catch(error => {
-    //     setErrorFromBackEnd(true);
-    //     setSnackbarMessage('Ocurrió un error!');
-    //   });
-  }, []);
+      mainDataGrid.load({ fixedFilters: { ...filters } });
+    },
+    [mainDataGrid],
+  );
+
+  const onClickAbrirLogDetalle = (row: any) => {
+    const datos = row;
+    setFacturacionData(datos);
+    setOpenModal(true);
+  };
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
-          <Col md={6}>
+          <Col md={3}>
             <FormTextField
               control={control}
               disabled={isSubmitting}
@@ -84,11 +82,9 @@ const FacturacionLog = () => {
               error={!!formErrors.numeroSecuenciaFacturacion}
             />
           </Col>
-          <Col md={6}>
+          <Col md={3}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <ClienteDropdownAutoComplete
               control={control}
@@ -100,16 +96,6 @@ const FacturacionLog = () => {
               // helperText={formErrors?.clienteId?.message}
             />
           </Col>
-          <Col md={6}>
-            <FormTextField
-              control={control}
-              disabled={isSubmitting}
-              label='Cantidad'
-              name='cantidad'
-              type='number'
-              error={!!formErrors.cantidad}
-            />
-          </Col>
         </Row>
         <Row>
           <Col md={6}>
@@ -118,7 +104,7 @@ const FacturacionLog = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
+              error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -138,21 +124,84 @@ const FacturacionLog = () => {
   return (
     <>
       {toolbar}
-      <Snackbar
-        open={openSackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          severity={errorFromBackEnd ? 'error' : 'success'}
-          variant='filled'
-          sx={{ width: '100%' }}
-          onClose={handleCloseSnackbar}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      <DataGrid
+        hookRef={mainDataGrid.ref}
+        columns={[
+          {
+            field: 'numeroSecuenciaFacturacion',
+            headerName: 'Nro. Cálculo Facturación',
+            valueGetter: params => params.row.facturacionCabecera.numeroSecuenciaFacturacion,
+          },
+          {
+            field: 'fechaEjecucion',
+            headerName: 'Fecha Facturación',
+            valueGetter: params => DateLib.parseFromDBString(params.row.facturacionCabecera.fechaEjecucion),
+            type: 'date',
+          },
+          {
+            field: 'estado',
+            headerName: 'Estado Contrato',
+            valueGetter: params => params.row.facturacionCabecera.estado,
+          },
+          {
+            field: 'contratoNumero',
+            headerName: 'Número Contrato',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoNumero,
+          },
+          {
+            field: 'contratoDescripcion',
+            headerName: 'Descripción Contrato',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoDescripcion,
+          },
+          {
+            field: 'contratoClienteCodigo',
+            headerName: 'Número de Cliente',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteCodigo,
+          },
+          {
+            field: 'contratoClienteDescripcion',
+            headerName: 'Denominación',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteDescripcion,
+          },
+          {
+            field: 'periodoNumero',
+            headerName: 'Periodo',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].periodoNumero,
+          },
+          {
+            field: 'estadoContrato',
+            headerName: 'Estado Contrato',
+            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].estado,
+          },
+          {
+            field: 'avisos',
+            headerName: 'Errores/Advertencias',
+          },
+          {
+            field: 'actions',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => [
+              <GridActionsCellItem
+                key={2}
+                icon={<ViewIcon />}
+                label='Log Detalle'
+                onClick={() => onClickAbrirLogDetalle(params.row)}
+                showInMenu
+                // disabled={!isContratoActivo(params?.row?.estado)}
+              />,
+            ],
+          },
+        ]}
+        repositoryFunc={FacturacionRepository.getFacturacionLog}
+      />
+
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log Detalle'>
+        <DetalleFacturacionLog facturacionData={facturacionData} />
+      </Modal>
     </>
   );
 };
