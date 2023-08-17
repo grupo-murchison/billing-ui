@@ -16,11 +16,12 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { DateLib } from '@libs';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 import { FacturacionMasivaSchema } from '@domains/facturacion/repository/facturacion.schemas';
+import Toast from '@app/components/Toast/Toast';
 
 const FacturacionMasiva = () => {
-  const [openSackbar, setOpenSackbar] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('Datos enviados');
+  const [toastMessage, setToastMessage] = useState('Datos enviados');
 
   const {
     control,
@@ -37,11 +38,11 @@ const FacturacionMasiva = () => {
     },
   });
 
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
-    setOpenSackbar(false);
+    setOpenToast(false);
   };
 
   const onSubmit: SubmitHandler<any> = useCallback(async data => {
@@ -54,12 +55,12 @@ const FacturacionMasiva = () => {
 
     FacturacionRepository.facturacionMasiva(filters)
       .then(({ data }) => {
-        setOpenSackbar(true);
-        setSnackbarMessage(data);
+        setOpenToast(true);
+        setToastMessage(data);
       })
       .catch(error => {
         setErrorFromBackEnd(true);
-        setSnackbarMessage('Ocurrió un error!');
+        setToastMessage('Ocurrió un error!');
       });
   }, []);
 
@@ -136,21 +137,7 @@ const FacturacionMasiva = () => {
   return (
     <>
       {toolbar}
-      <Snackbar
-        open={openSackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          severity={errorFromBackEnd ? 'error' : 'success'}
-          variant='filled'
-          sx={{ width: '100%' }}
-          onClose={handleCloseSnackbar}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+      <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
     </>
   );
 };

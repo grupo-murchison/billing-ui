@@ -36,14 +36,14 @@ const FacturacionLog = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<FacturacionLogSchema>({
+  } = useForm<any>({
     defaultValues: {
-      numeroSecuenciaFacturacion: undefined,
-      nroContrato: undefined,
+      numeroSecuenciaFacturacion: '',
+      nroContrato: '',
       // clienteId: { value: 1, code: '', label: '1' },
-      clienteId: undefined,
-      fechaDesde: undefined,
-      fechaHasta: undefined,
+      clienteId: '',
+      fechaDesde: null,
+      fechaHasta: null,
     },
   });
 
@@ -72,7 +72,7 @@ const FacturacionLog = () => {
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
-          <Col md={6}>
+          <Col md={3}>
             <FormTextField
               control={control}
               disabled={isSubmitting}
@@ -82,13 +82,9 @@ const FacturacionLog = () => {
               error={!!formErrors.numeroSecuenciaFacturacion}
             />
           </Col>
-        </Row>
-        <Row>
-          <Col md={6}>
+          <Col md={3}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <ClienteDropdownAutoComplete
               control={control}
