@@ -175,36 +175,38 @@ const FacturacionReporte = () => {
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.parseFromDBString(params?.value),
             type: 'date',
           },
           {
             field: 'contratoClienteNumero',
             headerName: 'Nro. Cliente',
             flex: 0.8,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoClienteNumero || '',
           },
           {
             field: 'denominación',
             headerName: 'Denominación',
-            valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
+            valueGetter: params => params.row?.contratos[0]?.sociedadDenominacion || '',
           },
           {
-            field: 'numeroSecuenciaContrato',
+            field: 'contratoNro',
             headerName: 'Nro. Contrato',
             flex: 0.9,
-            valueGetter: params => params.row.contratos[0]?.contratoNro || '',
+            valueGetter: params => {
+              console.log('', params.row)
+              return params.row?.contratos[0]?.contratoNumero || ''},
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
             flex: 2,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoDescripcion || '',
           },
           {
             field: 'periodo',
             headerName: 'Período',
-            valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
+            valueGetter: params => params.row?.contratos[0]?.periodoNumero || '',
             flex: 0.5,
           },
           {
