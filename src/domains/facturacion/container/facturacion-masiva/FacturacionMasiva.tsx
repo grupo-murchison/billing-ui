@@ -51,7 +51,6 @@ const FacturacionMasiva = () => {
       sinMensajesLogOk: data.sinMensajesLogOk,
       sinMensajesLogInfo: data.sinMensajesLogInfo,
     };
-    console.log('filters', filters);
 
     FacturacionRepository.facturacionMasiva(filters)
       .then(({ data }) => {
