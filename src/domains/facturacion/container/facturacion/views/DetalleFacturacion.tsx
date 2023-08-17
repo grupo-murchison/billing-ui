@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
 
-import { Box, Divider as DividerMUI, Paper, TextField, Typography } from '@mui/material';
+import { Box, TextField, Typography } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
@@ -14,7 +13,7 @@ import Form from '@app/components/Form/Form';
 
 function DetalleFacturacion({
   periodo,
-  facturacionContratoConceptoId, // TODO este dato de donde sale ? en el flujo de pantallas deberia llegar con el Plan de Facturacion
+  facturacionContratoConceptoId,
 }: {
   facturacionContratoConceptoId?: string;
   periodo: any;
@@ -23,14 +22,11 @@ function DetalleFacturacion({
   const [detalle, setDetalle] = useState<any>();
   const [loading, setLoading] = useState(false);
 
-  const { register } = useForm({ defaultValues: { periodo: periodo?.periodo } });
-
   useEffect(() => {
     if (facturacionContratoConceptoId) {
       setLoading(true);
-      FacturacionRepository.getEventos(facturacionContratoConceptoId)
+      FacturacionRepository.getEventos(facturacionContratoConceptoId) // TODO es el mismo id que para los detalles o es otro dato ?
         .then(({ data }) => {
-          // setEventos(data[0]?.facturacionContratoConcepto);
           setEventos(data[0]?.eventos);
         })
         .catch()
@@ -43,10 +39,7 @@ function DetalleFacturacion({
       setLoading(true);
       FacturacionRepository.getDetallePeriodo(facturacionContratoConceptoId)
         .then(({ data }) => {
-          // setEventos(data[0]?.facturacionContratoConcepto);
-          console.log('getDetallePeriodo', data);
-
-          // setEventos(data[0]?.eventos);
+          setDetalle(data);
         })
         .catch()
         .finally(() => setLoading(false));
@@ -55,17 +48,13 @@ function DetalleFacturacion({
 
   return (
     <>
-      <DividerMUI sx={{ my: 4 }}>
-        <Typography variant='h3'>Detalle Facturación</Typography>
-      </DividerMUI>
-
       <Form>
         <Row>
           <Col sm={12} md={6}>
             <TextField
               label={'Nro Facturación'}
               name='nroFacturacion'
-              value={' '}
+              value={periodo?.numeroSecuenciaFacturacion}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -74,8 +63,8 @@ function DetalleFacturacion({
             <TextField
               label={'Fecha Facturación'}
               name='fechaFacturacion'
-              value={DateLib.beautifyDBString(periodo?.fechaFacturacion)}
-              inputProps={{ readOnly: true, shrink: true }}
+              value={DateLib.beautifyDBString(periodo?.fechaEjecucion)}
+              inputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>
@@ -85,7 +74,8 @@ function DetalleFacturacion({
             <TextField
               label={'Sociedad'}
               name='sociedad'
-              value={'Murchison Uruguay S.A'}
+              // value={periodo?.contratos[0]?.sociedadDenominacion}
+              value={detalle ? `${detalle[0]?.sociedadCodigo} - ${detalle[0]?.sociedadDescripcion}` : ''}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -96,10 +86,9 @@ function DetalleFacturacion({
             <TextField
               label={'Periodo'}
               id='periodo'
-              // value={periodo?.periodo}
-              inputProps={{ readOnly: true, shrink: true }}
+              value={periodo?.contratos[0]?.periodoNumero}
+              inputProps={{ readOnly: true }}
               fullWidth
-              {...register('periodo')}
             />
           </Col>
           <Col sm={2} />
@@ -107,8 +96,7 @@ function DetalleFacturacion({
             <TextField
               label={'Desde'}
               name='fechaFacturacion'
-              // value={DateLib.beautifyDBString(DateLib.parseFromDBString(periodo?.liquidacionDesde))}
-              value={DateLib.beautifyDBString(periodo?.liquidacionDesde)}
+              value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionDesde.slice(0, 8))}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -117,7 +105,7 @@ function DetalleFacturacion({
             <TextField
               label={'Hasta'}
               name='sociedad'
-              value={DateLib.beautifyDBString(periodo?.liquidacionHasta)}
+              value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionHasta.slice(0, 8))}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -129,29 +117,37 @@ function DetalleFacturacion({
           </Typography>
         </Box>
         <Row>
-          <Col sm={12} md={6}>
-            <TextField label={'Nro. Proforma'} name='nroProforma' value={3} inputProps={{ readOnly: true }} fullWidth />
+          <Col sm={12} md={3}>
+            <TextField
+              label={'Nro. Proforma'}
+              name='nroProforma'
+              value={''}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+
+          <Col sm={12} md={3}>
+            <TextField label={'Nro. Contrato'} name='nroContrato' value={2} inputProps={{ readOnly: true }} fullWidth />
           </Col>
 
           <Col sm={12} md={6}>
             <TextField
               label={'Cliente'}
-              name='cliente'
-              value={'1000547 - KMUCORP S.A.'}
+              name='contratoClienteId'
+              // value={periodo?.contratos[0]?.contratoClienteId}
+              value={detalle ? `${detalle[0]?.clienteCodigo} - ${detalle[0]?.clienteDescripcion}` : ''}
               inputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>
         </Row>
         <Row>
-          <Col sm={12} md={6}>
-            <TextField label={'Nro. Contrato'} name='nroContrato' value={2} inputProps={{ readOnly: true }} fullWidth />
-          </Col>
-          <Col sm={12} md={6}>
+          <Col sm={12}>
             <TextField
               label={'Descripción Contrato'}
-              name='cliente'
-              value={'Contrato KIA paraalmacenaje por bloques'}
+              name='clienteContratoDescripcion'
+              value={periodo?.contratos[0]?.contratoClienteDescripcion}
               inputProps={{ readOnly: true }}
               fullWidth
             />
@@ -161,18 +157,18 @@ function DetalleFacturacion({
 
       <DataGridBase
         loading={loading}
-        rows={[]}
+        rows={detalle || []}
         columns={[
           {
-            field: 'productoSoftland',
-            headerName: 'ProductoSoftland',
+            field: 'productoSoftlandCodigo',
+            headerName: 'Producto Softland',
           },
           {
-            field: 'descripcion',
+            field: 'productoSoftlandDescripcion',
             headerName: 'Descripcion',
           },
           {
-            field: 'cantidadTotal',
+            field: 'total',
             headerName: 'Cantidad Total',
           },
           {
@@ -180,15 +176,15 @@ function DetalleFacturacion({
             headerName: 'Precio Unitario',
           },
           {
-            field: 'total',
+            field: 'importe',
             headerName: 'Total',
           },
           {
-            field: 'moneda',
+            field: 'monedaCodigo',
             headerName: 'Moneda',
           },
           {
-            field: 'cantidadItemVIN',
+            field: 'cantidad',
             headerName: 'Cantidad Item VIN',
           },
         ]}

@@ -20,11 +20,14 @@ const contratoSchema = z
   .object({
     contratoId: z.number().nullish(),
     contratoNro: z.string().nullish(),
+    contratoClienteId: z.number().nullish(),
     contratoClienteDescripcion: z.string().nullish(),
     contratoClienteNumero: z.string().nullish(),
     estado: z.string().nullish(),
     id: z.number().nullish(),
     periodoNumero: z.number().nullish(),
+    periodoLiquidacionDesde: z.string().nullish(),
+    periodoLiquidacionHasta: z.string().nullish(),
     sociedadDenominacion: z.string().nullish(),
   })
   .array();

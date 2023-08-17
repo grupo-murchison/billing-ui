@@ -1,4 +1,4 @@
-import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI, GridToolbar } from '@mui/x-data-grid';
+import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI } from '@mui/x-data-grid';
 import { Button, Paper, Stack, SxProps, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
@@ -7,6 +7,7 @@ import NoRowsContent from './components/NoRowsContent';
 import { AddIcon } from '@assets/icons';
 
 import { localeText } from './constants/dataGrid.config';
+import * as helperGrid from './helpers';
 
 const DataGridBase = ({
   rows,
@@ -49,13 +50,10 @@ const DataGridBase = ({
     },
   };
 
-  // Repartir el espacio en partes iguales
-  columns.forEach((col: any) => {
-    col['flex'] = col?.flex ? col.flex : 1;
-  });
-
   const pageSize = 10;
   const page = 1;
+
+  helperGrid.columnsFlexResolver(columns);
 
   return (
     <>
@@ -72,7 +70,10 @@ const DataGridBase = ({
           {...props}
           rows={rows}
           columns={columns}
-          pageSizeOptions={pageSizeOptions || [10, 25, 50, 100]}
+          initialState={{
+            pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
+          }}
+          pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
           // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
           autoHeight={rows.length > 0 ? true : false}
           loading={loading}
@@ -80,14 +81,14 @@ const DataGridBase = ({
           slots={{
             loadingOverlay: LinearProgress,
             noRowsOverlay: NoRowsContent,
-            // toolbar: GridToolbar,
+            // toolbar: Toolbar
           }}
           slotProps={{
             pagination: {
               labelRowsPerPage: 'Filas por página:',
               labelDisplayedRows: props => {
                 const { from, to, count } = props;
-                return `${from}–${to} de ${count !== -1 ? count : `más de ${to}`}`;
+                return `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`;
               },
             },
             // filterPanel: { sx: { maxWidth: '100vw' } },
@@ -106,4 +107,11 @@ const DataGridBase = ({
 
 export default DataGridBase;
 
-type DataGridProps = DataGridPropsMUI & { onClickNew?: () => void };
+interface DataGridProps extends DataGridPropsMUI {
+  onClickNew?: () => void;
+  /**
+   * Select the pageSize dynamically using the component UI.
+   * @default [10, 25, 50]
+   */
+  pageSizeOptions?: helperGrid.PageSizeOptions;
+}

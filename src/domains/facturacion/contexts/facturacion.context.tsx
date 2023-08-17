@@ -11,9 +11,9 @@ const estadosContrato = [
 
 const estadosPeriodos = [
   { value: 'ABIERTO', label: 'Abierto' },
-  { value: 'ANULADO', label: 'Anulado' },
+  { value: 'ANULADO', label: 'Anulado' }, // anulado, no revierte la facturación
   { value: 'FACTURADO', label: 'Facturado' },
-  { value: 'REVERTIDO', label: 'Revertido' }, // TODO revertido es lo mismo que anulado ?
+  { value: 'REVERTIDO', label: 'Revertido' }, // es un deshacer, vuelve hacia atras una facturación (calculos, etc)
 ];
 
 const initialContext: InitialContext = {

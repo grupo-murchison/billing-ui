@@ -1,10 +1,12 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Alert, Backdrop, CircularProgress, Snackbar, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
+import Backdrop from '@app/components/Backdrop/Backdrop';
+import Toast from '@app/components/Toast/Toast';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { FacturacionRepository } from '@domains/facturacion/repository';
@@ -23,13 +25,6 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
   const [periodo, setPeriodo] = useState<any>(null);
-
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenSackbar(false);
-  };
 
   const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
@@ -149,25 +144,14 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
 
       {periodo && <DetalleFacturacion periodo={periodo} />}
 
-      <Backdrop sx={{ color: '#fff', zIndex: theme => theme.zIndex.drawer + 1 }} open={openBackdrop}>
-        <CircularProgress color='inherit' />
-      </Backdrop>
+      <Backdrop open={openBackdrop} />
 
-      <Snackbar
+      <Toast
         open={openSackbar}
-        autoHideDuration={4000}
-        onClose={handleCloseSnackbar}
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
-      >
-        <Alert
-          severity={errorFromBackEnd ? 'error' : 'success'}
-          variant='filled'
-          sx={{ width: '100%' }}
-          onClose={handleCloseSnackbar}
-        >
-          {snackbarMessage}
-        </Alert>
-      </Snackbar>
+        error={errorFromBackEnd}
+        onClose={() => setOpenSackbar(false)}
+        message={snackbarMessage}
+      />
     </>
   );
 }
