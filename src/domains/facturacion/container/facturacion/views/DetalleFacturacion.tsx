@@ -31,6 +31,8 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
       setLoading(true);
       FacturacionRepository.getDetallePeriodo(facturacionContratoId)
         .then(({ data }) => {
+        console.log('concepto', data);
+        
           setDetalle(data);
         })
         .catch()
@@ -113,7 +115,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
 
       <Row>
         <Col sm={12} md={3}>
-          <TextField label={'Nro. Proforma'} name='nroProforma' value={''} inputProps={{ readOnly: true }} fullWidth />
+          <TextField label={'Nro. Proforma'} name='nroProforma' value={detalle ? detalle[0]?.fcaNumeroSecuenciaContrato : ''} inputProps={{ readOnly: true }} fullWidth />
         </Col>
 
         <Col sm={12} md={3}>
@@ -136,7 +138,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
           <TextField
             label={'Descripción Contrato'}
             name='clienteContratoDescripcion'
-            value={periodo?.contratos[0]?.contratoClienteDescripcion}
+            value={periodo?.contratos[0]?.contratoDescripcion}
             inputProps={{ readOnly: true }}
             fullWidth
           />

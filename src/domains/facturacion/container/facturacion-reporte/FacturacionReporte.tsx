@@ -179,15 +179,15 @@ const FacturacionReporte = () => {
             type: 'date',
           },
           {
-            field: 'contratoClienteNumero',
+            field: 'contratoClienteCodigo',
             headerName: 'Nro. Cliente',
             flex: 0.8,
-            valueGetter: params => params.row?.contratos[0]?.contratoClienteNumero || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoClienteCodigo || '',
           },
           {
             field: 'denominación',
             headerName: 'Denominación',
-            valueGetter: params => params.row?.contratos[0]?.sociedadDenominacion || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoClienteDescripcion || '',
           },
           {
             field: 'contratoNro',
