@@ -1,2 +1,2 @@
 export { AuthContext, AuthProvider } from './auth.context';
-export { ThemeContext, ThemeProvider } from './theme.context';
+export { ComponentInjectorContext, ComponentInjectorProvider } from './componentInjector.context';

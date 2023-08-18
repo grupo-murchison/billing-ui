@@ -1,12 +1,16 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Paper } from '@mui/material';
+import { Backdrop, Paper } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
+import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import Toast from '@app/components/Toast/Toast';
 
 import { withBreadcrumb } from '@app/hocs';
 
@@ -15,15 +19,17 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
 import { FacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
 
-import Form from '@app/components/Form/Form';
-import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
-// import IconMenu from '@app/components/DataGrid/components/MenuVertical';
-import { ViewIcon } from '@assets/icons';
+
+import { CancelScheduleSendIcon, RestoreIcon } from '@assets/icons';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
+
+  const [openBackdrop, setOpenBackdrop] = useState(false);
+  const [openSackbar, setOpenSackbar] = useState(false);
+  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
+  const [snackbarMessage, setSnackbarMessage] = useState('Se inicia el procesamiento!');
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
@@ -65,13 +71,40 @@ const FacturacionReversion = () => {
     const cantidadContratos = 10;
     const numeroFacturacion = 10;
 
+    // TODO mostrar un diálogo de confirmacion con el siguiente mensaje
     console.log(
-      `Se procederá a realizar la reversión de ${cantidadContratos} contratos asociados al número de facturación ${numeroFacturacion}`,
+      `Se procederá a realizar la reversión de ${cantidadContratos} contrato/s asociados al número de facturación: ${numeroFacturacion}`,
     );
 
-    console.log(
-      `Se procederá a realizar la reversión de ${cantidadContratos} contratos asociados al número de facturación ${numeroFacturacion}`,
-    );
+    setOpenBackdrop(true);
+
+    FacturacionRepository.revertirFacturacion(row.contratos[0]?.id)
+      .then(_response => {
+        setOpenSackbar(true);
+        setSnackbarMessage('La funcionalidad "Revertir" aún no está disponible.');
+      })
+      .catch(error => {
+        console.log('Revertir Error', error);
+        setErrorFromBackEnd(true);
+        setSnackbarMessage('Ocurrió un error!');
+      })
+      .finally(() => setOpenBackdrop(false));
+  };
+
+  const handleAnular = (row: any) => {
+    setOpenBackdrop(true);
+
+    FacturacionRepository.anularFacturacion(row.contratos[0]?.id)
+      .then(_response => {
+        setOpenSackbar(true);
+        setSnackbarMessage('La funcionalidad "Anular" aún no está disponible.');
+      })
+      .catch(error => {
+        console.log('Anular Error', error);
+        setErrorFromBackEnd(true);
+        setSnackbarMessage('Ocurrió un error!');
+      })
+      .finally(() => setOpenBackdrop(false));
   };
 
   const toolbar = (
@@ -98,8 +131,6 @@ const FacturacionReversion = () => {
               label='Cliente'
               name='contrao'
               error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -110,7 +141,6 @@ const FacturacionReversion = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -145,18 +175,18 @@ const FacturacionReversion = () => {
             field: 'clienteId',
             headerName: 'Nro. Cliente',
             flex: 0.8,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
+            valueGetter: params => params.row.contratos[0]?.contratoClienteCodigo || '',
           },
           {
             field: 'denominación',
             headerName: 'Denominación',
-            valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
+            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
           },
           {
             field: 'numeroSecuenciaContrato',
             headerName: 'Nro. Contrato',
             flex: 0.9,
-            valueGetter: params => params.row.contratos[0]?.numeroSecuenciaContrato || '',
+            valueGetter: params => params.row.contratos[0]?.contratoNumero || '',
           },
           {
             field: 'contratoDescripcion',
@@ -179,16 +209,32 @@ const FacturacionReversion = () => {
             flex: 0.5,
             getActions: params => [
               <GridActionsCellItem
-                key={2}
-                icon={<ViewIcon />}
+                key={1}
+                icon={<RestoreIcon />}
                 label='Revertir'
                 onClick={() => handleRevertir(params.row)}
+                showInMenu
+              />,
+              <GridActionsCellItem
+                key={2}
+                icon={<CancelScheduleSendIcon />}
+                label='Anular'
+                onClick={() => handleAnular(params.row)}
                 showInMenu
               />,
             ],
           },
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+      />
+
+      <Backdrop open={openBackdrop} />
+
+      <Toast
+        open={openSackbar}
+        error={errorFromBackEnd}
+        onClose={() => setOpenSackbar(false)}
+        message={snackbarMessage}
       />
     </>
   );
