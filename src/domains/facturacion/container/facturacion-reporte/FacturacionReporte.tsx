@@ -66,10 +66,14 @@ const FacturacionReporte = () => {
     [mainDataGrid],
   );
 
-  const onClickVerSoporte = (row: any) => {
+  const handleVerSoporte = (row: any) => {
     setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
     setPeriodo(row);
     setOpenModal(true);
+  };
+
+  const handleVerProforma = (_row: any) => {
+    // setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
   };
 
   const toolbar = (
@@ -193,9 +197,7 @@ const FacturacionReporte = () => {
             field: 'contratoNro',
             headerName: 'Nro. Contrato',
             flex: 0.9,
-            valueGetter: params => {
-              console.log('', params.row)
-              return params.row?.contratos[0]?.contratoNumero || ''},
+            valueGetter: params => params.row?.contratos[0]?.contratoNumero || '',
           },
           {
             field: 'contratoDescripcion',
@@ -221,14 +223,14 @@ const FacturacionReporte = () => {
                 key={2}
                 icon={<ViewIcon />}
                 label='Ver Soporte'
-                onClick={() => onClickVerSoporte(params.row)}
+                onClick={() => handleVerSoporte(params.row)}
                 showInMenu
               />,
               <GridActionsCellItem
                 key={3}
                 icon={<ViewIcon />}
                 label='Ver Proforma'
-                // onClick={duplicateUser(params.id)}
+                onClick={() => handleVerProforma(params.row)}
                 showInMenu
               />,
               // <IconMenu
@@ -243,7 +245,6 @@ const FacturacionReporte = () => {
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
         toolbar={toolbarMUI}
-        // getRows={rows => console.log('rows', rows)}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>

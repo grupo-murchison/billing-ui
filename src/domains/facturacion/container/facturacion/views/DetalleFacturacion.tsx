@@ -9,30 +9,34 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 
 import { DateLib } from '@libs';
 
+const currencyFormatter = new Intl.NumberFormat('en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
 function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: any }) {
   const [eventos, setEventos] = useState<any>();
   const [detalle, setDetalle] = useState<any>();
   const [loading, setLoading] = useState(false);
+  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<number>();
 
   useEffect(() => {
-    if (facturacionContratoId) {
+    if (facturacionContratoConceptoId) {
       setLoading(true);
-      FacturacionRepository.getEventos(facturacionContratoId) // TODO es el mismo id que para los detalles o es otro dato ?
+      FacturacionRepository.getEventos(String(facturacionContratoConceptoId)) // TODO es el mismo id que para los detalles o es otro dato ?
         .then(({ data }) => {
           setEventos(data[0]?.eventos);
         })
         .catch()
         .finally(() => setLoading(false));
     }
-  }, [facturacionContratoId]);
+  }, [facturacionContratoConceptoId]);
 
   useEffect(() => {
     if (facturacionContratoId) {
       setLoading(true);
       FacturacionRepository.getDetallePeriodo(facturacionContratoId)
         .then(({ data }) => {
-        console.log('concepto', data);
-        
           setDetalle(data);
         })
         .catch()
@@ -115,7 +119,13 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
 
       <Row>
         <Col sm={12} md={3}>
-          <TextField label={'Nro. Proforma'} name='nroProforma' value={detalle ? detalle[0]?.fcaNumeroSecuenciaContrato : ''} inputProps={{ readOnly: true }} fullWidth />
+          <TextField
+            label={'Nro. Proforma'}
+            name='nroProforma'
+            value={detalle ? detalle[0]?.fcaNumeroSecuenciaContrato : ''}
+            inputProps={{ readOnly: true }}
+            fullWidth
+          />
         </Col>
 
         <Col sm={12} md={3}>
@@ -158,26 +168,32 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
             headerName: 'Descripcion',
           },
           {
-            field: 'total',
+            field: 'cantidad',
             headerName: 'Cantidad Total',
-          },
-          {
-            field: 'precioUnitario',
-            headerName: 'Precio Unitario',
+            type: 'number',
           },
           {
             field: 'importe',
+            headerName: 'Precio Unitario',
+            type: 'number',
+            valueFormatter: ({ value }) => currencyFormatter.format(value),
+          },
+          {
+            field: 'total',
             headerName: 'Total',
+            type: 'number',
+            valueFormatter: ({ value }) => currencyFormatter.format(value),
           },
           {
             field: 'monedaCodigo',
             headerName: 'Moneda',
           },
           {
-            field: 'cantidad',
+            field: 'cantidadItemVIN',
             headerName: 'Cantidad Item VIN',
           },
         ]}
+        onRowSelectionModelChange={(rowSelectionModel: any) => setFacturacionContratoConceptoId(rowSelectionModel[0])}
       />
 
       <Box mt={4} mb={2}>
