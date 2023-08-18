@@ -4,7 +4,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
-import { FacturacionMasivaSchema } from './facturacion.schemas';
+import { FacturacionLogSchema, FacturacionMasivaSchema } from './facturacion.schemas';
 
 const BASE_PATH = 'v1/facturaciones';
 
@@ -32,6 +32,11 @@ class FacturacionService {
     return [response, error];
   };
 
+  /**
+   * Campo id de la tabla facturacion_contrato_concepto = FacturacionContratoConceptoEntity
+   * @param facturacionContratoConceptoId
+   * @returns
+   */
   static getEventos = async (facturacionContratoConceptoId: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/eventosByFacturacionContratoConceptoId/${facturacionContratoConceptoId}`),
@@ -40,11 +45,39 @@ class FacturacionService {
     return [response, error];
   };
 
+  /**
+   * Campo facturacionContratoId de la tabla facturacion_contrato_concepto (FK => id de la tabla facturacion_contrato )
+   * @param facturacionContratoId
+   * @returns
+   */
   static getDetallePeriodo = async (facturacionContratoId: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/conceptoByFacturacionContrato/${facturacionContratoId}`),
     );
 
+    return [response, error];
+  };
+
+  static revertirFacturacion = async (facturacionContratoId: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/reversar/${facturacionContratoId}`),
+    );
+
+    return [response, error];
+  };
+
+  static anularFacturacion = async (facturacionContratoId: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/anular/${facturacionContratoId}`),
+    );
+
+    return [response, error];
+  };
+
+  static getFacturacionLog = async (params: FacturacionLogSchema): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`v1/proceso-log/filter`, { params }),
+    );
     return [response, error];
   };
 }

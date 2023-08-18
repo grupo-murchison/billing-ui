@@ -17,7 +17,7 @@ const FormActionButtons = ({ isSubmitting, handleClose, label }: ActionButtonsPr
       )}
 
       <ActionButton
-        isSubmitting={isSubmitting}
+        isSubmitting={isSubmitting || false}
         label={
           (label === 'update' && 'Actualizar') ||
           (label === 'search' && 'Buscar') ||

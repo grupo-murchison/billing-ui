@@ -27,9 +27,11 @@ export const components: Components = {
       },
     },
   },
-  MuiGrid2: {
+  MuiTooltip: {
     styleOverrides: {
-      root: {},
+      tooltip: {
+        backgroundColor: alpha('#000', 0.85),
+      },
     },
   },
 };

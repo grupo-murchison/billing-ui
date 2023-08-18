@@ -28,7 +28,7 @@ const FacturacionReporte = () => {
   // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
-  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<any>(null);
+  const [facturacionContratoId, setFacturacionContratoId] = useState<any>(null);
   const [periodo, setPeriodo] = useState<any>();
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
@@ -66,10 +66,14 @@ const FacturacionReporte = () => {
     [mainDataGrid],
   );
 
-  const onClickVerSoporte = (row: any) => {
-    setFacturacionContratoConceptoId(row.contratos[0]?.id);
+  const handleVerSoporte = (row: any) => {
+    setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
     setPeriodo(row);
     setOpenModal(true);
+  };
+
+  const handleVerProforma = (_row: any) => {
+    // setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
   };
 
   const toolbar = (
@@ -175,36 +179,36 @@ const FacturacionReporte = () => {
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.parseFromDBString(params?.value),
             type: 'date',
           },
           {
-            field: 'contratoClienteNumero',
+            field: 'contratoClienteCodigo',
             headerName: 'Nro. Cliente',
             flex: 0.8,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteNumero || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoClienteCodigo || '',
           },
           {
             field: 'denominación',
             headerName: 'Denominación',
-            valueGetter: params => params.row.contratos[0]?.sociedadDenominacion || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoClienteDescripcion || '',
           },
           {
-            field: 'numeroSecuenciaContrato',
+            field: 'contratoNro',
             headerName: 'Nro. Contrato',
             flex: 0.9,
-            valueGetter: params => params.row.contratos[0]?.contratoNro || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoNumero || '',
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
             flex: 2,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
+            valueGetter: params => params.row?.contratos[0]?.contratoDescripcion || '',
           },
           {
             field: 'periodo',
             headerName: 'Período',
-            valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
+            valueGetter: params => params.row?.contratos[0]?.periodoNumero || '',
             flex: 0.5,
           },
           {
@@ -219,14 +223,14 @@ const FacturacionReporte = () => {
                 key={2}
                 icon={<ViewIcon />}
                 label='Ver Soporte'
-                onClick={() => onClickVerSoporte(params.row)}
+                onClick={() => handleVerSoporte(params.row)}
                 showInMenu
               />,
               <GridActionsCellItem
                 key={3}
                 icon={<ViewIcon />}
                 label='Ver Proforma'
-                // onClick={duplicateUser(params.id)}
+                onClick={() => handleVerProforma(params.row)}
                 showInMenu
               />,
               // <IconMenu
@@ -241,11 +245,10 @@ const FacturacionReporte = () => {
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
         toolbar={toolbarMUI}
-        // getRows={rows => console.log('rows', rows)}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>
-        <DetalleFacturacion periodo={periodo} facturacionContratoConceptoId={facturacionContratoConceptoId} />
+        <DetalleFacturacion periodo={periodo} facturacionContratoId={facturacionContratoId} />
       </Modal>
     </>
   );

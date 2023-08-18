@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { TextField } from '@mui/material';
+import { TextField, Tooltip } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -128,10 +128,16 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
               // !isPeriodoFacturado(params?.row?.estado) ? (
               <GridActionsCellItem
                 key={2}
-                icon={<ScheduleSendIcon />}
+                icon={
+                  <Tooltip title='Facturar' placement='left'>
+                    <ScheduleSendIcon
+                      color={handleDisableFacturar(params.row, planFacturacion?.periodos) ? 'disabled' : 'primary'}
+                    />
+                  </Tooltip>
+                }
                 label='Facturar'
                 onClick={onClickFacturar}
-                showInMenu
+                // showInMenu
                 disabled={handleDisableFacturar(params.row, planFacturacion?.periodos)}
               />,
               // ) : (

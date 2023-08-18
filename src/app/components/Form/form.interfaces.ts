@@ -10,7 +10,7 @@ export type FromProps = ActionButtonsProps & {
 export type ActionButtonsProps = {
   isSubmitting?: boolean;
   handleClose?: () => void;
-  label: string;
+  label?: string;
 };
 
 type FixedLabel = 'search' | 'create' | 'update';
