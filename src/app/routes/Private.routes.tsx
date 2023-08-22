@@ -4,7 +4,7 @@ import { Navigate } from 'react-router-dom';
 
 import { AuthContext, ComponentInjectorProvider } from '@app/contexts';
 
-import MainLayout from '@app/layouts/MainLayout';
+import MainLayout from 'layout';
 
 import { ProductoSoftlandRoutes } from '@domains/producto-softland/navigation';
 import { ProcedimientoPSRoutes } from '@domains/procedimiento-ps/navigation';

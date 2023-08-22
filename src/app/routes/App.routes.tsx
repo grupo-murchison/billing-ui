@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
-import PrivateRoutes from '@app/navigation/Private.routes';
+import PrivateRoutes from '@app/routes/Private.routes';
 
 import { AuthRoutes } from '@domains/auth/navigation';
 

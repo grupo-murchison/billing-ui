@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { AppRoutes } from '@app/navigation';
+import { AppRoutes } from '@app/routes';
 import { AuthProvider } from '@app/contexts';
 
 import { ThemeProvider } from '@mui/material/styles';
