@@ -5,7 +5,11 @@ export {
   Add as AddIcon,
   AccountTree as AccountTreeIcon,
 
+  // B
+  Block as BlockIcon,
+
   // C
+  CancelScheduleSend as CancelScheduleSendIcon,
   Category as CategoryIcon,
 
   // D
@@ -45,6 +49,7 @@ export {
 
   // R
   Receipt as ReceiptIcon,
+  Restore as RestoreIcon,
 
   // S
   Search as SearchIcon,
