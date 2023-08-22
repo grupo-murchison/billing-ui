@@ -1,9 +1,7 @@
-// import { useCallback, useContext, useEffect } from 'react';
 
 import { Col, Row } from "@app/components";
 import Form from "@app/components/Form/Form";
 import FormDesktopDatePicker from "@app/components/Form/FormInputs/FormDatePicker";
-import FormTextField from "@app/components/Form/FormInputs/FormTextField";
 import { ClienteDropdownAutoComplete } from "@domains/cliente/container/cliente-dropdown";
 import { DateLib } from "@libs";
 import { Paper } from "@mui/material";
@@ -12,10 +10,7 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteEventosContext, FacturacionReporteContext } from "../../facturacion/contexts";
 
-// import { Paper } from '@mui/material';
-// import { GridActionsCellItem } from '@mui/x-data-grid';
 
-// import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 import { GridActionsCellItem } from "@mui/x-data-grid";
@@ -23,26 +18,18 @@ import { ViewIcon } from "@assets/icons";
 
 import { withBreadcrumb } from '@app/hocs';
 
-// import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
 import { EventoClienteRepository } from "../repository";
 import { EventosDropdownAutoComplete } from "./cliente-dropdown copy/EventosDropdown";
+import { EventosClientesCreateSchema } from "../schemas";
+import { debugSchema } from "@app/utils/zod.util";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { ConceptoAcuerdoCreateSchema } from "@domains/concepto-acuerdo/container/concepto-acuerdo-create/schemas";
 
-// import { FacturacionReporteContext } from '@domains/facturacion/contexts';
-// import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
 
-// import Form from '@app/components/Form/Form';
-// import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-// import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
-// import { DateLib } from '@libs';
-// // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
-// import { ViewIcon } from '@assets/icons';
 
 const EventoClientes = () => {
-//   // const _navigate = useNavigate();
+
 
   const [rows, setRows] = useState<any>();
 
@@ -57,7 +44,7 @@ const EventoClientes = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<any>({ 
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
@@ -65,7 +52,8 @@ const EventoClientes = () => {
       cantidad: '',
       eventos: '',
     },
-    // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
+    // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
+    // resolver: zodResolver(EventosClientesCreateSchema),
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
@@ -75,7 +63,6 @@ const EventoClientes = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        take: data.cantidad ? data.cantidad : undefined,
         eventos: data.eventos ? data.eventos : undefined,
       };
 
@@ -98,7 +85,7 @@ const EventoClientes = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              error={!!formErrors.clienteId}
+              // error={!!formErrors.clienteId}
               // emptyOption
               // helperText={formErrors?.clienteId?.message}
             />
@@ -123,7 +110,7 @@ const EventoClientes = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
+              error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -136,8 +123,7 @@ const EventoClientes = () => {
             />
           </Col>
         </Row>
-        <Row>
-          {/* TODO: cambiar a Cantidad. valor numerico minimo 1  */}
+        {/* <Row>
           <Col md={12}>
             <FormTextField
               control={control}
@@ -147,7 +133,7 @@ const EventoClientes = () => {
               // error={!!formErrors.fechaDesde}
             />
           </Col>
-        </Row>
+        </Row> */}
       </Form>
     </Paper>
   );
@@ -156,22 +142,15 @@ const EventoClientes = () => {
     <>
     {toolbar}
     <Paper>
-      {/* TODO: Adaptar a los campos segun el word */}
     <DataGrid
           hookRef={mainDataGrid.ref}
           columns={[
-            // { field: 'id', headerName: 'id' },
-            // { field: 'clienteId', headerName: 'clienteId' },
-
-            // { field: 'eventoCodigo', headerName: 'eventoCodigo' },
-            // { field: 'eventoDenominacion', headerName: 'eventoDenominacion' },
-            // { field: 'eventoDescripcion', headerName: 'eventoDescripcion' },
-            // { field: 'clienteCodigo', headerName: 'clienteCodigo' },
-            // { field: 'clienteDescripcion', headerName: 'clienteDescripcion' },
             { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115},
             { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
-            { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125 },
-            // { field: 'genEventoFechaModificacion', headerName: 'genEventoFechaModificacion' },
+            { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125,
+              valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0,8)),
+              type: 'date',
+            },
             { field: 'genCompania', headerName: 'Compania', minWidth: 100  },
             { field: 'genSistema', headerName: 'Sistema', minWidth: 80  },
             { field: 'genClienteId', headerName: 'Cliente', minWidth: 80  },
@@ -179,7 +158,6 @@ const EventoClientes = () => {
             { field: 'genDestinoId', headerName: 'Identificador Destino', minWidth: 160  },
             { field: 'genTerminalId', headerName: 'Terminal', minWidth: 100  },
             { field: 'genPatio', headerName: 'Patio', minWidth: 70  },
-            // { field: 'genZona', headerName: 'genZona' },
             { field: 'genTarea', headerName: 'Tarea', minWidth: 150 },
             { field: 'genOrdenCompra', headerName: 'Orden Compra', minWidth: 125  },
             { field: 'evCantidadLitros', headerName: 'Cantidad Litros', minWidth: 125  },
@@ -195,15 +173,11 @@ const EventoClientes = () => {
             { field: 'evTipoEmbarque', headerName: 'Tipo Embarque', minWidth: 130  },
             { field: 'evColor', headerName: 'Color', minWidth: 130  },
             { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135  },
-            { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135  },
-            // { field: 'evDimension', headerName: 'Dimension' },
-            // { field: 'evDestino', headerName: 'evDestino' },
-            // { field: 'evCiudadDestino', headerName: 'evCiudadDestino' },
-            // { field: 'evTipoServicio', headerName: 'evTipoServicio' },
-            // { field: 'evDocumentoSalida', headerName: 'evDocumentoSalida' },
-            // { field: 'evDiaHabil', headerName: 'evDiaHabil' },
-            // { field: 'evAlmacen', headerName: 'evAlmacen' },
-            // { field: 'evHallazgos', headerName: 'evHallazgos' },
+            { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135,
+              valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0,8)),
+              type: 'date',
+            },
+
             {
               field: 'actions',
               type: 'actions',

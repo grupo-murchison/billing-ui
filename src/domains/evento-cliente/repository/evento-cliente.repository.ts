@@ -9,7 +9,6 @@ import {
 
 class EventoClienteRepository {
   static getAllEventDetails = async (params: any) => {
-    console.log("🚀 ~ file: evento-cliente.repository.ts:12 ~ EventoClienteRepository ~ getAllEventDetails= ~ params:", params)
     const response$ = from(EventoClienteService.getAllEventDetails(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       // RepositoryUtils.PIPES.validateWithSchema(getAllEventoCampoAsDropdownSchema),

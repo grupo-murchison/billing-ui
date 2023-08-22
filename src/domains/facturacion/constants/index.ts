@@ -12,9 +12,8 @@ export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
   { label: 'Facturación Reporte', path: '/facturacion/reporte' },
 ];
 
-// TODO: agregar para el bredeacrum de EVENTO CLIENTES
 export const ClienteEventosBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Cliente Eventos', path: '/facturacion/reporte' },
+  { label: 'Cliente Eventos', path: '/eventos-cliente' },
 ];
 export const FacturacionMasivaBreadcrumb: BreadcrumbItem[] = [
   { label: 'Facturación Masiva', path: '/facturacion/masiva' },
