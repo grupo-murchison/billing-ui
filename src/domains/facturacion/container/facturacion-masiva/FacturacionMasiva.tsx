@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Alert, Checkbox, FormControlLabel, FormGroup, Paper, Snackbar, Typography, Box } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Paper, Typography, Box } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
