@@ -1,9 +1,11 @@
 import { Routes, Route, Navigate } from 'react-router-dom';
 
+import { ClienteEventosProvider } from '@domains/facturacion/contexts';
 import { FacturacionLogProvider, FacturacionProvider, FacturacionReporteProvider } from '@domains/facturacion/contexts';
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
 import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
+import { EventoClientes } from '../../evento-cliente/container/index';
 import { FacturacionMasiva } from '@domains/facturacion/container/facturacion-masiva';
 import { FacturacionLog } from '../container/facturacion-log';
 
@@ -32,6 +34,14 @@ const FacturacionRoutes = () => {
           <FacturacionReporteProvider>
             <FacturacionReporte />
           </FacturacionReporteProvider>
+        }
+      />
+      <Route
+        path='/eventos-cliente'
+        element={
+          <ClienteEventosProvider>
+            <EventoClientes />
+          </ClienteEventosProvider>
         }
       />
       <Route path='/facturacion/masiva' element={<FacturacionMasiva />} />
