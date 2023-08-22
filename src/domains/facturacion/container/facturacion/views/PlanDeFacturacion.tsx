@@ -18,13 +18,13 @@ import { FacturacionContext } from '@domains/facturacion/contexts';
 import DetalleFacturacion from './DetalleFacturacion';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
-  const [planFacturacion, setPlanFacturacion] = useState<any>(null);
+  const [planFacturacion, setPlanFacturacion] = useState<AnyValue>(null);
   const [loading, setLoading] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
-  const [periodo, setPeriodo] = useState<any>(null);
+  const [periodo, setPeriodo] = useState<AnyValue>(null);
 
   const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
@@ -57,7 +57,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     }
   };
 
-  const onClickVerDetalle = (row: any) => {
+  const onClickVerDetalle = (row: AnyValue) => {
     setPeriodo(row);
   };
 

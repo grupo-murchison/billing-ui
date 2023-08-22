@@ -41,7 +41,7 @@ const Facturacion = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
       nroContrato: '',
@@ -51,7 +51,7 @@ const Facturacion = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
@@ -66,7 +66,7 @@ const Facturacion = () => {
     [mainDataGrid],
   );
 
-  const onClickAbrirPlanFacturacion = (params: any) => {
+  const onClickAbrirPlanFacturacion = (params: AnyValue) => {
     setContratoId(params.id);
     setOpenModal(true);
   };

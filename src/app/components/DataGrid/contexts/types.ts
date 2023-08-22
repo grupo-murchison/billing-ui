@@ -9,7 +9,6 @@ export type DataGridProps<T> = {
   hookRef: React.MutableRefObject<{
     load: (config?: { fixedFilters?: RepositoryParams; filters?: RepositoryParams }) => void;
     reload: () => void;
-    getRows: () => any[];
   }>;
   columns: GridColDef[];
   onClickNew?: () => void;
@@ -21,8 +20,8 @@ export type DataGridProps<T> = {
       };
     }>
   >;
-  toolbar?: JSXElementConstructor<any> | null | undefined;
-  getRows?: (rows: any) => any;
+  toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
+  getRows?: (rows: AnyValue) => AnyValue;
 };
 
 export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {
@@ -45,6 +44,6 @@ export type InitialContext = {
   rowsPerPage: number;
   rowsTotalCount: number;
   loading: boolean;
-  error: any;
-  toolbar?: JSXElementConstructor<any> | null | undefined;
+  error: AnyValue;
+  toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
 };

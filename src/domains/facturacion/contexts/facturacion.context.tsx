@@ -54,7 +54,7 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
    * @param rows todos los periodos
    * @returns boolean
    */
-  const handleDisableFacturar = (row: any, rows: any[]) => {
+  const handleDisableFacturar = (row: AnyValue, rows: AnyValue[]) => {
     let periodo = row;
 
     if (periodo?.periodo === 1 && !isPeriodoFacturado(periodo?.estado)) {
@@ -91,7 +91,7 @@ type InitialContext = {
   estadosPeriodos: Record<'value' | 'label', string>[];
   isContratoActivo: (estado: string) => boolean;
   isPeriodoFacturado: (estado: string) => boolean;
-  handleDisableFacturar: (row: any, rows: any) => boolean;
+  handleDisableFacturar: (row: AnyValue, rows: AnyValue) => boolean;
 };
 
 export { FacturacionContext, FacturacionProvider };
