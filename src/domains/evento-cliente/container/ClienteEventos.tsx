@@ -49,11 +49,10 @@ const EventoClientes = () => {
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
-      cantidad: '',
-      eventos: '',
+      eventos: null,
     },
     // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    // resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: zodResolver(EventosClientesCreateSchema),
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
@@ -213,7 +212,7 @@ const EventoClientes = () => {
           ]}
           repositoryFunc={EventoClienteRepository.getAllEventDetails}
           toolbar={toolbarMUI}
-          getRows={rows => console.log('rows', rows) }
+          // getRows={rows => console.log('rows', rows) }
         />
       </Paper>
     </>
