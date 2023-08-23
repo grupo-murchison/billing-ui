@@ -34,6 +34,7 @@ function FormSelect({
               field.onChange(_);
               onChangeProp && onChangeProp(data);
             }}
+            MenuProps={{ disableScrollLock: true }}
           >
             {fullOptions.length > 0 &&
               fullOptions.map((x, index) => (

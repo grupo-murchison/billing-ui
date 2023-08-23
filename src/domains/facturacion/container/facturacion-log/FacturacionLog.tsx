@@ -36,7 +36,7 @@ const FacturacionLog = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       numeroSecuenciaFacturacion: '',
       nroContrato: '',
@@ -47,7 +47,7 @@ const FacturacionLog = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters: FacturacionLogSchema = {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
@@ -62,7 +62,7 @@ const FacturacionLog = () => {
     [mainDataGrid],
   );
 
-  const onClickAbrirLogDetalle = (row: any) => {
+  const onClickAbrirLogDetalle = (row: AnyValue) => {
     const datos = row;
     setFacturacionData(datos);
     setOpenModal(true);
