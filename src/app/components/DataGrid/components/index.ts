@@ -4,7 +4,7 @@
 
 import { renderCellExpand } from './DescriptionTextCellExpand';
 
-export const renderCellResolver = (type: string, params: any, config?: any) => {
+export const renderCellResolver = (type: string, params: AnyValue, config?: AnyValue) => {
   switch (type) {
     case 'renderCellExpand':
       return renderCellExpand(params);

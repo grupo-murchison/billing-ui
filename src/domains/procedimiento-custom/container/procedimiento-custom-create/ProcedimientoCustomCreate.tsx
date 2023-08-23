@@ -13,7 +13,7 @@ import type { ProcedimientoCustomCreateSchemaType } from '@domains/procedimiento
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, TextField } from '@mui/material';
+import { Box, InputAdornment, TextField } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import Form from '@app/components/Form/Form';
@@ -236,17 +236,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
                 emptyOption={true}
               />
             </Col>
-            <Col md={4} sx={{ display: 'flex', justifyContent: 'center' }}>
-              <Box
-                sx={{
-                  paddingTop: 'calc(1rem - 0.2rem)',
-                  fontSize: '1.2rem',
-                  marginLeft: '-0.8rem',
-                  marginRight: '0.75rem',
-                }}
-              >
-                =
-              </Box>
+            <Col md={4}>
               <TextField
                 id='filtroValue'
                 label='Valor'
@@ -254,6 +244,9 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
                 error={!!formErrors.filtroValue}
                 helperText={formErrors?.filtroValue?.message}
                 disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                InputProps={{
+                  startAdornment: <InputAdornment position='start'>=</InputAdornment>,
+                }}
                 fullWidth
               />
             </Col>

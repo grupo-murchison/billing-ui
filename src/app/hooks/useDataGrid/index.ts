@@ -3,7 +3,7 @@ import { useCallback, useRef } from 'react';
 
 type LoadConfig = { fixedFilters?: RepositoryParams; filters?: RepositoryParams };
 
-type UseDataGridRefType = { load: (config?: LoadConfig) => void; reload: () => void; getRows: () => any[] };
+type UseDataGridRefType = { load: (config?: LoadConfig) => void; reload: () => void; };
 
 const initialState = {
   load() {
@@ -11,10 +11,7 @@ const initialState = {
   },
   reload() {
     return;
-  },
-  getRows() {
-    return [];
-  },
+  }
 };
 
 const useDataGrid = () => {
@@ -28,11 +25,7 @@ const useDataGrid = () => {
     ref.current.reload();
   }, []);
 
-  const getRows = useCallback(() => {
-   return ref.current.getRows();
-  }, []);
-
-  return { ref, load, reload, getRows };
+  return { ref, load, reload };
 };
 
 const initialValues: ReturnType<typeof useDataGrid> = {

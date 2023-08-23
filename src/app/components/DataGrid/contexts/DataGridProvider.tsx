@@ -20,7 +20,7 @@ const DataGridProvider = <T,>({
   const [rowsTotalCount, setRowsTotalCount] = useState<number>(initialContext.rowsTotalCount);
   const [rows, setRows] = useState<GridRowsProp>([]);
   const [loading, setLoading] = useState<boolean>(initialContext.loading);
-  const [error, setError] = useState<any>(initialContext.error);
+  const [error, setError] = useState<AnyValue>(initialContext.error);
 
   const repositoryFuncParamsRef = useRef<DataGridRepositoryFuncParams>({
     page: initialContext.currentPage + 1,
@@ -101,7 +101,6 @@ const DataGridProvider = <T,>({
         makeRequest();
       },
       reload: makeRequest,
-      getRows: () => [...rows], // TODO funciona a veces, hay que revisar bien si es viable y mejorarlo
     };
   }, [makeRequest]);
 
