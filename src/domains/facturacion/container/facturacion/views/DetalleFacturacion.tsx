@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { Box, FormLabel, TextField, Typography } from '@mui/material';
+import { GridRowSelectionModel, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
@@ -14,11 +15,13 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
   currency: 'USD',
 });
 
-function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: any }) {
-  const [eventos, setEventos] = useState<any>();
-  const [detalle, setDetalle] = useState<any>();
+function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: AnyValue }) {
+  const [eventos, setEventos] = useState<AnyValue>();
+  const [detalle, setDetalle] = useState<AnyValue>();
   const [loading, setLoading] = useState(false);
   const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<number>();
+
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   useEffect(() => {
     if (facturacionContratoConceptoId) {
@@ -159,6 +162,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         loading={loading}
         rows={detalle || []}
         columns={[
+          { ...GRID_CHECKBOX_SELECTION_COL_DEF, renderHeader: () => '', maxWidth: 50 },
           {
             field: 'productoSoftlandCodigo',
             headerName: 'Producto Softland',
@@ -193,7 +197,18 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
             headerName: 'Cantidad Item VIN',
           },
         ]}
-        onRowSelectionModelChange={(rowSelectionModel: any) => setFacturacionContratoConceptoId(rowSelectionModel[0])}
+        checkboxSelection
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(selection: AnyValue) => {
+          if (selection.length > 1) {
+            const selectionSet = new Set(rowSelectionModel);
+            const result = selection.filter((s: AnyValue) => !selectionSet.has(s));
+            setFacturacionContratoConceptoId(selection[0]);
+            setRowSelectionModel(result);
+          } else {
+            setRowSelectionModel(selection);
+          }
+        }}
       />
 
       <Box mt={4} mb={2}>
@@ -207,6 +222,19 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
       <DataGridBase
         loading={loading}
         rows={eventos || []}
+        // onSelectionModelChange={(selection) => {
+        //   if (selection.length > 1) {
+        //     const selectionSet = new Set(selectionModel);
+        //     const result = selection.filter((s) => !selectionSet.has(s));
+
+        //     setSelectionModel(result);
+        //   } else {
+        //     setSelectionModel(selection);
+        //   }
+        // }}
+        onRowSelectionModelChange={newRowSelectionModel => {
+          setRowSelectionModel(newRowSelectionModel);
+        }}
         columns={[
           {
             field: 'genDestinoId',

@@ -28,8 +28,8 @@ const FacturacionReporte = () => {
   // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
-  const [facturacionContratoId, setFacturacionContratoId] = useState<any>(null);
-  const [periodo, setPeriodo] = useState<any>();
+  const [facturacionContratoId, setFacturacionContratoId] = useState<AnyValue>(null);
+  const [periodo, setPeriodo] = useState<AnyValue>();
   const { mainDataGrid } = useContext(FacturacionReporteContext);
 
   useEffect(() => {
@@ -40,7 +40,7 @@ const FacturacionReporte = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
@@ -51,7 +51,7 @@ const FacturacionReporte = () => {
     // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
@@ -66,13 +66,13 @@ const FacturacionReporte = () => {
     [mainDataGrid],
   );
 
-  const handleVerSoporte = (row: any) => {
+  const handleVerSoporte = (row: AnyValue) => {
     setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
     setPeriodo(row);
     setOpenModal(true);
   };
 
-  const handleVerProforma = (_row: any) => {
+  const handleVerProforma = (_row: AnyValue) => {
     // setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
   };
 

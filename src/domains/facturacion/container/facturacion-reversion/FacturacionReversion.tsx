@@ -41,7 +41,7 @@ const FacturacionReversion = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
@@ -52,7 +52,7 @@ const FacturacionReversion = () => {
     // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
         clienteId: data.clienteId ? data.clienteId.value : undefined,
@@ -67,7 +67,7 @@ const FacturacionReversion = () => {
     [mainDataGrid],
   );
 
-  const handleRevertir = (row: any) => {
+  const handleRevertir = (row: AnyValue) => {
     const cantidadContratos = 10;
     const numeroFacturacion = 10;
 
@@ -91,7 +91,7 @@ const FacturacionReversion = () => {
       .finally(() => setOpenBackdrop(false));
   };
 
-  const handleAnular = (row: any) => {
+  const handleAnular = (row: AnyValue) => {
     setOpenBackdrop(true);
 
     FacturacionRepository.anularFacturacion(row.contratos[0]?.id)
