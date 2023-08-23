@@ -13,15 +13,11 @@ import { ClienteEventosContext, FacturacionReporteContext } from "../../facturac
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
-import { GridActionsCellItem } from "@mui/x-data-grid";
-import { ViewIcon } from "@assets/icons";
 
 import { withBreadcrumb } from '@app/hocs';
-
-import { FacturacionRepository } from '@domains/facturacion/repository';
 import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
 import { EventoClienteRepository } from "../repository";
-import { EventosDropdownAutoComplete } from "./cliente-dropdown copy/EventosDropdown";
+import { EventosDropdownAutoComplete } from "./cliente-dropdown/EventosDropdown";
 import { EventosClientesCreateSchema } from "../schemas";
 import { debugSchema } from "@app/utils/zod.util";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -46,14 +42,13 @@ const EventoClientes = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<any>({ 
     defaultValues: {
-      // clienteId: { value: '', code: '', label: '' },
       clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: { value: '', code: '', label: '' },
+      eventoId: null,                                                                                          
     },
-    resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    // resolver: zodResolver(EventosClientesCreateSchema), 
+    // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
+    resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
@@ -64,9 +59,6 @@ const EventoClientes = () => {
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
         eventoId: data.eventoId ? [data.eventoId.value] : undefined,
       };
-
-
-      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
       setRows(mainDataGrid.getRows());
     },
@@ -84,12 +76,8 @@ const EventoClientes = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              // error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
-          {/* TODO: cambiar a EVENTOS y que sea un selector multiple */}
           <Col sm={12} md={6}>
             <EventosDropdownAutoComplete
               control={control}
@@ -97,8 +85,6 @@ const EventoClientes = () => {
               label='Evento'
               name='eventoId'
               error={!!formErrors.eventos}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -106,7 +92,7 @@ const EventoClientes = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Cálculo Desde'
+              label='Fecha Evento Desde'
               name='fechaDesde'
               disabled={isSubmitting}
               error={!!formErrors.fechaDesde}
@@ -115,24 +101,13 @@ const EventoClientes = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Cálculo Hasta'
+              label='Fecha Evento Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
               error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={12}>
-            <FormTextField
-              control={control}
-              label='Cantidad'
-              name='cantidad'
-              disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
-            />
-          </Col>
-        </Row> */}
       </Form>
     </Paper>
   );
@@ -175,39 +150,6 @@ const EventoClientes = () => {
             { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135,
               valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0,8)),
               type: 'date',
-            },
-
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              minWidth: 115, 
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Soporte'
-                  // onClick={toggleAdmin(params.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<ViewIcon />}
-                  label='Ver Proforma'
-                  // onClick={duplicateUser(params.id)}
-                  showInMenu
-                />,
-                // <IconMenu
-                //   key={4}
-                //   options={[
-                //     { label: 'Ver Soporte', icon: '', caption: '' },
-                //     { label: 'Ver Proforma', icon: '', caption: '' },
-                //   ]}
-                // />,
-              ],
             },
           ]}
           repositoryFunc={EventoClienteRepository.getAllEventDetails}

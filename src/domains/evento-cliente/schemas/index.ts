@@ -5,12 +5,12 @@ export const EventosClientesCreateSchema = z.object({
     value: z.number({ required_error: 'El campo es requerido.' }),
     code: z.string({ required_error: 'El campo es requerido.' }),
     label: z.string({ required_error: 'El campo es requerido.' })
-  }, { required_error: 'Este campo es obligatorio.', invalid_type_error: 'No podes mandarlo vacio' }),
+  }, { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
   eventoId: z.object({
-    value: z.number({ required_error: 'El campo es requerido.' }),
-    code: z.string({ required_error: 'El campo es requerido.' }),
-    label: z.string({ required_error: 'El campo es requerido.' })
-  }), //
+    value: z.number(),
+    code: z.string(),
+    label: z.string()
+  }).nullable().optional(), //
   fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
   fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
 });
