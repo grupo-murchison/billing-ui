@@ -1,4 +1,3 @@
-// import { useCallback, useContext, useEffect } from 'react';
 
 import { Col, Row } from "@app/components";
 import Form from "@app/components/Form/Form";
@@ -10,16 +9,10 @@ import { Paper } from "@mui/material";
 import { useCallback, useContext, useEffect, useState } from "react";
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ClienteEventosContext, FacturacionReporteContext } from "../../facturacion/contexts";
 
-// import { Paper } from '@mui/material';
-// import { GridActionsCellItem } from '@mui/x-data-grid';
 
-// import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
-import { GridActionsCellItem } from "@mui/x-data-grid";
-import { ViewIcon } from "@assets/icons";
 
 import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from "@domains/facturacion/constants";
@@ -29,15 +22,11 @@ import { EventosServiciosContext } from "../contexts/eventos.servicios.context";
 
 
 const EventoServicio = () => {
-//   // const _navigate = useNavigate();
-
-  const [rows, setRows] = useState<any>();
 
   const { mainDataGrid } = useContext(EventosServiciosContext);
 
   useEffect(() => {
     mainDataGrid.load();
-    setRows(mainDataGrid.getRows());
   }, [mainDataGrid.load]);
 
   const {
@@ -69,7 +58,6 @@ const EventoServicio = () => {
 
       console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
-      setRows(mainDataGrid.getRows());
     },
     [mainDataGrid],
     
@@ -99,8 +87,6 @@ const EventoServicio = () => {
               label='Cliente'
               name='clienteId'
               error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
           {/* TODO: cambiar a EVENTOS y que sea un selector multiple */}
@@ -111,8 +97,6 @@ const EventoServicio = () => {
               label='Evento'
               name='eventos'
               error={!!formErrors.eventos}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -123,7 +107,6 @@ const EventoServicio = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -137,14 +120,12 @@ const EventoServicio = () => {
           </Col>
         </Row>
         <Row>
-          {/* TODO: cambiar a Cantidad. valor numerico minimo 1  */}
           <Col md={12}>
             <FormTextField
               control={control}
               label='Cantidad'
               name='cantidad'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
             />
           </Col>
         </Row>
@@ -160,18 +141,9 @@ const EventoServicio = () => {
     <DataGrid
           hookRef={mainDataGrid.ref}
           columns={[
-            // { field: 'id', headerName: 'id' },
-            // { field: 'clienteId', headerName: 'clienteId' },
-
-            // { field: 'eventoCodigo', headerName: 'eventoCodigo' },
-            // { field: 'eventoDenominacion', headerName: 'eventoDenominacion' },
-            // { field: 'eventoDescripcion', headerName: 'eventoDescripcion' },
-            // { field: 'clienteCodigo', headerName: 'clienteCodigo' },
-            // { field: 'clienteDescripcion', headerName: 'clienteDescripcion' },
             { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115},
             { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
             { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125 },
-            // { field: 'genEventoFechaModificacion', headerName: 'genEventoFechaModificacion' },
             { field: 'genCompania', headerName: 'Compania', minWidth: 100  },
             { field: 'genSistema', headerName: 'Sistema', minWidth: 80  },
             { field: 'genClienteId', headerName: 'Cliente', minWidth: 80  },
@@ -179,7 +151,6 @@ const EventoServicio = () => {
             { field: 'genDestinoId', headerName: 'Identificador Destino', minWidth: 160  },
             { field: 'genTerminalId', headerName: 'Terminal', minWidth: 100  },
             { field: 'genPatio', headerName: 'Patio', minWidth: 70  },
-            // { field: 'genZona', headerName: 'genZona' },
             { field: 'genTarea', headerName: 'Tarea', minWidth: 150 },
             { field: 'genOrdenCompra', headerName: 'Orden Compra', minWidth: 125  },
             { field: 'evCantidadLitros', headerName: 'Cantidad Litros', minWidth: 125  },
@@ -196,46 +167,6 @@ const EventoServicio = () => {
             { field: 'evColor', headerName: 'Color', minWidth: 130  },
             { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135  },
             { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135  },
-            // { field: 'evDimension', headerName: 'Dimension' },
-            // { field: 'evDestino', headerName: 'evDestino' },
-            // { field: 'evCiudadDestino', headerName: 'evCiudadDestino' },
-            // { field: 'evTipoServicio', headerName: 'evTipoServicio' },
-            // { field: 'evDocumentoSalida', headerName: 'evDocumentoSalida' },
-            // { field: 'evDiaHabil', headerName: 'evDiaHabil' },
-            // { field: 'evAlmacen', headerName: 'evAlmacen' },
-            // { field: 'evHallazgos', headerName: 'evHallazgos' },
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              minWidth: 115, 
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Soporte'
-                  // onClick={toggleAdmin(params.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<ViewIcon />}
-                  label='Ver Proforma'
-                  // onClick={duplicateUser(params.id)}
-                  showInMenu
-                />,
-                // <IconMenu
-                //   key={4}
-                //   options={[
-                //     { label: 'Ver Soporte', icon: '', caption: '' },
-                //     { label: 'Ver Proforma', icon: '', caption: '' },
-                //   ]}
-                // />,
-              ],
-            },
           ]}
           repositoryFunc={EventoServicioRepository.getAllEventDetails}
           toolbar={toolbarMUI}
@@ -246,6 +177,4 @@ const EventoServicio = () => {
     )
 };
 
-
-// export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
 export default withBreadcrumb(EventoServicio, EventosServiciosBreadcrumb);
