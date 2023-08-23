@@ -60,7 +60,7 @@ export default function AsyncAutocomplete({
     <Controller
       name={name}
       control={control}
-      render={({ field }) => (
+      render={({ field, fieldState: {error} }) => (
         <Autocomplete
           {...props}
           {...field}
@@ -87,7 +87,7 @@ export default function AsyncAutocomplete({
           open={open}
           options={options}
           // renderOption={(option) => <span>{option.label}</span>}
-          renderInput={params => <AutocompleteRenderInput {...params} label={label} loading={loading} />}
+          renderInput={params => <AutocompleteRenderInput {...params} label={label} loading={loading} error={error} />}
           // value={value}
         />
       )}

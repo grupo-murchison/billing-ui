@@ -46,23 +46,23 @@ const EventoClientes = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<any>({ 
     defaultValues: {
-      clienteId: { value: '', code: '', label: '' },
+      // clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      eventos: null,
+      eventoId: { value: '', code: '', label: '' },
     },
-    // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
+    // resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
-      console.log("🚀 ~ file: ClienteEventos.tsx:69 ~ EventoClientes ~ data:", data)
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventos: data.eventos ? data.eventos : undefined,
+        eventoId: data.eventoId ? [data.eventoId.value] : undefined,
       };
 
 
@@ -95,7 +95,7 @@ const EventoClientes = () => {
               control={control}
               disabled={isSubmitting}
               label='Evento'
-              name='eventos'
+              name='eventoId'
               error={!!formErrors.eventos}
               // emptyOption
               // helperText={formErrors?.clienteId?.message}

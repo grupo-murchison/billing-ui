@@ -14,6 +14,7 @@ class EventoClienteService {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${this.BASE_PATH_EVENTO_DETALLE}/filter`, {params}),
       );
+      console.log("🚀 ~ file: evento-cliente.service.ts:18 ~ EventoClienteService ~ getAllEventDetails= ~ response:", response)
     return [response, error];
   };
 
