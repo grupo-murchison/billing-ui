@@ -7,22 +7,20 @@ import { Paper } from '@mui/material';
 import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ClienteEventosContext, FacturacionReporteContext } from '../../facturacion/contexts';
+import { ClienteEventosContext } from '../../facturacion/contexts';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
-import { GridActionsCellItem } from '@mui/x-data-grid';
-import { ViewIcon } from '@assets/icons';
 
 import { withBreadcrumb } from '@app/hocs';
+import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
+import { EventoClienteRepository } from "../repository";
+import { EventosDropdownAutoComplete } from "./cliente-dropdown/EventosDropdown";
+import { EventosClientesCreateSchema } from "../schemas";
+import { debugSchema } from "@app/utils/zod.util";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-import { FacturacionRepository } from '@domains/facturacion/repository';
-import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
-import { EventoClienteRepository } from '../repository';
-import { EventosDropdownAutoComplete } from './cliente-dropdown copy/EventosDropdown';
-import { EventosClientesCreateSchema } from '../schemas';
-import { debugSchema } from '@app/utils/zod.util';
-import { zodResolver } from '@hookform/resolvers/zod';
+
 
 const EventoClientes = () => {
   const { mainDataGrid } = useContext(ClienteEventosContext);
@@ -37,27 +35,23 @@ const EventoClientes = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<any>({
     defaultValues: {
-      clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      cantidad: '',
-      eventos: '',
+      eventoId: null,                                                                                          
     },
     // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    // resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
     async data => {
-      console.log('🚀 ~ file: ClienteEventos.tsx:69 ~ EventoClientes ~ data:', data);
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventos: data.eventos ? data.eventos : undefined,
+        eventoId: data.eventoId ? [data.eventoId.value] : undefined,
       };
-
-      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -73,21 +67,15 @@ const EventoClientes = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              // error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
-          {/* TODO: cambiar a EVENTOS y que sea un selector multiple */}
           <Col sm={12} md={6}>
             <EventosDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
               label='Evento'
-              name='eventos'
+              name='eventoId'
               error={!!formErrors.eventos}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -95,7 +83,7 @@ const EventoClientes = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Cálculo Desde'
+              label='Fecha Evento Desde'
               name='fechaDesde'
               disabled={isSubmitting}
               error={!!formErrors.fechaDesde}
@@ -104,24 +92,13 @@ const EventoClientes = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha Cálculo Hasta'
+              label='Fecha Evento Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
               error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>
-        {/* <Row>
-          <Col md={12}>
-            <FormTextField
-              control={control}
-              label='Cantidad'
-              name='cantidad'
-              disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
-            />
-          </Col>
-        </Row> */}
       </Form>
     </Paper>
   );
@@ -171,43 +148,10 @@ const EventoClientes = () => {
               valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0, 8)),
               type: 'date',
             },
-
-            {
-              field: 'actions',
-              type: 'actions',
-              headerName: 'Acciones',
-              headerAlign: 'center',
-              align: 'center',
-              flex: 0.5,
-              minWidth: 115,
-              getActions: params => [
-                <GridActionsCellItem
-                  key={2}
-                  icon={<ViewIcon />}
-                  label='Ver Soporte'
-                  // onClick={toggleAdmin(params.id)}
-                  showInMenu
-                />,
-                <GridActionsCellItem
-                  key={3}
-                  icon={<ViewIcon />}
-                  label='Ver Proforma'
-                  // onClick={duplicateUser(params.id)}
-                  showInMenu
-                />,
-                // <IconMenu
-                //   key={4}
-                //   options={[
-                //     { label: 'Ver Soporte', icon: '', caption: '' },
-                //     { label: 'Ver Proforma', icon: '', caption: '' },
-                //   ]}
-                // />,
-              ],
-            },
           ]}
           repositoryFunc={EventoClienteRepository.getAllEventDetails}
           toolbar={toolbarMUI}
-          getRows={rows => console.log('rows', rows)}
+          // getRows={rows => console.log('rows', rows) }
         />
       </Paper>
     </>

@@ -10,13 +10,15 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, error, ...pr
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
+        render={({ field: { onChange, value }, fieldState: { error } }) => (
           <DesktopDatePicker
-            {...field}
             label={label}
             inputFormat={inputFormat || 'dd-MM-yyyy'}
-            renderInput={params => <TextField {...params} error={!!error} fullWidth />}
-            {...props}
+            value={value}
+            onChange={event => {
+              onChange(event);
+            }}
+            renderInput={params => <TextField {...params} error={!!error} fullWidth helperText={error?.message} />}
           />
         )}
       />
