@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Alert, Checkbox, FormControlLabel, FormGroup, Paper, Snackbar, TextField } from '@mui/material';
+import { Chip, Paper } from '@mui/material';
 
 import { Col, Modal, Row } from '@app/components';
 
@@ -36,7 +36,7 @@ const FacturacionLog = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       numeroSecuenciaFacturacion: '',
       nroContrato: '',
@@ -47,7 +47,7 @@ const FacturacionLog = () => {
     },
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters: FacturacionLogSchema = {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
@@ -62,7 +62,7 @@ const FacturacionLog = () => {
     [mainDataGrid],
   );
 
-  const onClickAbrirLogDetalle = (row: any) => {
+  const onClickAbrirLogDetalle = (row: AnyValue) => {
     const datos = row;
     setFacturacionData(datos);
     setOpenModal(true);
@@ -140,7 +140,7 @@ const FacturacionLog = () => {
           },
           {
             field: 'estado',
-            headerName: 'Estado Contrato',
+            headerName: 'Estado Cabecera',
             valueGetter: params => params.row.facturacionCabecera.estado,
           },
           {
@@ -172,6 +172,17 @@ const FacturacionLog = () => {
             field: 'estadoContrato',
             headerName: 'Estado Contrato',
             valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].estado,
+            renderCell: params => {
+              const isRejected = params.value === 'ANULADO';
+              return (
+                <Chip
+                  // icon={isRejected ? <ViewIcon /> : <ViewIcon />}
+                  label={params.value}
+                  variant='outlined'
+                  color={isRejected ? 'error' : 'primary'}
+                />
+              );
+            },
           },
           {
             field: 'avisos',

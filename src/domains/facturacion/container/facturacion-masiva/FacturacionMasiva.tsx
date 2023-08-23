@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Alert, Checkbox, FormControlLabel, FormGroup, Paper, Snackbar, Typography, Box } from '@mui/material';
+import { Checkbox, FormControlLabel, FormGroup, Paper, Typography, Box } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -45,7 +45,7 @@ const FacturacionMasiva = () => {
     setOpenToast(false);
   };
 
-  const onSubmit: SubmitHandler<any> = useCallback(async data => {
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(async data => {
     const filters: FacturacionMasivaSchema = {
       sociedadId: data.sociedadId ? data.sociedadId : undefined,
       fechaHastaFacturacion: data.fechaHastaFacturacion && DateLib.parseToDBString(data.fechaHastaFacturacion),
