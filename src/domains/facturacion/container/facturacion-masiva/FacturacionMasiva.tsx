@@ -45,7 +45,7 @@ const FacturacionMasiva = () => {
     setOpenToast(false);
   };
 
-  const onSubmit: SubmitHandler<any> = useCallback(async data => {
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(async data => {
     const filters: FacturacionMasivaSchema = {
       sociedadId: data.sociedadId ? data.sociedadId : undefined,
       fechaHastaFacturacion: data.fechaHastaFacturacion && DateLib.parseToDBString(data.fechaHastaFacturacion),
