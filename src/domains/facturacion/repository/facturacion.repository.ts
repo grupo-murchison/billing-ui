@@ -65,7 +65,7 @@ class FacturacionRepository {
     return response;
   };
 
-  static getFacturacionLog = async (params: FacturacionLogSchema) => {
+  static getFacturacionLog = async (params: AnyValue) => {
     const response$ = from(FacturacionService.getFacturacionLog(params)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
