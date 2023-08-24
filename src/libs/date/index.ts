@@ -22,3 +22,16 @@ export const beautifyISO = (inputDate: Nullable<string>) => {
 
   return format(parseISO(inputDate), 'dd-MM-yyyy');
 };
+
+export const ISOStringToTimeStamp = (inputDate: Nullable<string>) => {
+  if (!inputDate) return undefined;
+
+  return format(parseISO(inputDate), 'yyyyMMdd-HHmmssSSS');
+};
+
+export const fromFormatToFormat = (inputDate: Nullable<string>, inputFormat: string, outputFormat: string) => {
+  if (!inputDate) return undefined;
+
+  return format(parse(inputDate, inputFormat || 'yyyyMMddHHmmss', new Date()), outputFormat || 'yyyyMMdd-HHmmss');
+  
+};

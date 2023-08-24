@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
-import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+// import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from "@domains/facturacion/constants";
@@ -169,7 +169,7 @@ const EventoServicio = () => {
             { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135  },
           ]}
           repositoryFunc={EventoServicioRepository.getAllEventDetails}
-          toolbar={toolbarMUI}
+          // toolbar={toolbarMUI}
           getRows={rows => console.log('rows', rows) }
         />
       </Paper>
