@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { TextField, Tooltip } from '@mui/material';
+import { Chip, TextField, Tooltip } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -13,18 +13,18 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 
 import { DateLib } from '@libs';
 
-import { ScheduleSendIcon, ViewIcon } from '@assets/icons';
+import { ScheduleSendIcon } from '@assets/icons';
 import { FacturacionContext } from '@domains/facturacion/contexts';
 import DetalleFacturacion from './DetalleFacturacion';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
-  const [planFacturacion, setPlanFacturacion] = useState<any>(null);
+  const [planFacturacion, setPlanFacturacion] = useState<AnyValue>(null);
   const [loading, setLoading] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
-  const [periodo, setPeriodo] = useState<any>(null);
+  const [periodo, setPeriodo] = useState<AnyValue>(null);
 
   const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
@@ -57,7 +57,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     }
   };
 
-  const onClickVerDetalle = (row: any) => {
+  const onClickVerDetalle = (row: AnyValue) => {
     setPeriodo(row);
   };
 
@@ -105,6 +105,16 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
           {
             field: 'estado',
             headerName: 'Estado',
+            renderCell: params => {
+              return (
+                <Chip
+                  label={params.value}
+                  variant='outlined'
+                  color={params.value === 'FACTURADO' ? 'primary' : params.value === 'ABIERTO' ? 'info' : 'default'}
+                  size='small'
+                />
+              );
+            },
           },
           {
             field: 'actions',
@@ -131,7 +141,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
                 icon={
                   <Tooltip title='Facturar' placement='left'>
                     <ScheduleSendIcon
-                      color={handleDisableFacturar(params.row, planFacturacion?.periodos) ? 'disabled' : 'primary'}
+                      color={handleDisableFacturar(params.row, planFacturacion?.periodos) ? 'disabled' : 'inherit'}
                     />
                   </Tooltip>
                 }

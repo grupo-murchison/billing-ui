@@ -2,9 +2,9 @@ import * as React from 'react';
 import { AutocompleteRenderInputParams, TextField } from '@mui/material';
 import CircularProgress from '@mui/material/CircularProgress';
 
-type RenderInput = AutocompleteRenderInputParams & { label: string; loading: boolean };
+type RenderInput = AutocompleteRenderInputParams & { label: string; loading: boolean, error: AnyValue };
 
-const AutocompleteRenderInput = ({ label, loading, ...params }: RenderInput) => (
+const AutocompleteRenderInput = ({ label, loading, error, ...params }: RenderInput) => (
   <TextField
     {...params}
     label={label}
@@ -17,6 +17,8 @@ const AutocompleteRenderInput = ({ label, loading, ...params }: RenderInput) => 
         </React.Fragment>
       ),
     }}
+    error={!!error} 
+    helperText={error?.message}
   />
 );
 

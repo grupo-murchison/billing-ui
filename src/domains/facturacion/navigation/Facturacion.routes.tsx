@@ -37,7 +37,15 @@ const FacturacionRoutes = () => {
         }
       />
       <Route
-        path='/eventos-cliente'
+        path='/facturacion/eventos-cliente'
+        element={
+          <ClienteEventosProvider>
+            <EventoClientes />
+          </ClienteEventosProvider>
+        }
+      />
+      <Route
+        path='/eventos-servicios-cliente'
         element={
           <ClienteEventosProvider>
             <EventoClientes />

@@ -40,14 +40,14 @@ export const PIPES = {
   },
 };
 
-export const fromRxjs = async (axiosService: Promise<HandlePromise>, pipes?: any) => {
+export const fromRxjs = async (axiosService: Promise<HandlePromise>, pipes?: AnyValue) => {
   const response$ = from(axiosService).pipe(getResponse(), pipes());
 
   const response = await lastValueFrom(response$);
   return response;
 };
 
-function AxiosHandlerError(axiosError: Undefined<AxiosError<unknown, any>>) {
+function AxiosHandlerError(axiosError: Undefined<AxiosError<unknown, AnyValue>>) {
   const error: IError = {
     message: null,
     status: null,
@@ -78,7 +78,7 @@ function AxiosHandlerError(axiosError: Undefined<AxiosError<unknown, any>>) {
 }
 
 interface IError {
-  message: any;
+  message: AnyValue;
   status: number | null;
-  headers: any;
+  headers: AnyValue;
 }
