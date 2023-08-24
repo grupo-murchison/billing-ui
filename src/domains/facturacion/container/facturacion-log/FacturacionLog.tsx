@@ -22,6 +22,7 @@ import { FacturacionLogContext } from '@domains/facturacion/contexts/facturacion
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleFacturacionLog';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const FacturacionLog = () => {
   const { mainDataGrid } = useContext(FacturacionLogContext);
@@ -38,25 +39,24 @@ const FacturacionLog = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      numeroSecuenciaFacturacion: '',
-      nroContrato: '',
-      // clienteId: { value: 1, code: '', label: '1' },
-      clienteId: '',
+      numeroSecuenciaFacturacion: 0,
+      nroContrato: 0,
+      clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
     },
+    resolver: zodResolver(FacturacionLogSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
-      const filters: FacturacionLogSchema = {
+      const filters = {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
-        clienteId: data.clienteId.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde && DateLib.parseToDBString(data.fechaDesde),
-        fechaHasta: data.fechaHasta && DateLib.parseToDBString(data.fechaHasta),
+        clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
+        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
+        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
       };
-
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
