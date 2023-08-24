@@ -74,7 +74,7 @@ class FacturacionService {
     return [response, error];
   };
 
-  static getFacturacionLog = async (params: FacturacionLogSchema): Promise<HandlePromise> => {
+  static getFacturacionLog = async (params: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`v1/proceso-log/filter`, { params }),
     );
