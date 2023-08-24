@@ -17,7 +17,12 @@
             "request": "attach",
             "port": 9222,
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}"
+            "webRoot": "${workspaceFolder}",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**",
+                "${workspaceFolder}/node_modules/**/*.js"
+            ]
         },
         {
             "name": "run-app",
@@ -32,14 +37,24 @@
             ],
             "env": {
                 "BROWSER": "none"
-            }
+            },
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**",
+                "${workspaceFolder}/node_modules/**/*.js"
+            ]
         },
         {
             "name": "lunch-browser",
             "type": "chrome",
             "request": "launch",
             "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}/main"
+            "webRoot": "${workspaceFolder}",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**",
+                "${workspaceFolder}/node_modules/**/*.js"
+            ]
         }
     ],
     "compounds": [

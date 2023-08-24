@@ -4,23 +4,20 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { DateLib } from '@libs';
 import { Paper } from '@mui/material';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteEventosContext } from '../../facturacion/contexts';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
-import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+import ToolbarMUI from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
-import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
-import { EventoClienteRepository } from "../repository";
-import { EventosDropdownAutoComplete } from "./cliente-dropdown/EventosDropdown";
-import { EventosClientesCreateSchema } from "../schemas";
-import { debugSchema } from "@app/utils/zod.util";
-import { zodResolver } from "@hookform/resolvers/zod";
-
-
+import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
+import { EventoClienteRepository } from '../repository';
+import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
+import { EventosClientesCreateSchema } from '../schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const EventoClientes = () => {
   const { mainDataGrid } = useContext(ClienteEventosContext);
@@ -38,10 +35,10 @@ const EventoClientes = () => {
       clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: null,                                                                                          
+      eventoId: null,
     },
     // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    resolver: zodResolver(EventosClientesCreateSchema), 
+    resolver: zodResolver(EventosClientesCreateSchema),
   });
 
   const onSubmit: SubmitHandler<any> = useCallback(
@@ -62,12 +59,7 @@ const EventoClientes = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='clienteId'
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
           <Col sm={12} md={6}>
             <EventosDropdownAutoComplete
@@ -103,6 +95,8 @@ const EventoClientes = () => {
     </Paper>
   );
 
+  const toolbarProp = () => <ToolbarMUI fileName={'Eventos Del Cliente'} />;
+
   return (
     <>
       {toolbar}
@@ -116,7 +110,7 @@ const EventoClientes = () => {
               field: 'genEventoFechaCreacion',
               headerName: 'Fecha Creacion Evento',
               minWidth: 125,
-              valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0, 8)),
+              valueGetter: params => (params?.value ? DateLib.parseFromDBString(params?.value.slice(0, 8)) : ''),
               type: 'date',
             },
             { field: 'genCompania', headerName: 'Compania', minWidth: 100 },
@@ -144,13 +138,14 @@ const EventoClientes = () => {
             {
               field: 'genEventoFechaEnvio',
               headerName: 'Fecha Envio Evento',
-              minWidth: 135,
-              valueGetter: params => DateLib.parseFromDBString(params?.value.slice(0, 8)),
-              type: 'date',
+              minWidth: 160,
+              valueGetter: params =>
+                params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
+              // type: 'date',
             },
           ]}
           repositoryFunc={EventoClienteRepository.getAllEventDetails}
-          toolbar={toolbarMUI}
+          toolbar={toolbarProp}
           // getRows={rows => console.log('rows', rows) }
         />
       </Paper>

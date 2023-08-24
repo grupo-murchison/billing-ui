@@ -1,4 +1,5 @@
 import {
+  GridCsvExportOptions,
   GridToolbarColumnsButton,
   GridToolbarContainer,
   GridToolbarDensitySelector,
@@ -6,13 +7,24 @@ import {
   GridToolbarFilterButton,
 } from '@mui/x-data-grid';
 
-export const toolbarMUI = () => {
+import { DateLib } from '@libs';
+
+const ToolbarMUI = ({ ...props }: GridCsvExportOptions) => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
+      {/* <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
-      <GridToolbarExport />
+      {/* <GridToolbarDensitySelector /> */}
+      <GridToolbarExport
+        csvOptions={{
+          fileName: `${props.fileName || 'Download-Billing'}-${DateLib.ISOStringToTimeStamp(new Date().toISOString())}`,
+        }}
+        printOptions={{
+          disableToolbarButton: true,
+        }}
+      />
     </GridToolbarContainer>
   );
 };
+
+export default ToolbarMUI;

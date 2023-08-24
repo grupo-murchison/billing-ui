@@ -7,7 +7,6 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
-import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 
@@ -244,7 +243,6 @@ const FacturacionReporte = () => {
           },
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
-        toolbar={toolbarMUI}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>
