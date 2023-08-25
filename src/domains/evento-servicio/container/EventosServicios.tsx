@@ -80,8 +80,6 @@ const EventoServicio = () => {
               label='Nro Facturación'
               name='nroFacturacion'
               disabled={isSubmitting}
-              // error={!!formErrors.nroFacturacion}
-              // helperText={formErrors?.nroFacturacion?.message}
             />
           </Col>
           <Col sm={12} md={6}>
@@ -100,8 +98,6 @@ const EventoServicio = () => {
               disabled={isSubmitting}
               label='Contrato'
               name='contrato'
-              // error={!!formErrors.contrato}
-              // helperText={formErrors?.contrato?.message}
             />
           </Col>
            <Col sm={12} md={6}>
@@ -110,8 +106,6 @@ const EventoServicio = () => {
               disabled={isSubmitting}
               label='Concepto Acuerdo'
               name='conceptoAcuerdo'
-              // error={!!formErrors.conceptoAcuerdo}
-              // helperText={formErrors?.conceptoAcuerdo?.message}
             />
           </Col>
         </Row>

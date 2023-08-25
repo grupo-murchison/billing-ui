@@ -35,12 +35,12 @@ const EventoClientes = () => {
       clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: null,
+      eventoId: [null, null],
     },
     resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
-  const onSubmit: SubmitHandler<EventosClienteFormSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,

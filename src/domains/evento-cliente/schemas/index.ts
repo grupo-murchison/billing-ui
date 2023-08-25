@@ -11,11 +11,11 @@ export const EventosClientesCreateSchema = z
       { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
     ),
     eventoId: z
-      .object({
+      .array(z.object({
         value: z.number(),
         code: z.string(),
         label: z.string(),
-      })
+      }))
       .nullable()
       .optional(), //
     fechaHasta: z.date().nullable(),

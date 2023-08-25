@@ -22,6 +22,8 @@ import { FacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
 import { DateLib } from '@libs';
 
 import { CancelScheduleSendIcon, RestoreIcon } from '@assets/icons';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { FacturacionReversionCreateSchema } from '@domains/facturacion/schemas';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
@@ -49,7 +51,7 @@ const FacturacionReversion = () => {
       nroContrato: '',
       numeroSecuenciaFacturacion: '',
     },
-    // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
+    resolver: zodResolver(FacturacionReversionCreateSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -118,7 +120,6 @@ const FacturacionReversion = () => {
               label='Número Cálculo de Facturación'
               name='numeroSecuenciaFacturacion'
               type='number'
-              error={!!formErrors.numeroSecuenciaFacturacion}
             />
           </Col>
           <Col md={3}>

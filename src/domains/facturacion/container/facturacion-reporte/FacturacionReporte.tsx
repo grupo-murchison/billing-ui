@@ -22,6 +22,8 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { ViewIcon } from '@assets/icons';
+import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 const FacturacionReporte = () => {
   // const _navigate = useNavigate();
@@ -45,9 +47,9 @@ const FacturacionReporte = () => {
       fechaDesde: null,
       fechaHasta: null,
       nroContrato: '',
-      numeroSecuenciaFacturacion: '',
+      numeroSecuenciaFacturacion: null,
     },
-    // resolver: zodResolver(ConceptoAcuerdoCreateSchema),
+    resolver: zodResolver(FacturacionReporteCreateSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -86,7 +88,6 @@ const FacturacionReporte = () => {
               label='Número Cálculo de Facturación'
               name='numeroSecuenciaFacturacion'
               type='number'
-              error={!!formErrors.numeroSecuenciaFacturacion}
             />
           </Col>
           <Col md={3}>
@@ -99,8 +100,6 @@ const FacturacionReporte = () => {
               label='Cliente'
               name='clienteId'
               error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
