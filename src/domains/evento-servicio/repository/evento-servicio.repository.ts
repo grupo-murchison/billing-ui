@@ -8,7 +8,7 @@ import {
 } from './evento-servicio.chemas';
 
 class EventoServicioRepository {
-  static getAllEventDetails = async (params: any) => {
+  static getAllEventDetails = async (params: AnyValue) => {
     console.log("🚀 ~ file: evento-cliente.repository.ts:12 ~ EventoClienteRepository ~ getAllEventDetails= ~ params:", params)
     const response$ = from(EventoServicioService.getAllEventDetails(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),

@@ -9,12 +9,11 @@ class EventoServicioService {
   // clienteId=1&fechaDesde=20230101&fechaHasta=20231231&page=1&take=50
 
 
-  static getAllEventDetails = async (params: any): Promise<HandlePromise> => {
+  static getAllEventDetails = async (params: AnyValue): Promise<HandlePromise> => {
     console.log('params',params)
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${this.BASE_PATH}/filter`),
       );
-    console.log("🚀 ~ file: evento-servicio.service.ts:17 ~ EventoServicioService ~ getAllEventDetails= ~ [response, error]:", [response, error])
     return [response, error];
   };
 

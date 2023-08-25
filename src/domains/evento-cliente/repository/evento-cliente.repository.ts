@@ -8,7 +8,7 @@ import {
 } from './evento-clientes.chemas';
 
 class EventoClienteRepository {
-  static getAllEventDetails = async (params: any) => {
+  static getAllEventDetails = async (params: AnyValue) => {
     const response$ = from(EventoClienteService.getAllEventDetails(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
       // RepositoryUtils.PIPES.validateWithSchema(getAllEventoCampoAsDropdownSchema),

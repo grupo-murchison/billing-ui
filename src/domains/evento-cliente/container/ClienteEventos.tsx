@@ -16,7 +16,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
 import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
-import { EventosClientesCreateSchema } from '../schemas';
+import { EventosClienteFormSchemaType, EventosClientesCreateSchema } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const EventoClientes = () => {
@@ -30,7 +30,7 @@ const EventoClientes = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       clienteId: null,
       fechaDesde: null,
@@ -40,7 +40,7 @@ const EventoClientes = () => {
     resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<EventosClienteFormSchemaType> = useCallback(
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,

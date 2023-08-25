@@ -18,7 +18,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from "@domains/facturacion/constants";
 import { EventoServicioRepository } from "../repository";
 import { EventosServiciosContext } from "../contexts/eventos.servicios.context";
-import { EventosServicioCreateSchema } from "../schemas";
+import { EventosServicioCreateSchema, EventosServicioFormSchemaType } from "../schemas";
 
 import { debugSchema } from "@app/utils/zod.util";
 
@@ -37,11 +37,10 @@ const EventoServicio = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
       nroFacturacion: null,
       clienteId: null,
-      // clienteId: { value: null, code: '', label: '' },
       contrato: null,
       conceptoAcuerdo: null,
       fechaDesde: null,
@@ -51,7 +50,7 @@ const EventoServicio = () => {
     // resolver: zodResolver(EventosServicioCreateSchema),
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
     async data => {
       // console.log("🚀 ~ file: ClienteEventos.tsx:69 ~ EventoClientes ~ data:", data)
       const filters = {
