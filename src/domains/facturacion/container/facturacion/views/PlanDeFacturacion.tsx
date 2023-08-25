@@ -45,15 +45,16 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     if (contratoId) {
       FacturacionRepository.facturacionManual(contratoId)
         .then(({ data }) => {
-          setOpenSackbar(true);
           setSnackbarMessage(data);
         })
         .catch(error => {
-          console.log('Facturando Error', error);
+          setSnackbarMessage(error?.message);
           setErrorFromBackEnd(true);
-          setSnackbarMessage('Ocurrió un error!');
         })
-        .finally(() => setOpenBackdrop(false));
+        .finally(() => {
+          setOpenBackdrop(false);
+          setOpenSackbar(true);
+        });
     }
   };
 
