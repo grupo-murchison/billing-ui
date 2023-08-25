@@ -1,1 +1,1 @@
-export { default as EventoClientes } from './ClienteEventos';
+export { default as EventosServicios } from './EventosServicios';

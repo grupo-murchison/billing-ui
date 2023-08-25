@@ -18,24 +18,6 @@ class EventoServicioRepository {
     return response;
   };
 
-  static getAllEventsAsDropdown = async () => {
-    const response$ = from(EventoServicioService.getAllAsDropdown()).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),
-    );
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-  
-  static getAllEventsAsDropdownAutoComplete = async (filter?: Partial<Record<'filter', string>>) => {
-    const response$ = from(EventoServicioService.getAllAsEventsAutocomplete(filter)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),
-    );
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-
 }
 
 export default EventoServicioRepository;

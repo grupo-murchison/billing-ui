@@ -17,7 +17,7 @@ import { ClienteEventosBreadcrumb } from "@domains/facturacion/constants";
 import { EventoClienteRepository } from "../repository";
 import { EventosDropdownAutoComplete } from "./cliente-dropdown/EventosDropdown";
 import { EventosClientesCreateSchema } from "../schemas";
-import { debugSchema } from "@app/utils/zod.util";
+
 import { zodResolver } from "@hookform/resolvers/zod";
 
 
@@ -40,7 +40,6 @@ const EventoClientes = () => {
       fechaHasta: null,
       eventoId: null,                                                                                          
     },
-    // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
     resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
