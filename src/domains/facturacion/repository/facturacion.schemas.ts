@@ -49,13 +49,25 @@ const FacturacionMasivaSchema = z.object({
   sinMensajesLogInfo: z.boolean(),
 });
 
-const FacturacionLogSchema = z.object({
-  numeroSecuenciaFacturacion: z.number().nullish(),
-  nroContrato: z.number().nullish(),
-  clienteId: z.any(),
-  fechaDesde: z.string().nullish(),
-  fechaHasta: z.string().nullish(),
-});
+export const FacturacionLogSchema = z
+  .object({
+    numeroSecuenciaFacturacion: z.number().nullish(),
+    nroContrato: z.number().nullish(),
+    clienteId: z
+      .object({
+        value: z.number({ required_error: 'El campo es requerido.' }),
+        code: z.string({ required_error: 'El campo es requerido.' }),
+        label: z.string({ required_error: 'El campo es requerido.' }),
+      })
+      .nullable()
+      .optional(),
+    fechaHasta: z.date().nullable(),
+    fechaDesde: z.date().nullable(),
+  })
+  .refine(({ fechaDesde, fechaHasta }) => fechaHasta == null || fechaDesde == null || fechaHasta >= fechaDesde, {
+    message: 'Fecha hasta debe ser mayor o igual a Fecha desde',
+    path: ['fechaHasta'],
+  });
 
 export const getAllFacturasPaginatedSchema = ZodUtils.withPagination(FacturasRowDataGridSchema);
 export const getAllFacturasReportePaginatedSchema = ZodUtils.withPagination(FacturasReporteDataGridSchema);
@@ -65,4 +77,4 @@ export const getAllFacturasAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;
 export type FacturasRowDataGridSchema = z.infer<typeof FacturasRowDataGridSchema>;
 export type FacturasReporteDataGridSchema = z.infer<typeof FacturasReporteDataGridSchema>;
 export type FacturacionMasivaSchema = z.infer<typeof FacturacionMasivaSchema>;
-export type FacturacionLogSchema = z.infer<typeof FacturacionLogSchema>;
+export type FacturacionLogSchemaType = z.infer<typeof FacturacionLogSchema>;

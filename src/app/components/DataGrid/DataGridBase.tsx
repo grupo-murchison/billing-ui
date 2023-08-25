@@ -15,7 +15,7 @@ const DataGridBase = ({
   loading,
   pageSizeOptions,
   onClickNew,
-  //  toolbar: Toolbar,
+  toolbar: Toolbar,
   ...props
 }: DataGridProps) => {
   const theme = useTheme();
@@ -81,7 +81,7 @@ const DataGridBase = ({
           slots={{
             loadingOverlay: LinearProgress,
             noRowsOverlay: NoRowsContent,
-            // toolbar: Toolbar
+            toolbar: Toolbar,
           }}
           slotProps={{
             pagination: {
@@ -91,7 +91,6 @@ const DataGridBase = ({
                 return `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`;
               },
             },
-            // filterPanel: { sx: { maxWidth: '100vw' } },
           }}
           sx={{
             height: rows.length > 0 ? undefined : '380px',
@@ -114,4 +113,5 @@ interface DataGridProps extends DataGridPropsMUI {
    * @default [10, 25, 50]
    */
   pageSizeOptions?: helperGrid.PageSizeOptions;
+  toolbar?: AnyValue;
 }
