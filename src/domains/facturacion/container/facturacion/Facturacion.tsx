@@ -25,6 +25,8 @@ import { DateLib } from '@libs';
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
+import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
+import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
@@ -60,7 +62,6 @@ const Facturacion = () => {
         tipoContratoId: data?.tipoContratoId ? data.tipoContratoId : undefined,
         sociedadId: data?.sociedadId ? data.sociedadId : undefined,
       };
-
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -84,7 +85,7 @@ const Facturacion = () => {
               error={!!formErrors.clienteId}
             />
           </Col>
-          <Col sm={12} md={6}>
+          {/* <Col sm={12} md={6}>
             <SociedadDropdown
               control={control}
               disabled={isSubmitting}
@@ -93,9 +94,28 @@ const Facturacion = () => {
               error={!!formErrors.sociedadId}
               emptyOption
             />
-          </Col>
+          </Col> */}
           <Col sm={12} md={6}>
+            <SociedadDropdownAutoComplete
+              control={control}
+              disabled={isSubmitting}
+              label='Sociedad'
+              name='sociedadId'
+              error={!!formErrors.sociedadId}
+            />
+          </Col>
+          {/* <Col sm={12} md={6}>
             <TipoContratoDropdown
+              control={control}
+              disabled={isSubmitting}
+              label='Tipo Contrato'
+              name='tipoContratoId'
+              error={!!formErrors.sociedadId}
+              emptyOption
+            />
+          </Col> */}
+          <Col sm={12} md={6}>
+            <TipoContratoDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
               label='Tipo Contrato'
