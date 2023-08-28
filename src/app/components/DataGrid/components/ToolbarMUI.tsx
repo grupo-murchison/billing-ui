@@ -22,7 +22,7 @@ const timestamp = DateLib.ISOStringToTimeStamp(new Date().toISOString());
 const ToolbarMUI = ({ ...props }: GridCsvExportOptions) => {
   return (
     <GridToolbarContainer>
-      <GridToolbarColumnsButton />
+      {/* <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
       <GridToolbarDensitySelector />
       <GridToolbarExportContainer>

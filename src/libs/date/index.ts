@@ -1,5 +1,7 @@
 import { format, parse, parseISO } from 'date-fns';
 
+type FormatDateString = 'yyyyMMdd' | 'yyyyMMddHHmmss' | 'yyyyMMddHHmmssSSS' | 'dd-MM-yyyy';
+
 export const parseToDBString = (inputDate: Nullable<Date>) => {
   if (!inputDate) return undefined;
 
@@ -29,9 +31,15 @@ export const ISOStringToTimeStamp = (inputDate: Nullable<string>) => {
   return format(parseISO(inputDate), 'yyyyMMdd-HHmmssSSS');
 };
 
-export const fromFormatToFormat = (inputDate: Nullable<string>, inputFormat: string, outputFormat: string) => {
+export const fromFormatToFormat = (
+  inputDate: Nullable<string>,
+  inputFormat: TemplateLiteralString<FormatDateString>,
+  outputFormat: TemplateLiteralString<FormatDateString>,
+) => {
   if (!inputDate) return undefined;
 
-  return format(parse(inputDate, inputFormat || 'yyyyMMddHHmmss', new Date()), outputFormat || 'yyyyMMdd-HHmmss');
-  
+  return format(
+    parse(inputDate, (inputFormat as string) || 'yyyyMMddHHmmss', new Date()),
+    (outputFormat as string) || 'dd-MM-yyyy',
+  );
 };
