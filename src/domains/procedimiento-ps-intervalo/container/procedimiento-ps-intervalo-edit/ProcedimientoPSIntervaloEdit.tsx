@@ -31,7 +31,6 @@ const ProcedimientoPSIntervaloEdit = () => {
     handleSubmit,
     reset,
     control,
-    watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
     resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),

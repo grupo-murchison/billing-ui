@@ -34,7 +34,7 @@ const ProductoSoftlandDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `${labelAndPath.label}`,
         identifier: `${row.codigo}`,

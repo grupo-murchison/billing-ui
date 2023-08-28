@@ -40,7 +40,7 @@ const ProcedimientoQDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `${label.procedimientoQ}`,
         identifier: `${row.codigo}`,

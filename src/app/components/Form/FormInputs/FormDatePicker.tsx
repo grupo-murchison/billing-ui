@@ -27,7 +27,7 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, error, ...pr
 }
 
 interface FormDesktopDatePickerProps extends FormInputsCommonProps {
-  control: Control<any>;
+  control: Control<AnyValue>;
   inputFormat?: string;
 }
 

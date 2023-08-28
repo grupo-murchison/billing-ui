@@ -14,7 +14,7 @@ import { label } from '@domains/procedimiento-p-intervalo/contexts/constants';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
 
-const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
+const ProcedimientoPIntervaloDataGrid = (codigo: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPId } = useParams();
 
@@ -35,7 +35,7 @@ const ProcedimientoPIntervaloDataGrid = (codigo: any) => {
 
   //TODO: remplazar codigo.codigo.codigo por useContext
   const handleClickDelete = useCallback(
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `${label.label}`,
         identifier: `${codigo.codigo.codigo}`,

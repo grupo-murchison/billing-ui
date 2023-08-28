@@ -99,8 +99,6 @@ const FacturacionReporte = () => {
               label='Cliente'
               name='clienteId'
               error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -111,7 +109,6 @@ const FacturacionReporte = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              // error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -120,7 +117,6 @@ const FacturacionReporte = () => {
               label='Fecha Cálculo Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>

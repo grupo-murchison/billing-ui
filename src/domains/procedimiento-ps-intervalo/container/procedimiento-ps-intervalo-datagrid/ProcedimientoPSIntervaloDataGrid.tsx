@@ -1,7 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
-import { Stack } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -15,7 +14,7 @@ import { label } from '@domains/procedimiento-ps-intervalo/contexts/constans';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
-const ProcedimientoPSIntervaloDataGrid = (codigo: any) => {
+const ProcedimientoPSIntervaloDataGrid = (codigo: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
 
