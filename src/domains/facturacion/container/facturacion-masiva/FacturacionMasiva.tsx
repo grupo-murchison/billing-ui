@@ -55,12 +55,14 @@ const FacturacionMasiva = () => {
 
     FacturacionRepository.facturacionMasiva(filters)
       .then(({ data }) => {
-        setOpenToast(true);
         setToastMessage(data);
       })
       .catch(error => {
         setErrorFromBackEnd(true);
         setToastMessage('Ocurrió un error!');
+      })
+      .finally(() => {
+        setOpenToast(true);
       });
   }, []);
 

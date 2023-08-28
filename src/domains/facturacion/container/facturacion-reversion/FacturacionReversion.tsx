@@ -80,7 +80,6 @@ const FacturacionReversion = () => {
 
     FacturacionRepository.revertirFacturacion(row.contratos[0]?.id)
       .then(_response => {
-        setOpenSackbar(true);
         setSnackbarMessage('La funcionalidad "Revertir" aún no está disponible.');
       })
       .catch(error => {
@@ -88,7 +87,10 @@ const FacturacionReversion = () => {
         setErrorFromBackEnd(true);
         setSnackbarMessage('Ocurrió un error!');
       })
-      .finally(() => setOpenBackdrop(false));
+      .finally(() => {
+        setOpenBackdrop(false);
+        setOpenSackbar(true);
+      });
   };
 
   const handleAnular = (row: AnyValue) => {
@@ -96,7 +98,6 @@ const FacturacionReversion = () => {
 
     FacturacionRepository.anularFacturacion(row.contratos[0]?.id)
       .then(_response => {
-        setOpenSackbar(true);
         setSnackbarMessage('La funcionalidad "Anular" aún no está disponible.');
       })
       .catch(error => {
@@ -104,7 +105,10 @@ const FacturacionReversion = () => {
         setErrorFromBackEnd(true);
         setSnackbarMessage('Ocurrió un error!');
       })
-      .finally(() => setOpenBackdrop(false));
+      .finally(() => {
+        setOpenBackdrop(false);
+        setOpenSackbar(true);
+      });
   };
 
   const toolbar = (
