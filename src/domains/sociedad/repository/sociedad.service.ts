@@ -11,6 +11,14 @@ class SociedadService {
 
     return [response, error];
   };
+
+  static getAllAsDropdownAutocomplete = async (params?: Partial<Record<'filter', string>>): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/autocomplete?`, { params }),
+    );
+
+    return [response, error];
+  };
 }
 
 export { SociedadService };

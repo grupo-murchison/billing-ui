@@ -18,8 +18,8 @@ export const EventosClientesCreateSchema = z
       })
       .nullable()
       .optional(), //
-    fechaHasta: z.date().nullable(),
-    fechaDesde: z.date().nullable(),
+    fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
+    fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
   })
   .refine(({ fechaDesde, fechaHasta }) => fechaHasta == null || fechaDesde == null || fechaHasta >= fechaDesde, {
     message: 'Fecha hasta debe ser mayor o igual a Fecha desde',
