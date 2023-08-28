@@ -62,7 +62,6 @@ const Facturacion = () => {
         tipoContratoId: data?.tipoContratoId ? data.tipoContratoId : undefined,
         sociedadId: data?.sociedadId ? data.sociedadId.value : undefined,
       };
-      console.log('filters', filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
