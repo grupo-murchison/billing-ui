@@ -60,8 +60,9 @@ const Facturacion = () => {
         estadoEnum: data?.estadoEnum ? data.estadoEnum : undefined,
         nroContrato: data?.nroContrato ? data.nroContrato : undefined,
         tipoContratoId: data?.tipoContratoId ? data.tipoContratoId : undefined,
-        sociedadId: data?.sociedadId ? data.sociedadId : undefined,
+        sociedadId: data?.sociedadId ? data.sociedadId.value : undefined,
       };
+      console.log('filters', filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -104,7 +105,7 @@ const Facturacion = () => {
               error={!!formErrors.sociedadId}
             />
           </Col>
-          {/* <Col sm={12} md={6}>
+          <Col sm={12} md={6}>
             <TipoContratoDropdown
               control={control}
               disabled={isSubmitting}
@@ -113,8 +114,8 @@ const Facturacion = () => {
               error={!!formErrors.sociedadId}
               emptyOption
             />
-          </Col> */}
-          <Col sm={12} md={6}>
+          </Col>
+          {/* <Col sm={12} md={6}>
             <TipoContratoDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
@@ -123,7 +124,7 @@ const Facturacion = () => {
               error={!!formErrors.sociedadId}
               emptyOption
             />
-          </Col>
+          </Col> */}
           <Col sm={12} md={6}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
