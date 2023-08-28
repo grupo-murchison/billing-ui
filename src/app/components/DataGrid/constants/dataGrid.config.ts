@@ -19,6 +19,21 @@ export const localeText: Partial<GridLocaleText> = {
   columnsPanelShowAllButton: 'Mostrar todas',
   columnsPanelHideAllButton: 'Ocultar todas',
 
+  // Filters toolbar button text
+  toolbarFilters: 'Filtrar',
+  // toolbarFiltersLabel: 'Show filters',
+  // toolbarFiltersTooltipHide: 'Hide filters',
+  // toolbarFiltersTooltipShow: 'Show filters',
+  // toolbarFiltersTooltipActive: (count) =>
+  //   count !== 1 ? `${count} active filters` : `${count} active filter`,
+
+  // Export selector toolbar button text
+  toolbarExport: 'Exportar',
+  toolbarExportLabel: 'Exportar',
+  toolbarExportCSV: 'Descargar como CSV',
+  toolbarExportPrint: 'Imprimr',
+  // toolbarExportExcel: 'Descargar como Excel',
+
   // Rows selected footer text
   footerRowSelected: count =>
     count !== 1 ? `${count.toLocaleString()} filas seleccionadas` : `${count.toLocaleString()} fila seleccionada`,

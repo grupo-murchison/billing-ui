@@ -1,7 +1,11 @@
 import type { ComponentType } from 'react';
 
 import { Breadcrumb } from '@app/components';
-import type { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+
+export type BreadcrumbItem = {
+  path: string;
+  label: string;
+};
 
 const withBreadcrumb = <TProps,>(
   Component: ComponentType<TProps & JSX.IntrinsicAttributes>,

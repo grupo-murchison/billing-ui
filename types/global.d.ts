@@ -18,6 +18,10 @@ type Subtract<Num1 extends number, Num2 extends number> = BuildArray<Num1> exten
   ? Rest['length']
   : never;
 
+/**
+ * Crea un rango numerico, permite ingreso de números dentro del rango generado
+ * Example: NumberRange<1, 20>
+ */
 declare type NumberRange<
   start extends number,
   end extends number,
@@ -25,3 +29,11 @@ declare type NumberRange<
 > = R['length'] extends Subtract<end, start>
   ? [...R, end][number]
   : NumberRange<start, end, [...R, Add<start, R['length']>]>;
+
+/**
+ * Recibe un literal type de strings para intellisense y permite el ingreso de strings fuera del tipado.
+ * @template T
+ * @param {T} - "valor1" | "valor2" | "valor..."
+ * Example: TemplateLiteralString<"valor1" | "valor2" | "valor...">
+ */
+type TemplateLiteralString<T> = T | Omit<string, T>;

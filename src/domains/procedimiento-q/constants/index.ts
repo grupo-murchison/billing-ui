@@ -1,4 +1,4 @@
-import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+import { BreadcrumbItem } from '@app/hocs';
 
 export const label = {
   procedimientoQ: 'Procedimiento Cantidad',
