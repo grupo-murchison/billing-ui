@@ -25,6 +25,8 @@ import { DateLib } from '@libs';
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
+import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
+import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
@@ -58,9 +60,8 @@ const Facturacion = () => {
         estadoEnum: data?.estadoEnum ? data.estadoEnum : undefined,
         nroContrato: data?.nroContrato ? data.nroContrato : undefined,
         tipoContratoId: data?.tipoContratoId ? data.tipoContratoId : undefined,
-        sociedadId: data?.sociedadId ? data.sociedadId : undefined,
+        sociedadId: data?.sociedadId ? data.sociedadId.value : undefined,
       };
-
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -84,7 +85,7 @@ const Facturacion = () => {
               error={!!formErrors.clienteId}
             />
           </Col>
-          <Col sm={12} md={6}>
+          {/* <Col sm={12} md={6}>
             <SociedadDropdown
               control={control}
               disabled={isSubmitting}
@@ -92,6 +93,15 @@ const Facturacion = () => {
               name='sociedadId'
               error={!!formErrors.sociedadId}
               emptyOption
+            />
+          </Col> */}
+          <Col sm={12} md={6}>
+            <SociedadDropdownAutoComplete
+              control={control}
+              disabled={isSubmitting}
+              label='Sociedad'
+              name='sociedadId'
+              error={!!formErrors.sociedadId}
             />
           </Col>
           <Col sm={12} md={6}>
@@ -104,6 +114,16 @@ const Facturacion = () => {
               emptyOption
             />
           </Col>
+          {/* <Col sm={12} md={6}>
+            <TipoContratoDropdownAutoComplete
+              control={control}
+              disabled={isSubmitting}
+              label='Tipo Contrato'
+              name='tipoContratoId'
+              error={!!formErrors.sociedadId}
+              emptyOption
+            />
+          </Col> */}
           <Col sm={12} md={6}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
