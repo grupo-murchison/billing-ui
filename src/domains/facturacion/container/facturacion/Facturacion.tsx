@@ -101,6 +101,7 @@ const Facturacion = () => {
               error={!!formErrors.sociedadId}
             />
           </Col>
+
           <Col sm={12} md={6}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
