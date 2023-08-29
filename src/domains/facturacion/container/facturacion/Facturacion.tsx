@@ -17,14 +17,14 @@ import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-
 import { ContratoRepository } from '@domains/contrato/repository';
 import { FacturacionContext } from '@domains/facturacion/contexts';
 import { FacturacionDataGridBreadcrumb } from '@domains/facturacion/constants';
+import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
+import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 import { DateLib } from '@libs';
 
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
-import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
-import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
