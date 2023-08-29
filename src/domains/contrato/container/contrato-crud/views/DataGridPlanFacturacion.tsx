@@ -1,7 +1,7 @@
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { DateLib } from '@libs';
 
-export const DataGridPlanFacturacion = ({ rows }: { id: string; rows: any[] }) => {
+export const DataGridPlanFacturacion = ({ rows }: { id: string; rows: AnyValue[] }) => {
   return (
     <DataGridBase
       rows={rows}

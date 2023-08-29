@@ -41,7 +41,7 @@ class ModeloAcuerdoRepository {
     return response;
   };
 
-  static updateModeloAcuerdo = async (modeloAcuerdo: AnyValue, id: any) => {
+  static updateModeloAcuerdo = async (modeloAcuerdo: AnyValue, id: AnyValue) => {
     const response$ = from(ModeloAcuerdoService.patch(modeloAcuerdo, id)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;

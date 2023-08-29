@@ -14,6 +14,7 @@ const DataGridProvider = <T,>({
   children,
   toolbar,
   getRows,
+  ...props
 }: DataGridProviderProps<T>) => {
   const [currentPage, setCurrentPage] = useState<number>(initialContext.currentPage);
   const [rowsPerPage, setRowsPerPage] = useState<number>(initialContext.rowsPerPage);
@@ -109,6 +110,7 @@ const DataGridProvider = <T,>({
   return (
     <DataGridContext.Provider
       value={{
+        ...props,
         columns,
         currentPage,
         handleChangeRowsPerPage,

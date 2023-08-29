@@ -6,7 +6,7 @@ import { ProcedimientoPSIntervaloEdit } from '@domains/procedimiento-ps-interval
 
 import { ProcedimientoPSIntervaloProvider } from '@domains/procedimiento-ps-intervalo/contexts';
 
-export const ProcedimientoPSIntervaloWithinProcedimientoPSRoutes = (codigo: any) => {
+export const ProcedimientoPSIntervaloWithinProcedimientoPSRoutes = (codigo: AnyValue) => {
   return (
     <Routes>
       <Route

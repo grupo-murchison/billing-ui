@@ -1,6 +1,6 @@
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: any }) => {
+export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: AnyValue }) => {
   return (
     <DataGridBase
       rows={rows}

@@ -12,7 +12,7 @@ class ContratoVariablesService {
     return [response, error];
   };
 
-  static patch = async (contratoVariable: AnyValue, id: any): Promise<HandlePromise> => {
+  static patch = async (contratoVariable: AnyValue, id: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.patch<AnyValue>(`${BASE_PATH}/crud/${id}`, contratoVariable),
     );

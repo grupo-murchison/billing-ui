@@ -33,7 +33,7 @@ const ModeloAcuerdoDataGrid = () => {
 
   const handleClickDelete = useCallback(
     //TODO: tipar o buscar si existe para rows de Modelo Acuerdo
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `${ModeloAcuerdoLabelAndPath.label}`,
         identifier: `${row.codigo}`,

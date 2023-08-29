@@ -26,7 +26,7 @@ function FormTextField({ control, name, label, error, helperText, ...props }: Fo
 
 type FormTextFieldProps = FormInputsCommonProps &
   TextFieldProps & {
-    control: Control<any>;
+    control: Control<AnyValue>;
   };
 
 function typeResolver(value: string, type: React.InputHTMLAttributes<unknown>['type']) {

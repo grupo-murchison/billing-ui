@@ -28,7 +28,6 @@ const ProcedimientoPSIntervaloCreate = () => {
     register,
     handleSubmit,
     control,
-    watch,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProcedimientoPSIntervaloCreateSchemaType>({
     defaultValues: {

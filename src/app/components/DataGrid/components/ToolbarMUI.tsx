@@ -49,7 +49,7 @@ function JsonExportMenuItem(props: GridExportMenuItemProps<AnyValue>) {
 
     // Format the data. Here we only keep the value
     const data = filteredSortedRowIds.map(id => {
-      const row: Record<string, any> = {};
+      const row: Record<string, AnyValue> = {};
       visibleColumnsField.forEach(field => {
         row[field] = apiRef.current.getCellParams(id, field).value;
       });
@@ -57,7 +57,6 @@ function JsonExportMenuItem(props: GridExportMenuItemProps<AnyValue>) {
     });
 
     // Stringify with some indentation
-    // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON/stringify#parameters
     return JSON.stringify(data, null, 2);
   };
 

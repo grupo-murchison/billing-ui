@@ -11,7 +11,7 @@ class ContratoVariablesRepository {
     return response;
   };
 
-  static updateContratoVariable = async (contratoVariable: AnyValue, id: any) => {
+  static updateContratoVariable = async (contratoVariable: AnyValue, id: AnyValue) => {
     const response$ = from(ContratoVariablesService.patch(contratoVariable, id)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
