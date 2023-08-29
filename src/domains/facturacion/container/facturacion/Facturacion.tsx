@@ -17,16 +17,14 @@ import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-
 import { ContratoRepository } from '@domains/contrato/repository';
 import { FacturacionContext } from '@domains/facturacion/contexts';
 import { FacturacionDataGridBreadcrumb } from '@domains/facturacion/constants';
-import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
-import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-contrato-dropdown';
+import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
+import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 import { DateLib } from '@libs';
 
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
-import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
-import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
@@ -59,8 +57,8 @@ const Facturacion = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         estadoEnum: data?.estadoEnum ? data.estadoEnum : undefined,
         nroContrato: data?.nroContrato ? data.nroContrato : undefined,
-        tipoContratoId: data?.tipoContratoId ? data.tipoContratoId : undefined,
-        sociedadId: data?.sociedadId ? data.sociedadId.value : undefined,
+        tipoContratoId: data?.tipoContratoId.value ? data.tipoContratoId.value : undefined,
+        sociedadId: data?.sociedadId.value ? data.sociedadId.value : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -85,16 +83,6 @@ const Facturacion = () => {
               error={!!formErrors.clienteId}
             />
           </Col>
-          {/* <Col sm={12} md={6}>
-            <SociedadDropdown
-              control={control}
-              disabled={isSubmitting}
-              label='Sociedad'
-              name='sociedadId'
-              error={!!formErrors.sociedadId}
-              emptyOption
-            />
-          </Col> */}
           <Col sm={12} md={6}>
             <SociedadDropdownAutoComplete
               control={control}
@@ -105,25 +93,15 @@ const Facturacion = () => {
             />
           </Col>
           <Col sm={12} md={6}>
-            <TipoContratoDropdown
-              control={control}
-              disabled={isSubmitting}
-              label='Tipo Contrato'
-              name='tipoContratoId'
-              error={!!formErrors.sociedadId}
-              emptyOption
-            />
-          </Col>
-          {/* <Col sm={12} md={6}>
             <TipoContratoDropdownAutoComplete
               control={control}
               disabled={isSubmitting}
               label='Tipo Contrato'
               name='tipoContratoId'
               error={!!formErrors.sociedadId}
-              emptyOption
             />
-          </Col> */}
+          </Col>
+
           <Col sm={12} md={6}>
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
