@@ -57,8 +57,8 @@ const Facturacion = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         estadoEnum: data?.estadoEnum ? data.estadoEnum : undefined,
         nroContrato: data?.nroContrato ? data.nroContrato : undefined,
-        tipoContratoId: data?.tipoContratoId ? data.tipoContratoId.value : undefined,
-        sociedadId: data?.sociedadId ? data.sociedadId.value : undefined,
+        tipoContratoId: data?.tipoContratoId.value ? data.tipoContratoId.value : undefined,
+        sociedadId: data?.sociedadId.value ? data.sociedadId.value : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
