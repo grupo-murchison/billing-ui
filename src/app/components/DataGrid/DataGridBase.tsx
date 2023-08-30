@@ -24,7 +24,7 @@ const DataGridBase = ({
     '& .MuiDataGrid-root': {
       border: '1.25px solid',
     },
-    'backgroundColor': theme.palette.text.disabled,
+    'backgroundColor': rows.length > 0 ? theme.palette.text.disabled : theme.palette.background.paper,
     '& .MuiDataGrid-footerContainer': {
       backgroundColor: theme.palette.background.paper,
     },
