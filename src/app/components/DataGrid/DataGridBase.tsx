@@ -24,6 +24,10 @@ const DataGridBase = ({
     '& .MuiDataGrid-root': {
       border: '1.25px solid',
     },
+    'backgroundColor': theme.palette.text.disabled,
+    '& .MuiDataGrid-footerContainer': {
+      backgroundColor: theme.palette.background.paper,
+    },
   };
 
   const sxHeader: SxProps = {
@@ -36,6 +40,9 @@ const DataGridBase = ({
     '& .MuiDataGrid-columnHeader :first-letter': {
       textTransform: 'capitalize',
     },
+    // '& .MuiDataGrid-columnHeaders': {
+    //   borderRadius: '0px',
+    // },
   };
 
   const sxRows: SxProps = {

@@ -14,17 +14,29 @@ import {
 } from '@mui/x-data-grid';
 
 import { DateLib } from '@libs';
-import { MenuItem } from '@mui/material';
+import { Button, MenuItem, Stack, useTheme } from '@mui/material';
 import { exportBlob } from '@app/components/Button/Download';
+import { AddIcon } from '@assets/icons';
 
 const timestamp = DateLib.ISOStringToTimeStamp(new Date().toISOString());
 
-const ToolbarMUI = ({ ...props }: GridCsvExportOptions) => {
+interface ToolbarMuiExportProps extends GridCsvExportOptions {
+  onClickNew?: () => void;
+}
+
+const ToolbarMUI = ({ onClickNew, ...props }: ToolbarMuiExportProps) => {
+  const theme = useTheme();
   return (
-    <GridToolbarContainer>
+    <GridToolbarContainer
+      sx={{
+        justifyContent: 'flex-end',
+        backgroundColor: '#d1d8df',
+        borderRadius: '8px 8px 0px 0px',
+      }}
+    >
       {/* <GridToolbarColumnsButton /> */}
       <GridToolbarFilterButton />
-      <GridToolbarDensitySelector />
+      {/* <GridToolbarDensitySelector /> */}
       <GridToolbarExportContainer>
         <GridCsvExportMenuItem
           options={{
@@ -33,6 +45,17 @@ const ToolbarMUI = ({ ...props }: GridCsvExportOptions) => {
         />
         <JsonExportMenuItem options={{ fileName: props.fileName }} />
       </GridToolbarExportContainer>
+      {onClickNew && (
+        <Button
+          onClick={onClickNew}
+          color='primary'
+          variant='text'
+          sx={{ fontSize: '0.8125rem' }}
+          startIcon={<AddIcon />}
+        >
+          Alta
+        </Button>
+      )}
     </GridToolbarContainer>
   );
 };
