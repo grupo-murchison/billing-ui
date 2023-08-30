@@ -7,7 +7,7 @@ class EventoClienteService {
   private static BASE_PATH_EVENTO_DETALLE = 'v1/evento-detalle';
   private static BASE_PATH_EVENTOS = 'v1/eventos';
 
-  static getAllEventDetails = async (params: any): Promise<HandlePromise> => {
+  static getAllEventDetails = async (params: AnyValue): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${this.BASE_PATH_EVENTO_DETALLE}/filter`, {params}),
       );
