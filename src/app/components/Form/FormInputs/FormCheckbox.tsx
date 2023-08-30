@@ -19,7 +19,7 @@ function FormCheckbox({ control, name, label }: FormCheckboxProps) {
 }
 
 interface FormCheckboxProps extends FormInputsCommonProps {
-  control: Control<any>;
+  control: Control<AnyValue>;
 }
 
 export default FormCheckbox;

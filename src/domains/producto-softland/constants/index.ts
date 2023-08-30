@@ -1,10 +1,8 @@
-import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+import { BreadcrumbItem } from '@app/hocs';
 
-export const labelAndPath = { label: 'Producto Softland', path: '/producto-softland' }
+export const labelAndPath = { label: 'Producto Softland', path: '/producto-softland' };
 
-export const ProductoSoftlandDataGridBreadcrumb: BreadcrumbItem[] = [
-  labelAndPath,
-];
+export const ProductoSoftlandDataGridBreadcrumb: BreadcrumbItem[] = [labelAndPath];
 
 export const ProductoSoftlandCreateBreadcrumb: BreadcrumbItem[] = [
   ...ProductoSoftlandDataGridBreadcrumb,

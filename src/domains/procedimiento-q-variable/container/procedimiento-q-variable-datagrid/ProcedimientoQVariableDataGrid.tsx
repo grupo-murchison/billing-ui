@@ -34,7 +34,7 @@ const ProcedimientoQVariableDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `Procedimiento Cantidad Cantidad Variable`,
         identifier: `${row.codigo}`,

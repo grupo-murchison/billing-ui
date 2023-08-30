@@ -1,7 +1,5 @@
-import { BreadcrumbItem } from '@app/utils/types/withBreadcrumb.type';
+import { BreadcrumbItem } from '@app/hocs';
 
-export const ConceptoAcuerdoLabelAndPath = { label:'Concepto Acuerdo', path: '/concepto-acuerdo' };
+export const ConceptoAcuerdoLabelAndPath = { label: 'Concepto Acuerdo', path: '/concepto-acuerdo' };
 
-export const ConceptoAcuerdoDataGridBreadcrumb: BreadcrumbItem[] = [
-  ConceptoAcuerdoLabelAndPath,
-];
+export const ConceptoAcuerdoDataGridBreadcrumb: BreadcrumbItem[] = [ConceptoAcuerdoLabelAndPath];

@@ -51,8 +51,8 @@ function FormSelect({
 }
 
 export interface FormSelectProps extends FormInputsCommonProps {
-  control: Control<any>;
-  options: any[];
+  control: Control<AnyValue>;
+  options: AnyValue[];
   disabledEmpty?: boolean;
   emptyOption?: boolean;
 }

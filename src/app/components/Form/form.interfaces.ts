@@ -4,7 +4,7 @@ import { Control } from 'react-hook-form';
 export type FromProps = ActionButtonsProps & {
   children?: ReactNode;
   onSubmit?: () => void;
-  label?: FormLabel;
+  label?: TemplateLiteralString<FixedLabel>;
 };
 
 export type ActionButtonsProps = {
@@ -14,7 +14,6 @@ export type ActionButtonsProps = {
 };
 
 type FixedLabel = 'search' | 'create' | 'update';
-type FormLabel = FixedLabel | Omit<string, FixedLabel>;
 
 export type FormSelectProps = {
   control: Control<any>;

@@ -60,7 +60,7 @@ const ProcedimientoQCreate = () => {
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
 
-  const onChangeTipoProcedimientoCantidad = (data: any) => {
+  const onChangeTipoProcedimientoCantidad = (data: AnyValue) => {
     //TODO habria que comparar con el "code" de las options que viene del back
     const label: string = data.props.children;
     if (label.includes('BUILT')) {

@@ -13,7 +13,7 @@ import type { ProcedimientoPIntervaloEditSchemaType } from '@domains/procedimien
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Button, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
 
 const ProcedimientoPIntervaloEdit = () => {

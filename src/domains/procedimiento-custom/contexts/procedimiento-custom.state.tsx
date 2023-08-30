@@ -6,12 +6,12 @@ export type ProcedimientoCustomState = {
   eventosCampo: DropdownSchemaType;
   acciones: DropdownSchemaType;
   eventoCodeSelected?: string;
-  error: any;
+  error: AnyValue;
 };
 
 export interface ActionParam {
   type: string;
-  payload: any;
+  payload: AnyValue;
 }
 
 export const initialState: ProcedimientoCustomState = {
@@ -28,7 +28,7 @@ export const ACTION_TYPES = {
   SET_ERROR: 'SET_ERROR',
 };
 
-export function reducer(state: ProcedimientoCustomState = initialState, action: { type: string; payload: any }) {
+export function reducer(state: ProcedimientoCustomState = initialState, action: { type: string; payload: AnyValue }) {
   switch (action.type) {
     case ACTION_TYPES.SET_ENTITIES:
       return {

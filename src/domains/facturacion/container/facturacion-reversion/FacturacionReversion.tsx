@@ -2,8 +2,13 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Backdrop, Paper } from '@mui/material';
-import { GridActionsCellItem } from '@mui/x-data-grid';
+import { Backdrop, Box, Paper } from '@mui/material';
+import {
+  GRID_CHECKBOX_SELECTION_COL_DEF,
+  GridActionsCellItem,
+  GridRowSelectionModel,
+  useGridApiRef,
+} from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
@@ -21,9 +26,10 @@ import { FacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
 
 import { DateLib } from '@libs';
 
-import { CancelScheduleSendIcon, RestoreIcon } from '@assets/icons';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { FacturacionReversionCreateSchema } from '@domains/facturacion/schemas';
+import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
+import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
@@ -32,8 +38,11 @@ const FacturacionReversion = () => {
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Se inicia el procesamiento!');
+  const [contratos, setContratos] = useState<AnyValue>([]);
+  const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
+  const apiRef = useGridApiRef();
 
   useEffect(() => {
     mainDataGrid.load();
@@ -57,7 +66,7 @@ const FacturacionReversion = () => {
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
-        clienteId: data.clienteId ? data.clienteId.value : undefined,
+        clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
@@ -82,7 +91,6 @@ const FacturacionReversion = () => {
 
     FacturacionRepository.revertirFacturacion(row.contratos[0]?.id)
       .then(_response => {
-        setOpenSackbar(true);
         setSnackbarMessage('La funcionalidad "Revertir" aún no está disponible.');
       })
       .catch(error => {
@@ -90,7 +98,10 @@ const FacturacionReversion = () => {
         setErrorFromBackEnd(true);
         setSnackbarMessage('Ocurrió un error!');
       })
-      .finally(() => setOpenBackdrop(false));
+      .finally(() => {
+        setOpenBackdrop(false);
+        setOpenSackbar(true);
+      });
   };
 
   const handleAnular = (row: AnyValue) => {
@@ -98,7 +109,6 @@ const FacturacionReversion = () => {
 
     FacturacionRepository.anularFacturacion(row.contratos[0]?.id)
       .then(_response => {
-        setOpenSackbar(true);
         setSnackbarMessage('La funcionalidad "Anular" aún no está disponible.');
       })
       .catch(error => {
@@ -106,7 +116,28 @@ const FacturacionReversion = () => {
         setErrorFromBackEnd(true);
         setSnackbarMessage('Ocurrió un error!');
       })
-      .finally(() => setOpenBackdrop(false));
+      .finally(() => {
+        setOpenBackdrop(false);
+        setOpenSackbar(true);
+      });
+  };
+
+  const handleVerLog = (row: AnyValue) => {
+    // setOpenBackdrop(true);
+    setSnackbarMessage('La funcionalidad "Ver Log" aún no está disponible.');
+
+    // FacturacionRepository
+    // .then(_response => {
+    // })
+    // .catch(error => {
+    //   console.log('Anular Error', error);
+    //   setErrorFromBackEnd(true);
+    //   setSnackbarMessage('Ocurrió un error!');
+    // })
+    // .finally(() => {
+    // setOpenBackdrop(false);
+    // });
+    setOpenSackbar(true);
   };
 
   const toolbar = (
@@ -126,13 +157,7 @@ const FacturacionReversion = () => {
             <FormTextField control={control} label='Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='contrao'
-              error={!!formErrors.clienteId}
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
         </Row>
         <Row>
@@ -164,8 +189,15 @@ const FacturacionReversion = () => {
 
       <DataGrid
         hookRef={mainDataGrid.ref}
+        apiRef={apiRef}
         columns={[
+          { ...GRID_CHECKBOX_SELECTION_COL_DEF, renderHeader: () => '', maxWidth: 50 },
           { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+          {
+            field: 'cantidadContratos',
+            headerName: 'Cantidad Contratos',
+            valueGetter: ({ row }) => row?.contratos?.length || '',
+          },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
@@ -173,33 +205,8 @@ const FacturacionReversion = () => {
             type: 'date',
           },
           {
-            field: 'clienteId',
-            headerName: 'Nro. Cliente',
-            flex: 0.8,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteCodigo || '',
-          },
-          {
-            field: 'denominación',
-            headerName: 'Denominación',
-            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
-          },
-          {
-            field: 'numeroSecuenciaContrato',
-            headerName: 'Nro. Contrato',
-            flex: 0.9,
-            valueGetter: params => params.row.contratos[0]?.contratoNumero || '',
-          },
-          {
-            field: 'contratoDescripcion',
-            headerName: 'Descripción Contrato',
-            flex: 2,
-            valueGetter: params => params.row.contratos[0]?.contratoClienteDescripcion || '',
-          },
-          {
-            field: 'periodo',
-            headerName: 'Período',
-            valueGetter: params => params.row.contratos[0]?.periodoNumero || '',
-            flex: 0.5,
+            field: 'tipoFacturacion',
+            headerName: 'Tipo Facturación',
           },
           {
             field: 'actions',
@@ -211,9 +218,9 @@ const FacturacionReversion = () => {
             getActions: params => [
               <GridActionsCellItem
                 key={1}
-                icon={<RestoreIcon />}
-                label='Revertir'
-                onClick={() => handleRevertir(params.row)}
+                icon={<ViewIcon />}
+                label='Ver Log'
+                onClick={() => handleVerLog(params.row)}
                 showInMenu
               />,
               <GridActionsCellItem
@@ -223,10 +230,65 @@ const FacturacionReversion = () => {
                 onClick={() => handleAnular(params.row)}
                 showInMenu
               />,
+              <GridActionsCellItem
+                key={3}
+                icon={<RestoreIcon />}
+                label='Revertir'
+                onClick={() => handleRevertir(params.row)}
+                showInMenu
+              />,
             ],
           },
         ]}
         repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+        checkboxSelection
+        rowSelectionModel={rowSelectionModel}
+        onRowSelectionModelChange={(selection: AnyValue) => {
+          // TODO esto está raro, se puede mejorar
+          if (selection.length > 1) {
+            const selectionSet = new Set(rowSelectionModel);
+            const result = selection.filter((s: AnyValue) => !selectionSet.has(s));
+            setRowSelectionModel(result);
+            const rowMap = apiRef?.current?.getSelectedRows();
+            const row: AnyValue = rowMap.get(selection[0]);
+            setContratos(row?.contratos || []);
+          } else {
+            setRowSelectionModel(selection);
+          }
+        }}
+      />
+
+      <Box mt={4} mb={3} />
+
+      <DataGridBase
+        rows={contratos || []}
+        columns={[
+          { field: 'numeroSecuenciaContrato', headerName: 'Nro. Cálculo' },
+          {
+            field: 'contratoNumero',
+            headerName: 'Nro. Contrato',
+            flex: 0.9,
+          },
+          {
+            field: 'contratoDescripcion',
+            headerName: 'Descripción Contrato',
+            flex: 2,
+          },
+          {
+            field: 'contratoClienteDescripcion',
+            headerName: 'Cliente',
+          },
+          {
+            field: 'periodoNumero',
+            headerName: 'Periodo',
+            flex: 0.5,
+          },
+          {
+            field: 'estado',
+            headerName: 'Estado',
+            flex: 0.5,
+          },
+        ]}
       />
 
       <Backdrop open={openBackdrop} />

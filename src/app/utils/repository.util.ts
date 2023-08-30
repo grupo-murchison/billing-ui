@@ -1,5 +1,5 @@
-import type { AxiosError, AxiosResponse } from 'axios';
-import { from, lastValueFrom, map } from 'rxjs';
+import { AxiosError, AxiosResponse } from 'axios';
+import { OperatorFunction, UnaryFunction, from, lastValueFrom, map } from 'rxjs';
 
 import z from 'zod';
 
@@ -10,38 +10,46 @@ const getResponse = () => {
     if (response) {
       return response;
     }
-
     const err = AxiosHandlerError(error);
 
-    // throw new Error(`${error?.response?.data || '-'}`);
     throw new Error(`${JSON.stringify(err?.message)}`);
   });
 };
 
 export const PIPES = {
-  getResponse: () => {
-    return map(([response, error]: HandlePromise) => {
-      if (response) {
-        return response;
-      }
-
-      const err = AxiosHandlerError(error);
-
-      // throw new Error(`${error?.response?.data || '-'}`);
-      throw new Error(`${JSON.stringify(err?.message)}`);
-    });
-  },
+  getResponse,
   validateWithSchema: <T>(schema: z.ZodType<T>) => {
     return map((response: AxiosResponse): AxiosResponse<z.infer<typeof schema>> => {
-      response.data = schema.parse(response.data);
-
+      try {
+        schema.parse(response.data);
+      } catch (error) {
+        console.error(error);
+      }
       return response;
     });
   },
 };
 
-export const fromRxjs = async (axiosService: Promise<HandlePromise>, pipes?: AnyValue) => {
-  const response$ = from(axiosService).pipe(getResponse(), pipes());
+function identity<T>(x: T): T {
+  return x;
+}
+
+function pipeFromArray<T, R>(fns: Array<UnaryFunction<T, R>>): UnaryFunction<T, R> {
+  if (fns.length === 0) {
+    return identity as UnaryFunction<any, any>;
+  }
+
+  if (fns.length === 1) {
+    return fns[0];
+  }
+
+  return function piped(input: T): R {
+    return fns.reduce((prev: any, fn: UnaryFunction<T, R>) => fn(prev), input as any);
+  };
+}
+
+export const fromRxjs = async (axiosService: Promise<HandlePromise>, ...operations: OperatorFunction<any, any>[]) => {
+  const response$ = from(axiosService).pipe(getResponse(), pipeFromArray(operations));
 
   const response = await lastValueFrom(response$);
   return response;
@@ -53,27 +61,67 @@ function AxiosHandlerError(axiosError: Undefined<AxiosError<unknown, AnyValue>>)
     status: null,
     headers: null,
   };
-  if (axiosError) {
-    if (axiosError.response) {
-      // La respuesta fue hecha y el servidor respondió con un código de estado que esta fuera del rango de 2xx
 
-      error.message = axiosError.response.data;
-      error.status = axiosError.response.status;
-      error.headers = axiosError.response.headers;
-      console.log('Axios Error Response: \n', axiosError.request);
-    } else if (axiosError.request) {
-      // La petición fue hecha pero no se recibió respuesta
-      // `error.request` es una instancia de XMLHttpRequest en el navegador y una instancia de http.ClientRequest en node.js
-      error.message = axiosError.request;
-      console.log('Axios Error Request: \n', axiosError.request);
-    } else {
-      // Algo paso al preparar la petición que lanzo un Error
+  console.info('isAxiosError:', axiosError?.isAxiosError);
+
+  if (axiosError?.isAxiosError) {
+    handleAxiosError(axiosError, error);
+  } else {
+    handleUnexpectedError(axiosError, error);
+  }
+  return error;
+}
+
+function handleAxiosError(axiosError: AxiosError<unknown, AnyValue>, error: IError) {
+  console.info('Axios error code: ', axiosError.code);
+
+  if (axiosError?.response?.data) {
+    //* La respuesta fue hecha y el servidor respondió con un código de estado que esta fuera del rango de 2xx
+    //! axiosError.code => ERR_BAD_REQUEST
+    console.warn('Response Error:');
+    console.log(axiosError.response);
+
+    handleErrorRequest(axiosError, error);
+  } else if (axiosError.request) {
+    //? La petición fue hecha pero no se recibió respuesta. Is an instance of XMLHttpRequest: https://developer.mozilla.org/es/docs/Web/API/XMLHttpRequest
+    console.warn('No Response. Request:');
+    console.log(axiosError.request);
+
+    error.message = axiosError.message;
+  } else {
+    //! Algo sucedió al configurar la solicitud que provocó un error
+    console.warn('Axios Request Error');
+    console.error(axiosError.config);
+    error.message = axiosError.message;
+  }
+
+  //* https://github.com/axios/axios#error-types
+  switch (axiosError.code) {
+    case AxiosError.ERR_NETWORK:
+    case AxiosError.ECONNABORTED: // => Conexion cerrada, por ejemplo si el usuario recarga la página antes de recibir respuesta
+      error.message = 'Error de red o conexión.';
+      break;
+    case AxiosError.ERR_BAD_REQUEST:
+      // isAxiosError: true => "Request failed with status code 404", 400, etc
+      handleErrorRequest(axiosError, error);
+      break;
+    default:
       error.message = axiosError.message;
-      console.log('Error al hacer la petición');
-    }
-    console.log('Axios Error Config: \n', axiosError.config);
-    // error.message = axiosError.config;
-    return error;
+      break;
+  }
+}
+
+function handleUnexpectedError(axiosError: Undefined<AxiosError<unknown, AnyValue>>, error: IError) {
+  error.message = 'Ocurrió un error inesperado.';
+  console.error(error.message);
+  console.log(axiosError);
+}
+
+function handleErrorRequest(axiosError: Undefined<AxiosError<unknown, AnyValue>>, error: IError) {
+  if (axiosError?.response?.data) {
+    error.message = axiosError?.response.data;
+    error.status = axiosError?.response.status;
+    error.headers = axiosError?.response.headers;
   }
 }
 
