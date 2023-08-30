@@ -47,7 +47,7 @@ const FacturacionReporte = () => {
       fechaDesde: null,
       fechaHasta: null,
       nroContrato: '',
-      numeroSecuenciaFacturacion: null,
+      numeroSecuenciaFacturacion: '',
     },
     resolver: zodResolver(FacturacionReporteCreateSchema),
   });

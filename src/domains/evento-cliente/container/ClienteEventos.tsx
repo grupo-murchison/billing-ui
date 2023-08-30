@@ -32,7 +32,7 @@ const EventoClientes = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: null,
+      clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
       eventoId: [],
