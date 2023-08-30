@@ -36,7 +36,7 @@ function identity<T>(x: T): T {
 
 function pipeFromArray<T, R>(fns: Array<UnaryFunction<T, R>>): UnaryFunction<T, R> {
   if (fns.length === 0) {
-    return identity as UnaryFunction<any, any>;
+    return identity as UnaryFunction<AnyValue, AnyValue>;
   }
 
   if (fns.length === 1) {
@@ -44,11 +44,11 @@ function pipeFromArray<T, R>(fns: Array<UnaryFunction<T, R>>): UnaryFunction<T, 
   }
 
   return function piped(input: T): R {
-    return fns.reduce((prev: any, fn: UnaryFunction<T, R>) => fn(prev), input as any);
+    return fns.reduce((prev: AnyValue, fn: UnaryFunction<T, R>) => fn(prev), input as AnyValue);
   };
 }
 
-export const fromRxjs = async (axiosService: Promise<HandlePromise>, ...operations: OperatorFunction<any, any>[]) => {
+export const fromRxjs = async (axiosService: Promise<HandlePromise>, ...operations: OperatorFunction<AnyValue, AnyValue>[]) => {
   const response$ = from(axiosService).pipe(getResponse(), pipeFromArray(operations));
 
   const response = await lastValueFrom(response$);

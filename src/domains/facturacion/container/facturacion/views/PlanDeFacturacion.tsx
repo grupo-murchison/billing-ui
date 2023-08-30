@@ -45,7 +45,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     if (contratoId) {
       FacturacionRepository.facturacionManual(contratoId)
         .then(({ data }) => {
-          setSnackbarMessage(data);
+          setSnackbarMessage(`numeroSecuenciaFacturacion ${data?.numeroSecuenciaFacturacion}`);
         })
         .catch(error => {
           setSnackbarMessage(error?.message);
