@@ -269,8 +269,6 @@ const ContratoEdit = () => {
             name='diaPeriodo'
             control={control}
             label='Día Periodo'
-            error={!!formErrors.diaPeriodo}
-            helperText={formErrors?.diaPeriodo?.message}
             disabled={isSubmitting || !enableDiaPeriodo}
             type='number'
             inputProps={{ min: 1 }}

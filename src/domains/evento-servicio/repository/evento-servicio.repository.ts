@@ -3,37 +3,30 @@ import { from, lastValueFrom } from 'rxjs';
 import { RepositoryUtils } from '@app/utils';
 
 import { EventoServicioService } from './evento-servicio.service';
-import {
-  getAllEventoCampoAsDropdownSchema,
-} from './evento-servicio.chemas';
+
+function extractEventsOfData(response: AnyValue) {
+  let a:Array<AnyValue> = []
+
+  const responseParsed = response?.data.data.map((element:AnyValue) => { return  element.eventos[0]  }).map((evento:AnyValue) => { return evento})
+
+  for (let i = 0; i < responseParsed.length; i++) {
+    const element = responseParsed[i];
+    a = [...a, ...element]
+  }
+
+  response.data.data = a
+  response.data.meta = {itemCount: a.length}
+
+  return response
+}
 
 class EventoServicioRepository {
-  static getAllEventDetails = async (params: any) => {
-    console.log("🚀 ~ file: evento-cliente.repository.ts:12 ~ EventoClienteRepository ~ getAllEventDetails= ~ params:", params)
+  static getAllEventDetails = async (params: AnyValue) => {
     const response$ = from(EventoServicioService.getAllEventDetails(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllEventoCampoAsDropdownSchema),
     );
     const response = await lastValueFrom(response$);
-    return response;
-  };
-
-  static getAllEventsAsDropdown = async () => {
-    const response$ = from(EventoServicioService.getAllAsDropdown()).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),
-    );
-    const response = await lastValueFrom(response$);
-    return response;
-  };
-  
-  static getAllEventsAsDropdownAutoComplete = async (filter?: Partial<Record<'filter', string>>) => {
-    const response$ = from(EventoServicioService.getAllAsEventsAutocomplete(filter)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllClienteAsDropdownSchema),
-    );
-    const response = await lastValueFrom(response$);
-    return response;
+    return extractEventsOfData(response);
   };
 
 }

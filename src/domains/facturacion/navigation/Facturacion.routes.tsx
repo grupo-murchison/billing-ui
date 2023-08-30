@@ -8,6 +8,9 @@ import { FacturacionReversion } from '@domains/facturacion/container/facturacion
 import { EventoClientes } from '../../evento-cliente/container/index';
 import { FacturacionMasiva } from '@domains/facturacion/container/facturacion-masiva';
 import { FacturacionLog } from '../container/facturacion-log';
+import { EventosServicios } from '@domains/evento-servicio/container';
+import { EventosServiciosProvider } from '@domains/evento-servicio/contexts/eventos.servicios.context';
+
 
 const FacturacionRoutes = () => {
   return (
@@ -45,11 +48,11 @@ const FacturacionRoutes = () => {
         }
       />
       <Route
-        path='/eventos-servicios-cliente'
+        path='facturacion/eventos-servicios-cliente'
         element={
-          <ClienteEventosProvider>
-            <EventoClientes />
-          </ClienteEventosProvider>
+          <EventosServiciosProvider>
+            <EventosServicios />
+          </EventosServiciosProvider>
         }
       />
       <Route path='/facturacion/masiva' element={<FacturacionMasiva />} />

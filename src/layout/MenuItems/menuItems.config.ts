@@ -151,7 +151,7 @@ const facturaciones: IMenuItemGroup = {
           id: 'facturacionEventosServiciosCliente',
           title: 'Eventos Por Servicios ',
           type: 'item',
-          url: '/eventos-servicios-cliente',
+          url: 'facturacion/eventos-servicios-cliente',
           breadcrumbs: false,
         },
       ],
