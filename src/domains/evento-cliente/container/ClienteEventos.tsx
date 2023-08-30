@@ -16,7 +16,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
 import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
-import { EventosClienteFormSchemaType, EventosClientesCreateSchema } from '../schemas';
+import { EventosClientesCreateSchema } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 const EventoClientes = () => {
@@ -35,18 +35,19 @@ const EventoClientes = () => {
       clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: [null, null],
+      eventoId: [],
     },
     resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
+      const eventosIds= data.eventoId.map( (evento: AnyValue) => { return evento.value})
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventoId: data.eventoId ? [data.eventoId.value] : undefined,
+        eventoId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -152,5 +153,4 @@ const EventoClientes = () => {
   );
 };
 
-// export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
 export default withBreadcrumb(EventoClientes, ClienteEventosBreadcrumb);

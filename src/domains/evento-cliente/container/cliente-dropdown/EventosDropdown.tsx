@@ -2,10 +2,8 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { ClienteRepository } from '@domains/cliente/repository';
-
 import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
-import { FormAutocomplete } from '@app/components/Form/FormInputs/FormAutoComplete';
+import {  FormAutocompleteMultiple } from '@app/components/Form/FormInputs/FormAutoComplete';
 import { EventoClienteRepository } from '@domains/evento-cliente/repository';
 
 const EventosDropdown = ({ ...props }: EventosDropdownProps) => {
@@ -25,7 +23,7 @@ const EventosDropdown = ({ ...props }: EventosDropdownProps) => {
 };
 
 const EventosDropdownAutoComplete = ({ ...props }: EventosDropdownProps) => {
-  return <FormAutocomplete {...props} repositoryFunc={EventoClienteRepository.getAllEventsAsDropdownAutoComplete} />;
+  return <FormAutocompleteMultiple {...props} repositoryFunc={EventoClienteRepository.getAllEventsAsDropdownAutoComplete} />;
 };
 
 interface EventosDropdownProps extends Omit<FormSelectProps, 'options'> {

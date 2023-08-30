@@ -12,7 +12,8 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
-// import { toolbarMUI } from '@app/components/DataGrid/components/ToolbarMUI';
+import ToolbarMUI from '@app/components/DataGrid/components/ToolbarMUI';
+
 
 import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from "@domains/facturacion/constants";
@@ -39,31 +40,27 @@ const EventoServicio = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      nroFacturacion: null,
-      clienteId: null,
-      contrato: null,
-      conceptoAcuerdo: null,
+      nroFacturacion: '',
+      clienteId: { value: '', code: '', label: ''},
+      contrato: '',
+      conceptoAcuerdo: '',
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: (data, context, options) => { return debugSchema(data, context, options, EventosServicioCreateSchema)},
-    // resolver: zodResolver(EventosServicioCreateSchema),
+    resolver: zodResolver(EventosServicioCreateSchema),
   });
 
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
     async data => {
-      // console.log("🚀 ~ file: ClienteEventos.tsx:69 ~ EventoClientes ~ data:", data)
       const filters = {
-        nroFacturacion: data.nroFacturacion ? data.nroFacturacion : undefined,
+        numeroSecuenciaFacturacion: data.nroFacturacion ? data.nroFacturacion : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        contrato: data.contrato ? data.contrato : undefined,
-        conceptoAcuerdo: data.conceptoAcuerdo ? data.conceptoAcuerdo : undefined,
+        nroContato: data.contrato ? data.contrato : undefined,
+        modeloAcuerdoId: data.conceptoAcuerdo ? data.conceptoAcuerdo : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
       };
 
-
-      console.log(filters);
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -131,6 +128,8 @@ const EventoServicio = () => {
     </Paper>
   );
 
+  const toolbarProp = () => <ToolbarMUI fileName={'Eventos Por Servicio'} />;
+
   return (
     <>
     {toolbar}
@@ -140,7 +139,10 @@ const EventoServicio = () => {
           columns={[
             { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115},
             { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
-            { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125 },
+            { field: 'genEventoFechaCreacion', headerName: 'Fecha Creacion Evento', minWidth: 125,
+              valueGetter: params =>
+              params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
+            },
             { field: 'genCompania', headerName: 'Compania', minWidth: 100  },
             { field: 'genSistema', headerName: 'Sistema', minWidth: 80  },
             { field: 'genClienteId', headerName: 'Cliente', minWidth: 80  },
@@ -165,11 +167,13 @@ const EventoServicio = () => {
             { field: 'evColor', headerName: 'Color', minWidth: 130  },
             { field: 'evDimension', headerName: 'Dimension', minWidth: 130  },
             { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135  },
-            { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135  },
+            { field: 'genEventoFechaEnvio', headerName: 'Fecha Envio Evento', minWidth: 135,
+              valueGetter: params =>
+              params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
+            },
           ]}
           repositoryFunc={EventoServicioRepository.getAllEventDetails}
-          // toolbar={toolbarMUI}
-          // getRows={rows => console.log('rows', rows) }
+          toolbar={toolbarProp}
         />
       </Paper>
     </>

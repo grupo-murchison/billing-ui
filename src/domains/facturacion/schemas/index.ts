@@ -28,19 +28,3 @@ export const FacturacionReporteCreateSchema = z.object({
   
 export type FacturacionReporteFormSchemaType = z.infer<typeof FacturacionReporteCreateSchema>;
   
-
-export const FacturacionLogCreateSchema = z.object({
-    clienteId: z.object({ 
-      value: z.number({ required_error: 'El campo es requerido.' }),
-      code: z.string({ required_error: 'El campo es requerido.' }),
-      label: z.string({ required_error: 'El campo es requerido.' })
-    }, { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
-    numeroSecuenciaFacturacion: z.string({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
-    nroContrato: z.string({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
-    fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
-    fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
-  });
-  
-
-export type FacturacionLogFormSchemaType = z.infer<typeof FacturacionLogCreateSchema>;
-  
