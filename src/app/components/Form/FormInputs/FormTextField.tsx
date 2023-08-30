@@ -6,27 +6,29 @@ function FormTextField({ control, name, label, error, helperText, ...props }: Fo
   const inputLabel = label || name;
 
   return (
-    <FormControl fullWidth error={error}>
+    <FormControl fullWidth error={!!error}>
       <Controller
         control={control}
         name={name}
-        render={({ field }) => (
+        render={({ field, fieldState: { error }  }) => (
           <TextField
             {...props}
             {...field}
             label={inputLabel}
             onChange={e => field.onChange(typeResolver(e.target.value, props.type))}
+            error={!!error}
+            helperText={error?.message} 
           />
         )}
       />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
+      {/* {helperText && <FormHelperText>{helperText}</FormHelperText>} */}
     </FormControl>
   );
 }
 
 type FormTextFieldProps = FormInputsCommonProps &
   TextFieldProps & {
-    control: Control<any>;
+    control: Control<AnyValue>;
   };
 
 function typeResolver(value: string, type: React.InputHTMLAttributes<unknown>['type']) {

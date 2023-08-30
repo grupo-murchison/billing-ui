@@ -79,7 +79,6 @@ const FacturacionLog = () => {
               label='Número Cálculo de Facturación'
               name='numeroSecuenciaFacturacion'
               type='number'
-              error={!!formErrors.numeroSecuenciaFacturacion}
             />
           </Col>
           <Col md={3}>

@@ -5,7 +5,7 @@ import { ContratoRepository } from '@domains/contrato/repository';
 import ContratoVariablesRepository from './repository/contrato-variables.repository';
 
 export const DataGridContratoVariables = ({ contratoId }: { contratoId: string | undefined }) => {
-  const [rows, setRows] = useState<any>([]);
+  const [rows, setRows] = useState<AnyValue>([]);
   const [loading, setLoading] = useState(true);
   const [refreshData, setRefreshData] = useState(false);
 
@@ -18,7 +18,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
       .finally(() => setLoading(false));
   }, [contratoId, refreshData]);
 
-  const handleCellEdit = (params: any, event: any) => {
+  const handleCellEdit = (params: AnyValue, event: AnyValue) => {
     setLoading(true);
     const { row, id } = params;
 
@@ -26,7 +26,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
 
     ContratoVariablesRepository.updateContratoVariable(row, id)
       .then()
-      .catch((error: any) => {
+      .catch((error: AnyValue) => {
         // TODO falta un handlerError() que sustituya el console.log
         console.log('Error al actualizar variable:\n', error);
       })
@@ -45,14 +45,14 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
           headerName: 'Nombre del Concepto Acuerdo',
           description: 'This column has some type value.',
           sortable: false,
-          valueGetter: (params: any) => {
+          valueGetter: (params: AnyValue) => {
             return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
           },
         },
         {
           field: 'procedimientoQ.denominacion',
           headerName: 'Nombre Procedimiento Cantidad',
-          valueGetter: (params: any) => {
+          valueGetter: (params: AnyValue) => {
             return params.row.procedimientoQ?.denominacion || ' ';
           },
         },
@@ -60,7 +60,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
         {
           field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
           headerName: 'Nombre Variable',
-          valueGetter: (params: any) => {
+          valueGetter: (params: AnyValue) => {
             return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
           },
         },

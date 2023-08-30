@@ -32,7 +32,7 @@ const ProcedimientoCustomDataGrid = () => {
   );
 
   const handleClickDelete = useCallback(
-    (row: any) => {
+    (row: AnyValue) => {
       confirmDialog.open({
         entity: `${label.procedimientoCustom}`,
         identifier: `${row.denominacion}`,

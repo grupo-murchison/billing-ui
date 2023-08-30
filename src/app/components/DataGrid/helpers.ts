@@ -1,10 +1,10 @@
 import { GridColDef } from '@mui/x-data-grid';
 
-type TFn = (value: any) => any;
+type TFn = (value: AnyValue) => AnyValue;
 type TTowSanitizer = string | number | boolean | null | undefined | TFn;
 
 //* idea prototipo, se puede mejorar
-export const rowSanitizer = (value: TTowSanitizer): string | any => {
+export const rowSanitizer = (value: TTowSanitizer): string | AnyValue => {
   return value === null || value === undefined ? ' ' : value;
 };
 
@@ -13,7 +13,7 @@ export const rowSanitizer = (value: TTowSanitizer): string | any => {
  * @param columns
  */
 export const columnsFlexResolver = (columns: GridColDef[]) => {
-  columns.forEach((col: any) => {
+  columns.forEach((col: AnyValue) => {
     col['flex'] = col?.flex ? col.flex : 1;
   });
 };

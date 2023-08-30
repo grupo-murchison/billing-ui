@@ -5,7 +5,7 @@ import { GridColDef, GridRowsProp, DataGridProps as MUIDataGridProps } from '@mu
 
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 
-export type DataGridProps<T> = {
+export interface DataGridProps<T> extends Omit<MUIDataGridProps, 'rows'> {
   hookRef: React.MutableRefObject<{
     load: (config?: { fixedFilters?: RepositoryParams; filters?: RepositoryParams }) => void;
     reload: () => void;
@@ -22,7 +22,7 @@ export type DataGridProps<T> = {
   >;
   toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
   getRows?: (rows: AnyValue) => AnyValue;
-};
+}
 
 export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {
   filters?: RepositoryParams;

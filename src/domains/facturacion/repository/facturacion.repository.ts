@@ -13,12 +13,17 @@ import {
 
 class FacturacionRepository {
   static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {
-    const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
+    // const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
+    //   RepositoryUtils.PIPES.getResponse(),
+    //   RepositoryUtils.PIPES.validateWithSchema(getAllFacturasReportePaginatedSchema),
+    // );
+    // const response = await lastValueFrom(response$);
+    // return response;
+
+    return await RepositoryUtils.fromRxjs(
+      FacturacionService.getAllPaginated(params),
       RepositoryUtils.PIPES.validateWithSchema(getAllFacturasReportePaginatedSchema),
     );
-    const response = await lastValueFrom(response$);
-    return response;
   };
 
   static facturacionManual = async (contratoId: number) => {

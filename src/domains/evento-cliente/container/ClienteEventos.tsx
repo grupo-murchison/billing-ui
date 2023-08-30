@@ -30,24 +30,24 @@ const EventoClientes = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<any>({
+  } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: null,
+      clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: null,
+      eventoId: [],
     },
-    // resolver: (data, context, options) => { return debugSchema(data, context, options,EventosClientesCreateSchema)},
-    resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: zodResolver(EventosClientesCreateSchema), 
   });
 
-  const onSubmit: SubmitHandler<any> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
+      const eventosIds= data.eventoId.map( (evento: AnyValue) => { return evento.value})
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventoId: data.eventoId ? [data.eventoId.value] : undefined,
+        eventoId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -151,5 +151,4 @@ const EventoClientes = () => {
   );
 };
 
-// export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
 export default withBreadcrumb(EventoClientes, ClienteEventosBreadcrumb);
