@@ -31,7 +31,6 @@ const ToolbarMUI = ({ onClickNew, ...props }: ToolbarMuiExportProps) => {
       sx={{
         justifyContent: 'flex-end',
         backgroundColor: '#d1d8df',
-        borderRadius: '8px 8px 0px 0px',
       }}
     >
       {/* <GridToolbarColumnsButton /> */}
