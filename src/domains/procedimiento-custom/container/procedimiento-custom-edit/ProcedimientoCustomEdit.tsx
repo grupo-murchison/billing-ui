@@ -91,11 +91,10 @@ const ProcedimientoCustomEdit = () => {
       };
 
       if (accionCode === 'FIL') {
-        const splittedFilter = data.expresionFiltro.split('=');
-        values.filtroCampoCode = splittedFilter[0].trim();
-        values.filtroValue = splittedFilter[1]?.trim();
+        values.filtroValue = data.expresionFiltro;
+        values.filtroCampoCode = eventosCampo.find(({ value }) => value === data?.eventoCampoFiltroId)?.code || '';
       } else if (accionCode === 'AGR') {
-        values.filtroCampoCode = eventosCampo.find(({ value }) => value === data.eventoCampoAgrupacionId)?.code || '';
+        values.filtroCampoCode = eventosCampo.find(({ value }) => value === data?.eventoCampoAgrupacionId)?.code || '';
       }
 
       reset(values);
@@ -123,14 +122,17 @@ const ProcedimientoCustomEdit = () => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
+              eventoCampoFiltroId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value,
+              expresionFiltro: `${filtroValue}`,
             }
           : {
-              expresionFiltro: '',
               eventoCampoAgrupacionId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value || null,
+              eventoCampoFiltroId: null,
+              expresionFiltro: null,
             }),
       });
+      
       const apiPayload = parseToNull(data);
 
       ProcedimientoCustomRepository.updateProcedimientoCustom(apiPayload)

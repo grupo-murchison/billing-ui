@@ -65,14 +65,17 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
+              eventoCampoFiltroId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value,
+              expresionFiltro: `${filtroValue}`,
             }
           : {
-              expresionFiltro: '',
               eventoCampoAgrupacionId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value || null,
+              eventoCampoFiltroId: null,
+              expresionFiltro: null,
             }),
       });
+      
       const apiPayload = parseToNull(data);
       await ProcedimientoCustomRepository.createProcedimientoCustom(apiPayload);
 
