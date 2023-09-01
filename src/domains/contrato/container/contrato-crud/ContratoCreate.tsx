@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField, Typography, Card, CardContent, CardHeader } from '@mui/material';
+import { Typography, Card, CardContent, CardHeader } from '@mui/material';
 
 import { Row, Col } from '@app/components';
 import { DivisorProvisorio } from '@app/components/Divider';
@@ -46,7 +46,6 @@ const ContratoCreate = () => {
   const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
 
   const {
-    register,
     handleSubmit,
     watch,
     control,
@@ -181,16 +180,7 @@ const ContratoCreate = () => {
     <CardContent>
       <Row>
         <Col md={12}>
-          <TextField
-            id='descripcion'
-            label='Descripción'
-            error={!!formErrors.descripcion}
-            helperText={formErrors?.descripcion?.message}
-            disabled={isSubmitting}
-            multiline
-            fullWidth
-            {...register('descripcion')}
-          />
+          <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
         <Col md={6}>
           <FormDesktopDatePicker

@@ -13,20 +13,21 @@ import type { ProcedimientoCustomCreateSchemaType } from '@domains/procedimiento
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, InputAdornment, TextField } from '@mui/material';
+import { Box, InputAdornment } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-const ProcedimientoCustomCreate = forwardRef((_, ref) => {
+const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
 
   const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
 
   const {
-    register,
     control,
     handleSubmit,
     watch,
@@ -75,7 +76,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               expresionFiltro: null,
             }),
       });
-      
+
       const apiPayload = parseToNull(data);
       await ProcedimientoCustomRepository.createProcedimientoCustom(apiPayload);
 
@@ -123,25 +124,14 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={4}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              inputRef={ref}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} name='codigo' label='Código' fullWidth />
           </Col>
           <Col md={8}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              name='denominacion'
+              label='Denominación'
               fullWidth
             />
           </Col>
@@ -240,13 +230,11 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               />
             </Col>
             <Col md={4}>
-              <TextField
-                id='filtroValue'
-                label='Valor'
-                {...register('filtroValue')}
-                error={!!formErrors.filtroValue}
-                helperText={formErrors?.filtroValue?.message}
+              <FormTextField
+                control={control}
                 disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                label='Valor'
+                name='filtroValue'
                 InputProps={{
                   startAdornment: <InputAdornment position='start'>=</InputAdornment>,
                 }}

@@ -3,14 +3,13 @@ import { useNavigate } from 'react-router-dom';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { TextField } from '@mui/material';
-
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Modal, Row, Col } from '@app/components';
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandCreateSchema } from '@domains/producto-softland/container/producto-softland-create/schemas';
@@ -25,10 +24,9 @@ const ProductoSoftlandCreate = () => {
   const { mainDataGrid } = useContext(ProductoSoftlandContext);
 
   const {
-    register,
     handleSubmit,
     control,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProductoSoftlandCreateSchemaType>({
     defaultValues: {
       activo: false,
@@ -64,39 +62,15 @@ const ProductoSoftlandCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='agrupacion'
-              label='Agrupación'
-              {...register('agrupacion')}
-              error={!!formErrors.agrupacion}
-              helperText={formErrors?.agrupacion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} name='agrupacion' label='Agrupación' />
           </Col>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} name='codigo' label='Código' disabled={isSubmitting} />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              {...register('descripcion')}
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} name='descripcion' label='Descripción' disabled={isSubmitting} />
           </Col>
         </Row>
         <Row>

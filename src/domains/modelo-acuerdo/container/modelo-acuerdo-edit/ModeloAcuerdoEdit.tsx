@@ -12,9 +12,9 @@ import type { ModeloAcuerdoEditSchemaType } from '@domains/modelo-acuerdo/contai
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ModeloAcuerdoEdit = () => {
   const { modeloAcuerdoId } = useParams();
@@ -25,7 +25,7 @@ const ModeloAcuerdoEdit = () => {
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
-    register,
+    control,
     handleSubmit,
     reset,
     formState: { errors: formErrors, isSubmitting },
@@ -66,36 +66,15 @@ const ModeloAcuerdoEdit = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' />
           </Col>
           <Col md={6}>
-            <TextField
-              id='nombre'
-              label='Nombre'
-              {...register('nombre')}
-              error={!!formErrors.nombre}
-              helperText={formErrors?.nombre?.message}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Nombre' name='nombre' />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              {...register('descripcion')}
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
         </Row>
       </Form>
