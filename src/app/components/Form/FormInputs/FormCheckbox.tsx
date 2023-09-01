@@ -1,9 +1,8 @@
-import * as React from 'react';
 import { Checkbox, FormControlLabel, InputLabel } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 import { FormInputsCommonProps } from '../form.interfaces';
 
-function FormCheckbox({ control, name, label }: FormCheckboxProps) {
+function FormCheckbox({ control, name, label, labelPlacement }: FormCheckboxProps) {
   return (
     <>
       <InputLabel></InputLabel>
@@ -11,7 +10,11 @@ function FormCheckbox({ control, name, label }: FormCheckboxProps) {
         name={name}
         control={control}
         render={({ field }) => (
-          <FormControlLabel control={<Checkbox {...field} />} label={label} labelPlacement='start' />
+          <FormControlLabel
+            control={<Checkbox {...field} />}
+            label={label}
+            labelPlacement={labelPlacement || 'start'}
+          />
         )}
       />
     </>
@@ -20,6 +23,7 @@ function FormCheckbox({ control, name, label }: FormCheckboxProps) {
 
 interface FormCheckboxProps extends FormInputsCommonProps {
   control: Control<AnyValue>;
+  labelPlacement?: 'start' | 'end';
 }
 
 export default FormCheckbox;
