@@ -99,6 +99,12 @@ const DataGridBase = ({
                 const { from, to, count } = props;
                 return `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`;
               },
+              SelectProps: {
+                MenuProps: { disableScrollLock: true },
+              },
+            },
+            baseSelect: {
+              MenuProps: { disableScrollLock: true },
             },
           }}
           sx={{
