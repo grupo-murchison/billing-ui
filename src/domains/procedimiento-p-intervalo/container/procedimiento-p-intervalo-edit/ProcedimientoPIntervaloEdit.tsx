@@ -28,7 +28,7 @@ const ProcedimientoPIntervaloEdit = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoPIntervaloEditSchemaType>({
     resolver: zodResolver(ProcedimientoPIntervaloEditSchema),
   });

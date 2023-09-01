@@ -137,7 +137,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
           </Col>
         </Row>
         <Row>
-          <Col md={4}>
+          <Col md={6}>
             <FormSelect
               label='Función'
               name='funcionCode'
@@ -148,7 +148,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               options={mapearParametros(state.funciones)}
             />
           </Col>
-          <Col md={4}>
+          <Col md={6}>
             <FormSelect
               label='Evento'
               name='eventoCode'
@@ -160,14 +160,18 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               emptyOption={true}
             />
           </Col>
-          <Col md={4}>
+        </Row>
+
+        <Row>
+          <Col md={6}>
             <FormSelect
               label='Campo'
               name='eventoCampoCode'
               control={control}
               error={!!formErrors.eventoCampoCode}
               helperText={formErrors?.eventoCampoCode?.message}
-              disabled={isSubmitting || watch('funcionCode') === 'C'}
+              // disabled={isSubmitting || watch('funcionCode') === 'C'}
+              disabled={isSubmitting}
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
@@ -179,8 +183,8 @@ const ProcedimientoCustomCreate = forwardRef(() => {
           sx={{
             border: '1px solid lightgray',
             borderRadius: '0.25rem',
-            padding: '1.5rem 1rem 0rem',
-            marginBottom: '1rem',
+            padding: '2rem 1rem 0rem',
+            marginBottom: '2rem',
             position: 'relative',
           }}
         >
@@ -191,11 +195,12 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               top: '-0.5rem',
               backgroundColor: 'white',
               padding: '0 0.25rem',
-              marginLeft: '-0.5rem',
+              marginLeft: '-0.2rem',
               color: 'gray',
               fontSize: '0.85rem',
               lineHeight: '1rem',
               textTransform: 'capitalize',
+              my: 2,
             }}
           >
             {watch('accionCode')
