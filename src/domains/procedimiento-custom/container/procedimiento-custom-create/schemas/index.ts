@@ -36,7 +36,7 @@ export const ProcedimientoCustomCreateSchema = z
       });
     }
 
-    if (funcionCode !== 'C' && !eventoCampoCode) {
+    if (funcionCode && !eventoCampoCode) {
       ctx.addIssue({
         code: 'custom',
         message: 'Campo es requerido.',
