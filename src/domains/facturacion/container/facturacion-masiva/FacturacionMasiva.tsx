@@ -2,7 +2,7 @@ import { useCallback, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Checkbox, FormControlLabel, FormGroup, Paper, Typography, Box } from '@mui/material';
+import { Paper, Typography, Box } from '@mui/material';
 
 import { Col, Row } from '@app/components';
 
@@ -13,10 +13,12 @@ import { FacturacionMasivaBreadcrumb } from '@domains/facturacion/constants';
 
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
+import Toast from '@app/components/Toast/Toast';
+
 import { DateLib } from '@libs';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 import { FacturacionMasivaSchema } from '@domains/facturacion/repository/facturacion.schemas';
-import Toast from '@app/components/Toast/Toast';
 
 const FacturacionMasiva = () => {
   const [openToast, setOpenToast] = useState(false);
@@ -27,12 +29,10 @@ const FacturacionMasiva = () => {
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
-    watch,
-    setValue,
   } = useForm<FacturacionMasivaSchema>({
     defaultValues: {
       fechaHastaFacturacion: new Date(),
-      sociedadId: 0,
+      sociedadId: '',
       sinMensajesLogOk: false,
       sinMensajesLogInfo: false,
     },
@@ -59,7 +59,7 @@ const FacturacionMasiva = () => {
       })
       .catch(error => {
         setErrorFromBackEnd(true);
-        setToastMessage('Ocurrió un error!');
+        setToastMessage(error?.message || 'Ocurrió un error!');
       })
       .finally(() => {
         setOpenToast(true);
@@ -106,30 +106,20 @@ const FacturacionMasiva = () => {
         </Box>
         <Row>
           <Col md={12}>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={watch('sinMensajesLogOk')}
-                    onChange={() => setValue('sinMensajesLogOk', !watch('sinMensajesLogOk'))}
-                  />
-                }
-                label='Log sin mensaje de conclusión exitosa'
-                disabled={isSubmitting}
-              />
-            </FormGroup>
-            <FormGroup>
-              <FormControlLabel
-                control={
-                  <Checkbox
-                    checked={watch('sinMensajesLogInfo')}
-                    onChange={() => setValue('sinMensajesLogInfo', !watch('sinMensajesLogInfo'))}
-                  />
-                }
-                label='Log sin mensaje de información'
-                disabled={isSubmitting}
-              />
-            </FormGroup>
+            <FormCheckbox
+              control={control}
+              disabled={isSubmitting}
+              label='Log sin mensaje de conclusión exitosa'
+              labelPlacement='end'
+              name='sinMensajesLogOk'
+            />
+            <FormCheckbox
+              control={control}
+              disabled={isSubmitting}
+              label='Log sin mensaje de información'
+              labelPlacement='end'
+              name='sinMensajesLogInfo'
+            />
           </Col>
         </Row>
       </Form>

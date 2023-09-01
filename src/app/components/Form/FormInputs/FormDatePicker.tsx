@@ -1,10 +1,8 @@
-import * as React from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { DesktopDatePicker } from '@mui/x-date-pickers';
-import { TextField } from '@mui/material';
 import { FormInputsCommonProps } from '../form.interfaces';
 
-function FormDesktopDatePicker({ control, name, label, inputFormat, error, ...props }: FormDesktopDatePickerProps) {
+function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   return (
     <>
       <Controller
@@ -12,13 +10,26 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, error, ...pr
         control={control}
         render={({ field: { onChange, value }, fieldState: { error } }) => (
           <DesktopDatePicker
+            {...props}
+            slotProps={{
+              actionBar: {
+                actions: ['clear'],
+              },
+              textField: {
+                fullWidth: true,
+                helperText: error?.message,
+                error: !!error,
+              },
+            }}
             label={label}
-            inputFormat={inputFormat || 'dd-MM-yyyy'}
+            format={inputFormat || 'dd-MM-yyyy'}
             value={value}
             onChange={event => {
               onChange(event);
             }}
-            renderInput={params => <TextField {...params} error={!!error} fullWidth helperText={error?.message} />}
+            localeText={{
+              clearButtonLabel: 'Limpiar',
+            }}
           />
         )}
       />

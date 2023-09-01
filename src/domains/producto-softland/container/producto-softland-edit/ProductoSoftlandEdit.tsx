@@ -1,23 +1,23 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { useNavigate, useParams } from 'react-router-dom';
+import { TextField } from '@mui/material';
+
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Modal, Row, Col } from '@app/components';
+import Form from '@app/components/Form/Form';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandEditSchema } from '@domains/producto-softland/container/producto-softland-edit/schemas';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 import type { ProductoSoftlandEditSchemaType } from '@domains/producto-softland/container/producto-softland-edit/schemas';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { DateLib } from '@libs';
-
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
-import Form from '@app/components/Form/Form';
 
 const ProductoSoftlandEdit = () => {
   const { id } = useParams();
@@ -30,9 +30,8 @@ const ProductoSoftlandEdit = () => {
   const {
     register,
     handleSubmit,
-    watch,
-    setValue,
     reset,
+    control,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ProductoSoftlandEditSchemaType>({
     defaultValues: {
@@ -120,23 +119,15 @@ const ProductoSoftlandEdit = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <DesktopDatePicker
-              label='Fecha Estado'
-              inputFormat='dd-MM-yyyy'
-              value={watch('fechaCambioEstado')}
-              onChange={newValue => setValue('fechaCambioEstado', newValue)}
-              renderInput={params => <TextField {...params} fullWidth />}
+            <FormDesktopDatePicker
+              control={control}
               disabled={isSubmitting}
+              label='Fecha Estado'
+              name='fechaCambioEstado'
             />
           </Col>
           <Col md={6}>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox checked={watch('activo')} onChange={() => setValue('activo', !watch('activo'))} />}
-                label='Activo'
-                disabled={isSubmitting}
-              />
-            </FormGroup>
+            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
