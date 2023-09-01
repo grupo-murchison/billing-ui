@@ -1,7 +1,7 @@
 import z from 'zod';
 
 export const EventosServicioCreateSchema = z.object({
-  nroFacturacion: z.string({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
+  nroFacturacion: z.number({ required_error: 'El campo es requerido.', invalid_type_error: "El campo es requerido."}),
   clienteId: z.object({ 
     value: z.number({ required_error: 'El campo es requerido.' }),
     code: z.string({ required_error: 'El campo es requerido.' }),

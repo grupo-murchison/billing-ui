@@ -47,8 +47,6 @@ const ProductoSoftlandCreate = () => {
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
       };
 
-      console.log(submitData);
-
       await ProductoSoftlandRepository.createProductoSoftland(submitData);
 
       mainDataGrid.reload();

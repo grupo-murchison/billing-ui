@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Control, Controller } from 'react-hook-form';
-import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
+import Autocomplete from '@mui/material/Autocomplete';
 import { FormInputsCommonProps } from '../../form.interfaces';
 import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
 import AutocompleteRenderInput from './AutoCompleteRenderInput';
@@ -17,7 +17,6 @@ export default function AsyncAutocompleteMultiple({
 }: FormAsyncAutocomplete<DropdownItemType>) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<DropdownSchemaType>([]);
-  const [value, setValue] = React.useState<AnyValue>([{ code: '', label: '', value: '' }]);
   const [inputValue, setInputValue] = React.useState('');
   const loading = open && options.length === 0;
 
@@ -33,7 +32,7 @@ export default function AsyncAutocompleteMultiple({
         filter: inputValue ? inputValue : '*',
       };
 
-      repositoryFunc({ ...params }) // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
+      repositoryFunc({ ...params })
         .then(({ data }) => {
           if (active) {
             setOptions([...data]);
@@ -59,13 +58,13 @@ export default function AsyncAutocompleteMultiple({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: {error} }) => (
+      render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...props}
           {...field}
           multiple={true}
           filterSelectedOptions
-          getOptionLabel={(option) => option?.label}
+          getOptionLabel={option => option?.label}
           isOptionEqualToValue={(option, value) => option?.label === value?.label}
           inputValue={inputValue}
           onInputChange={(event, newInputValue) => {
@@ -76,9 +75,6 @@ export default function AsyncAutocompleteMultiple({
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
           onChange={(event: AnyValue, newValue) => {
-            console.log(newValue)
-            setValue(newValue);
-
             // Actually change the state of react-hook-forms
             field.onChange(newValue);
           }}

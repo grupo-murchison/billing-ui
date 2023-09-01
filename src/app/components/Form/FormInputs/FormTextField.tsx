@@ -1,28 +1,27 @@
-import { FormControl, FormHelperText, TextField, TextFieldProps } from '@mui/material';
+import { FormControl, TextField, TextFieldProps } from '@mui/material';
 import { Control, Controller } from 'react-hook-form';
 import { FormInputsCommonProps } from '../form.interfaces';
 
-function FormTextField({ control, name, label, error, helperText, ...props }: FormTextFieldProps) {
+function FormTextField({ control, name, label, ...props }: FormTextFieldProps) {
   const inputLabel = label || name;
 
   return (
-    <FormControl fullWidth error={!!error}>
-      <Controller
-        control={control}
-        name={name}
-        render={({ field, fieldState: { error }  }) => (
+    <Controller
+      control={control}
+      name={name}
+      render={({ field, fieldState: { error } }) => (
+        <FormControl fullWidth error={!!error}>
           <TextField
             {...props}
             {...field}
             label={inputLabel}
             onChange={e => field.onChange(typeResolver(e.target.value, props.type))}
             error={!!error}
-            helperText={error?.message} 
+            helperText={error?.message}
           />
-        )}
-      />
-      {/* {helperText && <FormHelperText>{helperText}</FormHelperText>} */}
-    </FormControl>
+        </FormControl>
+      )}
+    />
   );
 }
 
