@@ -4,7 +4,6 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Box, Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
@@ -33,6 +32,7 @@ import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
@@ -49,7 +49,6 @@ const ContratoEdit = () => {
     handleSubmit,
     watch,
     control,
-    setValue,
     resetField,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ContratoEditSchemaType>({
@@ -212,23 +211,19 @@ const ContratoEdit = () => {
           />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
-            label='Fecha Inicio Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaInicioContrato')}
-            onChange={newValue => setValue('fechaInicioContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
+          <FormDesktopDatePicker
+            control={control}
             disabled={isSubmitting}
+            label='Fecha Inicio Contrato'
+            name='fechaInicioContrato'
           />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
-            label='Fecha Fin Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaFinContrato')}
-            onChange={newValue => setValue('fechaFinContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
+          <FormDesktopDatePicker
+            control={control}
             disabled={isSubmitting}
+            label='Fecha Fin Contrato'
+            name='fechaFinContrato'
           />
         </Col>
       </Row>
@@ -328,7 +323,7 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
-          
+
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
               <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />

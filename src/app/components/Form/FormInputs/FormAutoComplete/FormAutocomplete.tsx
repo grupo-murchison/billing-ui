@@ -33,7 +33,7 @@ export default function AsyncAutocomplete({
         filter: inputValue ? inputValue : '*',
       };
 
-      repositoryFunc({ ...params }) // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
+      repositoryFunc({ ...params })
         .then(({ data }) => {
           if (active) {
             setOptions(data);
@@ -60,7 +60,7 @@ export default function AsyncAutocomplete({
     <Controller
       name={name}
       control={control}
-      render={({ field, fieldState: {error} }) => (
+      render={({ field, fieldState: { error } }) => (
         <Autocomplete
           {...props}
           {...field}
@@ -76,7 +76,7 @@ export default function AsyncAutocomplete({
           loadingText='Cargando...'
           onClose={() => setOpen(false)}
           onOpen={() => setOpen(true)}
-          onChange={(event: any, newValue) => {
+          onChange={(event: AnyValue, newValue) => {
             // setOptions(newValue ? [newValue, ...options] : options);
             // setValue(newValue);
 
@@ -96,7 +96,7 @@ export default function AsyncAutocomplete({
 }
 
 export interface FormAsyncAutocomplete<T> extends FormInputsCommonProps {
-  control: Control<any>;
-  options?: any[];
+  control: Control<AnyValue>;
+  options?: AnyValue[];
   repositoryFunc: (params?: Partial<Record<string, unknown>>) => Promise<AxiosResponse<T[]>>;
 }

@@ -51,18 +51,22 @@ const FacturacionMasivaSchema = z.object({
 
 export const FacturacionLogSchema = z
   .object({
-    numeroSecuenciaFacturacion: z.number().nullish(),
-    nroContrato: z.number().nullish(),
+    numeroSecuenciaFacturacion: z.number().nullish().or(z.literal('')),
+    nroContrato: z.number().nullish().or(z.literal('')),
     clienteId: z
       .object({
-        value: z.number({ required_error: 'El campo es requerido.' }),
-        code: z.string({ required_error: 'El campo es requerido.' }),
-        label: z.string({ required_error: 'El campo es requerido.' }),
+        value: z.number({ required_error: 'El campo es requerido.' }).or(z.literal('')),
+        code: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
+        label: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
       })
       .nullable()
       .optional(),
-    fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
-    fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
+    fechaHasta: z
+      .date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' })
+      .nullable(),
+    fechaDesde: z
+      .date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' })
+      .nullable(),
   })
   .refine(({ fechaDesde, fechaHasta }) => fechaHasta == null || fechaDesde == null || fechaHasta >= fechaDesde, {
     message: 'Fecha hasta debe ser mayor o igual a Fecha desde',

@@ -4,7 +4,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
 import { TextField, Typography, Card, CardContent, CardHeader } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
 
 import { Row, Col } from '@app/components';
 import { DivisorProvisorio } from '@app/components/Divider';
@@ -34,6 +33,7 @@ import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -49,7 +49,6 @@ const ContratoCreate = () => {
     register,
     handleSubmit,
     watch,
-    setValue,
     control,
     resetField,
     formState: { errors: formErrors, isSubmitting },
@@ -194,23 +193,19 @@ const ContratoCreate = () => {
           />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
-            label='Fecha Inicio Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaInicioContrato')}
-            onChange={newValue => setValue('fechaInicioContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
+          <FormDesktopDatePicker
+            control={control}
             disabled={isSubmitting}
+            label='Fecha Inicio Contrato'
+            name='fechaInicioContrato'
           />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
-            label='Fecha Fin Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaFinContrato')}
-            onChange={newValue => setValue('fechaFinContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
+          <FormDesktopDatePicker
+            control={control}
             disabled={isSubmitting}
+            label='Fecha Fin Contrato'
+            name='fechaFinContrato'
           />
         </Col>
       </Row>

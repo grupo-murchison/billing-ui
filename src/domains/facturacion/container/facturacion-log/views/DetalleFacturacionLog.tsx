@@ -3,7 +3,7 @@ import Form from '@app/components/Form/Form';
 import { TextField } from '@mui/material';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) => {
+const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue }) => {
   return (
     <>
       <Form>

@@ -39,9 +39,9 @@ const FacturacionLog = () => {
     formState: { errors: formErrors, isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      numeroSecuenciaFacturacion: 0,
-      nroContrato: 0,
-      clienteId: null,
+      numeroSecuenciaFacturacion: '',
+      nroContrato: '',
+      clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
     },
