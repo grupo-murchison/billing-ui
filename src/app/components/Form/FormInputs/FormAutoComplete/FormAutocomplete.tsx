@@ -33,7 +33,7 @@ export default function AsyncAutocomplete({
         filter: inputValue ? inputValue : '*',
       };
 
-      repositoryFunc({ ...params }) // TODO la request al back debe psasrse como parámetro desde un componente superior (ver datagrid)
+      repositoryFunc({ ...params })
         .then(({ data }) => {
           if (active) {
             setOptions(data);
