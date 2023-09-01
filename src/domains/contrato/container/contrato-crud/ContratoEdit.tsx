@@ -3,7 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
+import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
@@ -44,7 +44,6 @@ const ContratoEdit = () => {
   const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
 
   const {
-    register,
     reset,
     handleSubmit,
     watch,
@@ -151,11 +150,9 @@ const ContratoEdit = () => {
         {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
         {/* <Col md={6}>
           <ClienteDropdown
+            control={control}
             id='destinatarioId'
             label='Destinatario'
-            // {...register('destinatarioId', {
-            //   valueAsNumber: true,
-            // })}
             // error={!!formErrors.destinatarioId}
             // helperText={formErrors?.destinatarioId?.message}
             // disabled={isSubmitting}
@@ -198,17 +195,7 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={12}>
-          <TextField
-            id='descripcion'
-            label='Descripción'
-            error={!!formErrors.descripcion}
-            helperText={formErrors?.descripcion?.message}
-            disabled={isSubmitting}
-            multiline
-            fullWidth
-            // variant='standard'
-            {...register('descripcion')}
-          />
+          <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
         <Col md={6}>
           <FormDesktopDatePicker
@@ -292,15 +279,12 @@ const ContratoEdit = () => {
           <CardContent>
             <Row>
               <Col md={4}>
-                <TextField
-                  id='nroContrato'
+                <FormTextField
+                  control={control}
+                  name='nroContrato'
                   label='Nro. Contrato'
                   InputProps={{ readOnly: true }}
                   type='string'
-                  fullWidth
-                  {...register('nroContrato', {
-                    // valueAsNumber: true,
-                  })}
                 />
               </Col>
             </Row>

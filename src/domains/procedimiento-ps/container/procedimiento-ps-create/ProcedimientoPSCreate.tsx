@@ -13,8 +13,8 @@ import type { ProcedimientoPSCreateSchemaType } from '@domains/procedimiento-ps/
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ProcedimientoPSCreate = () => {
   const _navigate = useNavigate();
@@ -22,9 +22,9 @@ const ProcedimientoPSCreate = () => {
   const { mainDataGrid } = useContext(ProcedimientoPSContext);
 
   const {
-    register,
+    control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoPSCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -51,24 +51,14 @@ const ProcedimientoPSCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} name='codigo' label='Código' fullWidth />
           </Col>
           <Col md={6}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              label='Denominación'
+              name='denominacion'
               fullWidth
             />
           </Col>

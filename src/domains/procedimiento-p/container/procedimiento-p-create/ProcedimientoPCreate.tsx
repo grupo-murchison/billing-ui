@@ -15,8 +15,8 @@ import type { ProcedimientoPCreateSchemaType } from '@domains/procedimiento-p/co
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ProcedimientoPCreate = () => {
   const _navigate = useNavigate();
@@ -24,7 +24,6 @@ const ProcedimientoPCreate = () => {
   const { mainDataGrid } = useContext(ProcedimientoPContext);
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
@@ -55,26 +54,10 @@ const ProcedimientoPCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' />
           </Col>
           <Col md={6}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Denominación' name='denominacion' />
           </Col>
         </Row>
         <Row>
