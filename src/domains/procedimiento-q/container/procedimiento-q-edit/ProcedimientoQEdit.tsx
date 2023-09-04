@@ -12,9 +12,11 @@ import type { ProcedimientoQEditSchemaType } from '@domains/procedimiento-q/cont
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import { label } from '@domains/procedimiento-q/constants';
+
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+
 import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
 import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
 import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
@@ -31,7 +33,6 @@ const ProcedimientoQEdit = () => {
   const [disablePCustom, setDisablePCustom] = useState(false);
 
   const {
-    register,
     reset,
     formState: { errors: formErrors, isSubmitting },
     setValue,
@@ -98,43 +99,24 @@ const ProcedimientoQEdit = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled
-              fullWidth
-            />
+            <FormTextField control={control} label='Código' name='codigo' disabled fullWidth />
           </Col>
           <Col md={6}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              label='Denominación'
+              name='denominacion'
               fullWidth
             />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              {...register('descripcion')}
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' fullWidth />
           </Col>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
-              // onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               error={!!formErrors.tipoProcedimientoQId}

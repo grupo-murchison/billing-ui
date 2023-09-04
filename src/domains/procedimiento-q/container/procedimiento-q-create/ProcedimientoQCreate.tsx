@@ -13,10 +13,11 @@ import type { ProcedimientoQCreateSchemaType } from '@domains/procedimiento-q/co
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
-
 import { label } from '@domains/procedimiento-q/constants';
+
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+
 import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
 import ProcedimientoCustomDropdownController from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdownController';
 import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
@@ -27,7 +28,6 @@ const ProcedimientoQCreate = () => {
   const { mainDataGrid } = useContext(ProcedimientoQContext);
 
   const {
-    register,
     control,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
@@ -84,39 +84,21 @@ const ProcedimientoQCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' fullWidth />
           </Col>
           <Col md={6}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              label='Denominación'
+              name='denominacion'
               fullWidth
             />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              {...register('descripcion')}
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' fullWidth />
           </Col>
         </Row>
         <Row>

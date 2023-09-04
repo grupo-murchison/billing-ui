@@ -16,8 +16,8 @@ import { DiccionarioDropdown } from '@domains/diccionario/container/diccionario-
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ProcedimientoQVariableCreate = () => {
   const _navigate = useNavigate();
@@ -26,7 +26,6 @@ const ProcedimientoQVariableCreate = () => {
   const { mainDataGrid } = useContext(ProcedimientoQVariableContext);
 
   const {
-    register,
     handleSubmit,
     control,
     formState: { errors: formErrors, isSubmitting },
@@ -55,26 +54,10 @@ const ProcedimientoQVariableCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' fullWidth />
           </Col>
           <Col md={6}>
-            <TextField
-              id='nombre'
-              label='Nombre'
-              {...register('nombre')}
-              error={!!formErrors.nombre}
-              helperText={formErrors?.nombre?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField disabled={isSubmitting} control={control} label='Nombre' name='nombre' fullWidth />
           </Col>
         </Row>
         <Row>
