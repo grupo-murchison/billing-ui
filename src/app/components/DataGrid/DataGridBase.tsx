@@ -59,9 +59,6 @@ const DataGridBase = ({
     },
   };
 
-  const pageSize = 10;
-  const page = 1;
-
   helperGrid.columnsFlexResolver(columns);
 
   return (
@@ -83,7 +80,6 @@ const DataGridBase = ({
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
-          // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
           autoHeight={rows.length > 0 ? true : false}
           loading={loading}
           localeText={{ ...localeText }}
