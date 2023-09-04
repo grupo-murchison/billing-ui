@@ -10,7 +10,7 @@ import {
   useGridApiRef,
 } from '@mui/x-data-grid';
 
-import { Col, Row } from '@app/components';
+import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
@@ -30,6 +30,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FacturacionReversionCreateSchema } from '@domains/facturacion/schemas';
 import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
+import FacturacionReversionLog from './views/FacturacionReversionLog';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
@@ -40,6 +41,8 @@ const FacturacionReversion = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('Se inicia el procesamiento!');
   const [contratos, setContratos] = useState<AnyValue>([]);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
+  const [facturacionData, setFacturacionData] = useState({});
+  const [openModal, setOpenModal] = useState(false);
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
   const apiRef = useGridApiRef();
@@ -123,21 +126,9 @@ const FacturacionReversion = () => {
   };
 
   const handleVerLog = (row: AnyValue) => {
-    // setOpenBackdrop(true);
-    setSnackbarMessage('La funcionalidad "Ver Log" aún no está disponible.');
-
-    // FacturacionRepository
-    // .then(_response => {
-    // })
-    // .catch(error => {
-    //   console.log('Anular Error', error);
-    //   setErrorFromBackEnd(true);
-    //   setSnackbarMessage('Ocurrió un error!');
-    // })
-    // .finally(() => {
-    // setOpenBackdrop(false);
-    // });
-    setOpenSackbar(true);
+    const datos = row;
+    setFacturacionData(datos);
+    setOpenModal(true);
   };
 
   const toolbar = (
@@ -209,6 +200,10 @@ const FacturacionReversion = () => {
             headerName: 'Tipo Facturación',
           },
           {
+            field: 'estado',
+            headerName: 'Estado',
+          },
+          {
             field: 'actions',
             type: 'actions',
             headerName: 'Acciones',
@@ -221,6 +216,7 @@ const FacturacionReversion = () => {
                 icon={<ViewIcon />}
                 label='Ver Log'
                 onClick={() => handleVerLog(params.row)}
+                disabled={params.row.estado === 'REVERTIDO' ? false : true}
                 showInMenu
               />,
               <GridActionsCellItem
@@ -290,7 +286,9 @@ const FacturacionReversion = () => {
           },
         ]}
       />
-
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log proceso de reversión de la facturación'>
+        <FacturacionReversionLog facturacionData={facturacionData} />
+      </Modal>
       <Backdrop open={openBackdrop} />
 
       <Toast
