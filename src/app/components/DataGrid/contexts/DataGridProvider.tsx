@@ -28,6 +28,7 @@ const DataGridProvider = <T,>({
   });
 
   const makeRequest = useCallback((config?: { filters?: RepositoryParams }) => {
+    setLoading(true);
     const { filters: currentFilters, ...rest } = repositoryFuncParamsRef.current;
     repositoryFunc({
       ...rest,
@@ -47,7 +48,6 @@ const DataGridProvider = <T,>({
   }, []);
 
   const handlePaginationModelChange = useCallback((model: GridPaginationModel) => {
-    setLoading(true);
     setPaginationModel({ ...model });
     repositoryFuncParamsRef.current = {
       ...repositoryFuncParamsRef.current,
@@ -56,7 +56,6 @@ const DataGridProvider = <T,>({
     };
 
     makeRequest();
-    setLoading(false);
   }, []);
 
   useEffect(() => {
