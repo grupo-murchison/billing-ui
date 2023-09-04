@@ -216,7 +216,7 @@ const FacturacionReversion = () => {
                 icon={<ViewIcon />}
                 label='Ver Log'
                 onClick={() => handleVerLog(params.row)}
-                disabled={params.row.estado === 'REVERTIDO' ? false : true}
+                disabled={params.row.estado === 'REVERSADO' ? false : true}
                 showInMenu
               />,
               <GridActionsCellItem
