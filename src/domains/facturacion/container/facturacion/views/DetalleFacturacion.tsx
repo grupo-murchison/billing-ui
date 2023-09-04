@@ -10,30 +10,18 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 
 import { DateLib } from '@libs';
 
+import DataGridSoporte from './DataGridSoporte';
+
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
   currency: 'USD',
 });
 
 function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: AnyValue }) {
-  const [eventos, setEventos] = useState<AnyValue>();
   const [detalle, setDetalle] = useState<AnyValue>();
   const [loading, setLoading] = useState(false);
   const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<number>();
-
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
-
-  useEffect(() => {
-    if (facturacionContratoConceptoId) {
-      setLoading(true);
-      FacturacionRepository.getEventos(String(facturacionContratoConceptoId)) // TODO es el mismo id que para los detalles o es otro dato ?
-        .then(({ data }) => {
-          setEventos(data[0]?.eventos);
-        })
-        .catch()
-        .finally(() => setLoading(false));
-    }
-  }, [facturacionContratoConceptoId]);
 
   useEffect(() => {
     if (facturacionContratoId) {
@@ -200,10 +188,11 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         checkboxSelection
         rowSelectionModel={rowSelectionModel}
         onRowSelectionModelChange={(selection: AnyValue) => {
-          if (selection.length > 1) {
+          if (selection.length >= 1) {
             const selectionSet = new Set(rowSelectionModel);
             const result = selection.filter((s: AnyValue) => !selectionSet.has(s));
-            setFacturacionContratoConceptoId(selection[0]);
+
+            setFacturacionContratoConceptoId(result[0]);
             setRowSelectionModel(result);
           } else {
             setRowSelectionModel(selection);
@@ -219,54 +208,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         </FormLabel>
       </Box>
 
-      <DataGridBase
-        loading={loading}
-        rows={eventos || []}
-        // onSelectionModelChange={(selection) => {
-        //   if (selection.length > 1) {
-        //     const selectionSet = new Set(selectionModel);
-        //     const result = selection.filter((s) => !selectionSet.has(s));
-
-        //     setSelectionModel(result);
-        //   } else {
-        //     setSelectionModel(selection);
-        //   }
-        // }}
-        onRowSelectionModelChange={newRowSelectionModel => {
-          setRowSelectionModel(newRowSelectionModel);
-        }}
-        columns={[
-          {
-            field: 'genDestinoId',
-            headerName: 'VIN',
-          },
-          {
-            field: 'genEventoTipoId',
-            headerName: 'Tipo Evento',
-          },
-          {
-            field: 'genEventoFechaCreacion',
-            headerName: 'Fecha',
-            valueGetter: params => DateLib.beautifyISO(params?.value),
-          },
-          {
-            field: 'evDUA',
-            headerName: 'DUA',
-          },
-          {
-            field: 'evModelo',
-            headerName: 'Modelo',
-          },
-          {
-            field: 'genPatio',
-            headerName: 'Patio',
-          },
-          {
-            field: 'evTipoEmbarque',
-            headerName: 'Tipo Embarque',
-          },
-        ]}
-      />
+      <DataGridSoporte facturacionContratoConceptoId={facturacionContratoConceptoId} />
     </>
   );
 }
