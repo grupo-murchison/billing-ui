@@ -120,7 +120,13 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         </Col>
 
         <Col sm={12} md={3}>
-          <TextField label={'Nro. Contrato'} name='nroContrato' value={2} inputProps={{ readOnly: true }} fullWidth />
+          <TextField
+            label={'Nro. Contrato'}
+            name='nroContrato'
+            value={periodo?.contratos[0]?.contratoNumero}
+            inputProps={{ readOnly: true }}
+            fullWidth
+          />
         </Col>
 
         <Col sm={12} md={6}>

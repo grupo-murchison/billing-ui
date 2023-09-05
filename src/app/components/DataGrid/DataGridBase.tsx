@@ -1,10 +1,9 @@
 import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI } from '@mui/x-data-grid';
-import { Button, Paper, Stack, SxProps, useTheme } from '@mui/material';
+import { Paper, SxProps, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import NoRowsContent from './components/NoRowsContent';
-
-import { AddIcon } from '@assets/icons';
+import ToolbarBase from './components/Toolbar';
 
 import { localeText } from './constants/dataGrid.config';
 import * as helperGrid from './helpers';
@@ -15,7 +14,8 @@ const DataGridBase = ({
   loading,
   pageSizeOptions,
   onClickNew,
-  toolbar: Toolbar,
+  toolbar,
+  name,
   ...props
 }: DataGridProps) => {
   const theme = useTheme();
@@ -61,16 +61,10 @@ const DataGridBase = ({
 
   helperGrid.columnsFlexResolver(columns);
 
+  const Toolbar = () => <ToolbarBase fileName={name} onClickNew={onClickNew} subComponent={toolbar} />;
+
   return (
     <>
-      {onClickNew && (
-        <Stack sx={{ justifyContent: 'flex-end', marginBottom: 2, paddingTop: 3 }} direction='row'>
-          <Button onClick={onClickNew} color='primary' variant='contained' startIcon={<AddIcon />}>
-            Alta
-          </Button>
-        </Stack>
-      )}
-
       <Paper>
         <MUIDataGrid
           {...props}
@@ -125,4 +119,5 @@ interface DataGridProps extends DataGridPropsMUI {
    */
   pageSizeOptions?: helperGrid.PageSizeOptions;
   toolbar?: AnyValue;
+  name?: string;
 }

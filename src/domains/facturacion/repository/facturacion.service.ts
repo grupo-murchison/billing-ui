@@ -60,7 +60,7 @@ class FacturacionService {
 
   static revertirFacturacion = async (facturacionContratoId: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/reversar/${facturacionContratoId}`),
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/reversar/${facturacionContratoId}`),
     );
 
     return [response, error];
@@ -68,7 +68,7 @@ class FacturacionService {
 
   static anularFacturacion = async (facturacionContratoId: string): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/contrato/anular/${facturacionContratoId}`),
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/anular/${facturacionContratoId}`),
     );
 
     return [response, error];

@@ -7,11 +7,8 @@ import { initialContext } from '../constants';
 
 const DataGridProvider = <T,>({
   hookRef,
-  columns,
-  onClickNew,
   repositoryFunc,
   children,
-  toolbar,
   getRows,
   ...props
 }: DataGridProviderProps<T>) => {
@@ -74,13 +71,10 @@ const DataGridProvider = <T,>({
     <DataGridContext.Provider
       value={{
         ...props,
-        columns,
-        onClickNew,
         rows,
         rowsTotalCount,
         loading,
         error,
-        toolbar,
         paginationModel,
         handlePaginationModelChange,
       }}
