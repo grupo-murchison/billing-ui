@@ -22,6 +22,7 @@ export interface DataGridProps<T> extends Omit<MUIDataGridProps, 'rows'> {
   >;
   toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
   getRows?: (rows: AnyValue) => AnyValue;
+  name?: string;
 }
 
 export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {

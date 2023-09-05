@@ -1,3 +1,4 @@
+import React from 'react';
 import {
   GridApi,
   GridCsvExportMenuItem,
@@ -14,7 +15,7 @@ import {
 } from '@mui/x-data-grid';
 
 import { DateLib } from '@libs';
-import { Button, MenuItem, Stack, useTheme } from '@mui/material';
+import { Button, MenuItem } from '@mui/material';
 import { exportBlob } from '@app/components/Button/Download';
 import { AddIcon } from '@assets/icons';
 
@@ -22,10 +23,10 @@ const timestamp = DateLib.ISOStringToTimeStamp(new Date().toISOString());
 
 interface ToolbarMuiExportProps extends GridCsvExportOptions {
   onClickNew?: () => void;
+  subComponent?: React.JSXElementConstructor<any> | null;
 }
 
-const ToolbarMUI = ({ onClickNew, ...props }: ToolbarMuiExportProps) => {
-  const theme = useTheme();
+const ToolbarBase = ({ onClickNew, subComponent: SubComponent, ...props }: ToolbarMuiExportProps) => {
   return (
     <GridToolbarContainer
       sx={{
@@ -33,17 +34,14 @@ const ToolbarMUI = ({ onClickNew, ...props }: ToolbarMuiExportProps) => {
         backgroundColor: '#d1d8df',
       }}
     >
+      {SubComponent && <SubComponent />}
+
       {/* <GridToolbarColumnsButton /> */}
-      <GridToolbarFilterButton />
+
+      {<GridToolbarFilterButton />}
+
       {/* <GridToolbarDensitySelector /> */}
-      <GridToolbarExportContainer>
-        <GridCsvExportMenuItem
-          options={{
-            fileName: `${props.fileName || 'Download-Billing'}-${timestamp}`,
-          }}
-        />
-        <JsonExportMenuItem options={{ fileName: props.fileName }} />
-      </GridToolbarExportContainer>
+
       {onClickNew && (
         <Button
           onClick={onClickNew}
@@ -55,6 +53,15 @@ const ToolbarMUI = ({ onClickNew, ...props }: ToolbarMuiExportProps) => {
           Alta
         </Button>
       )}
+
+      <GridToolbarExportContainer>
+        <GridCsvExportMenuItem
+          options={{
+            fileName: `${props.fileName || 'Download-Billing'}-${timestamp}`,
+          }}
+        />
+        <JsonExportMenuItem options={{ fileName: props.fileName }} />
+      </GridToolbarExportContainer>
     </GridToolbarContainer>
   );
 };
@@ -98,4 +105,4 @@ function JsonExportMenuItem(props: GridExportMenuItemProps<AnyValue>) {
   );
 }
 
-export default ToolbarMUI;
+export default ToolbarBase;

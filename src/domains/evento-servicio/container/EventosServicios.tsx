@@ -10,7 +10,6 @@ import { useCallback, useContext, useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
-import ToolbarMUI from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from '@domains/facturacion/constants';
@@ -100,14 +99,13 @@ const EventoServicio = () => {
     </Paper>
   );
 
-  const toolbarProp = () => <ToolbarMUI fileName={'Eventos Por Servicio'} />;
-
   return (
     <>
       {toolbar}
 
       <DataGrid
         hookRef={mainDataGrid.ref}
+        name='Eventos Por Servicio'
         columns={[
           { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115 },
           { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
@@ -151,7 +149,6 @@ const EventoServicio = () => {
           },
         ]}
         repositoryFunc={EventoServicioRepository.getAllEventDetails}
-        toolbar={toolbarProp}
       />
     </>
   );
