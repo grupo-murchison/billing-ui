@@ -240,16 +240,17 @@ const FacturacionReversion = () => {
         checkboxSelection
         rowSelectionModel={rowSelectionModel}
         onRowSelectionModelChange={(selection: AnyValue) => {
-          // TODO esto está raro, se puede mejorar
-          if (selection.length > 1) {
+          if (selection.length >= 1) {
             const selectionSet = new Set(rowSelectionModel);
             const result = selection.filter((s: AnyValue) => !selectionSet.has(s));
             setRowSelectionModel(result);
-            const rowMap = apiRef?.current?.getSelectedRows();
-            const row: AnyValue = rowMap.get(selection[0]);
+
+            const row = apiRef?.current.getRow(result[0]);
+
             setContratos(row?.contratos || []);
           } else {
             setRowSelectionModel(selection);
+            setContratos([]);
           }
         }}
       />

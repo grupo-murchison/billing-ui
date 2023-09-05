@@ -20,7 +20,7 @@ const currencyFormatter = new Intl.NumberFormat('en-US', {
 function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: AnyValue }) {
   const [detalle, setDetalle] = useState<AnyValue>();
   const [loading, setLoading] = useState(false);
-  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<number>();
+  const [facturacionContratoConceptoId, setFacturacionContratoConceptoId] = useState<number | null>(null);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
 
   useEffect(() => {
@@ -196,6 +196,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
             setRowSelectionModel(result);
           } else {
             setRowSelectionModel(selection);
+            setFacturacionContratoConceptoId(null);
           }
         }}
       />

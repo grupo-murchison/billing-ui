@@ -6,11 +6,7 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 
 import { DateLib } from '@libs';
 
-function DataGridSoporte({
-  facturacionContratoConceptoId,
-}: {
-  facturacionContratoConceptoId: number | string | undefined;
-}) {
+function DataGridSoporte({ facturacionContratoConceptoId }: { facturacionContratoConceptoId: number | null }) {
   const [eventos, setEventos] = useState<AnyValue>();
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +19,8 @@ function DataGridSoporte({
         })
         .catch()
         .finally(() => setLoading(false));
+    } else {
+      setEventos([]);
     }
   }, [facturacionContratoConceptoId]);
 
