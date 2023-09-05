@@ -3,8 +3,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, Card, CardContent, CardHeader, Stack, TextField, Typography } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
+import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
 
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
@@ -33,6 +32,7 @@ import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
@@ -44,12 +44,10 @@ const ContratoEdit = () => {
   const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
 
   const {
-    register,
     reset,
     handleSubmit,
     watch,
     control,
-    setValue,
     resetField,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ContratoEditSchemaType>({
@@ -152,11 +150,9 @@ const ContratoEdit = () => {
         {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
         {/* <Col md={6}>
           <ClienteDropdown
+            control={control}
             id='destinatarioId'
             label='Destinatario'
-            // {...register('destinatarioId', {
-            //   valueAsNumber: true,
-            // })}
             // error={!!formErrors.destinatarioId}
             // helperText={formErrors?.destinatarioId?.message}
             // disabled={isSubmitting}
@@ -199,36 +195,22 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={12}>
-          <TextField
-            id='descripcion'
-            label='Descripción'
-            error={!!formErrors.descripcion}
-            helperText={formErrors?.descripcion?.message}
-            disabled={isSubmitting}
-            multiline
-            fullWidth
-            // variant='standard'
-            {...register('descripcion')}
-          />
+          <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
+          <FormDesktopDatePicker
+            control={control}
+            disabled={isSubmitting}
             label='Fecha Inicio Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaInicioContrato')}
-            onChange={newValue => setValue('fechaInicioContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
-            disabled={isSubmitting}
+            name='fechaInicioContrato'
           />
         </Col>
         <Col md={6}>
-          <DesktopDatePicker
-            label='Fecha Fin Contrato'
-            inputFormat='dd-MM-yyyy'
-            value={watch('fechaFinContrato')}
-            onChange={newValue => setValue('fechaFinContrato', newValue)}
-            renderInput={params => <TextField {...params} fullWidth />}
+          <FormDesktopDatePicker
+            control={control}
             disabled={isSubmitting}
+            label='Fecha Fin Contrato'
+            name='fechaFinContrato'
           />
         </Col>
       </Row>
@@ -297,15 +279,12 @@ const ContratoEdit = () => {
           <CardContent>
             <Row>
               <Col md={4}>
-                <TextField
-                  id='nroContrato'
+                <FormTextField
+                  control={control}
+                  name='nroContrato'
                   label='Nro. Contrato'
                   InputProps={{ readOnly: true }}
                   type='string'
-                  fullWidth
-                  {...register('nroContrato', {
-                    // valueAsNumber: true,
-                  })}
                 />
               </Col>
             </Row>
@@ -328,7 +307,7 @@ const ContratoEdit = () => {
           <DivisorProvisorio label='Plan Facturación' />
 
           {planFacturacion}
-          
+
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
               <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />

@@ -13,20 +13,21 @@ import type { ProcedimientoCustomCreateSchemaType } from '@domains/procedimiento
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, InputAdornment, TextField } from '@mui/material';
+import { Box, InputAdornment } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-const ProcedimientoCustomCreate = forwardRef((_, ref) => {
+const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
 
   const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
 
   const {
-    register,
     control,
     handleSubmit,
     watch,
@@ -65,14 +66,17 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
         accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
-              expresionFiltro: `${filtroValue}`,
               eventoCampoAgrupacionId: null,
+              eventoCampoFiltroId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value,
+              expresionFiltro: `${filtroValue}`,
             }
           : {
-              expresionFiltro: '',
               eventoCampoAgrupacionId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value || null,
+              eventoCampoFiltroId: null,
+              expresionFiltro: null,
             }),
       });
+
       const apiPayload = parseToNull(data);
       await ProcedimientoCustomRepository.createProcedimientoCustom(apiPayload);
 
@@ -120,31 +124,20 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={4}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              inputRef={ref}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} name='codigo' label='Código' fullWidth />
           </Col>
           <Col md={8}>
-            <TextField
-              id='denominacion'
-              label='Denominación'
-              {...register('denominacion')}
-              error={!!formErrors.denominacion}
-              helperText={formErrors?.denominacion?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              name='denominacion'
+              label='Denominación'
               fullWidth
             />
           </Col>
         </Row>
         <Row>
-          <Col md={4}>
+          <Col md={6}>
             <FormSelect
               label='Función'
               name='funcionCode'
@@ -155,7 +148,7 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               options={mapearParametros(state.funciones)}
             />
           </Col>
-          <Col md={4}>
+          <Col md={6}>
             <FormSelect
               label='Evento'
               name='eventoCode'
@@ -167,14 +160,18 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               emptyOption={true}
             />
           </Col>
-          <Col md={4}>
+        </Row>
+
+        <Row>
+          <Col md={6}>
             <FormSelect
               label='Campo'
               name='eventoCampoCode'
               control={control}
               error={!!formErrors.eventoCampoCode}
               helperText={formErrors?.eventoCampoCode?.message}
-              disabled={isSubmitting || watch('funcionCode') === 'C'}
+              // disabled={isSubmitting || watch('funcionCode') === 'C'}
+              disabled={isSubmitting}
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
@@ -186,8 +183,8 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
           sx={{
             border: '1px solid lightgray',
             borderRadius: '0.25rem',
-            padding: '1.5rem 1rem 0rem',
-            marginBottom: '1rem',
+            padding: '2rem 1rem 0rem',
+            marginBottom: '2rem',
             position: 'relative',
           }}
         >
@@ -198,11 +195,12 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               top: '-0.5rem',
               backgroundColor: 'white',
               padding: '0 0.25rem',
-              marginLeft: '-0.5rem',
+              marginLeft: '-0.2rem',
               color: 'gray',
               fontSize: '0.85rem',
               lineHeight: '1rem',
               textTransform: 'capitalize',
+              my: 2,
             }}
           >
             {watch('accionCode')
@@ -237,13 +235,11 @@ const ProcedimientoCustomCreate = forwardRef((_, ref) => {
               />
             </Col>
             <Col md={4}>
-              <TextField
-                id='filtroValue'
-                label='Valor'
-                {...register('filtroValue')}
-                error={!!formErrors.filtroValue}
-                helperText={formErrors?.filtroValue?.message}
+              <FormTextField
+                control={control}
                 disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                label='Valor'
+                name='filtroValue'
                 InputProps={{
                   startAdornment: <InputAdornment position='start'>=</InputAdornment>,
                 }}

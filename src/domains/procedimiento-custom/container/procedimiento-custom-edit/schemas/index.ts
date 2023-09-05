@@ -26,7 +26,7 @@ export const ProcedimientoCustomEditSchema = z
         path: ['funcionCode'],
         fatal: true,
       });
-      
+
       return z.never;
     } else {
       if (!eventoCode) {
@@ -36,8 +36,8 @@ export const ProcedimientoCustomEditSchema = z
           path: ['eventoCode'],
         });
       }
-  
-      if (funcionCode !== 'C' && !eventoCampoCode) {
+
+      if (funcionCode && !eventoCampoCode) {
         ctx.addIssue({
           code: 'custom',
           message: 'Campo es requerido.',

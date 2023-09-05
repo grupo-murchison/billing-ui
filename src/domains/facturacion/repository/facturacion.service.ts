@@ -4,7 +4,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
-import { FacturacionLogSchema, FacturacionMasivaSchema } from './facturacion.schemas';
+import { FacturacionMasivaSchema } from './facturacion.schemas';
 
 const BASE_PATH = 'v1/facturaciones';
 

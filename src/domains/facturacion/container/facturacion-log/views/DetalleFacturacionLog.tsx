@@ -3,7 +3,7 @@ import Form from '@app/components/Form/Form';
 import { TextField } from '@mui/material';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) => {
+const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue }) => {
   return (
     <>
       <Form>
@@ -13,8 +13,8 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) =>
               id='contratoDescripcion'
               label='Descripción Contrato'
               defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoClienteCodigo}
-              disabled
               fullWidth
+              InputProps={{ readOnly: true }}
             />
           </Col>
           <Col md={6}>
@@ -22,7 +22,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) =>
               id='contratoClienteCodigo'
               label='Número de Cliente'
               defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoClienteDescripcion}
-              disabled
+              InputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>
@@ -33,7 +33,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) =>
               id='contratoNumero'
               label='Número Contrato'
               defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoNumero}
-              disabled
+              InputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>
@@ -42,7 +42,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) =>
               id='contratoDescripcion'
               label='Descripción Contrato'
               defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoDescripcion}
-              disabled
+              InputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>
@@ -53,7 +53,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: any }) =>
               id='periodoNumero'
               label='Periodo'
               defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].periodoNumero}
-              disabled
+              InputProps={{ readOnly: true }}
               fullWidth
             />
           </Col>

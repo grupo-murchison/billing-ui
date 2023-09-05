@@ -15,8 +15,8 @@ import { ProductoSoftlandDropdown } from '@domains/producto-softland/container/p
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ProcedimientoPSIntervaloEdit = () => {
   const _navigate = useNavigate();
@@ -27,7 +27,6 @@ const ProcedimientoPSIntervaloEdit = () => {
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
-    register,
     handleSubmit,
     reset,
     control,
@@ -63,57 +62,45 @@ const ProcedimientoPSIntervaloEdit = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Procedimiento Producto Softland'>
+    <Modal isOpen onClose={handleClose} title='Editar Intervalo Procedimiento Producto Softland'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='intervalo'
+            <FormTextField
+              control={control}
               label='Intervalo'
+              name='intervalo'
               type='number'
-              {...register('intervalo', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.intervalo}
-              helperText={formErrors?.intervalo?.message}
               disabled={isSubmitting}
               fullWidth
             />
           </Col>
           <Col md={6}>
-            <TextField
-              id='valorInicial'
-              label='Valor Inicial'
-              type='number'
-              {...register('valorInicial', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.valorInicial}
-              helperText={formErrors?.valorInicial?.message}
+            <FormTextField
+              control={control}
               disabled={isSubmitting}
+              label='Valor Inicial'
+              name='valorInicial'
+              type='number'
               fullWidth
             />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
-            <TextField
-              id='valorFinal'
+            <FormTextField
+              control={control}
+              disabled={isSubmitting}
+              name='valorFinal'
               label='Valor Final'
               type='number'
-              {...register('valorFinal', {
-                valueAsNumber: true,
-              })}
-              error={!!formErrors.valorFinal}
-              helperText={formErrors?.valorFinal?.message}
-              disabled={isSubmitting}
               fullWidth
             />
           </Col>
           <Col md={6}>
             <ProductoSoftlandDropdown
               control={control}
-              name='productoSoftland'
+              name='productoSoftlandId'
               error={!!formErrors.productoSoftlandId}
               disabled={isSubmitting}
               label='Producto Softland'

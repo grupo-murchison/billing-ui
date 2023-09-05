@@ -19,8 +19,8 @@ import { ProcedimientoPSDropdown } from '@domains/procedimiento-ps/container/pro
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { TextField } from '@mui/material';
 import Form from '@app/components/Form/Form';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const ConceptoAcuerdoCreate = () => {
   const _navigate = useNavigate();
@@ -29,7 +29,6 @@ const ConceptoAcuerdoCreate = () => {
 
   const {
     control,
-    register,
     handleSubmit,
     formState: { errors: formErrors, isSubmitting },
   } = useForm<ConceptoAcuerdoCreateSchemaType>({
@@ -67,15 +66,7 @@ const ConceptoAcuerdoCreate = () => {
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              disabled={isSubmitting}
-              fullWidth
-              {...register('descripcion')}
-            />
+            <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
         </Row>
         <Row>

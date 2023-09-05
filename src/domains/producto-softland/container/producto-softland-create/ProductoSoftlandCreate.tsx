@@ -1,23 +1,22 @@
 import { useCallback, useContext } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
-import { useNavigate } from 'react-router-dom';
+import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Modal, Row, Col } from '@app/components';
+import Form from '@app/components/Form/Form';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 import { ProductoSoftlandRepository } from '@domains/producto-softland/repository';
 import { ProductoSoftlandCreateSchema } from '@domains/producto-softland/container/producto-softland-create/schemas';
 import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 import type { ProductoSoftlandCreateSchemaType } from '@domains/producto-softland/container/producto-softland-create/schemas';
 
-import { zodResolver } from '@hookform/resolvers/zod';
-
 import { DateLib } from '@libs';
-
-import { Checkbox, FormControlLabel, FormGroup, TextField } from '@mui/material';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
-import Form from '@app/components/Form/Form';
 
 const ProductoSoftlandCreate = () => {
   const _navigate = useNavigate();
@@ -25,11 +24,9 @@ const ProductoSoftlandCreate = () => {
   const { mainDataGrid } = useContext(ProductoSoftlandContext);
 
   const {
-    register,
     handleSubmit,
-    watch,
-    setValue,
-    formState: { errors: formErrors, isSubmitting },
+    control,
+    formState: { isSubmitting },
   } = useForm<ProductoSoftlandCreateSchemaType>({
     defaultValues: {
       activo: false,
@@ -47,7 +44,9 @@ const ProductoSoftlandCreate = () => {
         ...data,
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
       };
+
       await ProductoSoftlandRepository.createProductoSoftland(submitData);
+
       mainDataGrid.reload();
       _navigate('/producto-softland');
     },
@@ -63,60 +62,28 @@ const ProductoSoftlandCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <TextField
-              id='agrupacion'
-              label='Agrupación'
-              {...register('agrupacion')}
-              error={!!formErrors.agrupacion}
-              helperText={formErrors?.agrupacion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} disabled={isSubmitting} name='agrupacion' label='Agrupación' />
           </Col>
           <Col md={6}>
-            <TextField
-              id='codigo'
-              label='Código'
-              {...register('codigo')}
-              error={!!formErrors.codigo}
-              helperText={formErrors?.codigo?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} name='codigo' label='Código' disabled={isSubmitting} />
           </Col>
         </Row>
         <Row>
           <Col md={12}>
-            <TextField
-              id='descripcion'
-              label='Descripción'
-              {...register('descripcion')}
-              error={!!formErrors.descripcion}
-              helperText={formErrors?.descripcion?.message}
-              disabled={isSubmitting}
-              fullWidth
-            />
+            <FormTextField control={control} name='descripcion' label='Descripción' disabled={isSubmitting} />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
-            <DesktopDatePicker
-              label='Fecha Estado'
-              inputFormat='dd-MM-yyyy'
-              value={watch('fechaCambioEstado')}
-              onChange={newValue => setValue('fechaCambioEstado', newValue)}
-              renderInput={params => <TextField {...params} fullWidth />}
+            <FormDesktopDatePicker
+              control={control}
               disabled={isSubmitting}
+              label='Fecha Estado'
+              name='fechaCambioEstado'
             />
           </Col>
           <Col md={6}>
-            <FormGroup>
-              <FormControlLabel
-                control={<Checkbox checked={watch('activo')} onChange={() => setValue('activo', !watch('activo'))} />}
-                label='Activo'
-                disabled={isSubmitting}
-              />
-            </FormGroup>
+            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>

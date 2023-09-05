@@ -25,6 +25,8 @@ const DataGridBase = ({
       border: '1.25px solid',
     },
     'backgroundColor': rows.length > 0 ? theme.palette.text.disabled : theme.palette.background.paper,
+    'borderRadius': theme.shape,
+    'overflow': 'hidden',
     '& .MuiDataGrid-footerContainer': {
       backgroundColor: theme.palette.background.paper,
     },
@@ -57,9 +59,6 @@ const DataGridBase = ({
     },
   };
 
-  const pageSize = 10;
-  const page = 1;
-
   helperGrid.columnsFlexResolver(columns);
 
   return (
@@ -81,7 +80,6 @@ const DataGridBase = ({
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
-          // paginationModel={{ page, pageSize }} // TODO falta terminar de ver si esto esta bien o es así
           autoHeight={rows.length > 0 ? true : false}
           loading={loading}
           localeText={{ ...localeText }}
@@ -97,6 +95,12 @@ const DataGridBase = ({
                 const { from, to, count } = props;
                 return `${from}-${to} de ${count !== -1 ? count : `más de ${to}`}`;
               },
+              SelectProps: {
+                MenuProps: { disableScrollLock: true },
+              },
+            },
+            baseSelect: {
+              MenuProps: { disableScrollLock: true },
             },
           }}
           sx={{

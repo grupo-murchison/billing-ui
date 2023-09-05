@@ -26,7 +26,7 @@ const ProcedimientoQEdit = () => {
   const [procedimientoQ, setProcedimientoQ] = useState<AnyValue>();
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
-  const { register, reset } = useForm<ProcedimientoQEditSchemaType>({
+  const { reset } = useForm<ProcedimientoQEditSchemaType>({
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
 
@@ -56,8 +56,9 @@ const ProcedimientoQEdit = () => {
             <TextField
               id='codigo'
               label='Código'
-              {...register('codigo')}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
               defaultValue={procedimientoQ.codigo}
               fullWidth
             />
@@ -66,8 +67,9 @@ const ProcedimientoQEdit = () => {
             <TextField
               id='denominacion'
               label='Denominación'
-              {...register('denominacion')}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
               defaultValue={procedimientoQ.denominacion}
               fullWidth
             />
@@ -78,8 +80,9 @@ const ProcedimientoQEdit = () => {
             <TextField
               id='descripcion'
               label='Descripción'
-              {...register('descripcion')}
-              disabled
+              InputProps={{
+                readOnly: true,
+              }}
               defaultValue={procedimientoQ.descripcion}
               fullWidth
             />
@@ -88,9 +91,6 @@ const ProcedimientoQEdit = () => {
             <TipoProcedimientoQDropdown
               id='tipoProcedimientoQ'
               label={`Tipo ${label.procedimientoQ}`}
-              {...register('tipoProcedimientoQId', {
-                valueAsNumber: true,
-              })}
               disabled
               value={procedimientoQ.tipoProcedimientoQId}
             />
@@ -101,9 +101,6 @@ const ProcedimientoQEdit = () => {
             <ProcedimientoCustomDropdown
               id='procedimientoCustom'
               label='Procedimiento Custom'
-              {...register('procedimientoCustomId', {
-                valueAsNumber: true,
-              })}
               disabled
               value={procedimientoQ.procedimientoCustomId}
             />
@@ -112,9 +109,6 @@ const ProcedimientoQEdit = () => {
             <ProcedimientoBuiltinDropdown
               id='procedimientoBuiltin'
               label='Procedimiento Builtin'
-              {...register('procedimientoBuiltinId', {
-                valueAsNumber: true,
-              })}
               disabled
               value={procedimientoQ.procedimientoBuiltinId}
             />
