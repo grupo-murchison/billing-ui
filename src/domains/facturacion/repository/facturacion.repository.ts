@@ -6,7 +6,6 @@ import { RepositoryUtils } from '@app/utils';
 
 import { FacturacionService } from './facturacion.service';
 import {
-  FacturacionLogSchema,
   FacturacionMasivaSchema,
   getAllFacturasReportePaginatedSchema,
 } from './facturacion.schemas';
@@ -55,6 +54,7 @@ class FacturacionRepository {
   };
 
   static revertirFacturacion = async (facturacionContratoId: string) => {
+    return; // TODO quitar este return
     const response$ = from(FacturacionService.revertirFacturacion(facturacionContratoId)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
@@ -63,6 +63,7 @@ class FacturacionRepository {
   };
 
   static anularFacturacion = async (facturacionContratoId: string) => {
+    return; // TODO quitar este return
     const response$ = from(FacturacionService.anularFacturacion(facturacionContratoId)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );

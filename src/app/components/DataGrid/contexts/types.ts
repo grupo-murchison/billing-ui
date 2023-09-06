@@ -1,7 +1,7 @@
-import type { ChangeEvent, JSXElementConstructor, ReactNode } from 'react';
+import type { JSXElementConstructor, ReactNode } from 'react';
 
 import type { AxiosResponse } from 'axios';
-import { GridColDef, GridRowsProp, DataGridProps as MUIDataGridProps } from '@mui/x-data-grid';
+import { GridColDef, GridPaginationModel, GridRowsProp, DataGridProps as MUIDataGridProps } from '@mui/x-data-grid';
 
 export type DataGridProviderProps<T> = { children: ReactNode } & DataGridProps<T>;
 
@@ -22,6 +22,7 @@ export interface DataGridProps<T> extends Omit<MUIDataGridProps, 'rows'> {
   >;
   toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
   getRows?: (rows: AnyValue) => AnyValue;
+  name?: string;
 }
 
 export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {
@@ -34,16 +35,13 @@ export type RepositoryParams = Record<string, unknown>; // Record<string, AnyVal
 
 export type InitialContext = {
   columns: GridColDef[];
-  currentPage: number;
+  // currentPage: number;
   onClickNew?: () => void;
-  handleChangeRowsPerPage: (event: ChangeEvent<HTMLSelectElement>) => void;
-  handleNextPageChange: () => void;
-  handlePrevPageChange: () => void;
+  handlePaginationModelChange: (model: GridPaginationModel) => void;
   rows: GridRowsProp;
-  rowsCount: number;
-  rowsPerPage: number;
   rowsTotalCount: number;
   loading: boolean;
   error: AnyValue;
   toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
+  paginationModel: { page: number; pageSize: number };
 };

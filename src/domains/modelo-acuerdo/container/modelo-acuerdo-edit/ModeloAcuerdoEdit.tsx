@@ -28,7 +28,7 @@ const ModeloAcuerdoEdit = () => {
     control,
     handleSubmit,
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ModeloAcuerdoEditSchemaType>({
     defaultValues: {
       codigo: '',

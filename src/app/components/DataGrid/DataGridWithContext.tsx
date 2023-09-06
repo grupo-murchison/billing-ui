@@ -4,11 +4,17 @@ import { DataGridContext } from './contexts';
 import DataGridBase from './DataGridBase';
 
 const DataGridWithContext = () => {
-  const { ...props } = useContext(DataGridContext);
+  const { rowsTotalCount, paginationModel, handlePaginationModelChange, ...props } = useContext(DataGridContext);
 
   return (
     <>
-      <DataGridBase {...props} />
+      <DataGridBase
+        {...props}
+        paginationMode='server'
+        rowCount={rowsTotalCount}
+        paginationModel={{ ...paginationModel }}
+        onPaginationModelChange={handlePaginationModelChange}
+      />
     </>
   );
 };
