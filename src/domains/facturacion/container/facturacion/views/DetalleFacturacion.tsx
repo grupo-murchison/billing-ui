@@ -83,7 +83,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
           <TextField
             label={'Total Facturado'}
             name='fcTotalFacturado'
-            value={periodo?.contratos[0]?.fcTotalFacturado}
+            value={detalle[0]?.fcTotalFacturado}
             inputProps={{
               readOnly: true,
             }}
