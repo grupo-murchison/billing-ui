@@ -135,6 +135,10 @@ const Facturacion = () => {
             headerName: 'Sociedad',
           },
           {
+            field: 'estado',
+            headerName: 'Estado',
+          },
+          {
             field: 'fechaInicioContrato',
             headerName: 'Fecha Inicio',
             flex: 0.5,
