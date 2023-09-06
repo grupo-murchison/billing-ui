@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { Box, FormLabel, TextField, Typography } from '@mui/material';
+import { Box, FormLabel, InputAdornment, TextField, Typography } from '@mui/material';
 import { GridRowSelectionModel, GRID_CHECKBOX_SELECTION_COL_DEF } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -11,6 +11,7 @@ import { FacturacionRepository } from '@domains/facturacion/repository';
 import { DateLib } from '@libs';
 
 import DataGridSoporte from './DataGridSoporte';
+import { AttachMoneyIcon } from '@assets/icons';
 
 const currencyFormatter = new Intl.NumberFormat('en-US', {
   style: 'currency',
@@ -38,7 +39,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
   return (
     <>
       <Row>
-        <Col sm={12} md={6}>
+        <Col sm={12} md={4}>
           <TextField
             label={'Nro Facturación'}
             name='nroFacturacion'
@@ -62,7 +63,6 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
           <TextField
             label={'Sociedad'}
             name='sociedad'
-            // value={periodo?.contratos[0]?.sociedadDenominacion}
             value={detalle ? `${detalle[0]?.sociedadCodigo} - ${detalle[0]?.sociedadDescripcion}` : ''}
             inputProps={{ readOnly: true }}
             fullWidth
@@ -70,7 +70,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         </Col>
       </Row>
       <Row>
-        <Col sm={12} md={4}>
+        <Col sm={12} md={2}>
           <TextField
             label={'Periodo'}
             id='periodo'
@@ -79,7 +79,25 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
             fullWidth
           />
         </Col>
-        <Col sm={2} />
+        <Col sm={12} md={4}>
+          <TextField
+            label={'Total Facturado'}
+            name='fcTotalFacturado'
+            value={periodo?.contratos[0]?.fcTotalFacturado}
+            inputProps={{
+              readOnly: true,
+            }}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position='start'>
+                  <AttachMoneyIcon />
+                </InputAdornment>
+              ),
+            }}
+            type='number'
+            fullWidth
+          />
+        </Col>
         <Col sm={12} md={3}>
           <TextField
             label={'Desde'}
@@ -132,8 +150,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
         <Col sm={12} md={6}>
           <TextField
             label={'Cliente'}
-            name='contratoClienteId'
-            // value={periodo?.contratos[0]?.contratoClienteId}
+            name='contratoCliente'
             value={detalle ? `${detalle[0]?.clienteCodigo} - ${detalle[0]?.clienteDescripcion}` : ''}
             inputProps={{ readOnly: true }}
             fullWidth
