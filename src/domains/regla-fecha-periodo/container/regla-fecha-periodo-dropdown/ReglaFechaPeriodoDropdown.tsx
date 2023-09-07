@@ -6,7 +6,7 @@ import { ReglaFechaPeriodoRepository } from '@domains/regla-fecha-periodo/reposi
 
 import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
 
-const ReglaFechaPeriodoDropdown = ({ ...props }: ReglaFechaPeriodoDropdownProps) => {
+const ReglaFechaPeriodoDropdown = ({ getOptions, ...props }: ReglaFechaPeriodoDropdownProps) => {
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -19,11 +19,16 @@ const ReglaFechaPeriodoDropdown = ({ ...props }: ReglaFechaPeriodoDropdownProps)
       });
   }, []);
 
+  useEffect( () => {
+    getOptions && items.length >= 1 && getOptions(items);
+
+  },[getOptions, items.length])
+
   return <FormSelect {...props} options={items} />;
 };
 
 interface ReglaFechaPeriodoDropdownProps extends Omit<FormSelectProps, 'options'> {
-  options?: undefined;
+  getOptions: (options: DropdownSchemaType) => void;
 }
 
 export default ReglaFechaPeriodoDropdown;

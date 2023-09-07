@@ -22,7 +22,7 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { DropdownSchemaType } from '@app/utils/zod.util';
+import { findPropertyByCode, findPropertyById, mapearParametros } from '@app/utils/formHelpers.util';
 
 const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
@@ -82,20 +82,21 @@ const ProcedimientoCustomEdit = () => {
     ProcedimientoCustomRepository.getProcedimientoCustomById(id || '').then(({ data }) => {
       const { funciones, eventos, eventosCampo, acciones } = state;
 
-      const accionCode = acciones.find(({ value }) => value === data.accionId)?.code || '';
+      const accionCode = findPropertyById(acciones, data.accionId)?.code || '';
+
       const values = {
         ...data,
-        funcionCode: funciones.find(({ value }) => value === data.funcionId)?.code || '',
-        eventoCode: eventos.find(({ value }) => value === data.eventoId)?.code || '',
-        eventoCampoCode: eventosCampo.find(({ value }) => value === data.eventoCampoId)?.code || '',
+        funcionCode: findPropertyById(funciones, data.funcionId)?.code || '',
+        eventoCode: findPropertyById(eventos, data.eventoId)?.code || '',
+        eventoCampoCode: findPropertyById(eventosCampo, data.eventoCampoId)?.code || '',
         accionCode,
       };
 
       if (accionCode === 'FIL') {
-        values.filtroValue = data.expresionFiltro;
-        values.filtroCampoCode = eventosCampo.find(({ value }) => value === data?.eventoCampoFiltroId)?.code || '';
+        values.filtroValue = data?.expresionFiltro;
+        values.filtroCampoCode = findPropertyById(eventosCampo, data?.eventoCampoFiltroId)?.code || '';
       } else if (accionCode === 'AGR') {
-        values.filtroCampoCode = eventosCampo.find(({ value }) => value === data?.eventoCampoAgrupacionId)?.code || '';
+        values.filtroCampoCode = findPropertyById(eventosCampo, data?.eventoCampoAgrupacionId)?.code || '';
       }
 
       reset(values);
@@ -117,18 +118,18 @@ const ProcedimientoCustomEdit = () => {
         ...restProps
       }: ProcedimientoCustomEditSchemaType) => ({
         ...restProps,
-        funcionId: funciones.find(({ code }) => code === funcionCode)?.value || null,
-        eventoId: eventos.find(({ code }) => code === eventoCode)?.value || null,
-        eventoCampoId: eventosCampo.find(({ code }) => code === eventoCampoCode)?.value || null,
-        accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
+        funcionId: findPropertyByCode(funciones, funcionCode)?.value || null,
+        eventoId: findPropertyByCode(eventos, eventoCode)?.value || null,
+        eventoCampoId: findPropertyByCode(eventosCampo, eventoCampoCode)?.value || null,
+        accionId: findPropertyByCode(acciones, accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
               eventoCampoAgrupacionId: null,
-              eventoCampoFiltroId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value,
+              eventoCampoFiltroId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
               expresionFiltro: `${filtroValue}`,
             }
           : {
-              eventoCampoAgrupacionId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value || null,
+              eventoCampoAgrupacionId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
               eventoCampoFiltroId: null,
               expresionFiltro: null,
             }),
@@ -155,16 +156,6 @@ const ProcedimientoCustomEdit = () => {
   if (!isDataFetched) {
     return null;
   }
-
-  const mapearParametros = (estados: DropdownSchemaType) => {
-    return estados.map(data => {
-      return {
-        code: data.value,
-        label: data.label,
-        value: data.code,
-      };
-    });
-  };
 
   return (
     <Modal isOpen onClose={handleClose} title={`Editar ${label.procedimientoCustom}`}>
