@@ -64,5 +64,4 @@ export {
 
   // W
   WarningRounded as WarningIcon,
-  // import WarningRoundedIcon from '@mui/icons-material/WarningRounded';
 } from '@mui/icons-material';

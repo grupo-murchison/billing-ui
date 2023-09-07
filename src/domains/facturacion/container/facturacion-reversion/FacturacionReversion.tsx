@@ -249,6 +249,7 @@ const FacturacionReversion = () => {
                 key={2}
                 icon={<CancelScheduleSendIcon />}
                 label='Anular'
+                disabled={params.row.estado === 'FACTURADO' ? false : true}
                 onClick={() => handleAnular(params.row)}
                 showInMenu
               />,
