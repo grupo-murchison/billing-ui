@@ -25,6 +25,7 @@ const contratoSchema = z
     contratoClienteCodigo: z.string().nullish(),
     contratoClienteDescripcion: z.string().nullish(),
     estado: z.string().nullish(),
+    fcTotalFacturado: z.number().nullish(),
     id: z.number().nullish(),
     periodoNumero: z.number().nullish(),
     periodoLiquidacionDesde: z.string().nullish(),

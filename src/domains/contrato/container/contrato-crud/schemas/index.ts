@@ -1,3 +1,4 @@
+import { zodLocale } from '@app/constants';
 import z from 'zod';
 
 const ContratoVariablesSchema = z.object({
@@ -17,29 +18,75 @@ const PlanFacturacionPeriodosSchema = z.object({
 
 export const ContratoCreateSchema = z
   .object({
-    tipoContratoId: z.number({ required_error: 'El campo es requerido.' }),
-    tipoPlanFacturacionId: z.number({ required_error: 'El campo es requerido.' }),
-    reglaFechaPeriodoId: z.number({ required_error: 'El campo es requerido.' }),
-    clienteId: z.number({ required_error: 'El campo es requerido.' }),
-    modeloAcuerdoId: z.number({ required_error: 'El campo es requerido.' }),
+    clienteId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }), // .string().nonempty()
+    modeloAcuerdoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    reglaFechaPeriodoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    tipoContratoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    tipoPlanFacturacionId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    sociedadId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
     descripcion: z
-      .string({ required_error: 'El campo es requerido.' })
-      .min(1, { message: 'El campo es requerido.' })
-      .max(250, { message: 'Ha superado el límite de caracteres' }),
-    fechaInicioContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), // TODO por qué permiten null ?
-    fechaFinContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), //TODO por qué permiten null ?
+      .string({ required_error: zodLocale.required_error })
+      .min(1, { message: zodLocale.required_error })
+      .max(250, { message: zodLocale.stringMax(250) }),
+    fechaInicioContrato: z
+      .date({
+        required_error: zodLocale.required_error,
+        invalid_type_error: zodLocale.required_error,
+      })
+      .nullable(),
+    fechaFinContrato: z
+      .date({
+        required_error: zodLocale.required_error,
+        invalid_type_error: zodLocale.required_error,
+      })
+      .nullable(),
     diaPeriodo: z
-      .number({ required_error: 'El campo es requerido.' })
-      .positive({ message: 'Debe ser mayor a 0' })
+      .number({ required_error: zodLocale.required_error })
+      .positive({ message: zodLocale.numberPositive })
       .or(z.literal('')),
-    sociedadId: z.number({ required_error: 'El campo es requerido.' }),
   })
   .superRefine((values, ctx) => {
     if (values.reglaFechaPeriodoId === 3 && values.diaPeriodo === '') {
       ctx.addIssue({
-        message: 'El campo es requeridos.',
+        message: zodLocale.required_error,
         code: 'custom',
         path: ['diaPeriodo'],
+      });
+    }
+
+    if (values.fechaInicioContrato === null) {
+      ctx.addIssue({
+        message: zodLocale.required_error,
+        code: 'custom',
+        path: ['fechaInicioContrato'],
+      });
+    }
+
+    if (values.fechaFinContrato === null) {
+      ctx.addIssue({
+        message: zodLocale.required_error,
+        code: 'custom',
+        path: ['fechaFinContrato'],
+      });
+    }
+
+    if (values.fechaFinContrato && values.fechaInicioContrato && values.fechaFinContrato < values.fechaInicioContrato) {
+      ctx.addIssue({
+        message: 'Fecha Fin Contrato debe ser mayor o igual a Fecha Inicio Contrato',
+        code: 'custom',
+        path: ['fechaFinContrato'],
       });
     }
   });
