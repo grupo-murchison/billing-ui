@@ -38,6 +38,7 @@ const ProcedimientoQVariableDataGrid = () => {
       confirmDialog.open({
         entity: `Procedimiento Cantidad Cantidad Variable`,
         identifier: `${row.codigo}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoQVariableRepository.deleteProcedimientoQVariableById(row.id);
           confirmDialog.close();

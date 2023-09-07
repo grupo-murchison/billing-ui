@@ -13,7 +13,7 @@ const estadosPeriodos = [
   { value: 'ABIERTO', label: 'Abierto' },
   { value: 'ANULADO', label: 'Anulado' }, // anulado, no revierte la facturación
   { value: 'FACTURADO', label: 'Facturado' },
-  { value: 'REVERTIDO', label: 'Revertido' }, // es un deshacer, vuelve hacia atras una facturación (calculos, etc)
+  { value: 'REVERSADO', label: 'Reversado' }, // es un deshacer, vuelve hacia atras una facturación (calculos, etc)
 ];
 
 const initialContext: InitialContext = {

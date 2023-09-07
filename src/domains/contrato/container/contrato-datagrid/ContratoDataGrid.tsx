@@ -40,6 +40,7 @@ const ContratoDataGrid = () => {
       confirmDialog.open({
         entity: `${ContartoLabelAndPath.label}`,
         identifier: `${row.nroContrato}`,
+        type: 'delete',
         async onClickYes() {
           await ContratoRepository.deleteContratoById(row.id);
           confirmDialog.close();
