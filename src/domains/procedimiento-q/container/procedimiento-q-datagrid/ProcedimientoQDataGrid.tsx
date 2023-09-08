@@ -44,6 +44,7 @@ const ProcedimientoQDataGrid = () => {
       confirmDialog.open({
         entity: `${label.procedimientoQ}`,
         identifier: `${row.codigo}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoQRepository.deleteProcedimientoQById(row.id);
           confirmDialog.close();

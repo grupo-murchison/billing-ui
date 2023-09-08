@@ -39,6 +39,7 @@ const ProcedimientoPIntervaloDataGrid = (codigo: AnyValue) => {
       confirmDialog.open({
         entity: `${label.label}`,
         identifier: `${codigo.codigo.codigo}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(row.id);
           confirmDialog.close();

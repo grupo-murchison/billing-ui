@@ -1,4 +1,6 @@
-import z from 'zod';
+import z, { ZodType } from 'zod';
+import { zodId, zodLocale } from '@app/utils/zod.util';
+// import { differenceInDays } from 'date-fns';
 
 const ContratoVariablesSchema = z.object({
   id: z.number(),
@@ -6,7 +8,7 @@ const ContratoVariablesSchema = z.object({
   valor: z.string().optional().nullable(),
 });
 
-const PlanFacturacionPeriodosSchema = z.object({
+const ValidationSchemaPlanFacturacionPeriodos = z.object({
   id: z.number(),
   periodo: z.number(),
   liquidacionDesde: z.string(),
@@ -15,31 +17,71 @@ const PlanFacturacionPeriodosSchema = z.object({
   estado: z.string(),
 });
 
-export const ContratoCreateSchema = z
+export type FormDataTypeContratoCreate = {
+  clienteId: number | string;
+  descripcion: string;
+  diaPeriodo: number | string;
+  fechaInicioContrato: Date | null;
+  fechaFinContrato: Date | null;
+  modeloAcuerdoId: number | string;
+  reglaFechaPeriodoId: number | string;
+  sociedadId: number | string;
+  tipoContratoId: number | string;
+  tipoPlanFacturacionId: number | string;
+};
+
+export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate> = z
   .object({
-    tipoContratoId: z.number({ required_error: 'El campo es requerido.' }),
-    tipoPlanFacturacionId: z.number({ required_error: 'El campo es requerido.' }),
-    reglaFechaPeriodoId: z.number({ required_error: 'El campo es requerido.' }),
-    clienteId: z.number({ required_error: 'El campo es requerido.' }),
-    modeloAcuerdoId: z.number({ required_error: 'El campo es requerido.' }),
+    clienteId: zodId,
+    modeloAcuerdoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    reglaFechaPeriodoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    tipoContratoId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    tipoPlanFacturacionId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    sociedadId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
     descripcion: z
-      .string({ required_error: 'El campo es requerido.' })
-      .min(1, { message: 'El campo es requerido.' })
-      .max(250, { message: 'Ha superado el límite de caracteres' }),
-    fechaInicioContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), // TODO por qué permiten null ?
-    fechaFinContrato: z.date({ required_error: 'El campo es requerido.' }).nullable(), //TODO por qué permiten null ?
+      .string({ required_error: zodLocale.required_error })
+      .min(1, { message: zodLocale.required_error })
+      .max(250, { message: zodLocale.stringMax(250) }),
+    fechaInicioContrato: z.date({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    fechaFinContrato: z.date({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
     diaPeriodo: z
-      .number({ required_error: 'El campo es requerido.' })
-      .positive({ message: 'Debe ser mayor a 0' })
+      .number({ required_error: zodLocale.required_error })
+      .positive({ message: zodLocale.numberPositive })
       .or(z.literal('')),
-    sociedadId: z.number({ required_error: 'El campo es requerido.' }),
   })
-  .superRefine((values, ctx) => {
-    if (values.reglaFechaPeriodoId === 3 && values.diaPeriodo === '') {
+  .superRefine((fields, ctx) => {
+    // * por si se requiere validar que haya una difenrencia mínima de días entre las fechas
+    // if (differenceInDays(fields.fechaFinContrato, fields.fechaInicioContrato) < 14) {
+    //   ctx.addIssue({
+    //     message: 'Debe ser 15 días mayor a Fecha Inicio Contrato',
+    //     code: 'custom',
+    //     path: ['fechaFinContrato'],
+    //   });
+    // }
+
+    if (fields.fechaFinContrato < fields.fechaInicioContrato) {
       ctx.addIssue({
-        message: 'El campo es requeridos.',
+        message: 'Debe ser mayor o igual a Fecha Inicio Contrato',
         code: 'custom',
-        path: ['diaPeriodo'],
+        path: ['fechaFinContrato'],
       });
     }
   });
@@ -49,11 +91,11 @@ const _ContratoEditSchema = z.object({
   contratoVariables: z.array(ContratoVariablesSchema),
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
-  periodos: z.array(PlanFacturacionPeriodosSchema),
+  periodos: z.array(ValidationSchemaPlanFacturacionPeriodos),
 });
 
-export const ContratoEditSchema = z.intersection(ContratoCreateSchema, _ContratoEditSchema);
+export const ValidationSchemaContratoEdit = z.intersection(ValidationSchemaContratoCreate, _ContratoEditSchema);
 
-export type ContratoCreateSchemaType = z.infer<typeof ContratoCreateSchema>;
-export type ContratoEditSchemaType = z.infer<typeof ContratoEditSchema>;
-export type PlanFacturacionPeriodosSchemaType = z.infer<typeof PlanFacturacionPeriodosSchema>;
+export type FormDataContratoCreateType = z.infer<typeof ValidationSchemaContratoCreate>;
+export type FormDataContratoEditType = z.infer<typeof ValidationSchemaContratoEdit>;
+export type PlanFacturacionPeriodosType = z.infer<typeof ValidationSchemaPlanFacturacionPeriodos>;

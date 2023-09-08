@@ -5,11 +5,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 import { RepositoryUtils } from '@app/utils';
 
 import { FacturacionService } from './facturacion.service';
-import {
-  FacturacionLogSchema,
-  FacturacionMasivaSchema,
-  getAllFacturasReportePaginatedSchema,
-} from './facturacion.schemas';
+import { FacturacionMasivaSchema, getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
   static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {

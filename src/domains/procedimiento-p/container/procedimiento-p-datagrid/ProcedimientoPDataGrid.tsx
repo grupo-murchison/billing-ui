@@ -43,6 +43,7 @@ const ProcedimientoPDataGrid = () => {
       confirmDialog.open({
         entity: `${labelAndPath.label}`,
         identifier: `${row.codigo}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoPRepository.deleteProcedimientoPById(row.id);
           confirmDialog.close();

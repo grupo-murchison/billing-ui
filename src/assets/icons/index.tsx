@@ -4,6 +4,7 @@ export {
   AccountCircle as AccountCircleIcon,
   Add as AddIcon,
   AccountTree as AccountTreeIcon,
+  AttachMoney as AttachMoneyIcon,
 
   // B
   Block as BlockIcon,
@@ -57,8 +58,10 @@ export {
   ScheduleSend as ScheduleSendIcon,
   Settings as SetttingsIcon,
   SettingsOutlined as SettingsOutlinedIcon,
-
   // V
   Visibility as ViewIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
+
+  // W
+  WarningRounded as WarningIcon,
 } from '@mui/icons-material';

@@ -11,10 +11,19 @@ import { Stack } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
 
-import { DeleteOutlineIcon } from '@assets/icons';
+import { DeleteOutlineIcon, WarningIcon } from '@assets/icons';
 
 // TODO: Update is loading prop in order to show some loading animation.
-const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose, type }: ConfirmDialogProps) => {
+const ConfirmDialog = ({
+  identifier,
+  entity,
+  onClickYes,
+  onClickNot,
+  onClose,
+  type,
+  title,
+  message,
+}: ConfirmDialogProps) => {
   const theme = useTheme();
   const fullScreen = useMediaQuery(theme.breakpoints.down('md'));
 
@@ -44,8 +53,28 @@ const ConfirmDialog = ({ identifier, entity, onClickYes, onClickNot, onClose, ty
         />
       )}
 
-      {type !== 'delete' && (
+      {type === 'ok' && (
         <OkDialog message={'Demo'} title={'Demo'} isLoading={isLoading} handleClickYes={handleClickYes} />
+      )}
+
+      {type === 'warning' && (
+        <WarningDialog
+          isLoading={isLoading}
+          handleClickYes={handleClickYes}
+          handleClickNot={handleClickNot}
+          title={title}
+          message={message}
+        />
+      )}
+
+      {type === 'danger' && (
+        <DangerDialog
+          isLoading={isLoading}
+          handleClickYes={handleClickYes}
+          handleClickNot={handleClickNot}
+          title={title}
+          message={message}
+        />
       )}
     </Dialog>
   );
@@ -105,12 +134,97 @@ const DeleteDialog = ({
   );
 };
 
-type ConfirmDialogType = 'delete' | 'ok' | 'warning';
+const DangerDialog = ({ isLoading, handleClickYes, handleClickNot, title, message }: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <DeleteOutlineIcon
+        sx={{
+          color: theme.palette.common.white,
+          backgroundColor: theme.palette.error.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
+        }}
+      />
+      <DialogTitle variant='h3' color={theme.palette.error.main}>
+        {title || 'No es posible realizar esta acción'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
+          Cancelar
+        </Button>
+        <Button
+          onClick={handleClickYes}
+          disabled={isLoading}
+          variant='contained'
+          //TODO Revisar colores
+          sx={{
+            'backgroundColor': theme.palette.error.main,
+            ':hover': { backgroundColor: theme.palette.error.dark },
+          }}
+        >
+          Confirmar
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
+
+const WarningDialog = ({ isLoading, handleClickYes, handleClickNot, title, message }: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <WarningIcon
+        sx={{
+          color: theme.palette.warning.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
+        }}
+      />
+      <DialogTitle variant='h3' color={theme.palette.warning.main}>
+        {title || 'No es posible realizar esta acción'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button autoFocus onClick={handleClickNot} disabled={isLoading} color='secondary' variant='outlined'>
+          Cancelar
+        </Button>
+        <Button
+          onClick={handleClickYes}
+          disabled={isLoading}
+          variant='contained'
+          //TODO Revisar colores
+          sx={{
+            'backgroundColor': theme.palette.warning.main,
+            ':hover': { backgroundColor: theme.palette.warning.dark },
+          }}
+        >
+          Confirmar
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
+
+export type ConfirmDialogType = 'delete' | 'ok' | 'warning' | 'danger';
 
 type ConfirmDialogProps = {
   message?: string;
   title?: string;
-  identifier: string;
+  identifier?: string;
   entity?: string;
   type: ConfirmDialogType;
   onClickYes: () => void;

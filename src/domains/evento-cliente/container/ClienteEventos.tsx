@@ -10,7 +10,6 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { ClienteEventosContext } from '../../facturacion/contexts';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
-import ToolbarMUI from '@app/components/DataGrid/components/ToolbarMUI';
 
 import { withBreadcrumb } from '@app/hocs';
 import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
@@ -37,12 +36,14 @@ const EventoClientes = () => {
       fechaHasta: null,
       eventoId: [],
     },
-    resolver: zodResolver(EventosClientesCreateSchema), 
+    resolver: zodResolver(EventosClientesCreateSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
-      const eventosIds= data.eventoId.map( (evento: AnyValue) => { return evento.value})
+      const eventosIds = data.eventoId.map((evento: AnyValue) => {
+        return evento.value;
+      });
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
@@ -95,13 +96,15 @@ const EventoClientes = () => {
     </Paper>
   );
 
-  const toolbarProp = () => <ToolbarMUI fileName={'Eventos Del Cliente'} />;
+  // const toolbarAdicionales = () => <>Custom Tollbar Cliente</>;
 
   return (
     <>
       {toolbar}
       <DataGrid
+        name='Eventos Del Cliente'
         hookRef={mainDataGrid.ref}
+        onClickNew={() => console.log('Click New')}
         columns={[
           { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115 },
           { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
@@ -144,7 +147,7 @@ const EventoClientes = () => {
           },
         ]}
         repositoryFunc={EventoClienteRepository.getAllEventDetails}
-        toolbar={toolbarProp}
+        // toolbar={toolbarAdicionales}
         // getRows={rows => console.log('rows', rows) }
       />
     </>
