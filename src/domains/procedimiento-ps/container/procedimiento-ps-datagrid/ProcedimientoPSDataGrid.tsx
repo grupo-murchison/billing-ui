@@ -43,6 +43,7 @@ const ProcedimientoPSDataGrid = () => {
       confirmDialog.open({
         entity: `${labelAndPath.label}`,
         identifier: `${row.codigo}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoPSRepository.deleteProcedimientoPSById(row.id);
           confirmDialog.close();

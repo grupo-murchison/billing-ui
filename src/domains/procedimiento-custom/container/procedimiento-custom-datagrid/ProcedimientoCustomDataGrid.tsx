@@ -36,6 +36,7 @@ const ProcedimientoCustomDataGrid = () => {
       confirmDialog.open({
         entity: `${label.procedimientoCustom}`,
         identifier: `${row.denominacion}`,
+        type: 'delete',
         async onClickYes() {
           await ProcedimientoCustomRepository.deleteProcedimientoCustomById(row.id);
           confirmDialog.close();
