@@ -4,8 +4,10 @@ import {
   GridCsvExportMenuItem,
   GridCsvExportOptions,
   GridExportMenuItemProps,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GridToolbarColumnsButton,
   GridToolbarContainer,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   GridToolbarDensitySelector,
   GridToolbarExportContainer,
   GridToolbarFilterButton,
@@ -23,7 +25,7 @@ const timestamp = DateLib.ISOStringToTimeStamp(new Date().toISOString());
 
 interface ToolbarMuiExportProps extends GridCsvExportOptions {
   onClickNew?: () => void;
-  subComponent?: React.JSXElementConstructor<any> | null;
+  subComponent?: React.JSXElementConstructor<AnyValue> | null;
 }
 
 const ToolbarBase = ({ onClickNew, subComponent: SubComponent, ...props }: ToolbarMuiExportProps) => {

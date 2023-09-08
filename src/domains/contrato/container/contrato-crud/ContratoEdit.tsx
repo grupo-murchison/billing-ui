@@ -13,8 +13,8 @@ import { DivisorProvisorio } from '@app/components/Divider';
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
 
-import { ContratoEditSchema } from '@domains/contrato/container/contrato-crud/schemas';
-import type { ContratoEditSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
+import { ValidationSchemaContratoEdit } from '@domains/contrato/container/contrato-crud/schemas';
+import type { FormDataContratoEditType } from '@domains/contrato/container/contrato-crud/schemas';
 
 import { withBreadcrumb } from '@app/hocs';
 import { DateLib } from '@libs';
@@ -50,7 +50,7 @@ const ContratoEdit = () => {
     control,
     resetField,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<ContratoEditSchemaType>({
+  } = useForm<FormDataContratoEditType>({
     defaultValues: {
       clienteId: '',
       descripcion: '',
@@ -64,10 +64,10 @@ const ContratoEdit = () => {
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
     },
-    resolver: zodResolver(ContratoEditSchema),
+    resolver: zodResolver(ValidationSchemaContratoEdit),
   });
 
-  const onSubmit: SubmitHandler<ContratoEditSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
       const submitData = {
         ...data,

@@ -12,8 +12,8 @@ import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
 
-import { ContratoCreateSchema } from '@domains/contrato/container/contrato-crud/schemas';
-import type { ContratoCreateSchemaType } from '@domains/contrato/container/contrato-crud/schemas';
+import { ValidationSchemaContratoCreate } from '@domains/contrato/container/contrato-crud/schemas';
+import type { FormDataTypeContratoCreate } from '@domains/contrato/container/contrato-crud/schemas';
 
 import { withBreadcrumb } from '@app/hocs';
 import { DateLib } from '@libs';
@@ -34,6 +34,8 @@ import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import { zodLocale } from '@app/utils/zod.util';
+import { findPropertyById } from '@app/utils/formHelpers.util';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -43,7 +45,7 @@ const ContratoCreate = () => {
   const [modeloAcuerdo, setModeloAcuerdo] = useState<JSONObject>({}); // TODO tipar correctamente
   const [tipoContrato, setTipoContrato] = useState<JSONObject>({}); // TODO tipar correctamente
   const [cliente, setCliente] = useState<JSONObject>({}); // TODO tipar correctamente
-  const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
+  const [isDiaFijoPosteriorAlperiodo, setIsDiaFijoPosteriorAlperiodo] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -51,7 +53,7 @@ const ContratoCreate = () => {
     control,
     resetField,
     formState: { errors: formErrors, isSubmitting },
-  } = useForm<ContratoCreateSchemaType>({
+  } = useForm<FormDataTypeContratoCreate>({
     defaultValues: {
       clienteId: '',
       descripcion: '',
@@ -64,11 +66,21 @@ const ContratoCreate = () => {
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
     },
-    resolver: zodResolver(ContratoCreateSchema),
+    resolver: zodResolver(
+      ValidationSchemaContratoCreate.superRefine((fields, ctx) => {
+        if (isDiaFijoPosteriorAlperiodo && fields.diaPeriodo === '') {
+          ctx.addIssue({
+            message: zodLocale.required_error,
+            code: 'custom',
+            path: ['diaPeriodo'],
+          });
+        }
+      }),
+    ),
     // resolver: (data, context, options) => ZodUtils.debugSchema(data, context, options, contratoCreateSchema), // * para debuggear el schema de validación
   });
 
-  const onSubmit: SubmitHandler<ContratoCreateSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<FormDataTypeContratoCreate> = useCallback(
     async data => {
       const submitData = {
         ...data,
@@ -114,10 +126,7 @@ const ContratoCreate = () => {
   }, [watch('clienteId')]);
 
   useEffect(() => {
-    const diaFijoPosteriorAlperiodoId = 3; // FIXME id en la Tabla de base de datos, debemos cambiarlo para validar por el campo code (codigo)
-    const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
     resetField('diaPeriodo');
-    reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
   }, [watch('reglaFechaPeriodoId')]);
 
   const formHeader = (
@@ -223,6 +232,13 @@ const ContratoCreate = () => {
             error={!!formErrors.reglaFechaPeriodoId}
             helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
+            getOptions={options => {
+              const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
+              if (reglaFechaPeriodoId) {
+                const code = findPropertyById(options, reglaFechaPeriodoId)?.code || null;
+                code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlperiodo(true) : setIsDiaFijoPosteriorAlperiodo(false);
+              }
+            }}
           />
         </Col>
 
@@ -231,7 +247,7 @@ const ContratoCreate = () => {
             name='diaPeriodo'
             control={control}
             label='Día Periodo'
-            disabled={isSubmitting || !enableDiaPeriodo}
+            disabled={isSubmitting || !isDiaFijoPosteriorAlperiodo}
             type='number'
             inputProps={{ min: 1 }}
           />

@@ -1,5 +1,6 @@
-import { zodLocale } from '@app/constants';
-import z from 'zod';
+import z, { ZodType } from 'zod';
+import { zodId, zodLocale } from '@app/utils/zod.util';
+// import { differenceInDays } from 'date-fns';
 
 const ContratoVariablesSchema = z.object({
   id: z.number(),
@@ -7,7 +8,7 @@ const ContratoVariablesSchema = z.object({
   valor: z.string().optional().nullable(),
 });
 
-const PlanFacturacionPeriodosSchema = z.object({
+const ValidationSchemaPlanFacturacionPeriodos = z.object({
   id: z.number(),
   periodo: z.number(),
   liquidacionDesde: z.string(),
@@ -16,9 +17,22 @@ const PlanFacturacionPeriodosSchema = z.object({
   estado: z.string(),
 });
 
-export const ContratoCreateSchema = z
+export type FormDataTypeContratoCreate = {
+  clienteId: number | string;
+  descripcion: string;
+  diaPeriodo: number | string;
+  fechaInicioContrato: Date | null;
+  fechaFinContrato: Date | null;
+  modeloAcuerdoId: number | string;
+  reglaFechaPeriodoId: number | string;
+  sociedadId: number | string;
+  tipoContratoId: number | string;
+  tipoPlanFacturacionId: number | string;
+};
+
+export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate> = z
   .object({
-    clienteId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }), // .string().nonempty()
+    clienteId: zodId,
     modeloAcuerdoId: z.number({
       required_error: zodLocale.required_error,
       invalid_type_error: zodLocale.required_error,
@@ -40,51 +54,32 @@ export const ContratoCreateSchema = z
       .string({ required_error: zodLocale.required_error })
       .min(1, { message: zodLocale.required_error })
       .max(250, { message: zodLocale.stringMax(250) }),
-    fechaInicioContrato: z
-      .date({
-        required_error: zodLocale.required_error,
-        invalid_type_error: zodLocale.required_error,
-      })
-      .nullable(),
-    fechaFinContrato: z
-      .date({
-        required_error: zodLocale.required_error,
-        invalid_type_error: zodLocale.required_error,
-      })
-      .nullable(),
+    fechaInicioContrato: z.date({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    fechaFinContrato: z.date({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
     diaPeriodo: z
       .number({ required_error: zodLocale.required_error })
       .positive({ message: zodLocale.numberPositive })
       .or(z.literal('')),
   })
-  .superRefine((values, ctx) => {
-    if (values.reglaFechaPeriodoId === 3 && values.diaPeriodo === '') {
-      ctx.addIssue({
-        message: zodLocale.required_error,
-        code: 'custom',
-        path: ['diaPeriodo'],
-      });
-    }
+  .superRefine((fields, ctx) => {
+    // * por si se requiere validar que haya una difenrencia mínima de días entre las fechas
+    // if (differenceInDays(fields.fechaFinContrato, fields.fechaInicioContrato) < 14) {
+    //   ctx.addIssue({
+    //     message: 'Debe ser 15 días mayor a Fecha Inicio Contrato',
+    //     code: 'custom',
+    //     path: ['fechaFinContrato'],
+    //   });
+    // }
 
-    if (values.fechaInicioContrato === null) {
+    if (fields.fechaFinContrato < fields.fechaInicioContrato) {
       ctx.addIssue({
-        message: zodLocale.required_error,
-        code: 'custom',
-        path: ['fechaInicioContrato'],
-      });
-    }
-
-    if (values.fechaFinContrato === null) {
-      ctx.addIssue({
-        message: zodLocale.required_error,
-        code: 'custom',
-        path: ['fechaFinContrato'],
-      });
-    }
-
-    if (values.fechaFinContrato && values.fechaInicioContrato && values.fechaFinContrato < values.fechaInicioContrato) {
-      ctx.addIssue({
-        message: 'Fecha Fin Contrato debe ser mayor o igual a Fecha Inicio Contrato',
+        message: 'Debe ser mayor o igual a Fecha Inicio Contrato',
         code: 'custom',
         path: ['fechaFinContrato'],
       });
@@ -96,11 +91,11 @@ const _ContratoEditSchema = z.object({
   contratoVariables: z.array(ContratoVariablesSchema),
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
-  periodos: z.array(PlanFacturacionPeriodosSchema),
+  periodos: z.array(ValidationSchemaPlanFacturacionPeriodos),
 });
 
-export const ContratoEditSchema = z.intersection(ContratoCreateSchema, _ContratoEditSchema);
+export const ValidationSchemaContratoEdit = z.intersection(ValidationSchemaContratoCreate, _ContratoEditSchema);
 
-export type ContratoCreateSchemaType = z.infer<typeof ContratoCreateSchema>;
-export type ContratoEditSchemaType = z.infer<typeof ContratoEditSchema>;
-export type PlanFacturacionPeriodosSchemaType = z.infer<typeof PlanFacturacionPeriodosSchema>;
+export type FormDataContratoCreateType = z.infer<typeof ValidationSchemaContratoCreate>;
+export type FormDataContratoEditType = z.infer<typeof ValidationSchemaContratoEdit>;
+export type PlanFacturacionPeriodosType = z.infer<typeof ValidationSchemaPlanFacturacionPeriodos>;

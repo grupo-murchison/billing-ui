@@ -3,9 +3,7 @@ import { from, lastValueFrom } from 'rxjs';
 import { RepositoryUtils } from '@app/utils';
 
 import { EventoClienteService } from './evento-cliente.service';
-import {
-  getAllEventoCampoAsDropdownSchema,
-} from './evento-clientes.chemas';
+// import { getAllEventoCampoAsDropdownSchema } from './evento-clientes.schemas';
 
 class EventoClienteRepository {
   static getAllEventDetails = async (params: AnyValue) => {
@@ -25,7 +23,7 @@ class EventoClienteRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
-  
+
   static getAllEventsAsDropdownAutoComplete = async (filter?: Partial<Record<'filter', string>>) => {
     const response$ = from(EventoClienteService.getAllAsEventsAutocomplete(filter)).pipe(
       RepositoryUtils.PIPES.getResponse(),
@@ -34,7 +32,6 @@ class EventoClienteRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
-
 }
 
 export default EventoClienteRepository;

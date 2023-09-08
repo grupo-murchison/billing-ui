@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Control, Controller } from 'react-hook-form';
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import Autocomplete, { createFilterOptions } from '@mui/material/Autocomplete';
 import { FormInputsCommonProps } from '../../form.interfaces';
 import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
@@ -7,17 +8,16 @@ import AutocompleteRenderInput from './AutoCompleteRenderInput';
 import { AxiosResponse } from 'axios';
 
 export default function AsyncAutocomplete({
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   options: optionsProps,
   control,
   name,
   label,
-  error,
   repositoryFunc,
   ...props
 }: FormAsyncAutocomplete<DropdownItemType>) {
   const [open, setOpen] = React.useState(false);
   const [options, setOptions] = React.useState<DropdownSchemaType>([]);
-  const [value, setValue] = React.useState<DropdownItemType>({ code: '', label: '', value: '' });
   const [inputValue, setInputValue] = React.useState('');
   const loading = open && options.length === 0;
 

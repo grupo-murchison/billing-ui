@@ -7,11 +7,9 @@ import AutocompleteRenderInput from './AutoCompleteRenderInput';
 import { AxiosResponse } from 'axios';
 
 export default function AsyncAutocompleteMultiple({
-  options: optionsProps,
   control,
   name,
   label,
-  error,
   repositoryFunc,
   ...props
 }: FormAsyncAutocomplete<DropdownItemType>) {

@@ -20,7 +20,7 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { DropdownSchemaType } from '@app/utils/zod.util';
+import { mapearParametros } from '@app/utils/formHelpers.util';
 
 const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
@@ -108,16 +108,6 @@ const ProcedimientoCustomCreate = forwardRef(() => {
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-custom');
   }, [_navigate]);
-
-  const mapearParametros = (estados: DropdownSchemaType) => {
-    return estados.map(data => {
-      return {
-        code: data.value,
-        label: data.label,
-        value: data.code,
-      };
-    });
-  };
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoCustom}`}>

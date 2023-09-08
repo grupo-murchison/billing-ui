@@ -32,3 +32,11 @@ export const debugSchema = async (data: AnyValue, context: AnyValue, options: An
   console.log('validation result', await zodResolver(Schema)(data, context, options));
   return zodResolver(Schema)(data, context, options);
 };
+
+export const zodLocale = {
+  required_error: 'El campo es requerido.',
+  numberPositive: 'Debe ser mayor a 0',
+  stringMax: (cant?: number) => `Ha superado el límite de ${cant || ''} caracteres`,
+};
+
+export const zodId = z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error });
