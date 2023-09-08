@@ -61,4 +61,7 @@ export {
   // V
   Visibility as ViewIcon,
   VisibilityOutlined as VisibilityOutlinedIcon,
+
+  // W
+  WarningRounded as WarningIcon,
 } from '@mui/icons-material';

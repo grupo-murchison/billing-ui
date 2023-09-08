@@ -31,6 +31,7 @@ import { FacturacionReversionCreateSchema } from '@domains/facturacion/schemas';
 import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import FacturacionReversionLog from './views/FacturacionReversionLog';
+import { useConfirmDialog } from '@app/hooks';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
@@ -46,6 +47,8 @@ const FacturacionReversion = () => {
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
   const apiRef = useGridApiRef();
+
+  const confirmDialog = useConfirmDialog();
 
   useEffect(() => {
     mainDataGrid.load();
@@ -81,49 +84,69 @@ const FacturacionReversion = () => {
     [mainDataGrid],
   );
 
-  const handleRevertir = (row: AnyValue) => {
-    const cantidadContratos = 10;
-    const numeroFacturacion = 10;
-
-    // TODO mostrar un diálogo de confirmacion con el siguiente mensaje
-    console.log(
-      `Se procederá a realizar la reversión de ${cantidadContratos} contrato/s asociados al número de facturación: ${numeroFacturacion}`,
-    );
-
-    setOpenBackdrop(true);
-
-    FacturacionRepository.revertirFacturacion(row.contratos[0]?.id)
-      .then(_response => {
-        setSnackbarMessage('La funcionalidad "Revertir" aún no está disponible.');
-      })
-      .catch(error => {
-        console.log('Revertir Error', error);
-        setErrorFromBackEnd(true);
-        setSnackbarMessage('Ocurrió un error!');
-      })
-      .finally(() => {
-        setOpenBackdrop(false);
-        setOpenSackbar(true);
+  const handleRevertir = useCallback(
+    (row: AnyValue) => {
+      confirmDialog.open({
+        type: 'danger',
+        title: '¿Revertir Facturación?',
+        message: `Se procederá a realizar la reversión de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaFacturacion}`,
+        async onClickYes() {
+          await FacturacionRepository.revertirFacturacion(row.id)
+            .then(_response => {
+              console.log(_response);
+              if (_response.data) {
+                setSnackbarMessage('La reversión se realizó con éxito');
+              } else {
+                setSnackbarMessage('La reversión no pudo realizarse');
+              }
+            })
+            .catch(error => {
+              setErrorFromBackEnd(true);
+              setSnackbarMessage('Ocurrió un error!');
+            })
+            .finally(() => {
+              setOpenBackdrop(false);
+              setOpenSackbar(true);
+            });
+          confirmDialog.close();
+          mainDataGrid.reload();
+        },
       });
-  };
+    },
+    [confirmDialog, mainDataGrid],
+  );
 
-  const handleAnular = (row: AnyValue) => {
-    setOpenBackdrop(true);
-
-    FacturacionRepository.anularFacturacion(row.contratos[0]?.id)
-      .then(_response => {
-        setSnackbarMessage('La funcionalidad "Anular" aún no está disponible.');
-      })
-      .catch(error => {
-        console.log('Anular Error', error);
-        setErrorFromBackEnd(true);
-        setSnackbarMessage('Ocurrió un error!');
-      })
-      .finally(() => {
-        setOpenBackdrop(false);
-        setOpenSackbar(true);
+  const handleAnular = useCallback(
+    (row: AnyValue) => {
+      confirmDialog.open({
+        type: 'warning',
+        title: '¿Anular Facturación?',
+        message: `Se procederá a realizar la anulación de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaFacturacion}`,
+        async onClickYes() {
+          await FacturacionRepository.anularFacturacion(row.id)
+            .then(_response => {
+              console.log(_response);
+              if (_response.data) {
+                setSnackbarMessage('La anulación se realizó con éxito');
+              } else {
+                setSnackbarMessage('La anulación no pudo realizarse');
+              }
+            })
+            .catch(error => {
+              setErrorFromBackEnd(true);
+              setSnackbarMessage('Ocurrió un error!');
+            })
+            .finally(() => {
+              setOpenBackdrop(false);
+              setOpenSackbar(true);
+            });
+          confirmDialog.close();
+          mainDataGrid.reload();
+        },
       });
-  };
+    },
+    [confirmDialog, mainDataGrid],
+  );
 
   const handleVerLog = (row: AnyValue) => {
     const datos = row;
@@ -216,13 +239,14 @@ const FacturacionReversion = () => {
                 icon={<ViewIcon />}
                 label='Ver Log'
                 onClick={() => handleVerLog(params.row)}
-                disabled={params.row.estado === 'REVERSADO' ? false : true}
+                // disabled={params.row.estado === 'REVERSADO' ? false : true}
                 showInMenu
               />,
               <GridActionsCellItem
                 key={2}
                 icon={<CancelScheduleSendIcon />}
                 label='Anular'
+                disabled={params.row.estado === 'FACTURADO' ? false : true}
                 onClick={() => handleAnular(params.row)}
                 showInMenu
               />,

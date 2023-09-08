@@ -39,6 +39,7 @@ const ConceptoAcuerdoDataGrid = () => {
       confirmDialog.open({
         entity: `${ConceptoAcuerdoLabelAndPath.label}`,
         identifier: `${row.modeloAcuerdo}`,
+        type: 'delete',
         async onClickYes() {
           await ConceptoAcuerdoRepository.deleteConceptoAcuerdoById(row.id);
           confirmDialog.close();
