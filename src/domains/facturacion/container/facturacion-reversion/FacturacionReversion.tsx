@@ -142,9 +142,6 @@ const FacturacionReversion = () => {
             });
           confirmDialog.close();
           mainDataGrid.reload();
-          const datos = row;
-          setFacturacionData(datos);
-          setOpenModal(true);
         },
       });
     },

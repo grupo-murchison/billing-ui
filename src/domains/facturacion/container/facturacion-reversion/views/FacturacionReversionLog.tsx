@@ -3,11 +3,13 @@ import Form from '@app/components/Form/Form';
 import { TextField } from '@mui/material';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { DateLib } from '@libs';
+import { AlertInProgress } from '@app/components/Alerts';
 
 const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValue }) => {
   return (
     <>
       <Form>
+        <AlertInProgress message='Estos datos no corresponden a un Log De Reversión real, la funcionalidad estará disponible próximamente.' />
         <Row>
           <Col md={4}>
             <TextField
