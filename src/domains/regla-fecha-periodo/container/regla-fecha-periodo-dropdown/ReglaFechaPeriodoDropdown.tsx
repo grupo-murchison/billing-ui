@@ -28,7 +28,7 @@ const ReglaFechaPeriodoDropdown = ({ getOptions, ...props }: ReglaFechaPeriodoDr
 };
 
 interface ReglaFechaPeriodoDropdownProps extends Omit<FormSelectProps, 'options'> {
-  getOptions: (options: DropdownSchemaType) => void;
+  getOptions?: (options: DropdownSchemaType) => void;
 }
 
 export default ReglaFechaPeriodoDropdown;

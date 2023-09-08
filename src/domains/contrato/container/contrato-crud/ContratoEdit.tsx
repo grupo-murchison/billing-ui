@@ -34,14 +34,20 @@ import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 
+import { zodLocale } from '@app/utils/zod.util';
+import { findPropertyById } from '@app/utils/formHelpers.util';
+import { useConfirmDialog } from '@app/hooks';
+
 const ContratoEdit = () => {
   const { contratoId } = useParams(); // TODO ver como tipar como number
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ContratoContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-  const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
+  const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
+  const [backUpModeloAcuerdo, setBackUpModeloAcuerdo] = useState<AnyValue>(null);
 
   const {
     reset,
@@ -49,7 +55,7 @@ const ContratoEdit = () => {
     watch,
     control,
     resetField,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { errors: formErrors, isSubmitting, dirtyFields },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
       clienteId: '',
@@ -64,7 +70,17 @@ const ContratoEdit = () => {
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
     },
-    resolver: zodResolver(ValidationSchemaContratoEdit),
+    resolver: zodResolver(
+      ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
+        if (isDiaFijoPosteriorAlPeriodo && fields.diaPeriodo === '') {
+          ctx.addIssue({
+            message: zodLocale.required_error,
+            code: 'custom',
+            path: ['diaPeriodo'],
+          });
+        }
+      }),
+    ),
   });
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
@@ -105,18 +121,31 @@ const ContratoEdit = () => {
         contratoVariables: data?.contratoVariables,
         conceptosAcuerdo: data?.modeloAcuerdo?.conceptosAcuerdo,
       });
+      setBackUpModeloAcuerdo(data?.modeloAcuerdo);
       setIsDataFetched(true);
     });
   }, [contratoId, reset]);
 
   useEffect(() => {
-    if (watch('reglaFechaPeriodoId')) {
-      const diaFijoPosteriorAlperiodoId = 3; // FIXME id en la Tabla de base de datos, cambiar por codigo
-      const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
-      resetField('diaPeriodo');
-      reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
-    }
+    resetField('diaPeriodo');
   }, [watch('reglaFechaPeriodoId')]);
+
+  useEffect(() => {
+    if (dirtyFields.modeloAcuerdoId && watch('modeloAcuerdoId') !== backUpModeloAcuerdo?.id) {
+      confirmDialog.open({
+        type: 'warning',
+        title: 'Advertencia',
+        message: `Si cambia el modelo acuerdo "${backUpModeloAcuerdo.codigo} - ${backUpModeloAcuerdo.descripcion}" por uno distinto, al guardar los cambios se eliminarán las variables del contrato y deberá volver a cargarlas manualmente.`,
+        onClickYes: () => {
+          confirmDialog.close();
+        },
+        onClickNot() {
+          resetField('modeloAcuerdoId', { defaultValue: backUpModeloAcuerdo?.id });
+          confirmDialog.close();
+        },
+      });
+    }
+  }, [watch('modeloAcuerdoId')]);
 
   if (!isDataFetched) {
     return <></>;
@@ -163,7 +192,6 @@ const ContratoEdit = () => {
       </Row>
       <Row>
         <Col md={6}>
-          {/* // TODO agregar Notificación con mensaje de de Alerta: Si cambia el Modelo Acuerdo, se eliminarán las variables del contrato y deberá cargar las nuevas manualmente. */}
           <ModeloAcuerdoDropdown
             control={control}
             name='modeloAcuerdoId'
@@ -243,6 +271,13 @@ const ContratoEdit = () => {
             error={!!formErrors.reglaFechaPeriodoId}
             helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
+            getOptions={options => {
+              const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
+              if (reglaFechaPeriodoId) {
+                const code = findPropertyById(options, reglaFechaPeriodoId)?.code || null;
+                code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlPeriodo(true) : setIsDiaFijoPosteriorAlPeriodo(false);
+              }
+            }}
           />
         </Col>
 
@@ -251,9 +286,9 @@ const ContratoEdit = () => {
             name='diaPeriodo'
             control={control}
             label='Día Periodo'
-            disabled={isSubmitting || !enableDiaPeriodo}
+            disabled={isSubmitting || !isDiaFijoPosteriorAlPeriodo}
             type='number'
-            inputProps={{ min: 1 }}
+            inputProps={{ min: 2 }}
           />
         </Col>
       </Row>
