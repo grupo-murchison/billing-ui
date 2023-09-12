@@ -1,6 +1,6 @@
 import { Control, Controller } from 'react-hook-form';
-import { DesktopDatePicker } from '@mui/x-date-pickers';
-import { FormInputsCommonProps } from '../form.interfaces';
+import { DesktopDatePicker, DesktopDatePickerProps } from '@mui/x-date-pickers';
+// import { FormInputsCommonProps } from '../form.interfaces';
 
 function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   return (
@@ -37,9 +37,11 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: 
   );
 }
 
-interface FormDesktopDatePickerProps extends FormInputsCommonProps {
+interface FormDesktopDatePickerProps extends DesktopDatePickerProps<TDate> {
   control: Control<AnyValue>;
   inputFormat?: string;
+  name: string;
+  label: string;
 }
 
 export default FormDesktopDatePicker;

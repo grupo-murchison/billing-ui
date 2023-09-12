@@ -34,14 +34,21 @@ import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 
+import { zodLocale } from '@app/utils/zod.util';
+import { findPropertyById } from '@app/utils/formHelpers.util';
+import { useConfirmDialog } from '@app/hooks';
+
 const ContratoEdit = () => {
-  const { contratoId } = useParams(); // TODO ver como tipar como number
+  const { contratoId } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ContratoContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-  const [enableDiaPeriodo, setEnableDiaPeriodo] = useState<boolean>(false);
+  const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
+  const [backUpModeloAcuerdo, setBackUpModeloAcuerdo] = useState<AnyValue>(null);
+  // const [conceptosAcuerdo, setConceptosAcuerdo] = useState<AnyValue>(null);
 
   const {
     reset,
@@ -49,7 +56,7 @@ const ContratoEdit = () => {
     watch,
     control,
     resetField,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { errors: formErrors, isSubmitting, dirtyFields },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
       clienteId: '',
@@ -58,13 +65,24 @@ const ContratoEdit = () => {
       fechaInicioContrato: null,
       fechaFinContrato: null,
       modeloAcuerdoId: '',
+      nroContrato: '',
       reglaFechaPeriodoId: '',
       pausado: false,
       sociedadId: '',
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
     },
-    resolver: zodResolver(ValidationSchemaContratoEdit),
+    resolver: zodResolver(
+      ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
+        if (isDiaFijoPosteriorAlPeriodo && fields.diaPeriodo === '') {
+          ctx.addIssue({
+            message: zodLocale.required_error,
+            code: 'custom',
+            path: ['diaPeriodo'],
+          });
+        }
+      }),
+    ),
   });
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
@@ -91,32 +109,52 @@ const ContratoEdit = () => {
 
   useEffect(() => {
     ContratoRepository.getContratoByIdAndContratoVariables(contratoId || '').then(({ data }) => {
+      const { planFacturacion, modeloAcuerdo, ...contrato } = data;
       reset({
-        ...data,
+        clienteId: contrato?.clienteId,
+        descripcion: contrato?.descripcion,
+        modeloAcuerdoId: contrato?.modeloAcuerdoId,
+        nroContrato: contrato?.nroContrato,
+        sociedadId: contrato?.sociedadId,
+        tipoContratoId: contrato?.tipoContratoId,
         fechaInicioContrato: DateLib.parseFromDBString(
-          DateLib.parseToDBString(new Date(data.fechaInicioContrato)) || '',
+          DateLib.parseToDBString(new Date(contrato.fechaInicioContrato)) || '',
         ),
-        fechaFinContrato: DateLib.parseFromDBString(DateLib.parseToDBString(new Date(data.fechaFinContrato)) || ''),
-        tipoPlanFacturacionId: data?.planFacturacion?.tipoPlanFacturacionId,
-        reglaFechaPeriodoId: data?.planFacturacion?.reglaFechaPeriodoId,
-        diaPeriodo: data?.planFacturacion?.diaPeriodo || '',
-        pausado: data?.planFacturacion?.pausado,
-        periodos: data?.planFacturacion?.periodos,
-        contratoVariables: data?.contratoVariables,
-        conceptosAcuerdo: data?.modeloAcuerdo?.conceptosAcuerdo,
+        fechaFinContrato: DateLib.parseFromDBString(DateLib.parseToDBString(new Date(contrato.fechaFinContrato)) || ''),
+        tipoPlanFacturacionId: planFacturacion?.tipoPlanFacturacionId,
+        reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
+        diaPeriodo: planFacturacion?.diaPeriodo || '',
+        pausado: planFacturacion?.pausado,
+        periodos: planFacturacion?.periodos,
+        // contratoVariables: contrato?.contratoVariables
+        // conceptosAcuerdo: contrato?.modeloAcuerdo?.conceptosAcuerdo,
       });
+      setBackUpModeloAcuerdo(modeloAcuerdo);
+      // setConceptosAcuerdo(modeloAcuerdo?.conceptosAcuerdo);
       setIsDataFetched(true);
     });
   }, [contratoId, reset]);
 
   useEffect(() => {
-    if (watch('reglaFechaPeriodoId')) {
-      const diaFijoPosteriorAlperiodoId = 3; // FIXME id en la Tabla de base de datos, cambiar por codigo
-      const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
-      resetField('diaPeriodo');
-      reglaFechaPeriodoId === diaFijoPosteriorAlperiodoId ? setEnableDiaPeriodo(true) : setEnableDiaPeriodo(false);
-    }
+    resetField('diaPeriodo');
   }, [watch('reglaFechaPeriodoId')]);
+
+  useEffect(() => {
+    if (dirtyFields.modeloAcuerdoId && watch('modeloAcuerdoId') !== backUpModeloAcuerdo?.id) {
+      confirmDialog.open({
+        type: 'warning',
+        title: 'Advertencia',
+        message: `Si cambia el modelo acuerdo "${backUpModeloAcuerdo.codigo} - ${backUpModeloAcuerdo.descripcion}" por uno distinto, al guardar los cambios se eliminarán las variables del contrato y deberá volver a cargarlas manualmente.`,
+        onClickYes: () => {
+          confirmDialog.close();
+        },
+        onClickNot() {
+          resetField('modeloAcuerdoId', { defaultValue: backUpModeloAcuerdo?.id });
+          confirmDialog.close();
+        },
+      });
+    }
+  }, [watch('modeloAcuerdoId')]);
 
   if (!isDataFetched) {
     return <></>;
@@ -163,7 +201,6 @@ const ContratoEdit = () => {
       </Row>
       <Row>
         <Col md={6}>
-          {/* // TODO agregar Notificación con mensaje de de Alerta: Si cambia el Modelo Acuerdo, se eliminarán las variables del contrato y deberá cargar las nuevas manualmente. */}
           <ModeloAcuerdoDropdown
             control={control}
             name='modeloAcuerdoId'
@@ -203,6 +240,7 @@ const ContratoEdit = () => {
             disabled={isSubmitting}
             label='Fecha Inicio Contrato'
             name='fechaInicioContrato'
+            readOnly
           />
         </Col>
         <Col md={6}>
@@ -211,6 +249,7 @@ const ContratoEdit = () => {
             disabled={isSubmitting}
             label='Fecha Fin Contrato'
             name='fechaFinContrato'
+            readOnly
           />
         </Col>
       </Row>
@@ -221,6 +260,7 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={4}>
+          {/* TODO reemplzar por el select de estados la pantalla Facturacion, sin emptyOptions */}
           <FormCheckbox control={control} name='pausado' label='Pausado' />
         </Col>
       </Row>
@@ -233,6 +273,8 @@ const ContratoEdit = () => {
             error={!!formErrors.tipoPlanFacturacionId}
             helperText={formErrors?.tipoPlanFacturacionId?.message}
             disabled={isSubmitting}
+            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
+            // readOnly
           />
         </Col>
         <Col md={4}>
@@ -243,6 +285,15 @@ const ContratoEdit = () => {
             error={!!formErrors.reglaFechaPeriodoId}
             helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
+            getOptions={options => {
+              const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
+              if (reglaFechaPeriodoId) {
+                const code = findPropertyById(options, reglaFechaPeriodoId)?.code || null;
+                code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlPeriodo(true) : setIsDiaFijoPosteriorAlPeriodo(false);
+              }
+            }}
+            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
+            // readOnly
           />
         </Col>
 
@@ -251,9 +302,12 @@ const ContratoEdit = () => {
             name='diaPeriodo'
             control={control}
             label='Día Periodo'
-            disabled={isSubmitting || !enableDiaPeriodo}
+            disabled={isSubmitting || !isDiaFijoPosteriorAlPeriodo}
             type='number'
-            inputProps={{ min: 1 }}
+            inputProps={{ min: 2 }}
+            InputProps={{
+              readOnly: true,
+            }}
           />
         </Col>
       </Row>
@@ -300,7 +354,7 @@ const ContratoEdit = () => {
 
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
-              <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={watch('conceptosAcuerdo')} />
+              <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
             </Box>
           </Stack>
 

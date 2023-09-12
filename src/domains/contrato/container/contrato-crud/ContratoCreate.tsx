@@ -45,7 +45,7 @@ const ContratoCreate = () => {
   const [modeloAcuerdo, setModeloAcuerdo] = useState<JSONObject>({}); // TODO tipar correctamente
   const [tipoContrato, setTipoContrato] = useState<JSONObject>({}); // TODO tipar correctamente
   const [cliente, setCliente] = useState<JSONObject>({}); // TODO tipar correctamente
-  const [isDiaFijoPosteriorAlperiodo, setIsDiaFijoPosteriorAlperiodo] = useState<boolean>(false);
+  const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -68,7 +68,7 @@ const ContratoCreate = () => {
     },
     resolver: zodResolver(
       ValidationSchemaContratoCreate.superRefine((fields, ctx) => {
-        if (isDiaFijoPosteriorAlperiodo && fields.diaPeriodo === '') {
+        if (isDiaFijoPosteriorAlPeriodo && fields.diaPeriodo === '') {
           ctx.addIssue({
             message: zodLocale.required_error,
             code: 'custom',
@@ -236,7 +236,7 @@ const ContratoCreate = () => {
               const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
               if (reglaFechaPeriodoId) {
                 const code = findPropertyById(options, reglaFechaPeriodoId)?.code || null;
-                code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlperiodo(true) : setIsDiaFijoPosteriorAlperiodo(false);
+                code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlPeriodo(true) : setIsDiaFijoPosteriorAlPeriodo(false);
               }
             }}
           />
@@ -247,9 +247,9 @@ const ContratoCreate = () => {
             name='diaPeriodo'
             control={control}
             label='Día Periodo'
-            disabled={isSubmitting || !isDiaFijoPosteriorAlperiodo}
+            disabled={isSubmitting || !isDiaFijoPosteriorAlPeriodo}
             type='number'
-            inputProps={{ min: 1 }}
+            inputProps={{ min: 2 }}
           />
         </Col>
       </Row>

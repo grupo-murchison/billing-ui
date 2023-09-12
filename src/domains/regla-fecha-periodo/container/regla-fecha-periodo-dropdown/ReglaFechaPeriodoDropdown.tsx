@@ -19,16 +19,15 @@ const ReglaFechaPeriodoDropdown = ({ getOptions, ...props }: ReglaFechaPeriodoDr
       });
   }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     getOptions && items.length >= 1 && getOptions(items);
-
-  },[getOptions, items.length])
+  }, [getOptions, items.length]);
 
   return <FormSelect {...props} options={items} />;
 };
 
 interface ReglaFechaPeriodoDropdownProps extends Omit<FormSelectProps, 'options'> {
-  getOptions: (options: DropdownSchemaType) => void;
+  getOptions?: (options: DropdownSchemaType) => void;
 }
 
 export default ReglaFechaPeriodoDropdown;
