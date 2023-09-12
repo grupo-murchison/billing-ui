@@ -31,7 +31,7 @@ const ProcedimientoPCreate = () => {
     defaultValues: {
       codigo: '',
       denominacion: '',
-      monedaId: 1,
+      monedaId: '',
     },
     resolver: zodResolver(ProcedimientoPCreateSchema),
   });

@@ -37,9 +37,9 @@ const ProcedimientoQCreate = () => {
       codigo: '',
       descripcion: '',
       denominacion: '',
-      tipoProcedimientoQId: null,
-      procedimientoBuiltinId: null,
-      procedimientoCustomId: null,
+      tipoProcedimientoQId: '',
+      procedimientoBuiltinId: '',
+      procedimientoCustomId: '',
     },
     resolver: zodResolver(ProcedimientoQCreateSchema),
   });

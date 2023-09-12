@@ -44,16 +44,18 @@ const ProcedimientoQEdit = () => {
       codigo: '',
       descripcion: '',
       denominacion: '',
-      tipoProcedimientoQId: null,
-      procedimientoBuiltinId: null,
-      procedimientoCustomId: null,
+      tipoProcedimientoQId: '',
+      procedimientoBuiltinId: '',
+      procedimientoCustomId: '',
     },
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
 
   useEffect(() => {
     ProcedimientoQRepository.getProcedimientoQById(procedimientoQId || '').then(({ data }) => {
-      reset(data);
+      reset({
+        ...data,
+      });
       setIsDataFetched(true);
     });
   }, [procedimientoQId, reset]);
