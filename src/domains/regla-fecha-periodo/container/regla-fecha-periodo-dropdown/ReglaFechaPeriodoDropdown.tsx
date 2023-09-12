@@ -19,10 +19,9 @@ const ReglaFechaPeriodoDropdown = ({ getOptions, ...props }: ReglaFechaPeriodoDr
       });
   }, []);
 
-  useEffect( () => {
+  useEffect(() => {
     getOptions && items.length >= 1 && getOptions(items);
-
-  },[getOptions, items.length])
+  }, [getOptions, items.length]);
 
   return <FormSelect {...props} options={items} />;
 };
