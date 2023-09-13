@@ -12,7 +12,7 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
   useEffect(() => {
     ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId })
       .then(({ data }) => {
-        setRows(data);
+        setRows(data.data);
       })
       .catch(error => console.log(error))
       .finally(() => setLoading(false));

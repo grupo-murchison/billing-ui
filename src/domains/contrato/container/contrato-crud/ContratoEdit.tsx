@@ -48,7 +48,7 @@ const ContratoEdit = () => {
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
   const [backUpModeloAcuerdo, setBackUpModeloAcuerdo] = useState<AnyValue>(null);
-  // const [conceptosAcuerdo, setConceptosAcuerdo] = useState<AnyValue>(null);
+  const [periodos, setPeriodos] = useState<AnyValue>(null);
 
   const {
     reset,
@@ -125,12 +125,9 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: planFacturacion?.diaPeriodo || '',
         pausado: planFacturacion?.pausado,
-        periodos: planFacturacion?.periodos,
-        // contratoVariables: contrato?.contratoVariables
-        // conceptosAcuerdo: contrato?.modeloAcuerdo?.conceptosAcuerdo,
       });
+      setPeriodos(planFacturacion?.periodos);
       setBackUpModeloAcuerdo(modeloAcuerdo);
-      // setConceptosAcuerdo(modeloAcuerdo?.conceptosAcuerdo);
       setIsDataFetched(true);
     });
   }, [contratoId, reset]);
@@ -354,7 +351,7 @@ const ContratoEdit = () => {
 
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
-              <DataGridConceptoAcuerdo id='conceptosAcuerdo' rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
+              <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
             </Box>
           </Stack>
 
@@ -364,7 +361,7 @@ const ContratoEdit = () => {
 
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
-              <DataGridPlanFacturacion id='periodos' rows={watch('periodos')} />
+              <DataGridPlanFacturacion rows={periodos || []} />
             </Box>
           </Stack>
 

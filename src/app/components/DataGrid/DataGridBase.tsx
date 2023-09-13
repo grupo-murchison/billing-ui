@@ -9,7 +9,7 @@ import { localeText } from './constants/dataGrid.config';
 import * as helperGrid from './helpers';
 
 const DataGridBase = ({
-  rows,
+  rows = [],
   columns,
   loading,
   pageSizeOptions,
@@ -24,7 +24,7 @@ const DataGridBase = ({
     '& .MuiDataGrid-root': {
       border: '1.25px solid',
     },
-    'backgroundColor': rows.length > 0 ? theme.palette.text.disabled : theme.palette.background.paper,
+    'backgroundColor': rows?.length > 0 ? theme.palette.text.disabled : theme.palette.background.paper,
     'borderRadius': theme.shape,
     'overflow': 'hidden',
     '& .MuiDataGrid-footerContainer': {
@@ -74,7 +74,7 @@ const DataGridBase = ({
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
-          autoHeight={rows.length > 0 ? true : false}
+          autoHeight={rows?.length > 0 ? true : false}
           loading={loading}
           localeText={{ ...localeText }}
           slots={{
@@ -98,7 +98,7 @@ const DataGridBase = ({
             },
           }}
           sx={{
-            height: rows.length > 0 ? undefined : '380px',
+            height: rows?.length > 0 ? undefined : '380px',
             ...sxTable,
             ...sxHeader,
             ...sxRows,
