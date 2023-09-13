@@ -191,7 +191,7 @@ const ProcedimientoCustomEdit = () => {
               control={control}
               disabled={isSubmitting}
               options={mapearParametros(state.eventos)}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -206,7 +206,7 @@ const ProcedimientoCustomEdit = () => {
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -248,7 +248,7 @@ const ProcedimientoCustomEdit = () => {
                 error={!!formErrors.accionCode}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>
@@ -261,7 +261,7 @@ const ProcedimientoCustomEdit = () => {
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
                 )}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>

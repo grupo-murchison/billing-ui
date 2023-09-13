@@ -68,7 +68,7 @@ const ProcedimientoPCreate = () => {
               error={!!formErrors.monedaId}
               disabled={isSubmitting}
               label='Moneda'
-              emptyOption={false}
+              
             />
           </Col>
         </Row>

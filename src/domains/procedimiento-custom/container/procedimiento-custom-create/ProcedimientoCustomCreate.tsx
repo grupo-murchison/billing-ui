@@ -143,7 +143,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               control={control}
               disabled={isSubmitting}
               options={mapearParametros(state.eventos)}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -159,7 +159,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -199,7 +199,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                 control={control}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>
@@ -211,7 +211,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
                 )}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>

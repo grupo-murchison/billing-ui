@@ -13,7 +13,7 @@ function FormSelect({
   onChange: onChangeProp,
   emptyOption,
 }: FormSelectProps) {
-  const emptyValues = [{ value: null, label: 'Ninguno', disabled: disabledEmpty }]; // FIXME no puede ser value: null, debe ser value: '', para cambiar esto se deben revisar luego todos los formularios
+  const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }]; // FIXME no puede ser value: null, debe ser value: '', para cambiar esto se deben revisar luego todos los formularios
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
@@ -30,6 +30,7 @@ function FormSelect({
           <Select
             readOnly={readOnly}
             {...field}
+            value={fullOptions.length > 0 ? field.value : ''}
             label={inputLabel}
             onChange={(_, data) => {
               field.onChange(_);
@@ -38,6 +39,8 @@ function FormSelect({
             error={!!error}
             MenuProps={{ disableScrollLock: true }}
           >
+            {fullOptions.length <= 0 && <MenuItem value={emptyValues[0].value}>{emptyValues[0].label}</MenuItem>}
+
             {fullOptions.length > 0 &&
               fullOptions.map((x, index) => (
                 <MenuItem key={index} value={x.value} disabled={x?.disabled}>

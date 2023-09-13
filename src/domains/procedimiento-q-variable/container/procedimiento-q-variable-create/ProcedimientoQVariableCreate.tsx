@@ -68,7 +68,7 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.tipoId}
               disabled={isSubmitting}
               label='Tipo'
-              emptyOption={false}
+              
             />
           </Col>
           <Col md={6}>
@@ -78,7 +78,7 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.diccionarioId}
               disabled={isSubmitting}
               label='Diccionario'
-              emptyOption={false}
+              
             />
           </Col>
         </Row>

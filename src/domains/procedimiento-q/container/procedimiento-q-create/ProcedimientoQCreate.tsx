@@ -110,7 +110,7 @@ const ProcedimientoQCreate = () => {
               error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
-              emptyOption={false}
+              
             />
           </Col>
         </Row>
