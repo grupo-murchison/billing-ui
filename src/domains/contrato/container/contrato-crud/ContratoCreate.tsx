@@ -138,7 +138,6 @@ const ContratoCreate = () => {
             label='Cliente'
             control={control}
             error={!!formErrors.clienteId}
-            helperText={formErrors?.clienteId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -148,7 +147,6 @@ const ContratoCreate = () => {
             name='sociedadId'
             label='Sociedad'
             error={!!formErrors.sociedadId}
-            helperText={formErrors?.sociedadId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -163,7 +161,6 @@ const ContratoCreate = () => {
             name='modeloAcuerdoId'
             label='Modelo Acuerdo'
             error={!!formErrors.modeloAcuerdoId}
-            helperText={formErrors?.modeloAcuerdoId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -173,7 +170,6 @@ const ContratoCreate = () => {
             name='tipoContratoId'
             label='Tipo Contrato'
             error={!!formErrors.tipoContratoId}
-            helperText={formErrors?.tipoContratoId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -220,7 +216,6 @@ const ContratoCreate = () => {
             name='tipoPlanFacturacionId'
             label='Tipo Plan Facturación'
             error={!!formErrors.tipoPlanFacturacionId}
-            helperText={formErrors?.tipoPlanFacturacionId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -230,7 +225,6 @@ const ContratoCreate = () => {
             name='reglaFechaPeriodoId'
             label='Regla Fecha Periodo'
             error={!!formErrors.reglaFechaPeriodoId}
-            helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
             getOptions={options => {
               const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');

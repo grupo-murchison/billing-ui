@@ -60,7 +60,6 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.modeloAcuerdoId}
               disabled={isSubmitting}
               label='Modelo Acuerdo'
-              helperText={formErrors?.modeloAcuerdoId?.message}
             />
           </Col>
         </Row>
@@ -77,7 +76,6 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.tipoServicioId}
               disabled={isSubmitting}
               label='Tipo Servicio'
-              helperText={formErrors?.tipoServicioId?.message}
             />
           </Col>
           <Col md={6}>
@@ -87,7 +85,6 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.procedimientoProductoSoftlandId}
               disabled={isSubmitting}
               label='Procedimiento Producto Softland'
-              helperText={formErrors?.procedimientoProductoSoftlandId?.message}
             />
           </Col>
         </Row>
@@ -99,7 +96,6 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.procedimientoPId}
               disabled={isSubmitting}
               label='Procedimiento Precio'
-              helperText={formErrors?.procedimientoPId?.message}
             />
           </Col>
           <Col md={6}>
@@ -109,7 +105,6 @@ const ConceptoAcuerdoCreate = () => {
               error={!!formErrors.procedimientoQId}
               disabled={isSubmitting}
               label='Procedimiento Cantidad'
-              helperText={formErrors?.procedimientoQId?.message}
             />
           </Col>
         </Row>

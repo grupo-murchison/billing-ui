@@ -68,7 +68,6 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.tipoId}
               disabled={isSubmitting}
               label='Tipo'
-              helperText={formErrors?.tipoId?.message}
               emptyOption={false}
             />
           </Col>
@@ -79,7 +78,6 @@ const ProcedimientoQVariableCreate = () => {
               error={!!formErrors.diccionarioId}
               disabled={isSubmitting}
               label='Diccionario'
-              helperText={formErrors?.diccionarioId?.message}
               emptyOption={false}
             />
           </Col>

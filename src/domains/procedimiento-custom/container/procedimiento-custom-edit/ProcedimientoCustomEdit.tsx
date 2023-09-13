@@ -246,7 +246,6 @@ const ProcedimientoCustomEdit = () => {
                 name='accionCode'
                 control={control}
                 error={!!formErrors.accionCode}
-                helperText={formErrors?.accionCode?.message}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
                 emptyOption={true}
@@ -258,7 +257,6 @@ const ProcedimientoCustomEdit = () => {
                 name='filtroCampoCode'
                 control={control}
                 error={!!formErrors.filtroCampoCode}
-                helperText={formErrors?.filtroCampoCode?.message}
                 disabled={isSubmitting || !watch('accionCode')}
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),

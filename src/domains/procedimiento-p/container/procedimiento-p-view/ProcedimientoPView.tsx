@@ -71,7 +71,6 @@ const ProcedimientoPView = () => {
               error={!!formErrors.monedaId}
               disabled
               label='Moneda'
-              helperText={formErrors?.monedaId?.message}
             />
           </Col>
         </Row>

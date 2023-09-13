@@ -110,7 +110,6 @@ const ProcedimientoQCreate = () => {
               error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
-              helperText={formErrors?.tipoProcedimientoQId?.message}
               emptyOption={false}
             />
           </Col>
@@ -123,7 +122,6 @@ const ProcedimientoQCreate = () => {
               error={!!formErrors.procedimientoBuiltinId}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
-              helperText={formErrors?.procedimientoBuiltinId?.message}
               emptyOption
             />
           </Col>
@@ -134,7 +132,6 @@ const ProcedimientoQCreate = () => {
               error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
               label='Procedimiento Custom'
-              helperText={formErrors?.procedimientoCustomId?.message}
               emptyOption
             />
           </Col>
