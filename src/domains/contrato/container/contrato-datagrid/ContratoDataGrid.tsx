@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useNavigate, Outlet } from 'react-router-dom';
 
@@ -16,11 +16,22 @@ import { ContartoLabelAndPath } from '@domains/contrato/constants';
 import { DateLib } from '@libs';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import Toast from '@app/components/Toast/Toast';
 
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ContratoContext);
+  const [openToast, setOpenToast] = useState(false);
+  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
+  const [toastMessage, setToastMessage] = useState('Datos enviados');
+
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenToast(false);
+  };
 
   const confirmDialog = useConfirmDialog();
 
@@ -42,7 +53,9 @@ const ContratoDataGrid = () => {
         identifier: `${row.nroContrato}`,
         type: 'delete',
         async onClickYes() {
-          await ContratoRepository.deleteContratoById(row.id);
+          // await ContratoRepository.deleteContratoById(row.id);
+          setToastMessage('La funcionalidad para eliminar Contratos estará disponible próximamente.');
+          setOpenToast(true);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -107,6 +120,7 @@ const ContratoDataGrid = () => {
       />
 
       <Outlet />
+      <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
     </>
   );
 };

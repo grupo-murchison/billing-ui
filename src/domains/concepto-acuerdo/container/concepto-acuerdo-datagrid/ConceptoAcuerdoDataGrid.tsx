@@ -33,7 +33,6 @@ const ConceptoAcuerdoDataGrid = () => {
     [_navigate, modeloAcuerdoId],
   );
 
-  //TODO:  Obtener el valor con el nombre de la entidad de una constante,
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
       confirmDialog.open({

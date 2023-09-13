@@ -19,6 +19,7 @@ import Toast from '@app/components/Toast/Toast';
 import { DateLib } from '@libs';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 import { FacturacionMasivaSchema } from '@domains/facturacion/repository/facturacion.schemas';
+import HelperTooltip from '@app/components/Tooltips/HelperTooltip';
 
 const FacturacionMasiva = () => {
   const [openToast, setOpenToast] = useState(false);
@@ -47,7 +48,7 @@ const FacturacionMasiva = () => {
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(async data => {
     const filters: FacturacionMasivaSchema = {
-      sociedadId: data.sociedadId ? data.sociedadId : undefined,
+      sociedadId: data.sociedadId && data.sociedadId !== '' ? data.sociedadId : undefined,
       fechaHastaFacturacion: data.fechaHastaFacturacion && DateLib.parseToDBString(data.fechaHastaFacturacion),
       sinMensajesLogOk: data.sinMensajesLogOk,
       sinMensajesLogInfo: data.sinMensajesLogInfo,
@@ -106,20 +107,29 @@ const FacturacionMasiva = () => {
         </Box>
         <Row>
           <Col md={12}>
-            <FormCheckbox
-              control={control}
-              disabled={isSubmitting}
-              label='Log sin mensaje de conclusión exitosa'
-              labelPlacement='end'
-              name='sinMensajesLogOk'
-            />
-            <FormCheckbox
-              control={control}
-              disabled={isSubmitting}
-              label='Log sin mensaje de información'
-              labelPlacement='end'
-              name='sinMensajesLogInfo'
-            />
+            <Box>
+              <FormCheckbox
+                control={control}
+                disabled={isSubmitting}
+                label='Log sin mensaje de conclusión exitosa'
+                labelPlacement='end'
+                name='sinMensajesLogOk'
+              />
+              <HelperTooltip title='Si está activado, evita insertar datos o entradas innecesarias . Es decir, no escribe en el Log los mensajes de finalización exitosa/correcta pero si los mensajes de error si esto sucediera.' />
+            </Box>
+            <Box>
+              <FormCheckbox
+                control={control}
+                disabled={isSubmitting}
+                label='Log sin mensaje de información'
+                labelPlacement='end'
+                name='sinMensajesLogInfo'
+              />
+              <HelperTooltip
+                title='Si está activado, evita insertar datos o entradas innecesarias. No se escriben en el Log los mensajes de información, como por
+ejemplo la información sobre los distintos cálculos de servicios'
+              />
+            </Box>
           </Col>
         </Row>
       </Form>

@@ -1,6 +1,16 @@
-import z from 'zod';
+import { zodLocale } from '@app/utils/zod.util';
+import z, { ZodType } from 'zod';
 
-export const ProcedimientoQEditSchema = z
+export type FormDataProcedimientoQEdit = {
+  codigo: string;
+  descripcion: string;
+  denominacion: string;
+  tipoProcedimientoQId: number | string;
+  procedimientoBuiltinId: number | string | null;
+  procedimientoCustomId: number | string | null;
+};
+
+export const ProcedimientoQEditSchema: ZodType<FormDataProcedimientoQEdit> = z
   .object({
     codigo: z
       .string({ required_error: 'El campo es requerido.' })
@@ -14,9 +24,22 @@ export const ProcedimientoQEditSchema = z
       .string({ required_error: 'El campo es requerido.' })
       .min(1, { message: 'El campo es requerido.' })
       .max(50, { message: 'Ha superado el límite de caracteres' }),
-    tipoProcedimientoQId: z.number({ required_error: 'El campo es requerido.' }).nullable(),
-    procedimientoBuiltinId: z.number({ required_error: 'El campo es requerido.' }).nullable().optional(),
-    procedimientoCustomId: z.number({ required_error: 'El campo es requerido.' }).nullable().optional(),
+      tipoProcedimientoQId: z.number({
+        required_error: zodLocale.required_error,
+        invalid_type_error: zodLocale.required_error,
+      }),
+      procedimientoBuiltinId: z
+        .number({
+          required_error: zodLocale.required_error,
+          invalid_type_error: zodLocale.required_error,
+        })
+        .nullable(),
+      procedimientoCustomId: z
+        .number({
+          required_error: zodLocale.required_error,
+          invalid_type_error: zodLocale.required_error,
+        })
+        .nullable(),
   })
   .refine(schema => (schema.tipoProcedimientoQId === 1 ? !!schema.procedimientoBuiltinId : true), {
     message: 'El campo es requerido.',

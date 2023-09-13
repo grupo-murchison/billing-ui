@@ -38,6 +38,7 @@ export {
 
   // H
   Home as HomeIcon,
+  HelpOutline as HelpIcon,
 
   // I
   Inventory as InventoryIcon,
