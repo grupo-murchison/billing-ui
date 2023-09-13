@@ -31,7 +31,7 @@ const ProcedimientoPCreate = () => {
     defaultValues: {
       codigo: '',
       denominacion: '',
-      monedaId: 1,
+      monedaId: '',
     },
     resolver: zodResolver(ProcedimientoPCreateSchema),
   });
@@ -68,8 +68,7 @@ const ProcedimientoPCreate = () => {
               error={!!formErrors.monedaId}
               disabled={isSubmitting}
               label='Moneda'
-              helperText={formErrors?.monedaId?.message}
-              emptyOption={false}
+              
             />
           </Col>
         </Row>

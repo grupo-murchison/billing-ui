@@ -20,7 +20,7 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { mapearParametros } from '@app/utils/formHelpers.util';
+import { findPropertyByCode, mapearParametros } from '@app/utils/formHelpers.util';
 
 const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
@@ -60,18 +60,18 @@ const ProcedimientoCustomCreate = forwardRef(() => {
         ...restProps
       }: ProcedimientoCustomCreateSchemaType) => ({
         ...restProps,
-        funcionId: funciones.find(({ code }) => code === funcionCode)?.value || null,
-        eventoId: eventos.find(({ code }) => code === eventoCode)?.value || null,
-        eventoCampoId: eventosCampo.find(({ code }) => code === eventoCampoCode)?.value || null,
-        accionId: acciones.find(({ code }) => code === accionCode)?.value || null,
+        funcionId: findPropertyByCode(funciones, funcionCode)?.value || null,
+        eventoId: findPropertyByCode(eventos, eventoCode)?.value || null,
+        eventoCampoId: findPropertyByCode(eventosCampo, eventoCampoCode)?.value || null,
+        accionId: findPropertyByCode(acciones, accionCode)?.value || null,
         ...(accionCode === 'FIL'
           ? {
               eventoCampoAgrupacionId: null,
-              eventoCampoFiltroId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value,
+              eventoCampoFiltroId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
               expresionFiltro: `${filtroValue}`,
             }
           : {
-              eventoCampoAgrupacionId: eventosCampo.find(({ code }) => code === filtroCampoCode)?.value || null,
+              eventoCampoAgrupacionId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
               eventoCampoFiltroId: null,
               expresionFiltro: null,
             }),
@@ -132,8 +132,6 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               label='Función'
               name='funcionCode'
               control={control}
-              error={!!formErrors.funcionCode}
-              helperText={formErrors?.funcionCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.funciones)}
             />
@@ -143,11 +141,9 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               label='Evento'
               name='eventoCode'
               control={control}
-              error={!!formErrors.eventoCode}
-              helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.eventos)}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -158,14 +154,12 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               label='Campo'
               name='eventoCampoCode'
               control={control}
-              error={!!formErrors.eventoCampoCode}
-              helperText={formErrors?.eventoCampoCode?.message}
               // disabled={isSubmitting || watch('funcionCode') === 'C'}
               disabled={isSubmitting}
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -203,11 +197,9 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                 label='Acción'
                 name='accionCode'
                 control={control}
-                error={!!formErrors.accionCode}
-                helperText={formErrors?.accionCode?.message}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>
@@ -215,13 +207,11 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                 label='Campo'
                 name='filtroCampoCode'
                 control={control}
-                error={!!formErrors.filtroCampoCode}
-                helperText={formErrors?.filtroCampoCode?.message}
                 disabled={isSubmitting || !watch('accionCode')}
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
                 )}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>

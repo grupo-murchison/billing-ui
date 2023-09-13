@@ -44,16 +44,18 @@ const ProcedimientoQEdit = () => {
       codigo: '',
       descripcion: '',
       denominacion: '',
-      tipoProcedimientoQId: null,
-      procedimientoBuiltinId: null,
-      procedimientoCustomId: null,
+      tipoProcedimientoQId: '',
+      procedimientoBuiltinId: '',
+      procedimientoCustomId: '',
     },
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
 
   useEffect(() => {
     ProcedimientoQRepository.getProcedimientoQById(procedimientoQId || '').then(({ data }) => {
-      reset(data);
+      reset({
+        ...data,
+      });
       setIsDataFetched(true);
     });
   }, [procedimientoQId, reset]);
@@ -122,8 +124,7 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
-              helperText={formErrors?.tipoProcedimientoQId?.message}
-              emptyOption={false}
+              
             />
           </Col>
         </Row>
@@ -135,7 +136,6 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.procedimientoBuiltinId}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
-              helperText={formErrors?.procedimientoBuiltinId?.message}
               emptyOption
             />
           </Col>
@@ -146,7 +146,6 @@ const ProcedimientoQEdit = () => {
               error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
               label='Procedimiento Custom'
-              helperText={formErrors?.procedimientoCustomId?.message}
               emptyOption
             />
           </Col>
