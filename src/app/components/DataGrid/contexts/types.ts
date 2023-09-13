@@ -35,7 +35,6 @@ export type RepositoryParams = Record<string, unknown>; // Record<string, AnyVal
 
 export type InitialContext = {
   columns: GridColDef[];
-  // currentPage: number;
   onClickNew?: () => void;
   handlePaginationModelChange: (model: GridPaginationModel) => void;
   rows: GridRowsProp;

@@ -1,6 +1,6 @@
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: AnyValue }) => {
+export const DataGridConceptoAcuerdo = ({ rows }: { rows: AnyValue }) => {
   return (
     <DataGridBase
       rows={rows}
@@ -42,6 +42,7 @@ export const DataGridConceptoAcuerdo = ({ rows }: { id: string; rows: AnyValue }
         },
       ]}
       pageSizeOptions={[5, 10, 25]}
+      rowSelection={false}
     />
   );
 };

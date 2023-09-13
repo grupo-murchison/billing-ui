@@ -51,9 +51,17 @@ class ContratoService {
     return [response, error];
   };
 
-  static postVariablesPorContratoProcedimientoQ = async (contratoId: number): Promise<HandlePromise> => {
+  static postVariablesPorContratoProcedimientoQ = async (data: AnyValue): Promise<HandlePromise> => {
+    const { contratoId, ...params } = data;
+
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.post<AnyValue>(`${BASE_PATH}/variablesPorContratoProcedimientoQ`, contratoId),
+      ApiProvider.post<AnyValue>(
+        `${BASE_PATH}/variablesPorContratoProcedimientoQ`,
+        { contratoId },
+        {
+          params: { ...params },
+        },
+      ),
     );
 
     return [response, error];

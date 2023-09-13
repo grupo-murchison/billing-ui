@@ -54,7 +54,24 @@ class ContratoRepository {
     const response$ = from(ContratoService.postVariablesPorContratoProcedimientoQ(Contrato)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
-    const response = await lastValueFrom(response$);
+    const _response = await lastValueFrom(response$);
+    // TODO actualizar el backend para que este endpoint venga con la estructura paginada
+    let response = {
+      data: {
+        data: [],
+        meta: {
+          itemCount: '',
+        },
+      },
+    };
+
+    if (_response.data.data) {
+      response = { ..._response };
+    } else {
+      response['data']['data'] = _response.data;
+      response['data']['meta']['itemCount'] = _response.data.length;
+    }
+
     return response;
   };
 

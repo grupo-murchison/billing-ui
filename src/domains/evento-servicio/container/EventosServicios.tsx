@@ -32,7 +32,7 @@ const EventoServicio = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      nroFacturacion: '',
+      numeroSecuenciaFacturacion: '',
       clienteId: { value: '', code: '', label: '' },
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
       conceptoAcuerdo: '', // TODO deber sen un filtro más avanzado, ver documentación
@@ -45,7 +45,7 @@ const EventoServicio = () => {
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
     async data => {
       const filters = {
-        numeroSecuenciaFacturacion: data.nroFacturacion ? data.nroFacturacion : undefined,
+        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         nroContato: data.contrato ? data.contrato : undefined,
         modeloAcuerdoId: data.conceptoAcuerdo ? data.conceptoAcuerdo : undefined,
@@ -63,7 +63,7 @@ const EventoServicio = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} label='Nro. Facturación' name='nroFacturacion' disabled={isSubmitting} />
+            <FormTextField control={control} label='Nro. Facturación' name='numeroSecuenciaFacturacion' disabled={isSubmitting} type='number'/>
           </Col>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
