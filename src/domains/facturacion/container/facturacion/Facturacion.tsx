@@ -80,7 +80,6 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              emptyOption
               // error={!!formErrors.clienteId}
             />
           </Col>
