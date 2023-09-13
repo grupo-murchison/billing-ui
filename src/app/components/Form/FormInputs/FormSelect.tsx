@@ -7,10 +7,9 @@ function FormSelect({
   name,
   label,
   options,
-  error,
   disabledEmpty,
   disabled,
-  helperText,
+  readOnly,
   onChange: onChangeProp,
   emptyOption,
 }: FormSelectProps) {
@@ -21,19 +20,22 @@ function FormSelect({
   const inputLabel = label || name;
 
   return (
-    <FormControl fullWidth error={error} disabled={disabled}>
+    <FormControl fullWidth disabled={disabled}>
       <InputLabel>{inputLabel}</InputLabel>
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
+          <>
           <Select
+            readOnly={readOnly}
             {...field}
             label={inputLabel}
             onChange={(_, data) => {
               field.onChange(_);
               onChangeProp && onChangeProp(data);
             }}
+            error={!!error}
             MenuProps={{ disableScrollLock: true }}
           >
             {fullOptions.length > 0 &&
@@ -43,9 +45,10 @@ function FormSelect({
                 </MenuItem>
               ))}
           </Select>
+          {!!error && <FormHelperText>{error?.message}</FormHelperText>}
+          </>
         )}
       />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 }
@@ -55,6 +58,7 @@ export interface FormSelectProps extends FormInputsCommonProps {
   options: AnyValue[];
   disabledEmpty?: boolean;
   emptyOption?: boolean;
+  readOnly?: boolean
 }
 
 export default FormSelect;

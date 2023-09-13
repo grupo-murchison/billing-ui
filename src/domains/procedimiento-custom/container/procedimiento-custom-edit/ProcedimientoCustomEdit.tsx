@@ -180,8 +180,6 @@ const ProcedimientoCustomEdit = () => {
               label='Función'
               name='funcionCode'
               control={control}
-              error={!!formErrors.funcionCode}
-              helperText={formErrors?.funcionCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.funciones)}
             />
@@ -191,8 +189,6 @@ const ProcedimientoCustomEdit = () => {
               label='Evento'
               name='eventoCode'
               control={control}
-              error={!!formErrors.eventoCode}
-              helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.eventos)}
               emptyOption={true}
@@ -205,8 +201,6 @@ const ProcedimientoCustomEdit = () => {
               label='Campo'
               name='eventoCampoCode'
               control={control}
-              error={!!formErrors.eventoCampoCode}
-              helperText={formErrors?.eventoCampoCode?.message}
               // disabled={isSubmitting || watch('funcionCode') === 'C'}
               disabled={isSubmitting}
               options={mapearParametros(

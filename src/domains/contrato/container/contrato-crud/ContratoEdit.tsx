@@ -273,8 +273,7 @@ const ContratoEdit = () => {
             error={!!formErrors.tipoPlanFacturacionId}
             helperText={formErrors?.tipoPlanFacturacionId?.message}
             disabled={isSubmitting}
-            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
-            // readOnly
+            readOnly
           />
         </Col>
         <Col md={4}>
@@ -292,8 +291,7 @@ const ContratoEdit = () => {
                 code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlPeriodo(true) : setIsDiaFijoPosteriorAlPeriodo(false);
               }
             }}
-            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
-            // readOnly
+            readOnly
           />
         </Col>
 
