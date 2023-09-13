@@ -1,44 +1,50 @@
-import { useEffect, useState } from 'react';
-import DataGridBase from '@app/components/DataGrid/DataGridBase';
+import { useEffect } from 'react';
+import { GridCellEditStopReasons, GridEventListener, useGridApiRef } from '@mui/x-data-grid';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import ContratoVariablesRepository from './repository/contrato-variables.repository';
 
+import { DataGrid } from '@app/components/DataGrid';
+
+import { useDataGrid } from '@app/hooks';
+
 export const DataGridContratoVariables = ({ contratoId }: { contratoId: string | undefined }) => {
-  const [rows, setRows] = useState<AnyValue>([]);
-  const [loading, setLoading] = useState(true);
-  const [refreshData, setRefreshData] = useState(false);
+  const apiRef = useGridApiRef();
+
+  const mainDataGrid = useDataGrid();
 
   useEffect(() => {
-    ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId })
-      .then(({ data }) => {
-        setRows(data);
-      })
-      .catch(error => console.log(error))
-      .finally(() => setLoading(false));
-  }, [contratoId, refreshData]);
+    mainDataGrid.load({ fixedFilters: { contratoId } });
+  }, [mainDataGrid]);
 
-  const handleCellEdit = (params: AnyValue, event: AnyValue) => {
-    setLoading(true);
-    const { row, id } = params;
+  const handleCellEditStop: GridEventListener<'cellEditStop'> = (params, event) => {
+    if (params.reason === GridCellEditStopReasons.cellFocusOut) {
+      // Si es true, la celda que da en modo edicion hasta que presionen Enter, Tab o Esc
+      event.defaultMuiPrevented = false;
+    }
 
-    row['valor'] = event.target.value;
+    const row = apiRef.current.getRowWithUpdatedValues(params.id, params.field);
 
-    ContratoVariablesRepository.updateContratoVariable(row, id)
-      .then()
+    ContratoVariablesRepository.updateContratoVariable({ valor: row?.valor }, params.id)
+      .then(response => console.log('response', response))
       .catch((error: AnyValue) => {
-        // TODO falta un handlerError() que sustituya el console.log
         console.log('Error al actualizar variable:\n', error);
       })
       .finally(() => {
-        setRefreshData(!refreshData);
-        setLoading(false);
+        mainDataGrid.load({ fixedFilters: { contratoId } });
       });
   };
 
+  // const handleProcessRowUpdateError = (error: AnyValue) => {
+  //   console.error('handleProcessRowUpdateError');
+  //   console.log(error);
+  // };
+
   return (
-    <DataGridBase
-      rows={rows}
+    <DataGrid
+      repositoryFunc={ContratoRepository.variablesPorContratoProcedimientoQ}
+      hookRef={mainDataGrid.ref}
+      apiRef={apiRef}
       columns={[
         {
           field: 'procedimientoQ.conceptoAcuerdo.descripcion',
@@ -71,8 +77,12 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
           editable: true,
         },
       ]}
-      loading={loading}
-      onCellEditStop={handleCellEdit}
+      onCellEditStop={handleCellEditStop}
+      // processRowUpdate={(updatedRow, originalRow) => {
+      //   apiRef.current.stopCellEditMode({ id: updatedRow.id, field: 'valor' });
+      //   console.log('updatedRow', updatedRow);
+      // }}
+      // onProcessRowUpdateError={handleProcessRowUpdateError}
     />
   );
 };

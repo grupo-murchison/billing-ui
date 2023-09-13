@@ -8,15 +8,6 @@ const ContratoVariablesSchema = z.object({
   valor: z.string().optional().nullable(),
 });
 
-const ValidationSchemaPlanFacturacionPeriodos = z.object({
-  id: z.number(),
-  periodo: z.number(),
-  liquidacionDesde: z.string(),
-  liquidacionHasta: z.string(),
-  fechaFacturacion: z.string(),
-  estado: z.string(),
-});
-
 export type FormDataTypeContratoCreate = {
   clienteId: number | string;
   descripcion: string;
@@ -87,15 +78,12 @@ export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate>
   });
 
 const _ContratoEditSchema = z.object({
-  conceptosAcuerdo: z.array(z.any()),
-  contratoVariables: z.array(ContratoVariablesSchema),
+  // contratoVariables: z.array(ContratoVariablesSchema),
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
-  periodos: z.array(ValidationSchemaPlanFacturacionPeriodos),
 });
 
 export const ValidationSchemaContratoEdit = z.intersection(ValidationSchemaContratoCreate, _ContratoEditSchema);
 
 export type FormDataContratoCreateType = z.infer<typeof ValidationSchemaContratoCreate>;
 export type FormDataContratoEditType = z.infer<typeof ValidationSchemaContratoEdit>;
-export type PlanFacturacionPeriodosType = z.infer<typeof ValidationSchemaPlanFacturacionPeriodos>;
