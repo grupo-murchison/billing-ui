@@ -59,5 +59,3 @@ export const ProcedimientoQCreateSchema: ZodType<FormDataProcedimientoQCreate> =
   });
 
 export type ProcedimientoQCreateSchemaType = z.infer<typeof ProcedimientoQCreateSchema>;
-
-// export const ValidationSchemaProcedimientoQEdit = z.intersection(ProcedimientoQCreateSchema, _ContratoEditSchema);
