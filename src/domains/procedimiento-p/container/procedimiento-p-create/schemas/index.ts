@@ -1,6 +1,6 @@
-import z from 'zod';
+import z, { ZodType } from 'zod';
 
-export const ProcedimientoPCreateSchema = z.object({
+export const ProcedimientoPCreateSchema: ZodType<FormDataTypeProcedimientoPCreate> = z.object({
   codigo: z
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
@@ -11,5 +11,11 @@ export const ProcedimientoPCreateSchema = z.object({
     .max(250, { message: 'Ha superado el límite de caracteres' }),
   monedaId: z.number({ required_error: 'El campo es requerido.' }),
 });
+
+export type FormDataTypeProcedimientoPCreate = {
+  codigo: string;
+  denominacion: string;
+  monedaId: number | string;
+};
 
 export type ProcedimientoPCreateSchemaType = z.infer<typeof ProcedimientoPCreateSchema>;

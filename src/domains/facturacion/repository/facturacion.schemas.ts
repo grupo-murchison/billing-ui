@@ -1,4 +1,4 @@
-import z from 'zod';
+import z, { ZodType } from 'zod';
 
 import { ZodUtils } from '@app/utils';
 
@@ -43,12 +43,19 @@ const FacturasReporteDataGridSchema = z.object({
   tipoFacturacion: z.string().nullish(),
 });
 
-const FacturacionMasivaSchema = z.object({
+const FacturacionMasivaSchema: ZodType<FormDataTypeFacturacionMasiva> = z.object({
   fechaHastaFacturacion: z.date(),
-  sociedadId: z.number({ required_error: 'El campo es requerido.' }).nullish(),
+  sociedadId: z.number({ required_error: 'El campo es requerido.' }),
   sinMensajesLogOk: z.boolean(),
   sinMensajesLogInfo: z.boolean(),
 });
+
+export type FormDataTypeFacturacionMasiva = {
+  fechaHastaFacturacion: Date | null;
+  sociedadId: number | string;
+  sinMensajesLogOk: boolean;
+  sinMensajesLogInfo: boolean;
+};
 
 export const FacturacionLogSchema = z
   .object({
