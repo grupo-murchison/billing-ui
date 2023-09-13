@@ -104,7 +104,6 @@ const ProcedimientoPSIntervaloEdit = () => {
               error={!!formErrors.productoSoftlandId}
               disabled={isSubmitting}
               label='Producto Softland'
-              helperText={formErrors?.productoSoftlandId?.message}
               emptyOption
             />
           </Col>

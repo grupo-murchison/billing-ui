@@ -80,7 +80,8 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              error={!!formErrors.clienteId}
+              emptyOption
+              // error={!!formErrors.clienteId}
             />
           </Col>
           <Col sm={12} md={6}>
@@ -89,7 +90,7 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Sociedad'
               name='sociedadId'
-              error={!!formErrors.sociedadId}
+              // error={!!formErrors.sociedadId}
             />
           </Col>
           <Col sm={12} md={6}>
@@ -98,7 +99,7 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Tipo Contrato'
               name='tipoContratoId'
-              error={!!formErrors.sociedadId}
+              // error={!!formErrors.sociedadId}
             />
           </Col>
 
