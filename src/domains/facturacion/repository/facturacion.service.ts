@@ -1,4 +1,4 @@
-import { ApiProvider, ApiProviderBilligProcessor } from '@providers';
+import { ApiProvider, ApiProviderBilligProcessor, ApiProviderBilligReport } from '@providers';
 
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
@@ -78,6 +78,22 @@ class FacturacionService {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`v1/proceso-log/filter`, { params }),
     );
+    return [response, error];
+  };
+
+  static downloadProforma = async (facturacionContratoId: string): Promise<HandlePromise> => {
+    const body = { tipoFormato: 'PDF', facturacionContratoId };
+    console.log(body);
+
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProviderBilligReport.post('proforma', body, {
+        headers: {
+          // 'Content-Type': 'application/pdf',
+          'responseType': 'blob',
+        },
+      }),
+    );
+
     return [response, error];
   };
 }

@@ -71,6 +71,13 @@ class FacturacionRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static downloadProforma= async (facturacionContratoId: string) => {
+      
+    return await RepositoryUtils.fromRxjs(
+      FacturacionService.downloadProforma(facturacionContratoId),
+    );
+  }
 }
 
 export default FacturacionRepository;

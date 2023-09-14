@@ -12,8 +12,18 @@ class ApiProvider {
     if (!this.instance) {
       this.instance = axios.create({
         baseURL: `${BASE_URL}`,
-        headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          'Accept': '*/*', // application/json
+          'Access-Control-Allow-Origin': '*',
+          'Access-Control-Expose-Headers': '*',
+          'Access-Control-Allow-Headers': 'Origin, X-Requested-With, Content-Type, Accept, Authorization',
+          // 'Access-Control-Allow-Credentials': true,
+          // "Referrer-Policy": "strict-origin-when-cross-origin"
+          // "Referrer-Policy": "origin"
+        },
         auth: { password: PASS, username: USER },
+        // withCredentials: true,
       });
     }
 

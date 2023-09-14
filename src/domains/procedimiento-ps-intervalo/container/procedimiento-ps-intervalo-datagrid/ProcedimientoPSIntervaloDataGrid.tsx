@@ -1,6 +1,8 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { useNavigate, useParams, Outlet } from 'react-router-dom';
+import { Box, FormLabel, Typography } from '@mui/material';
+import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 
@@ -10,11 +12,9 @@ import { DataGrid } from '@app/components/DataGrid';
 
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
-import { label } from '@domains/procedimiento-ps-intervalo/contexts/constans';
-import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
-import { Box, FormLabel, Typography } from '@mui/material';
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
