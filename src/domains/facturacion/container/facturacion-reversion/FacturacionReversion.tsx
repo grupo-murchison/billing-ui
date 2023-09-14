@@ -57,7 +57,7 @@ const FacturacionReversion = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -189,7 +189,6 @@ const FacturacionReversion = () => {
               label='Fecha Cálculo Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>

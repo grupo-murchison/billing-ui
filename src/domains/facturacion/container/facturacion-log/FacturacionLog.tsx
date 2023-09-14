@@ -36,7 +36,7 @@ const FacturacionLog = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       numeroSecuenciaFacturacion: '',
@@ -90,9 +90,7 @@ const FacturacionLog = () => {
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
-              error={!!formErrors.clienteId}
               // emptyOption
-              // helperText={formErrors?.clienteId?.message}
             />
           </Col>
         </Row>
@@ -103,7 +101,6 @@ const FacturacionLog = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -112,7 +109,6 @@ const FacturacionLog = () => {
               label='Fecha Cálculo Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>

@@ -30,7 +30,7 @@ const ProcedimientoPSIntervaloEdit = () => {
     handleSubmit,
     reset,
     control,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
     resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),
   });
@@ -101,7 +101,6 @@ const ProcedimientoPSIntervaloEdit = () => {
             <ProductoSoftlandDropdown
               control={control}
               name='productoSoftlandId'
-              error={!!formErrors.productoSoftlandId}
               disabled={isSubmitting}
               label='Producto Softland'
               emptyOption

@@ -40,7 +40,7 @@ const Facturacion = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -75,13 +75,7 @@ const Facturacion = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='clienteId'
-              // error={!!formErrors.clienteId}
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
           <Col sm={12} md={6}>
             <SociedadDropdownAutoComplete
@@ -89,7 +83,6 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Sociedad'
               name='sociedadId'
-              // error={!!formErrors.sociedadId}
             />
           </Col>
           <Col sm={12} md={6}>
@@ -98,7 +91,6 @@ const Facturacion = () => {
               disabled={isSubmitting}
               label='Tipo Contrato'
               name='tipoContratoId'
-              // error={!!formErrors.sociedadId}
             />
           </Col>
 

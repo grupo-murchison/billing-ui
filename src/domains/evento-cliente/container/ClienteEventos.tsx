@@ -28,7 +28,7 @@ const EventoClientes = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: {  isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -63,13 +63,7 @@ const EventoClientes = () => {
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
           <Col sm={12} md={6}>
-            <EventosDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Evento'
-              name='eventoId'
-              error={!!formErrors.eventos}
-            />
+            <EventosDropdownAutoComplete control={control} disabled={isSubmitting} label='Evento' name='eventoId' />
           </Col>
         </Row>
         <Row>
@@ -79,7 +73,6 @@ const EventoClientes = () => {
               label='Fecha Evento Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -88,7 +81,6 @@ const EventoClientes = () => {
               label='Fecha Evento Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>

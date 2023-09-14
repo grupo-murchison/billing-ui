@@ -11,6 +11,7 @@ export {
 
   // C
   CancelScheduleSend as CancelScheduleSendIcon,
+  Cancel as CancelIcon,
   Category as CategoryIcon,
 
   // D

@@ -29,7 +29,7 @@ const FacturacionMasiva = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<FacturacionMasivaSchema>({
     defaultValues: {
       fechaHastaFacturacion: new Date(),
@@ -77,7 +77,6 @@ const FacturacionMasiva = () => {
               label='Fecha de Facturación - calcular hasta'
               name='fechaHastaFacturacion'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHastaFacturacion}
             />
           </Col>
         </Row>
@@ -93,7 +92,6 @@ const FacturacionMasiva = () => {
               control={control}
               name='sociedadId'
               label='Sociedad'
-              error={!!formErrors.sociedadId}
               disabled={isSubmitting}
               emptyOption
             />

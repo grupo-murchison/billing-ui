@@ -56,7 +56,7 @@ const ContratoEdit = () => {
     watch,
     control,
     resetField,
-    formState: { errors: formErrors, isSubmitting, dirtyFields },
+    formState: { isSubmitting, dirtyFields },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
       clienteId: '',
@@ -161,22 +161,10 @@ const ContratoEdit = () => {
     <CardContent>
       <Row>
         <Col md={6}>
-          <ClienteDropdown
-            name='clienteId'
-            label='Cliente'
-            control={control}
-            error={!!formErrors.clienteId}
-            disabled={isSubmitting}
-          />
+          <ClienteDropdown name='clienteId' label='Cliente' control={control} disabled={isSubmitting} />
         </Col>
         <Col md={6}>
-          <SociedadDropdown
-            control={control}
-            name='sociedadId'
-            label='Sociedad'
-            error={!!formErrors.sociedadId}
-            disabled={isSubmitting}
-          />
+          <SociedadDropdown control={control} name='sociedadId' label='Sociedad' disabled={isSubmitting} />
         </Col>
       </Row>
       <Row>
@@ -186,8 +174,6 @@ const ContratoEdit = () => {
             control={control}
             id='destinatarioId'
             label='Destinatario'
-            // error={!!formErrors.destinatarioId}
-            // helperText={formErrors?.destinatarioId?.message}
             // disabled={isSubmitting}
             // value={watch('destinatarioId')}
           />
@@ -200,18 +186,11 @@ const ContratoEdit = () => {
             control={control}
             name='modeloAcuerdoId'
             label='Modelo Acuerdo'
-            error={!!formErrors.modeloAcuerdoId}
             disabled={isSubmitting}
           />
         </Col>
         <Col md={6}>
-          <TipoContratoDropdown
-            control={control}
-            name='tipoContratoId'
-            label='Tipo Contrato'
-            error={!!formErrors.tipoContratoId}
-            disabled={isSubmitting}
-          />
+          <TipoContratoDropdown control={control} name='tipoContratoId' label='Tipo Contrato' disabled={isSubmitting} />
         </Col>
       </Row>
       {/* <Row>
@@ -263,7 +242,6 @@ const ContratoEdit = () => {
             control={control}
             name='tipoPlanFacturacionId'
             label='Tipo Plan Facturación'
-            error={!!formErrors.tipoPlanFacturacionId}
             disabled={isSubmitting}
             readOnly
           />
@@ -273,7 +251,6 @@ const ContratoEdit = () => {
             control={control}
             name='reglaFechaPeriodoId'
             label='Regla Fecha Periodo'
-            error={!!formErrors.reglaFechaPeriodoId}
             disabled={isSubmitting}
             getOptions={options => {
               const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');

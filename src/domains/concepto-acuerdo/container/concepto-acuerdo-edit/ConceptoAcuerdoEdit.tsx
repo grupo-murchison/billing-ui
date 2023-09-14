@@ -34,7 +34,7 @@ const ConceptoAcuerdoEdit = () => {
     handleSubmit,
     control,
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ConceptoAcuerdoEditSchemaType>({
     resolver: zodResolver(ConceptoAcuerdoEditSchema),
   });
@@ -68,13 +68,7 @@ const ConceptoAcuerdoEdit = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={12}>
-            <ModeloAcuerdoDropdown
-              control={control}
-              name='modeloAcuerdoId'
-              label='Modelo Acuerdo'
-              error={!!formErrors.modeloAcuerdoId}
-              disabled
-            />
+            <ModeloAcuerdoDropdown control={control} name='modeloAcuerdoId' label='Modelo Acuerdo' disabled />
           </Col>
         </Row>
         <Row>
@@ -87,7 +81,6 @@ const ConceptoAcuerdoEdit = () => {
             <TipoServicioDropdown
               control={control}
               name='tipoServicioId'
-              error={!!formErrors.tipoServicioId}
               disabled={isSubmitting}
               label='Tipo Servicio'
             />
@@ -96,7 +89,6 @@ const ConceptoAcuerdoEdit = () => {
             <ProcedimientoPSDropdown
               control={control}
               name='procedimientoProductoSoftlandId'
-              error={!!formErrors.procedimientoProductoSoftlandId}
               disabled={isSubmitting}
               label='Procedimiento Producto Softland'
             />
@@ -107,7 +99,6 @@ const ConceptoAcuerdoEdit = () => {
             <ProcedimientoPDropdown
               control={control}
               name='procedimientoPId'
-              error={!!formErrors.procedimientoPId}
               disabled={isSubmitting}
               label='Procedimiento Precio'
             />
@@ -116,7 +107,6 @@ const ConceptoAcuerdoEdit = () => {
             <ProcedimientoQDropdown
               control={control}
               name='procedimientoQId'
-              error={!!formErrors.procedimientoQId}
               disabled={isSubmitting}
               label='Procedimiento Cantidad'
             />
