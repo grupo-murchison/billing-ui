@@ -13,7 +13,7 @@ function DataGridSoporte({ facturacionContratoConceptoId }: { facturacionContrat
   useEffect(() => {
     if (facturacionContratoConceptoId) {
       setLoading(true);
-      FacturacionRepository.getEventos(String(facturacionContratoConceptoId)) // TODO es el mismo id que para los detalles o es otro dato ?
+      FacturacionRepository.getEventos(String(facturacionContratoConceptoId))
         .then(({ data }) => {
           setEventos(data[0]?.eventos);
         })

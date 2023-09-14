@@ -164,7 +164,6 @@ const DangerDialog = ({ isLoading, handleClickYes, handleClickNot, title, messag
           onClick={handleClickYes}
           disabled={isLoading}
           variant='contained'
-          //TODO Revisar colores
           sx={{
             'backgroundColor': theme.palette.error.main,
             ':hover': { backgroundColor: theme.palette.error.dark },
@@ -206,7 +205,6 @@ const WarningDialog = ({ isLoading, handleClickYes, handleClickNot, title, messa
           onClick={handleClickYes}
           disabled={isLoading}
           variant='contained'
-          //TODO Revisar colores
           sx={{
             'backgroundColor': theme.palette.warning.main,
             ':hover': { backgroundColor: theme.palette.warning.dark },

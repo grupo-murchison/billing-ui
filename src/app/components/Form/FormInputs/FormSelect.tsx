@@ -13,7 +13,7 @@ function FormSelect({
   onChange: onChangeProp,
   emptyOption,
 }: FormSelectProps) {
-  const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }]; // FIXME no puede ser value: null, debe ser value: '', para cambiar esto se deben revisar luego todos los formularios
+  const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }];
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
