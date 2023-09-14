@@ -4,7 +4,6 @@ import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 
 class EventoService {
-  // TODO: Implement next BASE_PATH const in the rest of service databases.
   private static BASE_PATH = 'v1/eventos';
 
   static getAllAsDropdown = async (): Promise<HandlePromise> => {

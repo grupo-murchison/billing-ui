@@ -64,9 +64,9 @@ const ProcedimientoPDataGrid = () => {
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'codigo', headerName: 'CÓDIGO' },
-          { field: 'denominacion', headerName: 'DENOMINACIÓN' },
-          { field: 'moneda', headerName: 'MONEDA' },
+          { field: 'codigo', headerName: 'Código' },
+          { field: 'denominacion', headerName: 'Denominación' },
+          { field: 'moneda', headerName: 'Moneda' },
           {
             field: 'actions',
             type: 'actions',

@@ -1,1 +1,1 @@
-export { default as ProcedimientoPDataGrid } from './ProcedimientoPDataGrid';
+export { default as ProcedimientoPIntervaloDataGrid } from './ProcedimientoPIntervaloDataGrid';

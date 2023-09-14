@@ -7,14 +7,15 @@ import { Col, Row } from '@app/components';
 import { useConfirmDialog } from '@app/hooks';
 
 import { DataGrid } from '@app/components/DataGrid';
+import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
-import { label } from '@domains/procedimiento-p-intervalo/contexts/constants';
-import { GridActionsCellItem } from '@mui/x-data-grid';
 import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
+import { Box, FormLabel, Typography } from '@mui/material';
 
-const ProcedimientoPIntervaloDataGrid = (codigo: AnyValue) => {
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
+const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPId } = useParams();
 
@@ -33,12 +34,11 @@ const ProcedimientoPIntervaloDataGrid = (codigo: AnyValue) => {
     [_navigate, procedimientoPId],
   );
 
-  //TODO: remplazar codigo.codigo.codigo por useContext
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
       confirmDialog.open({
-        entity: `${label.label}`,
-        identifier: `${codigo.codigo.codigo}`,
+        entity: `Intervalo Procedimiento Precio`,
+        identifier: `${row.intervalo}`,
         type: 'delete',
         async onClickYes() {
           await ProcedimientoPIntervaloRepository.deleteProcedimientoPIntervaloById(row.id);
@@ -60,6 +60,14 @@ const ProcedimientoPIntervaloDataGrid = (codigo: AnyValue) => {
 
   return (
     <>
+      <Box mt={4} mb={3}>
+        <FormLabel component='legend'>
+          <Typography variant='h6' component='div'>
+            Intervalos Procedimiento Precio
+          </Typography>
+        </FormLabel>
+      </Box>
+
       <Row>
         <Col md={12}>
           <DataGrid

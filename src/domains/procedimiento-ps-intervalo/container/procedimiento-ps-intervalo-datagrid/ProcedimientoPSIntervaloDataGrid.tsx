@@ -13,8 +13,9 @@ import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-in
 import { label } from '@domains/procedimiento-ps-intervalo/contexts/constans';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { Box, FormLabel, Typography } from '@mui/material';
 
-const ProcedimientoPSIntervaloDataGrid = (codigo: AnyValue) => {
+const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
 
@@ -33,15 +34,14 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: AnyValue) => {
     [_navigate, procedimientoPSId],
   );
 
-  //TODO: Obenter codigo.codigo.codigo con useContext
   const handleClickDelete = useCallback(
-    (id: number) => {
+    (row: AnyValue) => {
       confirmDialog.open({
-        entity: `${label.label}`,
-        identifier: `${codigo.codigo.codigo}`,
+        entity: 'Intervalo Procedimiento Producto Softland',
+        identifier: `${row.intervalo}`,
         type: 'delete',
         async onClickYes() {
-          await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(id);
+          await ProcedimientoPSIntervaloRepository.deleteProcedimientoPSIntervaloById(row.id);
           confirmDialog.close();
           mainDataGrid.reload();
         },
@@ -60,6 +60,14 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: AnyValue) => {
 
   return (
     <>
+      <Box mt={4} mb={3}>
+        <FormLabel component='legend'>
+          <Typography variant='h6' component='div'>
+            Intervalos Procedimiento Prroducto Softland
+          </Typography>
+        </FormLabel>
+      </Box>
+
       <Row>
         <Col md={12}>
           <DataGrid
@@ -88,7 +96,7 @@ const ProcedimientoPSIntervaloDataGrid = (codigo: AnyValue) => {
                     key={3}
                     icon={<DeleteOutlineIcon />}
                     label='Eliminar'
-                    onClick={() => handleClickDelete(params.row.id)}
+                    onClick={() => handleClickDelete(params.row)}
                     // showInMenu
                   />,
                 ],

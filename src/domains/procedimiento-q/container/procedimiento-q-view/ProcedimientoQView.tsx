@@ -19,7 +19,7 @@ import { ProcedimientoCustomDropdown } from '@domains/procedimiento-custom/conta
 import { ProcedimientoBuiltinDropdown } from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown';
 import Form from '@app/components/Form/Form';
 
-const ProcedimientoQEdit = () => {
+const ProcedimientoQView = () => {
   const { procedimientoQId } = useParams();
   const _navigate = useNavigate();
 
@@ -45,12 +45,11 @@ const ProcedimientoQEdit = () => {
     return <></>;
   }
 
-  // //TODO creo esta constante para que no rompa.
-  const isSubmitting = false;
+// TODO usar useForm, control y reset para los Selects porque son elementos controlados
 
   return (
     <Modal isOpen onClose={handleClose} title={label.procedimientoQ}>
-      <Form handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form>
         <Row>
           <Col md={6}>
             <TextField
@@ -59,7 +58,7 @@ const ProcedimientoQEdit = () => {
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={procedimientoQ.codigo}
+              defaultValue={procedimientoQ?.codigo  || ''}
               fullWidth
             />
           </Col>
@@ -70,7 +69,7 @@ const ProcedimientoQEdit = () => {
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={procedimientoQ.denominacion}
+              defaultValue={procedimientoQ?.denominacion  || ''}
               fullWidth
             />
           </Col>
@@ -83,7 +82,7 @@ const ProcedimientoQEdit = () => {
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={procedimientoQ.descripcion}
+              defaultValue={procedimientoQ?.descripcion || ''}
               fullWidth
             />
           </Col>
@@ -92,7 +91,7 @@ const ProcedimientoQEdit = () => {
               id='tipoProcedimientoQ'
               label={`Tipo ${label.procedimientoQ}`}
               disabled
-              value={procedimientoQ.tipoProcedimientoQId}
+              value={procedimientoQ?.tipoProcedimientoQId  || ''}
             />
           </Col>
         </Row>
@@ -102,7 +101,7 @@ const ProcedimientoQEdit = () => {
               id='procedimientoCustom'
               label='Procedimiento Custom'
               disabled
-              value={procedimientoQ.procedimientoCustomId}
+              value={procedimientoQ?.procedimientoCustomId  || ''}
             />
           </Col>
           <Col md={6}>
@@ -110,7 +109,7 @@ const ProcedimientoQEdit = () => {
               id='procedimientoBuiltin'
               label='Procedimiento Builtin'
               disabled
-              value={procedimientoQ.procedimientoBuiltinId}
+              value={procedimientoQ?.procedimientoBuiltinId  || ''}
             />
           </Col>
         </Row>
@@ -119,4 +118,4 @@ const ProcedimientoQEdit = () => {
   );
 };
 
-export default ProcedimientoQEdit;
+export default ProcedimientoQView;
