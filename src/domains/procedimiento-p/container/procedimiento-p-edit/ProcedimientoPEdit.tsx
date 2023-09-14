@@ -84,7 +84,6 @@ const ProcedimientoPEdit = () => {
               error={!!formErrors.monedaId}
               disabled={isSubmitting}
               label='Moneda'
-              helperText={formErrors?.monedaId?.message}
             />
           </Col>
         </Row>

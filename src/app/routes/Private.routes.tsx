@@ -24,8 +24,6 @@ const PrivateRoutes = () => {
     return <Navigate to='/auth/login' replace />;
   }
 
-  //TODO estaria bueno migrar a useRoutes de mantis
-
   return (
     <ComponentInjectorProvider>
       <MainLayout>

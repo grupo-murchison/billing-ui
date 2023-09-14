@@ -26,7 +26,9 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
     const row = apiRef.current.getRowWithUpdatedValues(params.id, params.field);
 
     ContratoVariablesRepository.updateContratoVariable({ valor: row?.valor }, params.id)
-      .then(response => console.log('response', response))
+      .then
+      // response => console.log('response', response)
+      ()
       .catch((error: AnyValue) => {
         console.log('Error al actualizar variable:\n', error);
       })

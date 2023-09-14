@@ -7,35 +7,40 @@ function FormSelect({
   name,
   label,
   options,
-  error,
   disabledEmpty,
   disabled,
-  helperText,
+  readOnly,
   onChange: onChangeProp,
   emptyOption,
 }: FormSelectProps) {
-  const emptyValues = [{ value: null, label: 'Ninguno', disabled: disabledEmpty }]; // FIXME no puede ser value: null, debe ser value: '', para cambiar esto se deben revisar luego todos los formularios
+  const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }];
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
   const inputLabel = label || name;
 
   return (
-    <FormControl fullWidth error={error} disabled={disabled}>
+    <FormControl fullWidth disabled={disabled}>
       <InputLabel>{inputLabel}</InputLabel>
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
+        render={({ field, fieldState: { error } }) => (
+          <>
           <Select
+            readOnly={readOnly}
             {...field}
+            value={fullOptions.length > 0 ? field.value : ''}
             label={inputLabel}
             onChange={(_, data) => {
               field.onChange(_);
               onChangeProp && onChangeProp(data);
             }}
+            error={!!error}
             MenuProps={{ disableScrollLock: true }}
           >
+            {fullOptions.length <= 0 && <MenuItem value={emptyValues[0].value}>{emptyValues[0].label}</MenuItem>}
+
             {fullOptions.length > 0 &&
               fullOptions.map((x, index) => (
                 <MenuItem key={index} value={x.value} disabled={x?.disabled}>
@@ -43,9 +48,10 @@ function FormSelect({
                 </MenuItem>
               ))}
           </Select>
+          {!!error && <FormHelperText>{error?.message}</FormHelperText>}
+          </>
         )}
       />
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
     </FormControl>
   );
 }
@@ -55,6 +61,7 @@ export interface FormSelectProps extends FormInputsCommonProps {
   options: AnyValue[];
   disabledEmpty?: boolean;
   emptyOption?: boolean;
+  readOnly?: boolean
 }
 
 export default FormSelect;

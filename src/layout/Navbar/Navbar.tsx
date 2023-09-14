@@ -4,7 +4,6 @@ import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
-//TODO como puedo utilizar ruta absoluta
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 import { useSidebarContext } from '../context/useSidebarContext';
 

@@ -20,7 +20,6 @@ const Toolbar = ({ className }: ToolbarProps) => {
         borderBottom: '0px',
         backgroundColor: 'rgb(209, 216, 223)',
       }}
-      //TODO revisar el backgroundColor
     >
       <ActionButton icon={<SearchIcon />} label='Buscar' />
       <ActionButton icon={<FilterAltIcon />} label='Filtrar' />

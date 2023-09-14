@@ -166,7 +166,6 @@ const ContratoEdit = () => {
             label='Cliente'
             control={control}
             error={!!formErrors.clienteId}
-            helperText={formErrors?.clienteId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -176,7 +175,6 @@ const ContratoEdit = () => {
             name='sociedadId'
             label='Sociedad'
             error={!!formErrors.sociedadId}
-            helperText={formErrors?.sociedadId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -203,7 +201,6 @@ const ContratoEdit = () => {
             name='modeloAcuerdoId'
             label='Modelo Acuerdo'
             error={!!formErrors.modeloAcuerdoId}
-            helperText={formErrors?.modeloAcuerdoId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -213,7 +210,6 @@ const ContratoEdit = () => {
             name='tipoContratoId'
             label='Tipo Contrato'
             error={!!formErrors.tipoContratoId}
-            helperText={formErrors?.tipoContratoId?.message}
             disabled={isSubmitting}
           />
         </Col>
@@ -268,10 +264,8 @@ const ContratoEdit = () => {
             name='tipoPlanFacturacionId'
             label='Tipo Plan Facturación'
             error={!!formErrors.tipoPlanFacturacionId}
-            helperText={formErrors?.tipoPlanFacturacionId?.message}
             disabled={isSubmitting}
-            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
-            // readOnly
+            readOnly
           />
         </Col>
         <Col md={4}>
@@ -280,7 +274,6 @@ const ContratoEdit = () => {
             name='reglaFechaPeriodoId'
             label='Regla Fecha Periodo'
             error={!!formErrors.reglaFechaPeriodoId}
-            helperText={formErrors?.reglaFechaPeriodoId?.message}
             disabled={isSubmitting}
             getOptions={options => {
               const reglaFechaPeriodoId = watch('reglaFechaPeriodoId');
@@ -289,8 +282,7 @@ const ContratoEdit = () => {
                 code && code === 'FFDFP' ? setIsDiaFijoPosteriorAlPeriodo(true) : setIsDiaFijoPosteriorAlPeriodo(false);
               }
             }}
-            // TODO debe actualizarse el componente FormSelect para recibir la prop readOnly
-            // readOnly
+            readOnly
           />
         </Col>
 

@@ -7,7 +7,6 @@ const initialContext: InitialContext = {
   },
 };
 
-// TODO buscar un nombre más apropiado acorde a la funcionalidad que provee este componente
 const ComponentInjectorContext = createContext(initialContext);
 
 const ComponentInjectorProvider = ({ children }: ComponentInjectorProviderProps) => {

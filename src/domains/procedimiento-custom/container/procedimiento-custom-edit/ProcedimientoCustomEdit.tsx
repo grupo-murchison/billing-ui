@@ -180,8 +180,6 @@ const ProcedimientoCustomEdit = () => {
               label='Función'
               name='funcionCode'
               control={control}
-              error={!!formErrors.funcionCode}
-              helperText={formErrors?.funcionCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.funciones)}
             />
@@ -191,11 +189,9 @@ const ProcedimientoCustomEdit = () => {
               label='Evento'
               name='eventoCode'
               control={control}
-              error={!!formErrors.eventoCode}
-              helperText={formErrors?.eventoCode?.message}
               disabled={isSubmitting}
               options={mapearParametros(state.eventos)}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -205,14 +201,12 @@ const ProcedimientoCustomEdit = () => {
               label='Campo'
               name='eventoCampoCode'
               control={control}
-              error={!!formErrors.eventoCampoCode}
-              helperText={formErrors?.eventoCampoCode?.message}
               // disabled={isSubmitting || watch('funcionCode') === 'C'}
               disabled={isSubmitting}
               options={mapearParametros(
                 state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
               )}
-              emptyOption={true}
+              emptyOption
             />
           </Col>
         </Row>
@@ -252,10 +246,9 @@ const ProcedimientoCustomEdit = () => {
                 name='accionCode'
                 control={control}
                 error={!!formErrors.accionCode}
-                helperText={formErrors?.accionCode?.message}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>
@@ -264,12 +257,11 @@ const ProcedimientoCustomEdit = () => {
                 name='filtroCampoCode'
                 control={control}
                 error={!!formErrors.filtroCampoCode}
-                helperText={formErrors?.filtroCampoCode?.message}
                 disabled={isSubmitting || !watch('accionCode')}
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
                 )}
-                emptyOption={true}
+                emptyOption
               />
             </Col>
             <Col md={4}>
