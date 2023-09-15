@@ -26,14 +26,14 @@ const ProcedimientoPView = () => {
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
   const {
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     control,
     reset,
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
-      monedaId: '',
+      monedaId: 1,
     },
     resolver: zodResolver(ProcedimientoPEditSchema),
   });
@@ -75,7 +75,7 @@ const ProcedimientoPView = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <MonedaDropdown control={control} name='monedaId' error={!!formErrors.monedaId} disabled label='Moneda' />
+            <MonedaDropdown control={control} name='monedaId' disabled label='Moneda' />
           </Col>
         </Row>
       </Form>

@@ -26,7 +26,7 @@ const ProcedimientoPCreate = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoPCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -62,14 +62,7 @@ const ProcedimientoPCreate = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <MonedaDropdown
-              control={control}
-              name='monedaId'
-              error={!!formErrors.monedaId}
-              disabled={isSubmitting}
-              label='Moneda'
-              
-            />
+            <MonedaDropdown control={control} name='monedaId' disabled={isSubmitting} label='Moneda' />
           </Col>
         </Row>
       </Form>

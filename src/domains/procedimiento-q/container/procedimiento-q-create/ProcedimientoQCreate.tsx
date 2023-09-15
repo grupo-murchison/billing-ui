@@ -30,7 +30,7 @@ const ProcedimientoQCreate = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     setValue,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
@@ -107,10 +107,9 @@ const ProcedimientoQCreate = () => {
               onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
-              error={!!formErrors.tipoProcedimientoQId}
+              // error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
-              
             />
           </Col>
         </Row>
@@ -119,7 +118,7 @@ const ProcedimientoQCreate = () => {
             <ProcedimientoBuiltinDropdownController
               control={control}
               name='procedimientoBuiltinId'
-              error={!!formErrors.procedimientoBuiltinId}
+              // error={!!formErrors.procedimientoBuiltinId}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
               emptyOption
@@ -129,7 +128,7 @@ const ProcedimientoQCreate = () => {
             <ProcedimientoCustomDropdownController
               control={control}
               name='procedimientoCustomId'
-              error={!!formErrors.procedimientoCustomId}
+              // error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
               label='Procedimiento Custom'
               emptyOption

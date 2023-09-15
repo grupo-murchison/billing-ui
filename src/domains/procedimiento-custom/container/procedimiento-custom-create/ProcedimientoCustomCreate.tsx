@@ -31,7 +31,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
     control,
     handleSubmit,
     watch,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     setValue,
   } = useForm<ProcedimientoCustomCreateSchemaType>({
     defaultValues: {

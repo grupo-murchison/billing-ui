@@ -29,7 +29,7 @@ const ProcedimientoPEdit = () => {
 
   const {
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     handleSubmit,
     control,
   } = useForm<ProcedimientoPEditSchemaType>({
@@ -78,13 +78,7 @@ const ProcedimientoPEdit = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <MonedaDropdown
-              control={control}
-              name='monedaId'
-              error={!!formErrors.monedaId}
-              disabled={isSubmitting}
-              label='Moneda'
-            />
+            <MonedaDropdown control={control} name='monedaId' disabled={isSubmitting} label='Moneda' />
           </Col>
         </Row>
       </Form>
