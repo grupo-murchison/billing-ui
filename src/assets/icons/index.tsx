@@ -27,6 +27,7 @@ export {
   // F
   FilterList as FilterListIcon,
   FilterAlt as FilterAltIcon,
+  FileDownloadOutlined as FileDownloadOutlinedIcon,
 
   // G
   GppGood as GppGoodIcon,

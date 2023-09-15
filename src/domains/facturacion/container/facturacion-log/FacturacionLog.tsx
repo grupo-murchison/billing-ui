@@ -85,13 +85,7 @@ const FacturacionLog = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='clienteId'
-              // emptyOption
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
         </Row>
         <Row>
