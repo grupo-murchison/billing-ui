@@ -36,7 +36,7 @@ const ProcedimientoCustomEdit = () => {
     handleSubmit,
     watch,
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     trigger,
     setValue,
   } = useForm<ProcedimientoCustomEditSchemaType>({
@@ -245,7 +245,6 @@ const ProcedimientoCustomEdit = () => {
                 label='Acción'
                 name='accionCode'
                 control={control}
-                error={!!formErrors.accionCode}
                 disabled={isSubmitting}
                 options={mapearParametros(state.acciones)}
                 emptyOption
@@ -256,7 +255,6 @@ const ProcedimientoCustomEdit = () => {
                 label='Campo'
                 name='filtroCampoCode'
                 control={control}
-                error={!!formErrors.filtroCampoCode}
                 disabled={isSubmitting || !watch('accionCode')}
                 options={mapearParametros(
                   state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
