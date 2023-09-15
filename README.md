@@ -6,6 +6,18 @@
 
 Hacer una copia de _.env.test_, renombrarla como `.env.local` y actualizar los valores según el entorno local.
 
+## File hosts config
+
+Configuraciones a agregar al [archivo hosts](<https://en.wikipedia.org/wiki/Hosts_(file)#Location_in_the_file_system>) para billing:
+
+```bash
+# Billing
+10.5.0.40 billing-ui-billing-ui.apps.ocp.tzarate.com.ar
+10.5.0.40 billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar
+10.5.0.40 billing-processor-tzevent-mgr-stg.apps.ocp.tzarate.com.ar
+10.5.0.40 billing-report-tzevent-mgr-stg.apps.ocp.tzarate.com.ar
+```
+
 ## Vite Modos
 
 ```bash

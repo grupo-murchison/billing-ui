@@ -72,12 +72,9 @@ class FacturacionRepository {
     return response;
   };
 
-  static downloadProforma= async (facturacionContratoId: string) => {
-      
-    return await RepositoryUtils.fromRxjs(
-      FacturacionService.downloadProforma(facturacionContratoId),
-    );
-  }
+  static downloadProforma = async (facturacionContratoId: string) => {
+    return await RepositoryUtils.fromRxjs(FacturacionService.downloadProforma(facturacionContratoId));
+  };
 }
 
 export default FacturacionRepository;

@@ -83,14 +83,10 @@ class FacturacionService {
 
   static downloadProforma = async (facturacionContratoId: string): Promise<HandlePromise> => {
     const body = { tipoFormato: 'PDF', facturacionContratoId };
-    console.log(body);
 
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProviderBilligReport.post('proforma', body, {
-        headers: {
-          // 'Content-Type': 'application/pdf',
-          'responseType': 'blob',
-        },
+        responseType: 'blob',
       }),
     );
 

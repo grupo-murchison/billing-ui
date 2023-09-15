@@ -1,4 +1,4 @@
-import type { AxiosPromise, AxiosResponse, AxiosError } from 'axios';
+import type { AxiosPromise, AxiosResponse, AxiosError, AxiosResponseHeaders } from 'axios';
 
 export const handleResponse = (promise: AxiosPromise): Promise<HandlePromise> => {
   return new Promise(resolve => {
@@ -8,11 +8,7 @@ export const handleResponse = (promise: AxiosPromise): Promise<HandlePromise> =>
 
 export type HandlePromise = [Undefined<AxiosResponse>, Undefined<AxiosError>];
 
-export const downloadPdf = (url: any) => {
-  window.location.href = `${url}`;
-};
-
-export const downloadPdfAxios = (file: any, fileName = 'descarga.pdf') => {
+export const downloadPdfAxios = (file: AnyValue, fileName = 'descarga.pdf') => {
   const url = window.URL.createObjectURL(new Blob([file]));
   const link = document.createElement('a');
   link.href = url;
@@ -22,15 +18,15 @@ export const downloadPdfAxios = (file: any, fileName = 'descarga.pdf') => {
   document.body.removeChild(link);
 };
 
-export const getFileNameHeaders = (headers: any, fileName = 'descarga.pdf') => {
+export const getFileNameHeaders = (headers: AxiosResponseHeaders, fileName = 'descarga.pdf') => {
   return headers['content-disposition']
     ? headers['content-disposition'].split('filename=')[1].replace(/['"]+/g, '')
     : fileName;
 };
 
-const isJsonBlob = (data: any) => data instanceof Blob && data.type === 'application/json';
+const isJsonBlob = (data: AnyValue) => data instanceof Blob && data.type === 'application/json';
 
-export const blobToJSON = async (data: any) => {
+export const blobToJSON = async (data: AnyValue) => {
   const responseData = isJsonBlob(data) ? await data.text() : data || {};
   const responseJSON = typeof responseData === 'string' ? JSON.parse(responseData) : responseData;
   return responseJSON;

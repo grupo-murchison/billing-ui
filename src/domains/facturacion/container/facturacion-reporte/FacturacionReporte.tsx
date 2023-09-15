@@ -21,7 +21,7 @@ import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
-import { ViewIcon } from '@assets/icons';
+import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { blobToJSON, downloadPdfAxios, getFileNameHeaders } from '@app/utils/axios.util';
@@ -75,11 +75,12 @@ const FacturacionReporte = () => {
   };
 
   const handleVerProforma = async (row: AnyValue) => {
-    // setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
+    setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
+
     FacturacionRepository.downloadProforma(row.contratos[0]?.id)
       .then(res => {
         const fileName = getFileNameHeaders(res.headers);
-        downloadPdfAxios(res.data, fileName);
+        downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaFacturacion}.pdf`);
       })
       .catch(async error => {
         if (!error.response) {
@@ -234,8 +235,8 @@ const FacturacionReporte = () => {
               />,
               <GridActionsCellItem
                 key={3}
-                icon={<ViewIcon />}
-                label='Ver Proforma'
+                icon={<FileDownloadOutlinedIcon />}
+                label='Descargar Proforma'
                 onClick={() => handleVerProforma(params.row)}
                 showInMenu
               />,
