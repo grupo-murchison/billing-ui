@@ -186,8 +186,6 @@ const ContratoEdit = () => {
             control={control}
             id='destinatarioId'
             label='Destinatario'
-            // error={!!formErrors.destinatarioId}
-            // helperText={formErrors?.destinatarioId?.message}
             // disabled={isSubmitting}
             // value={watch('destinatarioId')}
           />
