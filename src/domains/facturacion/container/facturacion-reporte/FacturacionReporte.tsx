@@ -24,7 +24,7 @@ import { DateLib } from '@libs';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { blobToJSON, downloadPdfAxios, getFileNameHeaders } from '@app/utils/axios.util';
+import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
 
 const FacturacionReporte = () => {
   // const _navigate = useNavigate();
@@ -76,10 +76,10 @@ const FacturacionReporte = () => {
 
   const handleVerProforma = async (row: AnyValue) => {
     setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
-
+    
     FacturacionRepository.downloadProforma(row.contratos[0]?.id)
       .then(res => {
-        const fileName = getFileNameHeaders(res.headers);
+        // const fileName = getFileNameHeaders(res.headers);
         downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaFacturacion}.pdf`);
       })
       .catch(async error => {
