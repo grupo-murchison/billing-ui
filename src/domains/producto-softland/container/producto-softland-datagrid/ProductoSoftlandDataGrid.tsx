@@ -66,8 +66,7 @@ const ProductoSoftlandDataGrid = () => {
           {
             field: 'fechaCambioEstado',
             headerName: 'FECHA ACTIVO',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

@@ -80,7 +80,7 @@ const ContratoDataGrid = () => {
   return (
     <>
       <DataGrid
-      autoHeight={false}
+        autoHeight={false}
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
@@ -92,14 +92,12 @@ const ContratoDataGrid = () => {
           {
             field: 'fechaInicioContrato',
             headerName: 'Fecha Inicio',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'fechaFinContrato',
             headerName: 'Fecha Fin',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

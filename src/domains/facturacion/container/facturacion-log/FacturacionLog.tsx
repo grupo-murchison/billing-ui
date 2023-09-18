@@ -124,8 +124,7 @@ const FacturacionLog = () => {
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.parseFromDBString(params.row.facturacionCabecera.fechaEjecucion),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.row.facturacionCabecera.fechaEjecucion),
           },
           {
             field: 'estado',
