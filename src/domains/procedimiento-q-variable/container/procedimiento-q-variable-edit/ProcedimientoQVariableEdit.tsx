@@ -31,7 +31,7 @@ const ProcedimientoQVariableEdit = () => {
     handleSubmit,
     control,
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoQVariableEditSchemaType>({
     resolver: zodResolver(ProcedimientoQVariableEditSchema),
   });
@@ -73,24 +73,10 @@ const ProcedimientoQVariableEdit = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <TipoDatoDropdown
-              control={control}
-              name='tipoId'
-              error={!!formErrors.tipoId}
-              disabled={isSubmitting}
-              label='Tipo'
-              
-            />
+            <TipoDatoDropdown control={control} name='tipoId' disabled={isSubmitting} label='Tipo' />
           </Col>
           <Col md={6}>
-            <DiccionarioDropdown
-              control={control}
-              name='diccionarioId'
-              error={!!formErrors.diccionarioId}
-              disabled={isSubmitting}
-              label='Diccionario'
-              
-            />
+            <DiccionarioDropdown control={control} name='diccionarioId' disabled={isSubmitting} label='Diccionario' />
           </Col>
         </Row>
       </Form>

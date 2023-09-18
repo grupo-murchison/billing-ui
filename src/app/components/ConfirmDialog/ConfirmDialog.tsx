@@ -7,11 +7,11 @@ import DialogTitle from '@mui/material/DialogTitle';
 import DialogContent from '@mui/material/DialogContent';
 import DialogContentText from '@mui/material/DialogContentText';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import { Stack } from '@mui/material';
+import { CircularProgress, Stack } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
 
-import { DeleteOutlineIcon, WarningIcon } from '@assets/icons';
+import { CancelIcon, DeleteOutlineIcon, WarningIcon } from '@assets/icons';
 
 // TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({
@@ -76,6 +76,10 @@ const ConfirmDialog = ({
           message={message}
         />
       )}
+
+      {type === 'reject' && (
+        <RejectDialog isLoading={isLoading} handleClickYes={handleClickYes} title={title} message={message} />
+      )}
     </Dialog>
   );
 };
@@ -88,6 +92,7 @@ const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogIn
     </DialogContent>
     <DialogActions>
       <Button onClick={handleClickYes} disabled={isLoading} color='primary' variant='contained'>
+        {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
         OK
       </Button>
     </DialogActions>
@@ -127,6 +132,7 @@ const DeleteDialog = ({
           Cancelar
         </Button>
         <Button onClick={handleClickYes} disabled={isLoading} color='error' variant='contained'>
+          {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
           Eliminar
         </Button>
       </DialogActions>
@@ -164,13 +170,52 @@ const DangerDialog = ({ isLoading, handleClickYes, handleClickNot, title, messag
           onClick={handleClickYes}
           disabled={isLoading}
           variant='contained'
-          //TODO Revisar colores
           sx={{
             'backgroundColor': theme.palette.error.main,
             ':hover': { backgroundColor: theme.palette.error.dark },
           }}
         >
+          {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
           Confirmar
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
+
+const RejectDialog = ({ isLoading, handleClickYes, title, message }: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <CancelIcon
+        sx={{
+          color: theme.palette.error.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
+        }}
+      />
+      <DialogTitle variant='h3' color={theme.palette.error.main}>
+        {title || 'No es posible realizar esta acción'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button
+          autoFocus
+          onClick={handleClickYes}
+          disabled={isLoading}
+          variant='contained'
+          sx={{
+            'backgroundColor': theme.palette.error.main,
+            ':hover': { backgroundColor: theme.palette.error.dark },
+          }}
+        >
+          Aceptar
         </Button>
       </DialogActions>
     </Stack>
@@ -206,12 +251,12 @@ const WarningDialog = ({ isLoading, handleClickYes, handleClickNot, title, messa
           onClick={handleClickYes}
           disabled={isLoading}
           variant='contained'
-          //TODO Revisar colores
           sx={{
             'backgroundColor': theme.palette.warning.main,
             ':hover': { backgroundColor: theme.palette.warning.dark },
           }}
         >
+          {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
           Confirmar
         </Button>
       </DialogActions>
@@ -219,7 +264,7 @@ const WarningDialog = ({ isLoading, handleClickYes, handleClickNot, title, messa
   );
 };
 
-export type ConfirmDialogType = 'delete' | 'ok' | 'warning' | 'danger';
+export type ConfirmDialogType = 'delete' | 'ok' | 'warning' | 'danger' | 'reject';
 
 type ConfirmDialogProps = {
   message?: string;
@@ -238,7 +283,7 @@ type ConfirmDialogInternalProps = {
   isLoading: boolean;
   identifier?: string;
   entity?: string;
-  handleClickYes: () => void;
+  handleClickYes?: () => void;
   handleClickNot?: () => void;
 };
 

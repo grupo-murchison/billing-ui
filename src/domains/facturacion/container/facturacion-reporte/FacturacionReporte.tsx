@@ -21,9 +21,10 @@ import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
-import { ViewIcon } from '@assets/icons';
+import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import { blobToJSON, downloadPdfAxios, getFileNameHeaders } from '@app/utils/axios.util';
 
 const FacturacionReporte = () => {
   // const _navigate = useNavigate();
@@ -40,7 +41,7 @@ const FacturacionReporte = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -73,8 +74,24 @@ const FacturacionReporte = () => {
     setOpenModal(true);
   };
 
-  const handleVerProforma = (_row: AnyValue) => {
-    // setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
+  const handleVerProforma = async (row: AnyValue) => {
+    setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
+
+    FacturacionRepository.downloadProforma(row.contratos[0]?.id)
+      .then(res => {
+        const fileName = getFileNameHeaders(res.headers);
+        downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaFacturacion}.pdf`);
+      })
+      .catch(async error => {
+        if (!error.response) {
+          console.log('Error desconocido:');
+          console.log(error);
+        } else {
+          const response = await blobToJSON(error.response.data);
+          console.log('Error blob:');
+          console.log(response);
+        }
+      });
   };
 
   const toolbar = (
@@ -94,13 +111,7 @@ const FacturacionReporte = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='clienteId'
-              error={!!formErrors.clienteId}
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
         </Row>
         <Row>
@@ -224,8 +235,8 @@ const FacturacionReporte = () => {
               />,
               <GridActionsCellItem
                 key={3}
-                icon={<ViewIcon />}
-                label='Ver Proforma'
+                icon={<FileDownloadOutlinedIcon />}
+                label='Descargar Proforma'
                 onClick={() => handleVerProforma(params.row)}
                 showInMenu
               />,

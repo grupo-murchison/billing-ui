@@ -24,7 +24,6 @@ export const columnsFlexResolver = (columns: GridColDef[]) => {
  */
 export type PageSizeOptions = Array<NumberRange<5, 50> | { value: NumberRange<5, 50>; label: string }>;
 
-// TODO MUI permite un pageSize 100 como máximo, pero el back topea en 50. Se debe validar que los valores de pegeSizeOptions sean <= 50
 export const pageSizeOptionsResolver = (
   pageSizeOptions?: PageSizeOptions,
 ): { pageSizeOptions: PageSizeOptions; pageSize: number } => {

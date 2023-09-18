@@ -30,7 +30,7 @@ const ConceptoAcuerdoCreate = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ConceptoAcuerdoCreateSchemaType>({
     defaultValues: {},
     resolver: zodResolver(ConceptoAcuerdoCreateSchema),
@@ -57,7 +57,6 @@ const ConceptoAcuerdoCreate = () => {
             <ModeloAcuerdoDropdown
               control={control}
               name='modeloAcuerdoId'
-              error={!!formErrors.modeloAcuerdoId}
               disabled={isSubmitting}
               label='Modelo Acuerdo'
             />
@@ -73,7 +72,6 @@ const ConceptoAcuerdoCreate = () => {
             <TipoServicioDropdown
               control={control}
               name='tipoServicioId'
-              error={!!formErrors.tipoServicioId}
               disabled={isSubmitting}
               label='Tipo Servicio'
             />
@@ -82,7 +80,6 @@ const ConceptoAcuerdoCreate = () => {
             <ProcedimientoPSDropdown
               control={control}
               name='procedimientoProductoSoftlandId'
-              error={!!formErrors.procedimientoProductoSoftlandId}
               disabled={isSubmitting}
               label='Procedimiento Producto Softland'
             />
@@ -93,7 +90,6 @@ const ConceptoAcuerdoCreate = () => {
             <ProcedimientoPDropdown
               control={control}
               name='procedimientoPId'
-              error={!!formErrors.procedimientoPId}
               disabled={isSubmitting}
               label='Procedimiento Precio'
             />
@@ -102,7 +98,6 @@ const ConceptoAcuerdoCreate = () => {
             <ProcedimientoQDropdown
               control={control}
               name='procedimientoQId'
-              error={!!formErrors.procedimientoQId}
               disabled={isSubmitting}
               label='Procedimiento Cantidad'
             />

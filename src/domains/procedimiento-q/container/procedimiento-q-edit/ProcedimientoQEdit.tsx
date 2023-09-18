@@ -34,7 +34,7 @@ const ProcedimientoQEdit = () => {
 
   const {
     reset,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     setValue,
     handleSubmit,
     control,
@@ -121,10 +121,8 @@ const ProcedimientoQEdit = () => {
             <TipoProcedimientoQDropdownController
               control={control}
               name='tipoProcedimientoQId'
-              error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
-              
             />
           </Col>
         </Row>
@@ -133,7 +131,6 @@ const ProcedimientoQEdit = () => {
             <ProcedimientoBuiltinDropdownController
               control={control}
               name='procedimientoBuiltinId'
-              error={!!formErrors.procedimientoBuiltinId}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
               emptyOption
@@ -143,7 +140,6 @@ const ProcedimientoQEdit = () => {
             <ProcedimientoCustomDropdownController
               control={control}
               name='procedimientoCustomId'
-              error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
               label='Procedimiento Custom'
               emptyOption

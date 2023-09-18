@@ -27,7 +27,7 @@ const ProcedimientoPSIntervaloCreate = () => {
   const {
     handleSubmit,
     control,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<ProcedimientoPSIntervaloCreateSchemaType>({
     defaultValues: {
       procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
@@ -90,7 +90,6 @@ const ProcedimientoPSIntervaloCreate = () => {
             <ProductoSoftlandDropdown
               control={control}
               name='productoSoftland'
-              error={!!formErrors.productoSoftlandId}
               disabled={isSubmitting}
               label='Producto Softland'
               emptyOption

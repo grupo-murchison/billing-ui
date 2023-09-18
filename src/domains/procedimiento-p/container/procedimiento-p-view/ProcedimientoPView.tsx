@@ -10,7 +10,7 @@ import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
 
 import { ProcedimientoPIntervaloWithinProcedimientoPRoutes } from '@domains/procedimiento-p-intervalo/navigation';
 
-import { Divider, TextField } from '@mui/material';
+import { TextField } from '@mui/material';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -25,14 +25,15 @@ const ProcedimientoPView = () => {
   const [procedimientoPData, setProcedimientoPData] = useState<AnyValue>();
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
-  //TODO esto se podria ir, dado que no se editaria en esta pantalla?
   const {
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
     control,
+    reset,
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
+      monedaId: 1,
     },
     resolver: zodResolver(ProcedimientoPEditSchema),
   });
@@ -44,6 +45,9 @@ const ProcedimientoPView = () => {
   useEffect(() => {
     ProcedimientoPRepository.getProcedimientoPById(procedimientoPId || '').then(({ data }) => {
       setProcedimientoPData(data);
+      reset({
+        monedaId: data?.monedaId,
+      });
       setIsDataFetched(true);
     });
   }, [procedimientoPId]);
@@ -60,22 +64,22 @@ const ProcedimientoPView = () => {
             <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} fullWidth disabled />
           </Col>
           <Col md={6}>
-            <TextField id='denominacion' label='Denominación' defaultValue={procedimientoPData.denominacion} fullWidth disabled />
+            <TextField
+              id='denominacion'
+              label='Denominación'
+              defaultValue={procedimientoPData.denominacion}
+              fullWidth
+              disabled
+            />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
-            <MonedaDropdown
-              control={control}
-              name='monedaId'
-              error={!!formErrors.monedaId}
-              disabled
-              label='Moneda'
-            />
+            <MonedaDropdown control={control} name='monedaId' disabled label='Moneda' />
           </Col>
         </Row>
       </Form>
-      <Divider style={{ marginBottom: '1rem' }} />
+
       <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo} />
     </Modal>
   );

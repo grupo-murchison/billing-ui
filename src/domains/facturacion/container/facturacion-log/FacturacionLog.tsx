@@ -36,7 +36,7 @@ const FacturacionLog = () => {
   const {
     control,
     handleSubmit,
-    formState: { errors: formErrors, isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       numeroSecuenciaFacturacion: '',
@@ -85,15 +85,7 @@ const FacturacionLog = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col md={6}>
-            <ClienteDropdownAutoComplete
-              control={control}
-              disabled={isSubmitting}
-              label='Cliente'
-              name='clienteId'
-              error={!!formErrors.clienteId}
-              // emptyOption
-              // helperText={formErrors?.clienteId?.message}
-            />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
         </Row>
         <Row>
@@ -103,7 +95,6 @@ const FacturacionLog = () => {
               label='Fecha Cálculo Desde'
               name='fechaDesde'
               disabled={isSubmitting}
-              error={!!formErrors.fechaDesde}
             />
           </Col>
           <Col md={6}>
@@ -112,7 +103,6 @@ const FacturacionLog = () => {
               label='Fecha Cálculo Hasta'
               name='fechaHasta'
               disabled={isSubmitting}
-              error={!!formErrors.fechaHasta}
             />
           </Col>
         </Row>
