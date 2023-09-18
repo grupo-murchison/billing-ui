@@ -40,11 +40,11 @@ export const components: Components = {
     styleOverrides: {
       row: {
         '&.Mui-selected': {
-          'color': 'white',
-          'backgroundColor': alpha(colors.primary.main, 0.85),
+          // 'color': colors.primary.main,
+          // 'backgroundColor': alpha(colors.primary.main, 0.05),
           'fontWeight': 900,
           '&:hover': {
-            backgroundColor: alpha(colors.primary.main, 0.85),
+            // backgroundColor: alpha(colors.secondary.main, 0.85),
             color: 'white',
           },
         },

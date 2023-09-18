@@ -51,13 +51,15 @@ const DataGridBase = ({
     '& .MuiDataGrid-row:nth-of-type(even)': {
       'backgroundColor': theme.palette.background.default,
       '&.Mui-selected': {
-        backgroundColor: alpha(theme.palette.primary.main, 0.85),
+        // backgroundColor: alpha(theme.palette.secondary.light, 0.04),
+        // backgroundColor: theme.palette.secondary.light,
       },
     },
     '& .MuiDataGrid-row:nth-of-type(odd)': {
       'backgroundColor': theme.palette.background.paper,
       '&.Mui-selected': {
-        backgroundColor: alpha(theme.palette.primary.main, 0.85),
+        // backgroundColor: alpha(theme.palette.secondary.light, 0.04),
+        // backgroundColor: theme.palette.secondary.light,
       },
     },
     '& .MuiDataGrid-row:hover': {
