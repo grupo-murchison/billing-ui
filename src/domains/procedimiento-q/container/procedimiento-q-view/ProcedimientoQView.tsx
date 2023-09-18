@@ -75,7 +75,7 @@ const ProcedimientoQView = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
+          <Col md={12}>
             <TextField
               id='descripcion'
               label='Descripción'
@@ -86,7 +86,9 @@ const ProcedimientoQView = () => {
               fullWidth
             />
           </Col>
-          <Col md={6}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <TipoProcedimientoQDropdown
               id='tipoProcedimientoQ'
               label={`Tipo ${label.procedimientoQ}`}
@@ -97,19 +99,19 @@ const ProcedimientoQView = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <ProcedimientoCustomDropdown
-              id='procedimientoCustom'
-              label='Procedimiento Custom'
-              disabled
-              value={procedimientoQ?.procedimientoCustomId  || ''}
-            />
-          </Col>
-          <Col md={6}>
             <ProcedimientoBuiltinDropdown
               id='procedimientoBuiltin'
               label='Procedimiento Builtin'
               disabled
               value={procedimientoQ?.procedimientoBuiltinId  || ''}
+            />
+          </Col>
+          <Col md={6}>
+            <ProcedimientoCustomDropdown
+              id='procedimientoCustom'
+              label='Procedimiento Custom'
+              disabled
+              value={procedimientoQ?.procedimientoCustomId  || ''}
             />
           </Col>
         </Row>
