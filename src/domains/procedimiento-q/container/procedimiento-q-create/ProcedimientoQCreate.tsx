@@ -107,7 +107,6 @@ const ProcedimientoQCreate = () => {
               onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
-              // error={!!formErrors.tipoProcedimientoQId}
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
             />
@@ -118,7 +117,6 @@ const ProcedimientoQCreate = () => {
             <ProcedimientoBuiltinDropdownController
               control={control}
               name='procedimientoBuiltinId'
-              // error={!!formErrors.procedimientoBuiltinId}
               disabled={isSubmitting || disablePBuiltin}
               label='Procedimiento Builtin'
               emptyOption
@@ -128,7 +126,6 @@ const ProcedimientoQCreate = () => {
             <ProcedimientoCustomDropdownController
               control={control}
               name='procedimientoCustomId'
-              // error={!!formErrors.procedimientoCustomId}
               disabled={isSubmitting || disablePCustom}
               label='Procedimiento Custom'
               emptyOption
