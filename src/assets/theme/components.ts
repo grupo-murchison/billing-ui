@@ -34,4 +34,21 @@ export const components: Components = {
       },
     },
   },
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  MuiDataGrid: {
+    styleOverrides: {
+      row: {
+        '&.Mui-selected': {
+          'color': 'white',
+          'backgroundColor': alpha(colors.primary.main, 0.85),
+          'fontWeight': 900,
+          '&:hover': {
+            backgroundColor: alpha(colors.primary.main, 0.85),
+            color: 'white',
+          },
+        },
+      },
+    },
+  },
 };
