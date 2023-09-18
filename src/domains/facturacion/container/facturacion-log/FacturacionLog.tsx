@@ -30,7 +30,7 @@ const FacturacionLog = () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    mainDataGrid.load({ fixedFilters: { clienteId: 1 } });
+    mainDataGrid.load();
   }, [mainDataGrid]);
 
   const {
