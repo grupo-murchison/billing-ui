@@ -119,47 +119,47 @@ const FacturacionLog = () => {
           {
             field: 'numeroSecuenciaFacturacion',
             headerName: 'Nro. Cálculo Facturación',
-            valueGetter: params => params.row.facturacionCabecera.numeroSecuenciaFacturacion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.numeroSecuenciaFacturacion || '',
           },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.beautifyDBString(params.row.facturacionCabecera.fechaEjecucion),
+            valueGetter: ({ row }) => DateLib.beautifyDBString(row?.facturacionCabecera?.fechaEjecucion) || '',
           },
           {
             field: 'estado',
             headerName: 'Estado Cabecera',
-            valueGetter: params => params.row.facturacionCabecera.estado,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.estado,
           },
           {
             field: 'contratoNumero',
             headerName: 'Número Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoNumero,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoNumero,
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoDescripcion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoDescripcion,
           },
           {
             field: 'contratoClienteCodigo',
             headerName: 'Número de Cliente',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteCodigo,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteCodigo,
           },
           {
             field: 'contratoClienteDescripcion',
             headerName: 'Denominación',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteDescripcion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteDescripcion,
           },
           {
             field: 'periodoNumero',
             headerName: 'Periodo',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].periodoNumero,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.periodoNumero,
           },
           {
             field: 'estadoContrato',
             headerName: 'Estado Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].estado,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
             renderCell: params => {
               const isRejected = params.value === 'ANULADO';
               return (
