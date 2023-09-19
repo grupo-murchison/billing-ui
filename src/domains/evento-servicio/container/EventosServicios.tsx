@@ -18,6 +18,7 @@ import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
 import { EventosServicioCreateSchema, EventosServicioFormSchemaType } from '../schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
+import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
 
 const EventoServicio = () => {
   const { mainDataGrid } = useContext(EventosServiciosContext);
@@ -35,11 +36,11 @@ const EventoServicio = () => {
       numeroSecuenciaFacturacion: '',
       clienteId: { value: '', code: '', label: '' },
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
-      conceptoAcuerdo: '', // TODO deber sen un filtro más avanzado, ver documentación
+      conceptoAcuerdoId: { value: '',  label: '' },
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(EventosServicioCreateSchema),
+    resolver: zodResolver(EventosServicioCreateSchema),    
   });
 
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
@@ -48,7 +49,7 @@ const EventoServicio = () => {
         numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         nroContato: data.contrato ? data.contrato : undefined,
-        modeloAcuerdoId: data.conceptoAcuerdo ? data.conceptoAcuerdo : undefined,
+        conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
       };
@@ -74,7 +75,7 @@ const EventoServicio = () => {
             <FormTextField control={control} disabled={isSubmitting} label='Nro. Contrato' name='contrato' />
           </Col>
           <Col sm={12} md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdo' />
+            <ConcepoAcuerdoAutoComplete  control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
           </Col>
         </Row>
         <Row>
@@ -128,18 +129,17 @@ const EventoServicio = () => {
           { field: 'evCantidadLitros', headerName: 'Cantidad Litros', minWidth: 125 },
           { field: 'evTipoCombustible', headerName: 'Tipo Combustible', minWidth: 135 },
           { field: 'evConcesionario', headerName: 'Concesionario', minWidth: 125 },
-          { field: 'evModelo', headerName: 'Modelo', minWidth: 180 },
           { field: 'evDaño', headerName: 'Daño', minWidth: 115 },
           { field: 'evTipoDaño', headerName: 'Tipo Daño', minWidth: 115 },
           { field: 'evCategorizacion', headerName: 'Categorizacion', minWidth: 130 },
-          { field: 'evModelo', headerName: 'Modelo', minWidth: 130 },
+          { field: 'evModelo', headerName: 'Modelo', minWidth: 130  },
           { field: 'evPieza', headerName: 'Pieza', minWidth: 100 },
           { field: 'evEstado', headerName: 'Estado', minWidth: 115 },
           { field: 'evDUA', headerName: 'DUA', minWidth: 115 },
           { field: 'evTipoEmbarque', headerName: 'Tipo Embarque', minWidth: 130 },
           { field: 'evColor', headerName: 'Color', minWidth: 130 },
           { field: 'evDimension', headerName: 'Dimension', minWidth: 130 },
-          { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135 },
+          { field: 'id', headerName: 'Identificador Evento', minWidth: 135 },
           {
             field: 'genEventoFechaEnvio',
             headerName: 'Fecha Envio Evento',

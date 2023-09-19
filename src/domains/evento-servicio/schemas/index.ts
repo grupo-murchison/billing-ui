@@ -15,10 +15,14 @@ export const EventosServicioCreateSchema = z
       { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
     ),
     contrato: z.string({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
-    conceptoAcuerdo: z.string({
-      required_error: 'El campo es requerido.',
-      invalid_type_error: 'El campo es requerido.',
-    }),
+    conceptoAcuerdoId: z.object(
+    {
+      value: z.number({ required_error: 'El campos es requerido.' }),
+      // code: z.string({ required_error: 'El campos es requerido.' }),
+      label: z.string({ required_error: 'El campos es requerido.' }),
+    },
+    { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
+    ),
     fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
     fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
   })

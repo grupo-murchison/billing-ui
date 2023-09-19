@@ -58,11 +58,11 @@ const ProcedimientoCustomDataGrid = () => {
         hookRef={mainDataGrid.ref}
         columns={[
           { field: 'codigo', headerName: 'Código' },
-          { field: 'denominacion', headerName: 'DENOMINACIÓN' },
-          { field: 'funcion', headerName: 'TIPO FUNCIÓN' },
-          { field: 'accion', headerName: 'ACCIÓN' },
-          { field: 'evento', headerName: 'EVENTO' },
-          { field: 'eventoCampo', headerName: 'CAMPO' },
+          { field: 'denominacion', headerName: 'Denominación' },
+          { field: 'funcion', headerName: 'Tipo Función' },
+          { field: 'accion', headerName: 'Acción' },
+          { field: 'evento', headerName: 'Evento' },
+          { field: 'eventoCampo', headerName: 'Campo' },
           { field: 'expresionFiltro', headerName: 'Expresión Filtro' },
           {
             field: 'actions',
