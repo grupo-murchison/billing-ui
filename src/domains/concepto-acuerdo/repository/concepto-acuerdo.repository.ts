@@ -39,6 +39,23 @@ class ConceptoAcuerdoRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  
+  static getAllConceptoAcuerdoAsDropdownAutoComplete = async (filter?: Partial<Record<'filter', string>>) => {
+    const response$ = from(ConceptoAcuerdoService.getAllAsDropdownAutocomplete(filter)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllConceptoAcuerdoAsDropdown = async () => {
+    const response$ = from(ConceptoAcuerdoService.getAllAsDropdown()).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default ConceptoAcuerdoRepository;
