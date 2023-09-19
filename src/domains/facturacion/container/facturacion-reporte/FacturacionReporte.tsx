@@ -76,7 +76,7 @@ const FacturacionReporte = () => {
 
   const handleVerProforma = async (row: AnyValue) => {
     setFacturacionContratoId(row.contratos[0]?.id); //* id de la tabla facturacion_contrato
-    
+
     FacturacionRepository.downloadProforma(row.contratos[0]?.id)
       .then(res => {
         // const fileName = getFileNameHeaders(res.headers);
@@ -186,8 +186,7 @@ const FacturacionReporte = () => {
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.parseFromDBString(params?.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params?.value),
           },
           {
             field: 'contratoClienteCodigo',
