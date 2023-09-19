@@ -64,9 +64,9 @@ const ConceptoAcuerdoDataGrid = () => {
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'modeloAcuerdo', headerName: 'MODELO ACUERDO' },
-          { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
-          { field: 'tipoServicio', headerName: 'TIPO SERVICIO' },
+          { field: 'modeloAcuerdo', headerName: 'Modelo Acuerdo' },
+          { field: 'descripcion', headerName: 'Descripción' },
+          { field: 'tipoServicio', headerName: 'Tipo Servicio' },
           { field: 'procedimientoQ', headerName: 'Pocedimiento Cantidad' },
           { field: 'procedimientoP', headerName: 'Pocedimiento Precio' },
           { field: 'procedimientoProductoSoftland', headerName: 'Pocedimiento Producto Softland' },

@@ -58,9 +58,9 @@ const ModeloAcuerdoDataGrid = () => {
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'codigo', headerName: 'CÓDIGO' },
-          { field: 'nombre', headerName: 'NOMBRE' },
-          { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
+          { field: 'codigo', headerName: 'Código' },
+          { field: 'nombre', headerName: 'Nombre' },
+          { field: 'descripcion', headerName: 'Descripción' },
           {
             field: 'actions',
             type: 'actions',
