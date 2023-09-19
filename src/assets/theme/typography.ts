@@ -26,7 +26,7 @@ export const typography: TypographyOptions = {
   h2: {
     fontFamily: 'Roboto',
     fontSize: '28px',
-    letterSpacing: '-2px',
+    letterSpacing: '-2px', // 1.5
     lineHeight: '34px',
     // fontSize: '1.75rem',
     // letterSpacing: '-1.125rem',

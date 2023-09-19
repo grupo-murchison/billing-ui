@@ -134,15 +134,13 @@ const Facturacion = () => {
             field: 'fechaInicioContrato',
             headerName: 'Fecha Inicio',
             flex: 0.5,
-            type: 'date',
-            valueGetter: ({ value }) => DateLib.parseFromDBString(value),
+            valueGetter: ({ value }) => DateLib.beautifyDBString(value),
           },
           {
             field: 'fechaFinContrato',
             headerName: 'Fecha Fin',
             flex: 0.5,
-            type: 'date',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

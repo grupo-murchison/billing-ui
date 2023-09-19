@@ -16,7 +16,6 @@ export const DataGridPlanFacturacion = ({ rows }: { rows: AnyValue[] }) => {
         {
           field: 'liquidacionDesde',
           headerName: 'Desde',
-          type: 'Date',
           headerAlign: 'center',
           align: 'center',
           valueFormatter: ({ value }) => DateLib.beautifyISO(value) || '',
@@ -24,7 +23,6 @@ export const DataGridPlanFacturacion = ({ rows }: { rows: AnyValue[] }) => {
         {
           field: 'liquidacionHasta',
           headerName: 'Hasta',
-          type: 'Date',
           headerAlign: 'center',
           align: 'center',
           valueFormatter: ({ value }) => DateLib.beautifyISO(value) || '',
@@ -32,7 +30,6 @@ export const DataGridPlanFacturacion = ({ rows }: { rows: AnyValue[] }) => {
         {
           field: 'fechaFacturacion',
           headerName: 'Fecha Facturación',
-          type: 'Date',
           headerAlign: 'center',
           align: 'center',
           valueFormatter: ({ value }) => DateLib.beautifyISO(value) || '',

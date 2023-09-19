@@ -1,5 +1,5 @@
 import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI } from '@mui/x-data-grid';
-import { Paper, SxProps, useTheme } from '@mui/material';
+import { Paper, SxProps, alpha, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import NoRowsContent from './components/NoRowsContent';
@@ -49,10 +49,18 @@ const DataGridBase = ({
 
   const sxRows: SxProps = {
     '& .MuiDataGrid-row:nth-of-type(even)': {
-      backgroundColor: theme.palette.background.default,
+      'backgroundColor': theme.palette.background.default,
+      '&.Mui-selected': {
+        // backgroundColor: alpha(theme.palette.secondary.light, 0.04),
+        // backgroundColor: theme.palette.secondary.light,
+      },
     },
     '& .MuiDataGrid-row:nth-of-type(odd)': {
-      backgroundColor: theme.palette.background.paper,
+      'backgroundColor': theme.palette.background.paper,
+      '&.Mui-selected': {
+        // backgroundColor: alpha(theme.palette.secondary.light, 0.04),
+        // backgroundColor: theme.palette.secondary.light,
+      },
     },
     '& .MuiDataGrid-row:hover': {
       backgroundColor: '#CCCED0',
@@ -99,6 +107,7 @@ const DataGridBase = ({
           }}
           sx={{
             height: rows?.length > 0 ? undefined : '380px',
+            // maxHeight: 600, // TODO para sticky header se debe deshabilitar autoHeight
             ...sxTable,
             ...sxHeader,
             ...sxRows,

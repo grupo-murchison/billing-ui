@@ -22,7 +22,7 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: 
               },
             }}
             label={label}
-            format={inputFormat || 'dd-MM-yyyy'}
+            format={inputFormat || 'dd / MM / yyyy'}
             value={value}
             onChange={event => {
               onChange(event);

@@ -45,7 +45,9 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     if (contratoId) {
       FacturacionRepository.facturacionManual(contratoId)
         .then(({ data }) => {
-          setSnackbarMessage(`numeroSecuenciaFacturacion ${data?.numeroSecuenciaFacturacion}`);
+          setSnackbarMessage(
+            `Proceso ejecutado correctamente. Se generó el Número de Secuencia de Facturación: ${data?.numeroSecuenciaFacturacion}`,
+          );
         })
         .catch(error => {
           setSnackbarMessage(error?.message);
@@ -88,20 +90,17 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
           {
             field: 'liquidacionDesde',
             headerName: 'Desde',
-            type: 'date',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'liquidacionHasta',
             headerName: 'Hasta',
-            type: 'date',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'fechaFacturacion',
             headerName: 'Fecha Facturacion',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'estado',
