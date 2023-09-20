@@ -8,7 +8,7 @@ function extractEventsOfData(response: AnyValue) {
   let a:Array<AnyValue> = []
 
   const responseParsed = response?.data.data.map((eventosConDetalles:AnyValue) => { 
-    const mappedId = eventosConDetalles.eventos[0].map((event: AnyValue) =>{
+    eventosConDetalles.eventos[0].map((event: AnyValue) =>{
       event._id = event.id
       event.id = eventosConDetalles.id + '-' + event.id
       return event

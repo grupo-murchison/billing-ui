@@ -2,11 +2,11 @@ import { Chip } from '@mui/material';
 
 type ColorType =  "default" | "primary" | "info" | "error" | "secondary" | "success" | "warning"
 
-const CustomChip = ({estado}: AnyValue): any=>{  
+const CustomChip = ({estado}: AnyValue): AnyValue=>{  
 
     function setColor (text: string): ColorType{
         let output: ColorType = 'default'
-        switch (text) {
+        switch (text.toUpperCase()) {
             case 'FACTURADO':
               output = 'primary'
               break;

@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Chip, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 
 import { Col, Modal, Row } from '@app/components';
 
@@ -162,7 +162,6 @@ const FacturacionLog = () => {
             headerName: 'Estado Contrato',
             valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
             renderCell: params => {
-              const isRejected = params.value === 'ANULADO';
               return (
                 <CustomChip estado={params.value} />
               );

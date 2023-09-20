@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Chip, TextField, Tooltip } from '@mui/material';
+import { TextField, Tooltip } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -27,6 +27,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
   const [periodo, setPeriodo] = useState<AnyValue>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
   useEffect(() => {
@@ -60,7 +61,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
         });
     }
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClickVerDetalle = (row: AnyValue) => {
     setPeriodo(row);
   };
