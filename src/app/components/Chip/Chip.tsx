@@ -7,20 +7,29 @@ const CustomChip = ({estado}: AnyValue): AnyValue=>{
     function setColor (text: string): ColorType{
         let output: ColorType = 'default'
         switch (text.toUpperCase()) {
-            case 'FACTURADO':
-              output = 'primary'
-              break;
-            case 'ABIERTO':
-              output = 'info'
-              break;
-            case 'ANULADO':
-              output = 'error'
-              break;
-            case 'ACTIVO':
-              output = 'secondary'
-              break;
+          case 'ACTIVO':
+            output = 'info'
+            break;
+          case 'PAUSADO':
+            output = 'warning'
+            break;
+          case 'FINALIZADO':
+            output = 'primary'
+            break;      
+          case 'ABIERTO':
+            output = 'info'
+            break;
+          case 'ANULADO':
+            output = 'warning'
+            break;
+          case 'FACTURADO':
+            output = 'primary'
+            break;
+          case 'REVERSADO':
+            output = 'secondary'
+            break;
         }
-        return output
+      return output
     }
 
     return (
