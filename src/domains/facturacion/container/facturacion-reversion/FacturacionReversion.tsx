@@ -32,6 +32,7 @@ import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import FacturacionReversionLog from './views/FacturacionReversionLog';
 import { useConfirmDialog } from '@app/hooks';
+import CustomChip from '@app/components/Chip/Chip';
 
 const FacturacionReversion = () => {
   // const _navigate = useNavigate();
@@ -223,6 +224,11 @@ const FacturacionReversion = () => {
           {
             field: 'estado',
             headerName: 'Estado',
+            renderCell: params => {
+              return (
+                <CustomChip estado={params.value} />
+              );
+            },
           },
           {
             field: 'actions',
@@ -306,6 +312,11 @@ const FacturacionReversion = () => {
             field: 'estado',
             headerName: 'Estado',
             flex: 0.5,
+            renderCell: params => {
+              return (
+                <CustomChip estado={params.value} />
+              );
+            },
           },
         ]}
       />

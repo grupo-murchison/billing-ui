@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Chip, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 
 import { Col, Modal, Row } from '@app/components';
 
@@ -23,6 +23,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleFacturacionLog';
 import { zodResolver } from '@hookform/resolvers/zod';
+import CustomChip from '@app/components/Chip/Chip';
 
 const FacturacionLog = () => {
   const { mainDataGrid } = useContext(FacturacionLogContext);
@@ -161,14 +162,8 @@ const FacturacionLog = () => {
             headerName: 'Estado Contrato',
             valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
             renderCell: params => {
-              const isRejected = params.value === 'ANULADO';
               return (
-                <Chip
-                  // icon={isRejected ? <ViewIcon /> : <ViewIcon />}
-                  label={params.value}
-                  variant='outlined'
-                  color={isRejected ? 'error' : 'primary'}
-                />
+                <CustomChip estado={params.value} />
               );
             },
           },
