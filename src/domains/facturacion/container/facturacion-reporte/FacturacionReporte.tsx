@@ -147,7 +147,6 @@ const FacturacionReporte = () => {
   //       color: theme.palette.common.white,
   //       transition: 'ease-out',
   //       transitionDuration: '0.3s',
-  //       // transitionDuration: theme.transitions.duration.standard,
   //     },
   //   };
 

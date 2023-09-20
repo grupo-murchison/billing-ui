@@ -1,5 +1,5 @@
 import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI } from '@mui/x-data-grid';
-import { Paper, SxProps, alpha, useTheme } from '@mui/material';
+import { Paper, SxProps, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
 
 import NoRowsContent from './components/NoRowsContent';
