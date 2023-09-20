@@ -1,3 +1,4 @@
+import CustomChip from '@app/components/Chip/Chip';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { DateLib } from '@libs';
 
@@ -40,6 +41,11 @@ export const DataGridPlanFacturacion = ({ rows }: { rows: AnyValue[] }) => {
           type: 'string',
           headerAlign: 'center',
           align: 'center',
+          renderCell: params => {
+            return (
+              <CustomChip estado={params.value} />
+            );
+          },
         },
       ]}
       pageSizeOptions={[5, 10, 25]}

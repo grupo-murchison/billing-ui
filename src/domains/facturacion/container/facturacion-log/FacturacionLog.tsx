@@ -23,6 +23,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleFacturacionLog';
 import { zodResolver } from '@hookform/resolvers/zod';
+import CustomChip from '@app/components/Chip/Chip';
 
 const FacturacionLog = () => {
   const { mainDataGrid } = useContext(FacturacionLogContext);
@@ -163,12 +164,7 @@ const FacturacionLog = () => {
             renderCell: params => {
               const isRejected = params.value === 'ANULADO';
               return (
-                <Chip
-                  // icon={isRejected ? <ViewIcon /> : <ViewIcon />}
-                  label={params.value}
-                  variant='outlined'
-                  color={isRejected ? 'error' : 'primary'}
-                />
+                <CustomChip estado={params.value} />
               );
             },
           },

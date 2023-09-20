@@ -16,6 +16,7 @@ import { DateLib } from '@libs';
 import { ScheduleSendIcon } from '@assets/icons';
 import { FacturacionContext } from '@domains/facturacion/contexts';
 import DetalleFacturacion from './DetalleFacturacion';
+import CustomChip from '@app/components/Chip/Chip';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [planFacturacion, setPlanFacturacion] = useState<AnyValue>(null);
@@ -107,12 +108,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
             headerName: 'Estado',
             renderCell: params => {
               return (
-                <Chip
-                  label={params.value}
-                  variant='outlined'
-                  color={params.value === 'FACTURADO' ? 'primary' : params.value === 'ABIERTO' ? 'info' : 'default'}
-                  size='small'
-                />
+                <CustomChip estado={params.value} />
               );
             },
           },

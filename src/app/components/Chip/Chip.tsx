@@ -16,6 +16,9 @@ const CustomChip = ({estado}: AnyValue): any=>{
             case 'ANULADO':
               output = 'error'
               break;
+            case 'ACTIVO':
+              output = 'secondary'
+              break;
         }
         return output
     }
