@@ -14,7 +14,7 @@ export const ViewIconButton = ({ ...props }) => {
           color: theme.palette.common.white,
           transition: 'ease-out',
           // transitionDuration: '0.3s',
-          transitionDuration: theme.transitions.duration.standard,
+          transitionDuration: 3000,
         },
       }}
     >
