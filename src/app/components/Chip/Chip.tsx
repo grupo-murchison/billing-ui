@@ -31,6 +31,11 @@ const CustomChip = ({estado}: AnyValue): AnyValue=>{
           case 'REVERSADO':
             output = 'secondary'
             break;
+          case 'FACTURADO_CON_ERROR':
+            output = 'warning'
+            break;
+          default:
+            output = 'default'
         }
       return output
     }
