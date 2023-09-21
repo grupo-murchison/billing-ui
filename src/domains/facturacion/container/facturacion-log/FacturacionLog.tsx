@@ -131,6 +131,11 @@ const FacturacionLog = () => {
             field: 'estado',
             headerName: 'Estado Cabecera',
             valueGetter: ({ row }) => row?.facturacionCabecera?.estado,
+            renderCell: params => {
+              return (
+                <CustomChip estado={params.value} />
+              );
+            },
           },
           {
             field: 'contratoNumero',
