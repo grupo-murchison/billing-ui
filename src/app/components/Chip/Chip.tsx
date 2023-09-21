@@ -6,6 +6,9 @@ const CustomChip = ({estado}: AnyValue): AnyValue=>{
 
     function setColor (text: string): ColorType{
         let output: ColorType = 'default'
+
+        text = text !== undefined ? text.toUpperCase() : output
+
         switch (text.toUpperCase()) {
           case 'ACTIVO':
             output = 'info'
@@ -34,7 +37,7 @@ const CustomChip = ({estado}: AnyValue): AnyValue=>{
 
     return (
       <Chip
-        label={estado}
+        label={!estado ? '-------' : estado}
         variant='outlined'
         color={setColor(estado)}
         size='small'
