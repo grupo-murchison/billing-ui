@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from 'react';
 
-import { Chip, TextField, Tooltip } from '@mui/material';
+import { TextField, Tooltip } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
@@ -16,6 +16,7 @@ import { DateLib } from '@libs';
 import { ScheduleSendIcon } from '@assets/icons';
 import { FacturacionContext } from '@domains/facturacion/contexts';
 import DetalleFacturacion from './DetalleFacturacion';
+import CustomChip from '@app/components/Chip/Chip';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [planFacturacion, setPlanFacturacion] = useState<AnyValue>(null);
@@ -26,6 +27,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
   const [periodo, setPeriodo] = useState<AnyValue>(null);
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
 
   useEffect(() => {
@@ -59,7 +61,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
         });
     }
   };
-
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const onClickVerDetalle = (row: AnyValue) => {
     setPeriodo(row);
   };
@@ -107,12 +109,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
             headerName: 'Estado',
             renderCell: params => {
               return (
-                <Chip
-                  label={params.value}
-                  variant='outlined'
-                  color={params.value === 'FACTURADO' ? 'primary' : params.value === 'ABIERTO' ? 'info' : 'default'}
-                  size='small'
-                />
+                <CustomChip estado={params.value} />
               );
             },
           },
