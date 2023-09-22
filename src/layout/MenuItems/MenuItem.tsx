@@ -4,9 +4,9 @@ import { Link } from 'react-router-dom';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { SxProps } from '@mui/material/styles';
 
-import { IconRender } from './MenuComponents';
-import { IMenuItem } from '../menu-items.interface';
-import { useSidebarContext } from '../../context/useSidebarContext';
+import { IconRender } from './components';
+import { IMenuItem } from '../interfaces/menu-items.interface';
+import { useSidebarContext } from '../context/useSidebarContext';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
   const { isActive, toogleActiveMenu } = useSidebarContext();

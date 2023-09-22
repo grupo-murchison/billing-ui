@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
-import { useSidebarContext } from '../context/useSidebarContext';
+import { useSidebarContext } from './context/useSidebarContext';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;

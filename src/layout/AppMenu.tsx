@@ -1,9 +1,9 @@
-import { IMenuItemGroup } from './menu-items.interface';
+import { IMenuItemGroup } from './interfaces/menu-items.interface';
 
-import { MenuItemError } from './MenuItemsComponents/MenuComponents';
-import MenuItemGroup from './MenuItemsComponents/MenuItemGroup';
+import { MenuItemError } from './MenuItems/components';
+import MenuItemGroup from './MenuItems/MenuItemGroup';
 
-export function MenuItemsNestedList({ menuItems }: { menuItems: IMenuItemGroup[] }) {
+function MenuItemsNestedList({ menuItems }: { menuItems: IMenuItemGroup[] }) {
   const navItems = menuItems.map(itemGroup => {
     switch (itemGroup.type) {
       case 'group':
@@ -15,3 +15,5 @@ export function MenuItemsNestedList({ menuItems }: { menuItems: IMenuItemGroup[]
 
   return <>{navItems}</>;
 }
+
+export default MenuItemsNestedList;
