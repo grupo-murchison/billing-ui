@@ -1,8 +1,8 @@
 import { Divider, List } from '@mui/material';
 import MenuItemCollapse from './MenuItemCollapse';
 import MenuItem from './MenuItem';
-import { MenuItemError, ListSubHeader } from './MenuComponents';
-import { IMenuItemGroup } from '../menu-items.interface';
+import { MenuItemError, ListSubHeader } from './components';
+import { IMenuItemGroup } from '../interfaces/menu-items.interface';
 
 const MenuItemGroup = ({ item }: Props): JSX.Element => {
   // menu list collapse & items

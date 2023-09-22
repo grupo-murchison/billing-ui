@@ -2,10 +2,12 @@ import Toolbar from '@mui/material/Toolbar';
 import Box from '@mui/material/Box/Box';
 import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
-import { MenuItemsNestedList } from './MenuItems/MenuItems';
-import menuItems from './MenuItems/menuItems.config';
+
+import AppMenu from './AppMenu';
 import { useSidebarContext } from './context/useSidebarContext';
 import { drawerWidthOpen, drawerWidthClosed } from './context/constants';
+
+import menuItems from './menuItems.config';
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidthOpen,
@@ -74,7 +76,7 @@ const Sidebar = () => {
     >
       <Toolbar />
       <Box>
-        <MenuItemsNestedList menuItems={menuItems} />
+        <AppMenu menuItems={menuItems} />
       </Box>
     </Drawer>
   );

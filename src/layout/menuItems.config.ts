@@ -1,5 +1,5 @@
 // assets
-import { IMenuItemGroup } from './menu-items.interface';
+import { IMenuItemGroup } from './interfaces/menu-items.interface';
 
 //nano
 import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
