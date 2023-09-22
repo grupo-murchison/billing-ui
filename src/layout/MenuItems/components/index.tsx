@@ -1,6 +1,6 @@
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
 import { SvgIcon, Typography, useTheme } from '@mui/material';
-import { TIconRender } from '../menu-items.interface';
+import { TIconRender } from '../../interfaces/menu-items.interface';
 
 export function IconRender({ icon, level = 0, isSelected }: TIconRender) {
   const theme = useTheme();

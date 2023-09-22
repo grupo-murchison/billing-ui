@@ -5,9 +5,9 @@ import InboxIcon from '@mui/icons-material/MoveToInbox';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
-import { IconRender } from './MenuComponents';
-import { IMenuItemCollapse } from '../menu-items.interface';
-import { useSidebarContext } from '../../context/useSidebarContext';
+import { IconRender } from './components';
+import { IMenuItemCollapse } from '../interfaces/menu-items.interface';
+import { useSidebarContext } from '../context/useSidebarContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
   const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
