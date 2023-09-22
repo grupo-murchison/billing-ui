@@ -6,10 +6,10 @@ import { SxProps } from '@mui/material/styles';
 
 import { IconRender } from './components';
 import { IMenuItem } from '../interfaces/menu-items.interface';
-import { useSidebarContext } from '../context/useSidebarContext';
+import { useLayoutContext } from '../context/useLayoutContext';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const { isActive, toogleActiveMenu } = useSidebarContext();
+  const { isActive, toogleActiveMenu } = useLayoutContext();
 
   // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 

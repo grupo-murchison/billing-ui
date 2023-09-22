@@ -3,7 +3,7 @@ import { createContext } from 'react';
 import { initialState } from './constants';
 import { ISidebarContext } from '../interfaces/sidebar.interfaces';
 
-const SidebarContext = createContext<ISidebarContext>({
+const LayoutContext = createContext<ISidebarContext>({
   ...initialState,
   dispatch: () => null,
   toogleSidebar: () => null,
@@ -11,4 +11,4 @@ const SidebarContext = createContext<ISidebarContext>({
   toogleActiveMenu: () => null,
 });
 
-export default SidebarContext;
+export default LayoutContext;

@@ -4,7 +4,7 @@ import { styled, useTheme, Theme, CSSObject } from '@mui/material/styles';
 import MuiDrawer from '@mui/material/Drawer';
 
 import AppMenu from './AppMenu';
-import { useSidebarContext } from './context/useSidebarContext';
+import { useLayoutContext } from './context/useLayoutContext';
 import { drawerWidthOpen, drawerWidthClosed } from './context/constants';
 
 import menuItems from './menuItems.config';
@@ -46,7 +46,7 @@ const Drawer = styled(MuiDrawer, {
 
 const Sidebar = () => {
   const theme = useTheme();
-  const { isSidebarOpen, toogleSidebar } = useSidebarContext();
+  const { isSidebarOpen, toogleSidebar } = useLayoutContext();
 
   const handleSidebar = (res: boolean) => {
     if (res) {

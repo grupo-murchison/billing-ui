@@ -1,7 +1,7 @@
 import { IStateSidebar, TSidebarAction } from '../interfaces/sidebar.interfaces';
 import { ACTION_TYPES } from './constants';
 
-export const sideBarReducer = (state: IStateSidebar, action: TSidebarAction) => {
+export const layoutReducer = (state: IStateSidebar, action: TSidebarAction) => {
   switch (action.type) {
     case ACTION_TYPES.MENU_OPEN:
       return {
