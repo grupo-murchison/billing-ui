@@ -1,30 +1,20 @@
 import { useState } from 'react';
-import { withBreadcrumb } from '@app/hocs';
 import Tabs from '@app/components/Tabs/Tabs';
 import TabPanel from '@app/components/Tabs/TabPanel';
-import { Tab } from '@mui/material';
+import { Tab, TabProps as TabsPropsMui } from '@mui/material';
 
-// interface labelAndComponentProps {
-//     label: string; component: AnyValue
-// }
-
-// interface EnumLabelAndComponentProps extends Array<labelAndComponentProps>{}
-
-// interface EnumServiceGetOrderBy {
-//     [index: number]: { label: string; component: JSX.Element };
-// }
-
-type labelAndComponent = {
-    label: string;
-    component: JSX.Element
+interface labelAndComponent extends TabsPropsMui {
+  title: string;
+  renderelement: JSX.Element
+  rest?: TabsPropsMui
 }
 
 type TabPros = {
-    labelsAndComponents: labelAndComponent[]
+  options: labelAndComponent[]
 }
 
 
-const TabLayout = ({labelsAndComponents}: TabPros) => {
+const TabLayout = ({options}: TabPros) => {
   const [tabValue, setTabValue] = useState(0);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
@@ -32,19 +22,26 @@ const TabLayout = ({labelsAndComponents}: TabPros) => {
 
   return (
     <>
-      <Tabs value={tabValue} onChange={handleChangeTab}>
+      <Tabs value={tabValue} onChange={handleChangeTab}
+        TabIndicatorProps={{
+          style: {backgroundColor: "#D97D54"}
+        }}
+        scrollButtons
+        allowScrollButtonsMobile
+        variant="scrollable">
       {
-        labelsAndComponents.map((el:AnyValue,index:AnyValue) => {
-          return <Tab value={index} key={index} label={el.label} /> 
+        options.map((el:labelAndComponent,index:number) => {
+          const {  ...rest } = el;
+          return <Tab value={index} key={index} label={el.title} {...rest}/> 
         })
       }
       </Tabs>
       {
-        labelsAndComponents.map((el:AnyValue,index:AnyValue) => {
+        options.map((el:labelAndComponent,index:number) => {
           return (
             <TabPanel value={tabValue} key={index} index={index}>
-              {`Panel  ${el.label}`}
-              {el.component}
+              {`Panel ${el.title}`}
+              {el.renderelement}
             </TabPanel>
           )
         })
@@ -52,40 +49,4 @@ const TabLayout = ({labelsAndComponents}: TabPros) => {
     </>
   );
 }
-export default withBreadcrumb(TabLayout);
-
-
-
-
-// const datosContractuales = (
-//     <CardContent>
-//       <Row>
-//         <Col md={12}>
-//           <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
-//         </Col>
-//         <Col md={6}>
-//           <FormDesktopDatePicker
-//             control={control}
-//             disabled={isSubmitting}
-//             label='Fecha Inicio Contrato'
-//             name='fechaInicioContrato'
-//             readOnly
-//           />
-//         </Col>
-//         <Col md={6}>
-//           <FormDesktopDatePicker
-//             control={control}
-//             disabled={isSubmitting}
-//             label='Fecha Fin Contrato'
-//             name='fechaFinContrato'
-//             readOnly
-//           />
-//         </Col>
-//       </Row>
-//     </CardContent>
-//   );
-
-//   const comp = ( <><h1>hola</h1></>)
-
-//   const labelAndComponentToRenderTabPanel = [{label:'Datos Generales', component: comp}, {label: 'Datos Contractuales', component: datosContractuales}]
-
+export default TabLayout;
