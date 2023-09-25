@@ -67,6 +67,10 @@ const ConfirmDialog = ({
         />
       )}
 
+      {type === 'warning2' && (
+        <Warning2Dialog isLoading={isLoading} handleClickYes={handleClickYes} title={title} message={message} />
+      )}
+
       {type === 'danger' && (
         <DangerDialog
           isLoading={isLoading}
@@ -264,7 +268,45 @@ const WarningDialog = ({ isLoading, handleClickYes, handleClickNot, title, messa
   );
 };
 
-export type ConfirmDialogType = 'delete' | 'ok' | 'warning' | 'danger' | 'reject';
+const Warning2Dialog = ({ isLoading, handleClickYes, title, message }: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <WarningIcon
+        sx={{
+          color: theme.palette.warning.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
+        }}
+      />
+      <DialogTitle variant='h3' color={theme.palette.warning.main}>
+        {title || 'No es posible realizar esta acción'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button
+          onClick={handleClickYes}
+          disabled={isLoading}
+          variant='contained'
+          sx={{
+            'backgroundColor': theme.palette.warning.main,
+            ':hover': { backgroundColor: theme.palette.warning.dark },
+          }}
+        >
+          Entendido
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
+
+export type ConfirmDialogType = 'delete' | 'ok' | 'warning' | 'danger' | 'reject' | 'warning2';
 
 type ConfirmDialogProps = {
   message?: string;
