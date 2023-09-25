@@ -30,11 +30,11 @@ const ProcedimientoPSIntervaloCreate = () => {
     formState: { isSubmitting },
   } = useForm<ProcedimientoPSIntervaloCreateSchemaType>({
     defaultValues: {
-      procedimientoProductoSoftlandId: parseInt(procedimientoPSId || ''),
+      procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
       valorInicial: 1,
       valorFinal: 9999999,
       productoSoftlandId: '',
-      intervalo: ''
+      intervalo: '',
     },
     resolver: zodResolver(ProcedimientoPSIntervaloCreateSchema),
   });
