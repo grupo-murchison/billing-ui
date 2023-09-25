@@ -25,6 +25,13 @@ class ClienteService {
 
     return [response, error];
   };
+
+  static getAllByFilters = async (params: AnyValue): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
+    );
+    return [response, error];
+  };
 }
 
 export { ClienteService };
