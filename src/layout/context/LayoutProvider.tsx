@@ -1,10 +1,10 @@
 import { useReducer, ReactNode, useCallback } from 'react';
 import { ACTION_TYPES, initialState } from './constants';
-import SidebarContext from './SidebarContext';
-import { sideBarReducer } from './sidebarReducer';
+import LayoutContext from './LayoutContext';
+import { layoutReducer } from './layoutReducer';
 
-const SidebarProvider = ({ children }: { children: ReactNode }) => {
-  const [state, dispatch] = useReducer(sideBarReducer, initialState);
+const LayoutProvider = ({ children }: { children: ReactNode }) => {
+  const [state, dispatch] = useReducer(layoutReducer, initialState);
 
   // const toogleSidebar = (openSidebar: boolean) => {
   //   dispatch({ type: ACTION_TYPES.TOGGLE_SIDEBAR, openSidebar });
@@ -31,10 +31,10 @@ const SidebarProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <SidebarContext.Provider value={{ ...state, dispatch, toogleSidebar, toogleOpenMenu, toogleActiveMenu }}>
+    <LayoutContext.Provider value={{ ...state, dispatch, toogleSidebar, toogleOpenMenu, toogleActiveMenu }}>
       {children}
-    </SidebarContext.Provider>
+    </LayoutContext.Provider>
   );
 };
 
-export default SidebarProvider;
+export default LayoutProvider;

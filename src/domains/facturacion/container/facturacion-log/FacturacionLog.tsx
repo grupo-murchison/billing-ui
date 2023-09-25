@@ -2,7 +2,7 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { Chip, Paper } from '@mui/material';
+import { Paper } from '@mui/material';
 
 import { Col, Modal, Row } from '@app/components';
 
@@ -23,6 +23,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleFacturacionLog';
 import { zodResolver } from '@hookform/resolvers/zod';
+import CustomChip from '@app/components/Chip/Chip';
 
 const FacturacionLog = () => {
   const { mainDataGrid } = useContext(FacturacionLogContext);
@@ -30,7 +31,7 @@ const FacturacionLog = () => {
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
-    mainDataGrid.load({ fixedFilters: { clienteId: 1 } });
+    mainDataGrid.load();
   }, [mainDataGrid]);
 
   const {
@@ -119,57 +120,55 @@ const FacturacionLog = () => {
           {
             field: 'numeroSecuenciaFacturacion',
             headerName: 'Nro. Cálculo Facturación',
-            valueGetter: params => params.row.facturacionCabecera.numeroSecuenciaFacturacion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.numeroSecuenciaFacturacion || '',
           },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Facturación',
-            valueGetter: params => DateLib.parseFromDBString(params.row.facturacionCabecera.fechaEjecucion),
-            type: 'date',
+            valueGetter: ({ row }) => DateLib.beautifyDBString(row?.facturacionCabecera?.fechaEjecucion) || '',
           },
           {
             field: 'estado',
             headerName: 'Estado Cabecera',
-            valueGetter: params => params.row.facturacionCabecera.estado,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.estado,
+            renderCell: params => {
+              return (
+                <CustomChip estado={params.value} />
+              );
+            },
           },
           {
             field: 'contratoNumero',
             headerName: 'Número Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoNumero,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoNumero,
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoDescripcion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoDescripcion,
           },
           {
             field: 'contratoClienteCodigo',
             headerName: 'Número de Cliente',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteCodigo,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteCodigo,
           },
           {
             field: 'contratoClienteDescripcion',
             headerName: 'Denominación',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].contratoClienteDescripcion,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteDescripcion,
           },
           {
             field: 'periodoNumero',
             headerName: 'Periodo',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].periodoNumero,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.periodoNumero,
           },
           {
             field: 'estadoContrato',
             headerName: 'Estado Contrato',
-            valueGetter: params => params.row.facturacionCabecera.facturacionContratos[0].estado,
+            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
             renderCell: params => {
-              const isRejected = params.value === 'ANULADO';
               return (
-                <Chip
-                  // icon={isRejected ? <ViewIcon /> : <ViewIcon />}
-                  label={params.value}
-                  variant='outlined'
-                  color={isRejected ? 'error' : 'primary'}
-                />
+                <CustomChip estado={params.value} />
               );
             },
           },

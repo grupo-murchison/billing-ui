@@ -7,7 +7,14 @@ import { EventoServicioService } from './evento-servicio.service';
 function extractEventsOfData(response: AnyValue) {
   let a:Array<AnyValue> = []
 
-  const responseParsed = response?.data.data.map((element:AnyValue) => { return  element.eventos[0]  }).map((evento:AnyValue) => { return evento})
+  const responseParsed = response?.data.data.map((eventosConDetalles:AnyValue) => { 
+    eventosConDetalles.eventos[0].map((event: AnyValue) =>{
+      event._id = event.id
+      event.id = eventosConDetalles.id + '-' + event.id
+      return event
+    })
+    return eventosConDetalles.eventos[0]   
+  }).map((evento:AnyValue) => { return evento})
 
   for (let i = 0; i < responseParsed.length; i++) {
     const element = responseParsed[i];
@@ -22,6 +29,9 @@ function extractEventsOfData(response: AnyValue) {
 
 class EventoServicioRepository {
   static getAllEventDetails = async (params: AnyValue) => {
+    if(!params.clienteId && !params.numeroSecuenciaFacturacion && !params.fechaDesde && !params.fechaHasta ) {
+      return
+    }
     const response$ = from(EventoServicioService.getAllEventDetails(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );

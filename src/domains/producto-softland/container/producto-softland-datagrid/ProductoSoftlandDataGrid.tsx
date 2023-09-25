@@ -59,15 +59,14 @@ const ProductoSoftlandDataGrid = () => {
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'agrupacion', headerName: 'AGRUPACIÓN' },
-          { field: 'codigo', headerName: 'CÓDIGO' },
-          { field: 'descripcion', headerName: 'DESCRIPCIÓN' },
-          { field: 'activo', headerName: 'ACTIVO', valueGetter: params => (params.value ? 'SI' : 'NO') },
+          { field: 'agrupacion', headerName: 'Agrupación' },
+          { field: 'codigo', headerName: 'Código' },
+          { field: 'descripcion', headerName: 'Descripción' },
+          { field: 'activo', headerName: 'Activo', valueGetter: params => (params.value ? 'Si' : 'No') },
           {
             field: 'fechaCambioEstado',
-            headerName: 'FECHA ACTIVO',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            headerName: 'Fecha Activo',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

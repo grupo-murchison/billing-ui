@@ -25,6 +25,7 @@ import { DateLib } from '@libs';
 import { ViewIcon } from '@assets/icons';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
+import CustomChip from '@app/components/Chip/Chip';
 
 const Facturacion = () => {
   // const _navigate = useNavigate();
@@ -129,20 +130,23 @@ const Facturacion = () => {
           {
             field: 'estado',
             headerName: 'Estado',
+            renderCell: params => {
+              return (
+                <CustomChip estado={params.value} />
+              );
+            },
           },
           {
             field: 'fechaInicioContrato',
             headerName: 'Fecha Inicio',
             flex: 0.5,
-            type: 'date',
-            valueGetter: ({ value }) => DateLib.parseFromDBString(value),
+            valueGetter: ({ value }) => DateLib.beautifyDBString(value),
           },
           {
             field: 'fechaFinContrato',
             headerName: 'Fecha Fin',
             flex: 0.5,
-            type: 'date',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

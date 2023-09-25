@@ -180,7 +180,7 @@ function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionCon
           },
           {
             field: 'productoSoftlandDescripcion',
-            headerName: 'Descripcion',
+            headerName: 'Descripción',
           },
           {
             field: 'cantidad',

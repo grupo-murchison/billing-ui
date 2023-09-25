@@ -28,7 +28,7 @@ const EventoClientes = () => {
   const {
     control,
     handleSubmit,
-    formState: {  isSubmitting },
+    formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -104,8 +104,7 @@ const EventoClientes = () => {
             field: 'genEventoFechaCreacion',
             headerName: 'Fecha Creacion Evento',
             minWidth: 125,
-            valueGetter: params => (params?.value ? DateLib.parseFromDBString(params?.value.slice(0, 8)) : ''),
-            type: 'date',
+            valueGetter: params => (params?.value ? DateLib.beautifyDBString(params?.value.slice(0, 8)) : ''),
           },
           { field: 'genCompania', headerName: 'Compania', minWidth: 100 },
           { field: 'genSistema', headerName: 'Sistema', minWidth: 80 },
@@ -135,7 +134,6 @@ const EventoClientes = () => {
             minWidth: 160,
             valueGetter: params =>
               params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
-            // type: 'date',
           },
         ]}
         repositoryFunc={EventoClienteRepository.getAllEventDetails}

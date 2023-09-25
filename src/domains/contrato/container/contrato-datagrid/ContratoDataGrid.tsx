@@ -53,11 +53,20 @@ const ContratoDataGrid = () => {
         identifier: `${row.nroContrato}`,
         type: 'delete',
         async onClickYes() {
-          // await ContratoRepository.deleteContratoById(row.id);
-          setToastMessage('La funcionalidad para eliminar Contratos estará disponible próximamente.');
-          setOpenToast(true);
-          confirmDialog.close();
-          mainDataGrid.reload();
+          await ContratoRepository.deleteContratoById(row.id)
+            .then(response => {
+              if (response.status === 200) {
+                setToastMessage('Contrato eliminado correctamente.');
+              }
+            })
+            .catch(error => {
+              setToastMessage(error.message || 'Ocurrió un error inesperado.');
+            })
+            .finally(() => {
+              setOpenToast(true);
+              confirmDialog.close();
+              mainDataGrid.reload();
+            });
         },
       });
     },
@@ -71,6 +80,7 @@ const ContratoDataGrid = () => {
   return (
     <>
       <DataGrid
+        autoHeight={false}
         onClickNew={handleClickCreate}
         hookRef={mainDataGrid.ref}
         columns={[
@@ -82,14 +92,12 @@ const ContratoDataGrid = () => {
           {
             field: 'fechaInicioContrato',
             headerName: 'Fecha Inicio',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'fechaFinContrato',
             headerName: 'Fecha Fin',
-            valueGetter: params => DateLib.parseFromDBString(params.value),
-            type: 'date',
+            valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'actions',

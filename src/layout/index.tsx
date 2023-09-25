@@ -1,18 +1,18 @@
 import { ReactNode } from 'react';
 import Box from '@mui/material/Box/Box';
-import Navbar from './Navbar/Navbar';
-import Sidebar from './Sidebar';
-import Main from './Main';
-import SidebarProvider from './context/SidebarProvider';
+import Navbar from './AppNavbar';
+import Sidebar from './AppSidebar';
+import Main from './AppMain';
+import LayoutProvider from './context/LayoutProvider';
 
 function MainLayout({ children }: { children?: ReactNode }) {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <SidebarProvider>
+        <LayoutProvider>
           <Navbar />
           <Sidebar />
-        </SidebarProvider>
+        </LayoutProvider>
         <Main>{children}</Main>
       </Box>
     </>
