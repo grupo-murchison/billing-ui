@@ -24,7 +24,7 @@ import { DateLib } from '@libs';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { blobToJSON, downloadPdfAxios, getFileNameHeaders } from '@app/utils/axios.util';
+import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 
 const FacturacionReporte = () => {
