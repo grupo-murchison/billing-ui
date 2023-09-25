@@ -33,8 +33,8 @@ type FormTextFieldProps = FormInputsCommonProps &
 function typeResolver(value: string, type: React.InputHTMLAttributes<unknown>['type']) {
   let _value;
   switch (type) {
-    case 'number':
-      _value = +value || '';
+    case 'number':      
+      _value = Number.isNaN(+value) ? '' : +value;
       break;
 
     default:

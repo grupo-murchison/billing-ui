@@ -32,6 +32,13 @@ const ProcedimientoPSIntervaloEdit = () => {
     control,
     formState: { isSubmitting },
   } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
+    defaultValues: {
+      procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
+      valorInicial: 1,
+      valorFinal: 9999999,
+      productoSoftlandId: '',
+      intervalo: '',
+    },
     resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),
   });
 
