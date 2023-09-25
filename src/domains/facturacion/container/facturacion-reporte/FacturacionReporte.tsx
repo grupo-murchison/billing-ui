@@ -25,6 +25,7 @@ import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
+import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 
 const FacturacionReporte = () => {
   // const _navigate = useNavigate();
@@ -42,6 +43,7 @@ const FacturacionReporte = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    // resetField,
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -111,6 +113,14 @@ const FacturacionReporte = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
+            {/* <ClientePopUp
+              control={control}
+              disabled={isSubmitting}
+              label='Cliente'
+              name='clienteId'
+              resetField={resetField}
+            /> */}
+
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
           </Col>
         </Row>
