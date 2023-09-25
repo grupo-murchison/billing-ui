@@ -33,6 +33,8 @@ const ProcedimientoPSIntervaloCreate = () => {
       procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
       valorInicial: 1,
       valorFinal: 9999999,
+      productoSoftlandId: '',
+      intervalo: '',
     },
     resolver: zodResolver(ProcedimientoPSIntervaloCreateSchema),
   });
@@ -51,7 +53,7 @@ const ProcedimientoPSIntervaloCreate = () => {
   }, [_navigate, procedimientoPSId]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Procedimiento Producto Softland'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Intervalo Procedimiento Producto Softland'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
@@ -89,7 +91,7 @@ const ProcedimientoPSIntervaloCreate = () => {
           <Col md={6}>
             <ProductoSoftlandDropdown
               control={control}
-              name='productoSoftland'
+              name='productoSoftlandId'
               disabled={isSubmitting}
               label='Producto Softland'
               emptyOption

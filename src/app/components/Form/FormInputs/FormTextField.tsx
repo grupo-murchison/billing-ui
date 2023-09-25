@@ -34,7 +34,7 @@ function typeResolver(value: string, type: React.InputHTMLAttributes<unknown>['t
   let _value;
   switch (type) {
     case 'number':
-      _value = +value || '';
+      _value = Number.isNaN(+value) ? '' : +value;
       break;
 
     default:

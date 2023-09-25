@@ -7,10 +7,10 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
 import { IconRender } from './components';
 import { IMenuItemCollapse } from '../interfaces/menu-items.interface';
-import { useSidebarContext } from '../context/useSidebarContext';
+import { useLayoutContext } from '../context/useLayoutContext';
 
 function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; level?: number }) {
-  const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useSidebarContext();
+  const { isSidebarOpen, isMenuExpanded, toogleOpenMenu } = useLayoutContext();
   const [isMenuActive, setIsMenuActive] = useState<boolean>(false);
 
   useEffect(() => {
