@@ -66,6 +66,8 @@ const ProcedimientoPSIntervaloCreate = () => {
               fullWidth
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={6}>
             <FormTextField
               control={control}
@@ -76,8 +78,6 @@ const ProcedimientoPSIntervaloCreate = () => {
               fullWidth
             />
           </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <FormTextField
               control={control}
@@ -88,7 +88,9 @@ const ProcedimientoPSIntervaloCreate = () => {
               fullWidth
             />
           </Col>
-          <Col md={6}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <ProductoSoftlandDropdown
               control={control}
               name='productoSoftlandId'
