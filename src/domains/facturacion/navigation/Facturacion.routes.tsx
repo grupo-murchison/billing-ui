@@ -11,12 +11,11 @@ import { FacturacionLog } from '../container/facturacion-log';
 import { EventosServicios } from '@domains/evento-servicio/container';
 import { EventosServiciosProvider } from '@domains/evento-servicio/contexts/eventos.servicios.context';
 
-
 const FacturacionRoutes = () => {
   return (
     <Routes>
       <Route
-        path='/facturacion'
+        path='/calculo-facturacion'
         element={
           <FacturacionProvider>
             <Facturacion />
@@ -24,7 +23,7 @@ const FacturacionRoutes = () => {
         }
       ></Route>
       <Route
-        path='/facturacion/reversion'
+        path='/calculo-facturacion/reversion'
         element={
           <FacturacionReporteProvider>
             <FacturacionReversion />
@@ -32,7 +31,7 @@ const FacturacionRoutes = () => {
         }
       />
       <Route
-        path='/facturacion/reporte'
+        path='/calculo-facturacion/reporte'
         element={
           <FacturacionReporteProvider>
             <FacturacionReporte />
@@ -40,7 +39,7 @@ const FacturacionRoutes = () => {
         }
       />
       <Route
-        path='/facturacion/eventos-cliente'
+        path='/calculo-facturacion/eventos-cliente'
         element={
           <ClienteEventosProvider>
             <EventoClientes />
@@ -48,16 +47,16 @@ const FacturacionRoutes = () => {
         }
       />
       <Route
-        path='facturacion/eventos-servicios-cliente'
+        path='/calculo-facturacion/eventos-servicios-cliente'
         element={
           <EventosServiciosProvider>
             <EventosServicios />
           </EventosServiciosProvider>
         }
       />
-      <Route path='/facturacion/masiva' element={<FacturacionMasiva />} />
+      <Route path='/calculo-facturacion/masiva' element={<FacturacionMasiva />} />
       <Route
-        path='/facturacion/log'
+        path='/calculo-facturacion/log'
         element={
           <FacturacionLogProvider>
             <FacturacionLog />
@@ -65,7 +64,7 @@ const FacturacionRoutes = () => {
         }
       />
 
-      <Route path='/facturacion/*' element={<Navigate to='/' replace />} />
+      <Route path='/calculo-facturacion/*' element={<Navigate to='/' replace />} />
     </Routes>
   );
 };

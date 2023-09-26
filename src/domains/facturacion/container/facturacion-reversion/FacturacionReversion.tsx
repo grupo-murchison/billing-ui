@@ -22,7 +22,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
-import { FacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
+import { CalculoFacturacionReversionBreadcrumb } from '@domains/facturacion/constants';
 
 import { DateLib } from '@libs';
 
@@ -34,7 +34,7 @@ import FacturacionReversionLog from './views/FacturacionReversionLog';
 import { useConfirmDialog } from '@app/hooks';
 import CustomChip from '@app/components/Chip/Chip';
 
-const FacturacionReversion = () => {
+const CalculoFacturacionReversion = () => {
   // const _navigate = useNavigate();
 
   const [openBackdrop, setOpenBackdrop] = useState(false);
@@ -225,9 +225,7 @@ const FacturacionReversion = () => {
             field: 'estado',
             headerName: 'Estado',
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
           {
@@ -313,9 +311,7 @@ const FacturacionReversion = () => {
             headerName: 'Estado',
             flex: 0.5,
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
         ]}
@@ -335,4 +331,4 @@ const FacturacionReversion = () => {
   );
 };
 
-export default withBreadcrumb(FacturacionReversion, FacturacionReversionBreadcrumb);
+export default withBreadcrumb(CalculoFacturacionReversion, CalculoFacturacionReversionBreadcrumb);
