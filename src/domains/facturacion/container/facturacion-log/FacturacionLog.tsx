@@ -9,7 +9,7 @@ import { Col, Modal, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 
 import { FacturacionRepository } from '@domains/facturacion/repository';
-import { FacturacionLogBreadcrumb } from '@domains/facturacion/constants';
+import { CalculoFacturacionLogBreadcrumb } from '@domains/facturacion/constants';
 
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
@@ -25,7 +25,7 @@ import DetalleFacturacionLog from './views/DetalleFacturacionLog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomChip from '@app/components/Chip/Chip';
 
-const FacturacionLog = () => {
+const CalculoFacturacionLog = () => {
   const { mainDataGrid } = useContext(FacturacionLogContext);
   const [facturacionData, setFacturacionData] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -132,9 +132,7 @@ const FacturacionLog = () => {
             headerName: 'Estado Cabecera',
             valueGetter: ({ row }) => row?.facturacionCabecera?.estado,
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
           {
@@ -167,9 +165,7 @@ const FacturacionLog = () => {
             headerName: 'Estado Contrato',
             valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
           {
@@ -205,4 +201,4 @@ const FacturacionLog = () => {
   );
 };
 
-export default withBreadcrumb(FacturacionLog, FacturacionLogBreadcrumb);
+export default withBreadcrumb(CalculoFacturacionLog, CalculoFacturacionLogBreadcrumb);

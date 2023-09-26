@@ -13,7 +13,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 import { FacturacionReporteContext } from '@domains/facturacion/contexts';
-import { FacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
+import { CalculoFacturacionReporteBreadcrumb } from '@domains/facturacion/constants';
 import { DetalleFacturacion } from '@domains/facturacion/container/facturacion';
 
 import Form from '@app/components/Form/Form';
@@ -27,7 +27,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 
-const FacturacionReporte = () => {
+const CalculoFacturacionReporte = () => {
   // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
@@ -268,4 +268,4 @@ const FacturacionReporte = () => {
   );
 };
 
-export default withBreadcrumb(FacturacionReporte, FacturacionReporteBreadcrumb);
+export default withBreadcrumb(CalculoFacturacionReporte, CalculoFacturacionReporteBreadcrumb);
