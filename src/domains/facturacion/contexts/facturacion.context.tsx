@@ -13,6 +13,7 @@ const estadosPeriodos = [
   { value: 'ABIERTO', label: 'Abierto' },
   { value: 'ANULADO', label: 'Anulado' }, // anulado, no revierte la facturación
   { value: 'FACTURADO', label: 'Facturado' },
+  { value: 'CALCULADO', label: 'Calculado' },
   { value: 'REVERSADO', label: 'Reversado' }, // es un deshacer, vuelve hacia atras una facturación (calculos, etc)
 ];
 
@@ -21,8 +22,8 @@ const initialContext: InitialContext = {
   estadosContrato,
   estadosPeriodos,
   isContratoActivo: () => false,
-  isPeriodoFacturado: () => false,
-  handleDisableFacturar: () => false,
+  isPeriodoCalculado: () => false,
+  handleDisableCalcular: () => false,
 };
 
 const FacturacionContext = createContext(initialContext);
@@ -40,12 +41,12 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
   };
 
   /**
-   * La acción "Facturar" se activará para aquel periodo que este en estado "Abierto" o "Anulado"
+   * La acción "Calcular" se activará para aquel periodo que este en estado "Abierto" o "Anulado"
    * @param estado
    * @returns
    */
-  const isPeriodoFacturado = (estado: string) => {
-    return estado === 'FACTURADO' ? true : false;
+  const isPeriodoCalculado = (estado: string) => {
+    return estado === 'CALCULADO' || estado === 'FACTURADO' ? true : false; // TODO se debe quitar FACTURADO, falta migrar Back
   };
 
   /**
@@ -54,14 +55,14 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
    * @param rows todos los periodos
    * @returns boolean
    */
-  const handleDisableFacturar = (row: AnyValue, rows: AnyValue[]) => {
+  const handleDisableCalcular = (row: AnyValue, rows: AnyValue[]) => {
     let periodo = row;
 
-    if (periodo?.periodo === 1 && !isPeriodoFacturado(periodo?.estado)) {
+    if (periodo?.periodo === 1 && !isPeriodoCalculado(periodo?.estado)) {
       return false;
     } else {
       periodo = rows.find(periodoAnterior => periodoAnterior.periodo === periodo.periodo - 1);
-      return isPeriodoFacturado(periodo?.estado) ? false : true;
+      return isPeriodoCalculado(periodo?.estado) ? false : true;
     }
   };
 
@@ -72,8 +73,8 @@ const FacturacionProvider = ({ children }: FacturacionProviderProps) => {
         estadosContrato,
         estadosPeriodos,
         isContratoActivo,
-        isPeriodoFacturado,
-        handleDisableFacturar,
+        isPeriodoCalculado,
+        handleDisableCalcular,
       }}
     >
       {children}
@@ -90,8 +91,8 @@ type InitialContext = {
   estadosContrato: Record<'value' | 'label', string>[];
   estadosPeriodos: Record<'value' | 'label', string>[];
   isContratoActivo: (estado: string) => boolean;
-  isPeriodoFacturado: (estado: string) => boolean;
-  handleDisableFacturar: (row: AnyValue, rows: AnyValue) => boolean;
+  isPeriodoCalculado: (estado: string) => boolean;
+  handleDisableCalcular: (row: AnyValue, rows: AnyValue) => boolean;
 };
 
 export { FacturacionContext, FacturacionProvider };

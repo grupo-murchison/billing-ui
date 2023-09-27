@@ -68,7 +68,7 @@ class ContratoService {
   };
 
   //==============================  Endpoints Para Patalla Facturación
-  static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
+  static getAllContratoCalculosFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
     );

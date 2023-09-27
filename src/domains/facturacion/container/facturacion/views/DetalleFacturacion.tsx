@@ -9,14 +9,10 @@ import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { FacturacionRepository } from '@domains/facturacion/repository';
 
 import { DateLib } from '@libs';
+import { currencyFormatter } from '@libs/number';
 
 import DataGridSoporte from './DataGridSoporte';
 import { AttachMoneyIcon } from '@assets/icons';
-
-const currencyFormatter = new Intl.NumberFormat('en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
 
 function DetalleFacturacion({ periodo, facturacionContratoId }: { facturacionContratoId?: string; periodo: AnyValue }) {
   const [detalle, setDetalle] = useState<AnyValue>();

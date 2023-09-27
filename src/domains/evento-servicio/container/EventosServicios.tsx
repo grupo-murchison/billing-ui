@@ -33,7 +33,7 @@ const EventoServicio = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      numeroSecuenciaFacturacion: '',
+      numeroSecuenciaCalculo: '',
       clienteId: { value: '', code: '', label: '' },
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
       conceptoAcuerdoId: { value: '',  label: '' },
@@ -46,7 +46,7 @@ const EventoServicio = () => {
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
     async data => {
       const filters = {
-        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         nroContato: data.contrato ? data.contrato : undefined,
         conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
@@ -64,7 +64,7 @@ const EventoServicio = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} label='Nro. Facturación' name='numeroSecuenciaFacturacion' disabled={isSubmitting} type='number'/>
+            <FormTextField control={control} label='Número Secuencia Calculo' name='numeroSecuenciaCalculo' disabled={isSubmitting} type='number'/>
           </Col>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
@@ -72,7 +72,7 @@ const EventoServicio = () => {
         </Row>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Nro. Contrato' name='contrato' />
+            <FormTextField control={control} disabled={isSubmitting} label='Número Contrato' name='contrato' />
           </Col>
           <Col sm={12} md={6}>
             <ConcepoAcuerdoAutoComplete  control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
