@@ -346,7 +346,7 @@ const labelsAndComps = [
             }
           />
 
-          <TabLayout options={labelsAndComps}></TabLayout>
+          <TabLayout options={labelsAndComps} error={errors} ></TabLayout>
 
 
           {/* <DivisorProvisorio label='Datos Generales' /> */}

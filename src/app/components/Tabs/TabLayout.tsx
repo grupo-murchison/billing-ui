@@ -11,14 +11,18 @@ interface labelAndComponent extends TabsPropsMui {
 
 type TabPros = {
   options: labelAndComponent[]
+  error?: AnyValue
 }
 
 
-const TabLayout = ({options}: TabPros) => {
+const TabLayout = ({options, error}: TabPros) => {
   const [tabValue, setTabValue] = useState(0);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
   };
+  // console.log(error ?  error : 'nada')
+
+  
 
   return (
     <>
@@ -28,11 +32,12 @@ const TabLayout = ({options}: TabPros) => {
         }}
         scrollButtons
         allowScrollButtonsMobile
-        variant="scrollable">
+        variant="scrollable"
+        >
       {
         options.map((el:labelAndComponent,index:number) => {
           const {  ...rest } = el;
-          return <Tab value={index} key={index} label={el.title} {...rest}/> 
+          return <Tab value={index} key={index} label={el.title} {...rest} onChange={()=> console.log(error)}/> 
         })
       }
       </Tabs>
