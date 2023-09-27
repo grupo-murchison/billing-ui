@@ -31,7 +31,7 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
   return (
     <>
       <ListItemButton onMouseEnter={handleMouseEnter} selected={isMenuActive}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ mr: '-1rem' }}>
           <IconRender icon={menuItem?.icon || InboxIcon} level={level} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title} />

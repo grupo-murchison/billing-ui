@@ -107,14 +107,14 @@ const facturaciones: IMenuItemGroup = {
       children: [
         {
           id: 'calculo',
-          title: 'Cálculo',
+          title: 'Calcular Facturación',
           type: 'item',
           url: '/calculo-facturacion',
           breadcrumbs: false,
         },
         {
           id: 'calculoFacturacionMasiva',
-          title: 'Cálculo de Facturación Masiva',
+          title: 'Calcular Facturación Masiva',
           type: 'item',
           url: '/calculo-facturacion/masiva',
           breadcrumbs: false,
