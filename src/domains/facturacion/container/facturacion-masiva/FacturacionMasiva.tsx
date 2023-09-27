@@ -9,7 +9,7 @@ import { Col, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 
 import { FacturacionRepository } from '@domains/facturacion/repository';
-import { FacturacionMasivaBreadcrumb } from '@domains/facturacion/constants';
+import { CalculoFacturacionMasivaBreadcrumb } from '@domains/facturacion/constants';
 
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
@@ -21,7 +21,7 @@ import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown'
 import { FacturacionMasivaSchema } from '@domains/facturacion/repository/facturacion.schemas';
 import HelperTooltip from '@app/components/Tooltips/HelperTooltip';
 
-const FacturacionMasiva = () => {
+const CalculoFacturacionMasiva = () => {
   const [openToast, setOpenToast] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [toastMessage, setToastMessage] = useState('Datos enviados');
@@ -142,4 +142,4 @@ ejemplo la información sobre los distintos cálculos de servicios'
   );
 };
 
-export default withBreadcrumb(FacturacionMasiva, FacturacionMasivaBreadcrumb);
+export default withBreadcrumb(CalculoFacturacionMasiva, CalculoFacturacionMasivaBreadcrumb);

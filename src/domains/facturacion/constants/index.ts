@@ -1,27 +1,29 @@
 import { BreadcrumbItem } from '@app/hocs';
 
-export const FacturacionLabelAndPath = { label: 'Facturación', path: '/facturacion' };
+export const CalculoFacturacionLabelAndPath = { label: 'Cálculo de Facturación', path: '/calculo-facturacion' };
 
-export const FacturacionDataGridBreadcrumb: BreadcrumbItem[] = [{ ...FacturacionLabelAndPath }];
+export const CalculoFacturacionDataGridBreadcrumb: BreadcrumbItem[] = [{ ...CalculoFacturacionLabelAndPath }];
 
-export const FacturacionReversionBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Facturación Reversión', path: `${FacturacionLabelAndPath.path}/reversion` },
+export const CalculoFacturacionReversionBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Reversión Cálculo de Facturación', path: `${CalculoFacturacionLabelAndPath.path}/reversion` },
 ];
 
-export const FacturacionReporteBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Facturación Reporte', path: '/facturacion/reporte' },
+export const CalculoFacturacionReporteBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Cálculo de Facturación Reporte', path: `${CalculoFacturacionLabelAndPath.path}/reporte` },
 ];
 
 export const ClienteEventosBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Eventos Del Cliente', path: '/facturacion/eventos-cliente' },
+  { label: 'Eventos Del Cliente', path: `${CalculoFacturacionLabelAndPath.path}/eventos-cliente` },
 ];
 
 export const EventosServiciosBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Eventos por Servicios', path: 'facturacion/eventos-servicios-cliente' },
+  { label: 'Eventos por Servicios', path: `${CalculoFacturacionLabelAndPath.path}/eventos-servicios-cliente` },
 ];
 
-export const FacturacionMasivaBreadcrumb: BreadcrumbItem[] = [
-  { label: 'Facturación Masiva', path: '/facturacion/masiva' },
+export const CalculoFacturacionMasivaBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Cálculo de Facturación Masiva', path: `${CalculoFacturacionLabelAndPath.path}/masiva` },
 ];
 
-export const FacturacionLogBreadcrumb: BreadcrumbItem[] = [{ label: 'Log de Facturación', path: '/facturacion/log' }];
+export const CalculoFacturacionLogBreadcrumb: BreadcrumbItem[] = [
+  { label: 'Log Cálculo de Facturación', path: `${CalculoFacturacionLabelAndPath.path}/log` },
+];

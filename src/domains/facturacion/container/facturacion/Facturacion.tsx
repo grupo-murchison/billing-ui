@@ -16,7 +16,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { ContratoRepository } from '@domains/contrato/repository';
 import { FacturacionContext } from '@domains/facturacion/contexts';
-import { FacturacionDataGridBreadcrumb } from '@domains/facturacion/constants';
+import { CalculoFacturacionDataGridBreadcrumb } from '@domains/facturacion/constants';
 import { SociedadDropdownAutoComplete } from '@domains/sociedad/container/sociedad-dropdown/SociedadDropdown';
 import { TipoContratoDropdownAutoComplete } from '@domains/tipo-contrato/container/tipo-contrato-dropdown/TipoContratoDropdown';
 
@@ -27,7 +27,7 @@ import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import PlanDeFacturacion from './views/PlanDeFacturacion';
 import CustomChip from '@app/components/Chip/Chip';
 
-const Facturacion = () => {
+const CalculoFacturacion = () => {
   // const _navigate = useNavigate();
 
   const { mainDataGrid, estadosContrato, isContratoActivo } = useContext(FacturacionContext);
@@ -131,9 +131,7 @@ const Facturacion = () => {
             field: 'estado',
             headerName: 'Estado',
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
           {
@@ -177,4 +175,4 @@ const Facturacion = () => {
   );
 };
 
-export default withBreadcrumb(Facturacion, FacturacionDataGridBreadcrumb);
+export default withBreadcrumb(CalculoFacturacion, CalculoFacturacionDataGridBreadcrumb);
