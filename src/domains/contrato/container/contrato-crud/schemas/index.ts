@@ -5,7 +5,7 @@ import { zodId, zodLocale } from '@app/utils/zod.util';
 const ContratoVariablesSchema = z.object({
   id: z.number(),
   codigo: z.string().optional(),
-  valor: z.string().optional().nullable(),
+  valor: z.string({ required_error: zodLocale.required_error }).nonempty({ message: zodLocale.required_error }),
 });
 
 export type FormDataTypeContratoCreate = {
