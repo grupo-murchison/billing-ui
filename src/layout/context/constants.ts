@@ -12,5 +12,5 @@ export const initialState: IStateSidebar = {
   isMenuExpanded: [''],
 };
 
-export const drawerWidthOpen = 260;
+export const drawerWidthOpen = 300;
 export const drawerWidthClosed = 50;

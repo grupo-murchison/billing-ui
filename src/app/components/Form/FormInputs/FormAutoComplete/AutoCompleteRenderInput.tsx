@@ -38,12 +38,14 @@ const AutocompleteAdvancedSearchRenderInput = ({
     label={label}
     InputProps={{
       ...params.InputProps,
+      startAdornment: (
+        <IconButton onClick={onClickOpen}>
+          <SearchIcon />
+        </IconButton>
+      ),
       endAdornment: (
         <React.Fragment>
           {loading ? <CircularProgress size={20} /> : null}
-          <IconButton onClick={onClickOpen}>
-            <SearchIcon />
-          </IconButton>
           {params.InputProps.endAdornment}
         </React.Fragment>
       ),

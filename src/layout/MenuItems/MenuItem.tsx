@@ -39,7 +39,7 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
   return (
     <>
       <ListItemButton {...listItemProps} disabled={menuItem?.disabled} selected={isSelected} onClick={handleClick}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ mr: '-1rem' }}>
           <IconRender icon={menuItem?.icon} level={level && level} isSelected={isSelected} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title || 'Generic Title'} sx={{ whiteSpace: 'normal' }} />
