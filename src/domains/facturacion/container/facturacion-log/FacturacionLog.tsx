@@ -14,7 +14,7 @@ import { CalculoFacturacionLogBreadcrumb } from '@domains/facturacion/constants'
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
-import { FacturacionLogSchema } from '@domains/facturacion/repository/facturacion.schemas';
+import { CalculoFacturacionLogSchema } from '@domains/facturacion/repository/facturacion.schemas';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { DataGrid } from '@app/components/DataGrid';
@@ -46,7 +46,7 @@ const CalculoFacturacionLog = () => {
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(FacturacionLogSchema),
+    resolver: zodResolver(CalculoFacturacionLogSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -77,7 +77,7 @@ const CalculoFacturacionLog = () => {
             <FormTextField
               control={control}
               disabled={isSubmitting}
-              label='Número Cálculo de Facturación'
+              label='Número Secuencia Cálculo'
               name='numeroSecuenciaCalculo'
               type='number'
             />
