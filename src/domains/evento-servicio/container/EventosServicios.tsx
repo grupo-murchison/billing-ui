@@ -12,7 +12,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { withBreadcrumb } from '@app/hocs';
-import { EventosServiciosBreadcrumb } from '@domains/facturacion/constants';
+import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
 import { EventoServicioRepository } from '../repository';
 import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
 import { EventosServicioCreateSchema, EventosServicioFormSchemaType } from '../schemas';

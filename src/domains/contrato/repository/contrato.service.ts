@@ -67,7 +67,7 @@ class ContratoService {
     return [response, error];
   };
 
-  //==============================  Endpoints Para Patalla Facturación
+  //==============================  Endpoints Para Patalla Cálculo
   static getAllContratoCalculosFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),

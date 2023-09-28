@@ -7,12 +7,12 @@ import { Paper } from '@mui/material';
 import { useCallback, useContext, useEffect } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ClienteEventosContext } from '../../facturacion/contexts';
+import { ClienteEventosContext } from '../../calculo/contexts';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { withBreadcrumb } from '@app/hocs';
-import { ClienteEventosBreadcrumb } from '@domains/facturacion/constants';
+import { ClienteEventosBreadcrumb } from '@domains/calculo/constants';
 import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
 import { EventosClientesCreateSchema } from '../schemas';

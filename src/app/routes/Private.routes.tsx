@@ -14,7 +14,7 @@ import { ProcedimientoCustomRoutes } from '@domains/procedimiento-custom/navigat
 import { ModeloAcuerdoRoutes } from '@domains/modelo-acuerdo/navigation';
 import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
-import { FacturacionRoutes } from '@domains/facturacion/navigation';
+import { CalculoRoutes } from '@domains/calculo/navigation';
 import RootRoute from '@domains/root/Root.route';
 
 const PrivateRoutes = () => {
@@ -35,7 +35,7 @@ const PrivateRoutes = () => {
         <ModeloAcuerdoRoutes />
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
-        <FacturacionRoutes />
+        <CalculoRoutes />
         <RootRoute />
       </MainLayout>
     </ComponentInjectorProvider>
