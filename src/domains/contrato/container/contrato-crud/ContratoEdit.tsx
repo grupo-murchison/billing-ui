@@ -25,6 +25,7 @@ import { TipoContratoDropdown } from '@domains/tipo-contrato/container/tipo-cont
 import { ContratoEditBreadcrumb } from '@domains/contrato/constants';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
+import { ContratoVariablesDataGrid } from '@domains/contrato-variables/ContratoVariablesDataGrid';
 import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 
@@ -71,7 +72,7 @@ const ContratoEdit = () => {
       sociedadId: '',
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
-      // contratoVariables: [],
+      contratoVariables: [{id: 0, codigo: '',  valor: ''}], // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
     },
     resolver: zodResolver(
       ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
@@ -86,10 +87,11 @@ const ContratoEdit = () => {
     ),
   });
 
-  console.log('formErrors', formErrors);
+  // console.log('formErrors', formErrors);
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
-    async data => {
+    async (data, event) => {
+      event?.stopPropagation();
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
@@ -98,10 +100,11 @@ const ContratoEdit = () => {
         id: contratoId,
       };
 
-      await ContratoRepository.updateContrato(submitData);
+      console.log('Contrao Edit contratoVariables', data.contratoVariables);
+      // await ContratoRepository.updateContrato(submitData);
 
-      mainDataGrid.reload();
-      _navigate('/contrato');
+      // mainDataGrid.reload();
+      // _navigate('/contrato');
     },
     [_navigate, mainDataGrid],
   );
@@ -128,7 +131,7 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: planFacturacion?.diaPeriodo || '',
         pausado: planFacturacion?.pausado,
-        // contratoVariables: contrato.contratoVariables,
+        contratoVariables: [],
       });
       setPeriodos(planFacturacion?.periodos);
       setBackUpModeloAcuerdo(modeloAcuerdo);
@@ -342,7 +345,7 @@ const ContratoEdit = () => {
 
           <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
             <Box style={{ width: '100%' }}>
-              <DataGridContratoVariables contratoId={contratoId} />
+              <ContratoVariablesDataGrid contratoId={contratoId} resetField={resetField} />
             </Box>
           </Stack>
 

@@ -78,7 +78,7 @@ export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate>
   });
 
 const _ContratoEditSchema = z.object({
-  // contratoVariables: z.array(ContratoVariablesSchema),
+  contratoVariables: z.array(ContratoVariablesSchema).optional(), // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
 });
