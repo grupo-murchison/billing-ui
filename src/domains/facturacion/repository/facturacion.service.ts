@@ -4,7 +4,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
-import { FacturacionMasivaSchema } from './facturacion.schemas';
+import { FormDataTypeCalculoFacturacionMasiva } from './facturacion.schemas';
 
 const BASE_PATH = 'v1/calculos';
 
@@ -17,7 +17,7 @@ class FacturacionService {
     return [response, error];
   };
 
-  static facturacionManual = async (contratoId: number): Promise<HandlePromise> => {
+  static calculoFacturacionManual = async (contratoId: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProviderBilligProcessor.post<AnyValue>(`v1/main/facturacion/manual`, { contratoId: contratoId }),
     );
@@ -25,7 +25,7 @@ class FacturacionService {
     return [response, error];
   };
 
-  static facturacionMasiva = async (data: FacturacionMasivaSchema): Promise<HandlePromise> => {
+  static calculoFacturacionMasiva = async (data: FormDataTypeCalculoFacturacionMasiva): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProviderBilligProcessor.post<AnyValue>(`v1/main/facturacion/automatica`, data),
     );
