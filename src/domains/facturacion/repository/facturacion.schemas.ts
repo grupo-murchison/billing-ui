@@ -59,9 +59,9 @@ export type FormDataTypeCalculoFacturacionMasiva = {
   sinMensajesLogInfo: boolean;
 };
 
-export const FacturacionLogSchema = z
+export const CalculoFacturacionLogSchema = z
   .object({
-    numeroSecuenciaFacturacion: z.number().nullish().or(z.literal('')),
+    numeroSecuenciaCalculo: z.number().nullish().or(z.literal('')),
     nroContrato: z.number().nullish().or(z.literal('')),
     clienteId: z
       .object({
@@ -85,10 +85,11 @@ export const FacturacionLogSchema = z
 
 export const getAllFacturasPaginatedSchema = ZodUtils.withPagination(FacturasRowDataGridSchema);
 export const getAllFacturasReportePaginatedSchema = ZodUtils.withPagination(FacturasReporteDataGridSchema);
+export const getAllCalculoFacturacionLogSchema = ZodUtils.withPagination(CalculoFacturacionLogSchema);
 
 export const getAllFacturasAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;
 
 export type FacturasRowDataGridSchema = z.infer<typeof FacturasRowDataGridSchema>;
 export type FacturasReporteDataGridSchema = z.infer<typeof FacturasReporteDataGridSchema>;
 
-export type FacturacionLogSchemaType = z.infer<typeof FacturacionLogSchema>;
+export type CalculoFacturacionLogSchemaType = z.infer<typeof CalculoFacturacionLogSchema>;

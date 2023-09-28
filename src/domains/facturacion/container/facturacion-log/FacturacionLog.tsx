@@ -14,7 +14,7 @@ import { CalculoFacturacionLogBreadcrumb } from '@domains/facturacion/constants'
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
-import { FacturacionLogSchema } from '@domains/facturacion/repository/facturacion.schemas';
+import { CalculoFacturacionLogSchema } from '@domains/facturacion/repository/facturacion.schemas';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { DataGrid } from '@app/components/DataGrid';
@@ -40,19 +40,19 @@ const CalculoFacturacionLog = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      numeroSecuenciaFacturacion: '',
+      numeroSecuenciaCalculo: '',
       nroContrato: '',
       clienteId: { value: '', code: '', label: '' },
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(FacturacionLogSchema),
+    resolver: zodResolver(CalculoFacturacionLogSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
-        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
@@ -77,8 +77,8 @@ const CalculoFacturacionLog = () => {
             <FormTextField
               control={control}
               disabled={isSubmitting}
-              label='Número Cálculo de Facturación'
-              name='numeroSecuenciaFacturacion'
+              label='Número Secuencia Cálculo'
+              name='numeroSecuenciaCalculo'
               type='number'
             />
           </Col>
@@ -118,9 +118,9 @@ const CalculoFacturacionLog = () => {
         hookRef={mainDataGrid.ref}
         columns={[
           {
-            field: 'numeroSecuenciaFacturacion',
-            headerName: 'Nro. Cálculo Facturación',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.numeroSecuenciaFacturacion || '',
+            field: 'numeroSecuenciaCalculo',
+            headerName: 'Número Secuencia Cálculo',
+            valueGetter: ({ row }) => row?.facturacionCabecera?.numeroSecuenciaCalculo || '',
           },
           {
             field: 'fechaEjecucion',
