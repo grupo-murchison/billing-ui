@@ -214,7 +214,7 @@ const CalculoFacturacionReversion = () => {
           },
           {
             field: 'fechaEjecucion',
-            headerName: 'Fecha Cálculo Facturación',
+            headerName: 'Fecha Cálculo',
             valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {

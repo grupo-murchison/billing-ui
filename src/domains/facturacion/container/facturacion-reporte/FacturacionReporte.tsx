@@ -191,7 +191,7 @@ const CalculoFacturacionReporte = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'numeroSecuenciaCalculo', headerName: 'Nro. Cálculo' },
+          { field: 'numeroSecuenciaCalculo', headerName: 'Número Secuencia Cálculo' },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Cálculado',
