@@ -4,7 +4,7 @@ import { ClienteEventosProvider } from '@domains/facturacion/contexts';
 import { FacturacionLogProvider, FacturacionProvider, FacturacionReporteProvider } from '@domains/facturacion/contexts';
 import { Facturacion } from '@domains/facturacion/container/facturacion';
 import { FacturacionReporte } from '@domains/facturacion/container/facturacion-reporte';
-import { FacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
+import { CalculoFacturacionReversion } from '@domains/facturacion/container/facturacion-reversion';
 import { EventoClientes } from '../../evento-cliente/container/index';
 import { FacturacionMasiva } from '@domains/facturacion/container/facturacion-masiva';
 import { FacturacionLog } from '../container/facturacion-log';
@@ -26,7 +26,7 @@ const FacturacionRoutes = () => {
         path='/calculo-facturacion/reversion'
         element={
           <FacturacionReporteProvider>
-            <FacturacionReversion />
+            <CalculoFacturacionReversion />
           </FacturacionReporteProvider>
         }
       />

@@ -82,7 +82,7 @@ const CalculoFacturacionReporte = () => {
     FacturacionRepository.downloadProforma(row.contratos[0]?.id)
       .then(res => {
         // const fileName = getFileNameHeaders(res.headers);
-        downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaFacturacion}.pdf`);
+        downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaCalculo}.pdf`);
       })
       .catch(async error => {
         if (!error.response) {
@@ -96,8 +96,6 @@ const CalculoFacturacionReporte = () => {
       });
   };
 
-// TODO: calculo de facturacion en las labels o lo mas sensato
-
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
@@ -106,7 +104,7 @@ const CalculoFacturacionReporte = () => {
             <FormTextField
               control={control}
               disabled={isSubmitting}
-              label='Número Secuencia de Cálculo'
+              label='Número Secuencia Cálculo'
               name='numeroSecuenciaCalculo'
               type='number'
             />
@@ -193,7 +191,7 @@ const CalculoFacturacionReporte = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Cálculo' },
+          { field: 'numeroSecuenciaCalculo', headerName: 'Nro. Cálculo' },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Cálculado',

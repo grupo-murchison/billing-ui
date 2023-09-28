@@ -1,1 +1,1 @@
-export { default as FacturacionReversion } from './FacturacionReversion';
+export { default as CalculoFacturacionReversion } from './CalculoFacturacionReversion';
