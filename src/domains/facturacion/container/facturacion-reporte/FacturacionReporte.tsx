@@ -22,7 +22,7 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
-import { FacturacionReporteCreateSchema } from '@domains/facturacion/schemas';
+import { CalculoReporteFilterSchema } from '@domains/facturacion/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
@@ -50,9 +50,9 @@ const CalculoFacturacionReporte = () => {
       fechaDesde: null,
       fechaHasta: null,
       nroContrato: '',
-      numeroSecuenciaFacturacion: '',
+      numeroSecuenciaCalculo: '',
     },
-    resolver: zodResolver(FacturacionReporteCreateSchema),
+    resolver: zodResolver(CalculoReporteFilterSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -62,7 +62,7 @@ const CalculoFacturacionReporte = () => {
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
-        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
       };
 
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -96,6 +96,8 @@ const CalculoFacturacionReporte = () => {
       });
   };
 
+// TODO: calculo de facturacion en las labels o lo mas sensato
+
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
@@ -104,8 +106,8 @@ const CalculoFacturacionReporte = () => {
             <FormTextField
               control={control}
               disabled={isSubmitting}
-              label='Número Cálculo de Facturación'
-              name='numeroSecuenciaFacturacion'
+              label='Número Secuencia de Cálculo'
+              name='numeroSecuenciaCalculo'
               type='number'
             />
           </Col>
@@ -191,10 +193,10 @@ const CalculoFacturacionReporte = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Cálculo' },
           {
             field: 'fechaEjecucion',
-            headerName: 'Fecha Facturación',
+            headerName: 'Fecha Cálculado',
             valueGetter: params => DateLib.beautifyDBString(params?.value),
           },
           {
@@ -258,7 +260,7 @@ const CalculoFacturacionReporte = () => {
             ],
           },
         ]}
-        repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+        repositoryFunc={FacturacionRepository.getAllCalculosPaginated}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Facturación'>

@@ -6,7 +6,7 @@ import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 import { FacturacionMasivaSchema } from './facturacion.schemas';
 
-const BASE_PATH = 'v1/facturaciones';
+const BASE_PATH = 'v1/calculos';
 
 class FacturacionService {
   static getAllPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
