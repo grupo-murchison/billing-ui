@@ -18,8 +18,17 @@ import Toast from '@app/components/Toast/Toast';
 
 import { DateLib } from '@libs';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
-import { FacturacionMasivaSchema } from '@domains/facturacion/repository/facturacion.schemas';
+import {
+  // ValidationSchemaCalculoFacturacionMasiva,
+  FormDataTypeCalculoFacturacionMasiva,
+} from '@domains/facturacion/repository/facturacion.schemas';
 import HelperTooltip from '@app/components/Tooltips/HelperTooltip';
+// import { zodResolver } from '@hookform/resolvers/zod';
+
+const sinMensajesLogOkHelperText =
+  'Si está activado, evita insertar datos o entradas innecesarias. No se registran en el Log los mensajes de finalización exitosa pero si los mensajes de error si esto sucediera.';
+const sinMensajesLogInfoHelperText =
+  'Si está activado, evita insertar datos o entradas innecesarias. No se registran en el Log los mensajes de información, por ejemplo la información sobre los distintos cálculos de servicios.';
 
 const CalculoFacturacionMasiva = () => {
   const [openToast, setOpenToast] = useState(false);
@@ -30,13 +39,15 @@ const CalculoFacturacionMasiva = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<FacturacionMasivaSchema>({
+  } = useForm<FormDataTypeCalculoFacturacionMasiva>({
     defaultValues: {
       fechaHastaFacturacion: new Date(),
+      fechaHastaCalculo: new Date(),
       sociedadId: '',
       sinMensajesLogOk: false,
       sinMensajesLogInfo: false,
     },
+    // resolver: zodResolver(ValidationSchemaCalculoFacturacionMasiva),
   });
 
   const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
@@ -46,15 +57,16 @@ const CalculoFacturacionMasiva = () => {
     setOpenToast(false);
   };
 
-  const onSubmit: SubmitHandler<AnyValue> = useCallback(async data => {
-    const filters: FacturacionMasivaSchema = {
-      sociedadId: data.sociedadId && data.sociedadId !== '' ? data.sociedadId : undefined,
-      fechaHastaFacturacion: data.fechaHastaFacturacion && DateLib.parseToDBString(data.fechaHastaFacturacion),
+  const onSubmit: SubmitHandler<FormDataTypeCalculoFacturacionMasiva> = useCallback(async data => {
+    const filters = {
+      sociedadId: data.sociedadId !== '' ? data.sociedadId : undefined,
+      fechaHastaFacturacion: data.fechaHastaCalculo && DateLib.parseToDBString(data.fechaHastaCalculo as Date), // TODO debe quitarse y dejar fechaHastaCalculo. Falta cambiar api
+      fechaHastaCalculo: data.fechaHastaCalculo && DateLib.parseToDBString(data.fechaHastaCalculo as Date),
       sinMensajesLogOk: data.sinMensajesLogOk,
       sinMensajesLogInfo: data.sinMensajesLogInfo,
     };
 
-    FacturacionRepository.facturacionMasiva(filters)
+    FacturacionRepository.calculoFacturacionMasiva(filters)
       .then(({ data }) => {
         setToastMessage(data);
       })
@@ -74,8 +86,8 @@ const CalculoFacturacionMasiva = () => {
           <Col md={6}>
             <FormDesktopDatePicker
               control={control}
-              label='Fecha de Facturación - calcular hasta'
-              name='fechaHastaFacturacion'
+              label='Calcular Hasta Fecha'
+              name='fechaHastaCalculo'
               disabled={isSubmitting}
             />
           </Col>
@@ -100,7 +112,7 @@ const CalculoFacturacionMasiva = () => {
 
         <Box my={3}>
           <Typography variant='h6' component='div'>
-            Log
+            Mensajes de Log
           </Typography>
         </Box>
         <Row>
@@ -109,24 +121,21 @@ const CalculoFacturacionMasiva = () => {
               <FormCheckbox
                 control={control}
                 disabled={isSubmitting}
-                label='Log sin mensaje de conclusión exitosa'
+                label='Desactivar mensajes de conclusión exitosa'
                 labelPlacement='end'
                 name='sinMensajesLogOk'
               />
-              <HelperTooltip title='Si está activado, evita insertar datos o entradas innecesarias . Es decir, no escribe en el Log los mensajes de finalización exitosa/correcta pero si los mensajes de error si esto sucediera.' />
+              <HelperTooltip title={sinMensajesLogOkHelperText} />
             </Box>
             <Box>
               <FormCheckbox
                 control={control}
                 disabled={isSubmitting}
-                label='Log sin mensaje de información'
+                label='Desactivar mensajes de información'
                 labelPlacement='end'
                 name='sinMensajesLogInfo'
               />
-              <HelperTooltip
-                title='Si está activado, evita insertar datos o entradas innecesarias. No se escriben en el Log los mensajes de información, como por
-ejemplo la información sobre los distintos cálculos de servicios'
-              />
+              <HelperTooltip title={sinMensajesLogInfoHelperText} />
             </Box>
           </Col>
         </Row>

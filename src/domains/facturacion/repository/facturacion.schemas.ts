@@ -43,16 +43,18 @@ const FacturasReporteDataGridSchema = z.object({
   tipoFacturacion: z.string().nullish(),
 });
 
-const FacturacionMasivaSchema: ZodType<FormDataTypeFacturacionMasiva> = z.object({
-  fechaHastaFacturacion: z.date(),
+export const ValidationSchemaCalculoFacturacionMasiva: ZodType<FormDataTypeCalculoFacturacionMasiva> = z.object({
+  fechaHastaCalculo: z.date(),
+  fechaHastaFacturacion: z.date().optional(), // TODO quitar y dejar en su lugar fechaHastaCalculo
   sociedadId: z.number({ required_error: 'El campo es requerido.' }),
   sinMensajesLogOk: z.boolean(),
   sinMensajesLogInfo: z.boolean(),
 });
 
-export type FormDataTypeFacturacionMasiva = {
-  fechaHastaFacturacion: Date | null;
-  sociedadId: number | string;
+export type FormDataTypeCalculoFacturacionMasiva = {
+  fechaHastaCalculo?: Date | null | string;
+  fechaHastaFacturacion?: Date | null | string;
+  sociedadId?: number | string;
   sinMensajesLogOk: boolean;
   sinMensajesLogInfo: boolean;
 };
@@ -88,5 +90,5 @@ export const getAllFacturasAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;
 
 export type FacturasRowDataGridSchema = z.infer<typeof FacturasRowDataGridSchema>;
 export type FacturasReporteDataGridSchema = z.infer<typeof FacturasReporteDataGridSchema>;
-export type FacturacionMasivaSchema = z.infer<typeof FacturacionMasivaSchema>;
+
 export type FacturacionLogSchemaType = z.infer<typeof FacturacionLogSchema>;

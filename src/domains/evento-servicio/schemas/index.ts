@@ -2,7 +2,7 @@ import z from 'zod';
 
 export const EventosServicioCreateSchema = z
   .object({
-    numeroSecuenciaFacturacion: z.number({
+    numeroSecuenciaCalculo: z.number({
       required_error: 'El campo es requerido.',
       invalid_type_error: 'El campo es requerido.',
     }),

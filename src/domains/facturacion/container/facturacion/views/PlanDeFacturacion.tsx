@@ -24,11 +24,11 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
-  const [snackbarMessage, setSnackbarMessage] = useState('Periodo Facturado Correctamente!');
+  const [snackbarMessage, setSnackbarMessage] = useState('Periodo Calculado Correctamente!');
   const [periodo, setPeriodo] = useState<AnyValue>(null);
 
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isPeriodoFacturado, handleDisableFacturar } = useContext(FacturacionContext);
+  const { isPeriodoCalculado, handleDisableCalcular } = useContext(FacturacionContext);
 
   useEffect(() => {
     if (contratoId) {
@@ -42,13 +42,13 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     }
   }, [contratoId, openSackbar]);
 
-  const onClickFacturar = () => {
+  const onClickCalcular = () => {
     setOpenBackdrop(true);
     if (contratoId) {
-      FacturacionRepository.facturacionManual(contratoId)
+      FacturacionRepository.calculoFacturacionManual(contratoId)
         .then(({ data }) => {
           setSnackbarMessage(
-            `Proceso ejecutado correctamente. Se generó el Número de Secuencia de Facturación: ${data?.numeroSecuenciaFacturacion}`,
+            `Proceso ejecutado correctamente. Se generó el Número de Secuencia de Calculo: ${data?.numeroSecuenciaCalculo}`,
           );
         })
         .catch(error => {
@@ -71,8 +71,8 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
       <Row>
         <Col sm={12} md={4}>
           <TextField
-            label={'Fecha Facturación'}
-            name='fechaFacturacion'
+            label={'Fecha Cálculo'}
+            name='fechaCalculo'
             //* Se debe completar con la fecha del dia. (por ahora no es un campo editable)
             value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
             inputProps={{ readOnly: true }}
@@ -100,17 +100,15 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
             valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
-            field: 'fechaFacturacion',
-            headerName: 'Fecha Facturacion',
+            field: 'fechaFacturacion', // TODO debe cambiar en la API por fechaCalculo o similar
+            headerName: 'Fecha Cálculo',
             valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'estado',
             headerName: 'Estado',
             renderCell: params => {
-              return (
-                <CustomChip estado={params.value} />
-              );
+              return <CustomChip estado={params.value} />;
             },
           },
           {
@@ -121,7 +119,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
             align: 'center',
             flex: 0.5,
             getActions: params => [
-              // isPeriodoFacturado(params?.row?.estado) ? (
+              // isPeriodoCalculado(params?.row?.estado) ? (
               //   <GridActionsCellItem
               //     key={1}
               //     icon={<ViewIcon />}
@@ -132,24 +130,20 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
               // ) : (
               //   <></>
               // ),
-              // !isPeriodoFacturado(params?.row?.estado) ? (
               <GridActionsCellItem
                 key={2}
                 icon={
-                  <Tooltip title='Facturar' placement='left'>
+                  <Tooltip title='Calcular' placement='left'>
                     <ScheduleSendIcon
-                      color={handleDisableFacturar(params.row, planFacturacion?.periodos) ? 'disabled' : 'inherit'}
+                      color={handleDisableCalcular(params.row, planFacturacion?.periodos) ? 'disabled' : 'inherit'}
                     />
                   </Tooltip>
                 }
-                label='Facturar'
-                onClick={onClickFacturar}
+                label='Calcular'
+                onClick={onClickCalcular}
                 // showInMenu
-                disabled={handleDisableFacturar(params.row, planFacturacion?.periodos)}
+                disabled={handleDisableCalcular(params.row, planFacturacion?.periodos)}
               />,
-              // ) : (
-              // <></>
-              // ),
             ],
           },
         ]}

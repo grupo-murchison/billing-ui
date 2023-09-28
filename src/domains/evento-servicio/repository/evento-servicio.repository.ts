@@ -29,7 +29,7 @@ function extractEventsOfData(response: AnyValue) {
 
 class EventoServicioRepository {
   static getAllEventDetails = async (params: AnyValue) => {
-    if(!params.clienteId && !params.numeroSecuenciaFacturacion && !params.fechaDesde && !params.fechaHasta ) {
+    if(!params.clienteId && !params.numeroSecuenciaCalculo && !params.fechaDesde && !params.fechaHasta ) {
       return
     }
     const response$ = from(EventoServicioService.getAllEventDetails(params)).pipe(

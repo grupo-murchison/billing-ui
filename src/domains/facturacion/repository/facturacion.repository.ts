@@ -5,7 +5,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 import { RepositoryUtils } from '@app/utils';
 
 import { FacturacionService } from './facturacion.service';
-import { FacturacionMasivaSchema, getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
+import { FormDataTypeCalculoFacturacionMasiva, getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
   static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {
@@ -22,14 +22,14 @@ class FacturacionRepository {
     );
   };
 
-  static facturacionManual = async (contratoId: number) => {
-    const response$ = from(FacturacionService.facturacionManual(contratoId)).pipe(RepositoryUtils.PIPES.getResponse());
+  static calculoFacturacionManual = async (contratoId: number) => {
+    const response$ = from(FacturacionService.calculoFacturacionManual(contratoId)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
 
-  static facturacionMasiva = async (data: FacturacionMasivaSchema) => {
-    const response$ = from(FacturacionService.facturacionMasiva(data)).pipe(RepositoryUtils.PIPES.getResponse());
+  static calculoFacturacionMasiva = async (data: FormDataTypeCalculoFacturacionMasiva) => {
+    const response$ = from(FacturacionService.calculoFacturacionMasiva(data)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };

@@ -165,7 +165,7 @@ const CalculoFacturacion = () => {
             ],
           },
         ]}
-        repositoryFunc={ContratoRepository.getAllContratoFacturacionPaginated}
+        repositoryFunc={ContratoRepository.getAllContratoCalculosFacturacionPaginated}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Plan De Facturación'>
