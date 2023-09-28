@@ -5,7 +5,7 @@ import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import { DateLib } from '@libs';
 import { AlertInProgress } from '@app/components/Alerts';
 
-const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValue }) => {
+const CalculoReversionLog = ({ calculoFacturacionData }: { calculoFacturacionData: AnyValue }) => {
   return (
     <>
       <Form>
@@ -15,16 +15,16 @@ const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValu
             <TextField
               id='estado'
               label='Estado'
-              defaultValue={facturacionData.estado}
+              defaultValue={calculoFacturacionData.estado}
               fullWidth
               InputProps={{ readOnly: true }}
             />
           </Col>
           <Col md={4}>
             <TextField
-              id='numeroSecuenciaFacturacion'
-              label='Número facturación'
-              defaultValue={facturacionData.numeroSecuenciaFacturacion}
+              id='numeroSecuenciaCalculo'
+              label='Número Secuencia Cálculo'
+              defaultValue={calculoFacturacionData.numeroSecuenciaCalculo}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -33,7 +33,7 @@ const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValu
             <TextField
               id='fechaEjecucion'
               label='Fecha facturación'
-              value={DateLib.beautifyDBString(facturacionData.fechaEjecucion)}
+              value={DateLib.beautifyDBString(calculoFacturacionData.fechaEjecucion)}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -41,7 +41,7 @@ const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValu
         </Row>
       </Form>
       <DataGridBase
-        rows={facturacionData.contratos}
+        rows={calculoFacturacionData.contratos}
         columns={[
           {
             field: 'contratoClienteCodigo',
@@ -72,4 +72,4 @@ const FacturacionReversionLog = ({ facturacionData }: { facturacionData: AnyValu
   );
 };
 
-export default FacturacionReversionLog;
+export default CalculoReversionLog;

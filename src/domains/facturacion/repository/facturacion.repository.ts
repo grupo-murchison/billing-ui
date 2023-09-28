@@ -8,7 +8,7 @@ import { FacturacionService } from './facturacion.service';
 import { FormDataTypeCalculoFacturacionMasiva, getAllFacturasReportePaginatedSchema } from './facturacion.schemas';
 
 class FacturacionRepository {
-  static getAllFacturasPaginated = async (params: RepositoryFuncParamsPaginated) => {
+  static getAllCalculosPaginated = async (params: RepositoryFuncParamsPaginated) => {
     // const response$ = from(FacturacionService.getAllPaginated(params)).pipe(
     //   RepositoryUtils.PIPES.getResponse(),
     //   RepositoryUtils.PIPES.validateWithSchema(getAllFacturasReportePaginatedSchema),

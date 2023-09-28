@@ -30,7 +30,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { FacturacionReversionCreateSchema } from '@domains/facturacion/schemas';
 import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
-import FacturacionReversionLog from './views/FacturacionReversionLog';
+import CalculoReversionLog from './views/CalculoReversionLog';
 import { useConfirmDialog } from '@app/hooks';
 import CustomChip from '@app/components/Chip/Chip';
 
@@ -43,7 +43,7 @@ const CalculoFacturacionReversion = () => {
   const [snackbarMessage, setSnackbarMessage] = useState('Se inicia el procesamiento!');
   const [contratos, setContratos] = useState<AnyValue>([]);
   const [rowSelectionModel, setRowSelectionModel] = useState<GridRowSelectionModel>([]);
-  const [facturacionData, setFacturacionData] = useState({});
+  const [calculoFacturacionData, setCalculoFacturacionData] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
   const { mainDataGrid } = useContext(FacturacionReporteContext);
@@ -65,7 +65,7 @@ const CalculoFacturacionReversion = () => {
       fechaDesde: null,
       fechaHasta: null,
       nroContrato: '',
-      numeroSecuenciaFacturacion: '',
+      numeroSecuenciaCalculo: '',
     },
     resolver: zodResolver(FacturacionReversionCreateSchema),
   });
@@ -77,7 +77,7 @@ const CalculoFacturacionReversion = () => {
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
-        numeroSecuenciaFacturacion: data.numeroSecuenciaFacturacion ? data.numeroSecuenciaFacturacion : undefined,
+        numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
       };
 
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -90,7 +90,7 @@ const CalculoFacturacionReversion = () => {
       confirmDialog.open({
         type: 'danger',
         title: '¿Revertir Facturación?',
-        message: `Se procederá a realizar la reversión de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaFacturacion}`,
+        message: `Se procederá a realizar la reversión de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaCalculo}`,
         async onClickYes() {
           await FacturacionRepository.revertirFacturacion(row.id)
             .then(_response => {
@@ -121,8 +121,8 @@ const CalculoFacturacionReversion = () => {
     (row: AnyValue) => {
       confirmDialog.open({
         type: 'warning',
-        title: '¿Anular Facturación?',
-        message: `Se procederá a realizar la anulación de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaFacturacion}`,
+        title: '¿Anular Cálculo Facturación?',
+        message: `Se procederá a realizar la anulación de ${row.contratos.length} contrato/s asociados al número de facturación ${row.numeroSecuenciaCalculo}`,
         async onClickYes() {
           await FacturacionRepository.anularFacturacion(row.id)
             .then(_response => {
@@ -151,7 +151,7 @@ const CalculoFacturacionReversion = () => {
 
   const handleVerLog = (row: AnyValue) => {
     const datos = row;
-    setFacturacionData(datos);
+    setCalculoFacturacionData(datos);
     setOpenModal(true);
   };
 
@@ -163,8 +163,8 @@ const CalculoFacturacionReversion = () => {
             <FormTextField
               control={control}
               disabled={isSubmitting}
-              label='Número Cálculo de Facturación'
-              name='numeroSecuenciaFacturacion'
+              label='Número Secuencia Cálculo'
+              name='numeroSecuenciaCalculo'
               type='number'
             />
           </Col>
@@ -206,7 +206,7 @@ const CalculoFacturacionReversion = () => {
         apiRef={apiRef}
         columns={[
           { ...GRID_CHECKBOX_SELECTION_COL_DEF, renderHeader: () => '', maxWidth: 50 },
-          { field: 'numeroSecuenciaFacturacion', headerName: 'Nro. Facturación' },
+          { field: 'numeroSecuenciaCalculo', headerName: 'Número Secuencia Cálculo' },
           {
             field: 'cantidadContratos',
             headerName: 'Cantidad Contratos',
@@ -214,12 +214,12 @@ const CalculoFacturacionReversion = () => {
           },
           {
             field: 'fechaEjecucion',
-            headerName: 'Fecha Facturación',
+            headerName: 'Fecha Cálculo',
             valueGetter: params => DateLib.beautifyDBString(params.value),
           },
           {
             field: 'tipoFacturacion',
-            headerName: 'Tipo Facturación',
+            headerName: 'Tipo de Cálculo',
           },
           {
             field: 'estado',
@@ -262,7 +262,7 @@ const CalculoFacturacionReversion = () => {
             ],
           },
         ]}
-        repositoryFunc={FacturacionRepository.getAllFacturasPaginated}
+        repositoryFunc={FacturacionRepository.getAllCalculosPaginated}
         checkboxSelection
         rowSelectionModel={rowSelectionModel}
         onRowSelectionModelChange={(selection: AnyValue) => {
@@ -316,8 +316,8 @@ const CalculoFacturacionReversion = () => {
           },
         ]}
       />
-      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log proceso de reversión de la facturación'>
-        <FacturacionReversionLog facturacionData={facturacionData} />
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log proceso de reversión del Cálculo'>
+        <CalculoReversionLog calculoFacturacionData={calculoFacturacionData} />
       </Modal>
       <Backdrop open={openBackdrop} />
 
