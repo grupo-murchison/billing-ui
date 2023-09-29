@@ -7,7 +7,7 @@ import { RepositoryUtils } from '@app/utils';
 import { CalculoService } from './calculo.service';
 import {
   FormDataTypeCalculoFacturacionMasiva,
-  getAllCalculoFacturacionLogSchema,
+  getAllCalculoLogSchema,
   getAllFacturasReportePaginatedSchema,
 } from './calculo.schemas';
 
@@ -72,10 +72,10 @@ class CalculoRepository {
     return response;
   };
 
-  static getFacturacionLog = async (params: AnyValue) => {
-    const response$ = from(CalculoService.getFacturacionLog(params)).pipe(
+  static getCalculoLog = async (params: AnyValue) => {
+    const response$ = from(CalculoService.getCalculoLog(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
-      RepositoryUtils.PIPES.validateWithSchema(getAllCalculoFacturacionLogSchema),
+      RepositoryUtils.PIPES.validateWithSchema(getAllCalculoLogSchema),
     );
     const response = await lastValueFrom(response$);
     return response;
