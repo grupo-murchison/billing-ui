@@ -24,6 +24,6 @@ export const CalculoFacturacionMasivaBreadcrumb: BreadcrumbItem[] = [
   { label: 'Cálculo de Facturación Masiva', path: `${CalculoFacturacionLabelAndPath.path}/masiva` },
 ];
 
-export const CalculoFacturacionLogBreadcrumb: BreadcrumbItem[] = [
+export const CalculoLogBreadcrumb: BreadcrumbItem[] = [
   { label: 'Log Cálculo de Facturación', path: `${CalculoFacturacionLabelAndPath.path}/log` },
 ];

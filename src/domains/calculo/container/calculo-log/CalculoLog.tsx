@@ -9,24 +9,24 @@ import { Col, Modal, Row } from '@app/components';
 import { withBreadcrumb } from '@app/hocs';
 
 import { CalculoRepository } from '@domains/calculo/repository';
-import { CalculoFacturacionLogBreadcrumb } from '@domains/calculo/constants';
+import { CalculoLogBreadcrumb } from '@domains/calculo/constants';
 
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
-import { CalculoFacturacionLogSchema } from '@domains/calculo/repository/calculo.schemas';
+import { CalculoLogSchema } from '@domains/calculo/repository/calculo.schemas';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { DataGrid } from '@app/components/DataGrid';
-import { FacturacionLogContext } from '@domains/calculo/contexts/calculo.log.context';
+import { CalculoLogContext } from '@domains/calculo/contexts/calculo.log.context';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleCalculoLog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomChip from '@app/components/Chip/Chip';
 
-const CalculoFacturacionLog = () => {
-  const { mainDataGrid } = useContext(FacturacionLogContext);
+const CalculoLog = () => {
+  const { mainDataGrid } = useContext(CalculoLogContext);
   const [facturacionData, setFacturacionData] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
@@ -46,7 +46,7 @@ const CalculoFacturacionLog = () => {
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(CalculoFacturacionLogSchema),
+    resolver: zodResolver(CalculoLogSchema),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -120,17 +120,17 @@ const CalculoFacturacionLog = () => {
           {
             field: 'numeroSecuenciaCalculo',
             headerName: 'Número Secuencia Cálculo',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.numeroSecuenciaCalculo || '',
+            valueGetter: ({ row }) => row?.calculoCabecera?.numeroSecuenciaCalculo || '',
           },
           {
             field: 'fechaEjecucion',
             headerName: 'Fecha Cálculo',
-            valueGetter: ({ row }) => DateLib.beautifyDBString(row?.facturacionCabecera?.fechaEjecucion) || '',
+            valueGetter: ({ row }) => DateLib.beautifyDBString(row?.calculoCabecera?.fechaEjecucion) || '',
           },
           {
             field: 'estado',
             headerName: 'Estado Cabecera',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.estado,
+            valueGetter: ({ row }) => row?.calculoCabecera?.estado,
             renderCell: params => {
               return <CustomChip estado={params.value} />;
             },
@@ -138,32 +138,32 @@ const CalculoFacturacionLog = () => {
           {
             field: 'contratoNumero',
             headerName: 'Número Contrato',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoNumero,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.contratoNumero,
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoDescripcion,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.contratoDescripcion,
           },
           {
             field: 'contratoClienteCodigo',
             headerName: 'Número de Cliente',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteCodigo,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.contratoClienteCodigo,
           },
           {
             field: 'contratoClienteDescripcion',
             headerName: 'Denominación',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.contratoClienteDescripcion,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.contratoClienteDescripcion,
           },
           {
             field: 'periodoNumero',
             headerName: 'Periodo',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.periodoNumero,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.periodoNumero,
           },
           {
             field: 'estadoContrato',
             headerName: 'Estado Contrato',
-            valueGetter: ({ row }) => row?.facturacionCabecera?.facturacionContratos[0]?.estado,
+            valueGetter: ({ row }) => row?.calculoCabecera?.calculoContratos[0]?.estado,
             renderCell: params => {
               return <CustomChip estado={params.value} />;
             },
@@ -191,7 +191,7 @@ const CalculoFacturacionLog = () => {
             ],
           },
         ]}
-        repositoryFunc={CalculoRepository.getFacturacionLog}
+        repositoryFunc={CalculoRepository.getCalculoLog}
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log Detalle'>
@@ -201,4 +201,4 @@ const CalculoFacturacionLog = () => {
   );
 };
 
-export default withBreadcrumb(CalculoFacturacionLog, CalculoFacturacionLogBreadcrumb);
+export default withBreadcrumb(CalculoLog, CalculoLogBreadcrumb);
