@@ -77,7 +77,7 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
+      <Form isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <FormTextField
@@ -99,6 +99,11 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
             <FormTextField control={control} disabled={isSubmitting} label='País' name='paisId' type='number' />
           </Col>
         </Row>
+        <Stack direction='row' justifyContent='end'>
+          <Button onClick={handleSubmit(onSubmit)} variant='contained' color='primary'>
+            Buscar
+          </Button>
+        </Stack>
       </Form>
     </Paper>
   );

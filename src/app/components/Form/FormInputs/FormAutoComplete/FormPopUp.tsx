@@ -69,6 +69,12 @@ export default function FormPopUp({
     }
   }, [open]);
 
+  React.useEffect(() => {
+    if (openModal) {
+      setOpen(false);
+    }
+  }, [openModal]);
+
   return (
     <>
       <Controller
