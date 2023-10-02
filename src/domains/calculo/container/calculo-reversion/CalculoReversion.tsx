@@ -27,7 +27,7 @@ import { CalculoFacturacionReversionBreadcrumb } from '@domains/calculo/constant
 import { DateLib } from '@libs';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { FacturacionReversionCreateSchema } from '@domains/calculo/schemas';
+import { ValidationSchemaFacturacionReversion } from '@domains/calculo/repository/schemas';
 import { CancelScheduleSendIcon, RestoreIcon, ViewIcon } from '@assets/icons';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import CalculoReversionLog from './views/CalculoReversionLog';
@@ -67,7 +67,7 @@ const CalculoReversion = () => {
       nroContrato: '',
       numeroSecuenciaCalculo: '',
     },
-    resolver: zodResolver(FacturacionReversionCreateSchema),
+    resolver: zodResolver(ValidationSchemaFacturacionReversion),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
@@ -248,7 +248,7 @@ const CalculoReversion = () => {
                 key={2}
                 icon={<CancelScheduleSendIcon />}
                 label='Anular'
-                disabled={params.row.estado === 'FACTURADO' ? false : true}
+                disabled={params.row.estado === 'CALCULADO' ? false : true}
                 onClick={() => handleAnular(params.row)}
                 showInMenu
               />,
