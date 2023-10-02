@@ -13,7 +13,7 @@ const ContratoRowDataGridSchema = z.object({
   fechaFinContrato: z.string().nullish(),
 });
 
-const ContratoFacturacionRowDataGridSchema = z.object({
+const ContratoCalcularFacturacionRowDataGridSchema = z.object({
   id: z.number(),
   cliente: z.string().nullish(),
   estado: z.string().nullish(),
@@ -25,7 +25,7 @@ const ContratoFacturacionRowDataGridSchema = z.object({
 });
 
 export const getAllContratoPaginatedSchema = ZodUtils.withPagination(ContratoRowDataGridSchema);
-export const getAllContratoFacturacionPaginated = ZodUtils.withPagination(ContratoFacturacionRowDataGridSchema);
+export const getAllContratoCalcularFacturacionPaginated = ZodUtils.withPagination(ContratoCalcularFacturacionRowDataGridSchema);
 
 export const getAllContratoAsDropdownSchema = ZodUtils.DROPDOWN_SCHEMA;
 

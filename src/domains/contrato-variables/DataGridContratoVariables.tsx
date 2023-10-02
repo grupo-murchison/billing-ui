@@ -49,27 +49,33 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
       apiRef={apiRef}
       columns={[
         {
+          field: 'id',
+          headerName: 'ID',
+          sortable: false,
+          maxWidth: 90,
+        },
+        {
           field: 'procedimientoQ.conceptoAcuerdo.descripcion',
           headerName: 'Nombre del Concepto Acuerdo',
           description: 'This column has some type value.',
           sortable: false,
-          valueGetter: (params: AnyValue) => {
-            return params.row.procedimientoQ?.conceptoAcuerdo?.descripcion || ' ';
+          valueGetter: ({ row }) => {
+            return row.procedimientoQ?.conceptoAcuerdo?.descripcion || '';
           },
         },
         {
           field: 'procedimientoQ.denominacion',
           headerName: 'Nombre Procedimiento Cantidad',
-          valueGetter: (params: AnyValue) => {
-            return params.row.procedimientoQ?.denominacion || ' ';
+          valueGetter: ({ row }) => {
+            return row.procedimientoQ?.denominacion || '';
           },
         },
         { field: 'codigo', headerName: 'Codigo Variable' },
         {
           field: 'procedimientoQ.procedimientoBuiltin.procedimientoBuiltinVariables.nombre',
           headerName: 'Nombre Variable',
-          valueGetter: (params: AnyValue) => {
-            return params.row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || ' ';
+          valueGetter: ({ row }) => {
+            return row.procedimientoQ?.procedimientoBuiltin?.procedimientoBuiltinVariables?.nombre || '';
           },
         },
         {
@@ -77,6 +83,8 @@ export const DataGridContratoVariables = ({ contratoId }: { contratoId: string |
           headerName: 'Valor',
           type: 'string',
           editable: true,
+          // renderCell:
+          // renderEditCell:
         },
       ]}
       onCellEditStop={handleCellEditStop}

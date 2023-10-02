@@ -3,7 +3,7 @@ import { from, lastValueFrom } from 'rxjs';
 import { RepositoryUtils } from '@app/utils';
 
 import { ClienteService } from '@domains/cliente/repository/cliente.service';
-import { getAllClienteAsDropdownSchema } from '@domains/cliente/repository/cliente.schemas';
+import { getAllClienteAsDropdownSchema, getAllClientePaginated } from '@domains/cliente/repository/cliente.schemas';
 
 class ClienteRepository {
   static getAllClienteAsDropdown = async () => {
@@ -26,6 +26,15 @@ class ClienteRepository {
 
   static getClienteById = async (id: string) => {
     const response$ = from(ClienteService.getById(id)).pipe(RepositoryUtils.PIPES.getResponse());
+    const response = await lastValueFrom(response$);
+    return response;
+  };
+
+  static getAllClienteByFilters = async (params: AnyValue) => {
+    const response$ = from(ClienteService.getAllByFilters(params)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      RepositoryUtils.PIPES.validateWithSchema(getAllClientePaginated),
+    );
     const response = await lastValueFrom(response$);
     return response;
   };

@@ -6,10 +6,10 @@ import { SxProps } from '@mui/material/styles';
 
 import { IconRender } from './components';
 import { IMenuItem } from '../interfaces/menu-items.interface';
-import { useSidebarContext } from '../context/useSidebarContext';
+import { useLayoutContext } from '../context/useLayoutContext';
 
 function MenuItem({ menuItem, level }: MenuItemProps) {
-  const { isActive, toogleActiveMenu } = useSidebarContext();
+  const { isActive, toogleActiveMenu } = useLayoutContext();
 
   // const matchesSM = useMediaQuery(theme.breakpoints.down('lg'));
 
@@ -39,7 +39,7 @@ function MenuItem({ menuItem, level }: MenuItemProps) {
   return (
     <>
       <ListItemButton {...listItemProps} disabled={menuItem?.disabled} selected={isSelected} onClick={handleClick}>
-        <ListItemIcon>
+        <ListItemIcon sx={{ mr: '-1rem' }}>
           <IconRender icon={menuItem?.icon} level={level && level} isSelected={isSelected} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title || 'Generic Title'} sx={{ whiteSpace: 'normal' }} />

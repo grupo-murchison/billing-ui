@@ -57,7 +57,7 @@ const ContratoEdit = () => {
     watch,
     control,
     resetField,
-    formState: { isSubmitting, dirtyFields, errors },
+    formState: { isSubmitting, dirtyFields, errors: formErrors },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
       clienteId: '',
@@ -72,6 +72,7 @@ const ContratoEdit = () => {
       sociedadId: '',
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
+      // contratoVariables: [],
     },
     resolver: zodResolver(
       ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
@@ -85,6 +86,8 @@ const ContratoEdit = () => {
       }),
     ),
   });
+
+  console.log('formErrors', formErrors);
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
@@ -126,6 +129,7 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: planFacturacion?.diaPeriodo || '',
         pausado: planFacturacion?.pausado,
+        // contratoVariables: contrato.contratoVariables,
       });
       setPeriodos(planFacturacion?.periodos);
       setBackUpModeloAcuerdo(modeloAcuerdo);

@@ -32,6 +32,13 @@ const ProcedimientoPSIntervaloEdit = () => {
     control,
     formState: { isSubmitting },
   } = useForm<ProcedimientoPSIntervaloEditSchemaType>({
+    defaultValues: {
+      procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
+      valorInicial: 1,
+      valorFinal: 9999999,
+      productoSoftlandId: '',
+      intervalo: '',
+    },
     resolver: zodResolver(ProcedimientoPSIntervaloEditSchema),
   });
 
@@ -75,6 +82,8 @@ const ProcedimientoPSIntervaloEdit = () => {
               fullWidth
             />
           </Col>
+        </Row>
+        <Row>
           <Col md={6}>
             <FormTextField
               control={control}
@@ -85,8 +94,6 @@ const ProcedimientoPSIntervaloEdit = () => {
               fullWidth
             />
           </Col>
-        </Row>
-        <Row>
           <Col md={6}>
             <FormTextField
               control={control}
@@ -97,7 +104,9 @@ const ProcedimientoPSIntervaloEdit = () => {
               fullWidth
             />
           </Col>
-          <Col md={6}>
+        </Row>
+        <Row>
+          <Col md={12}>
             <ProductoSoftlandDropdown
               control={control}
               name='productoSoftlandId'

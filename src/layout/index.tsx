@@ -3,16 +3,16 @@ import Box from '@mui/material/Box/Box';
 import Navbar from './AppNavbar';
 import Sidebar from './AppSidebar';
 import Main from './AppMain';
-import SidebarProvider from './context/SidebarProvider';
+import LayoutProvider from './context/LayoutProvider';
 
 function MainLayout({ children }: { children?: ReactNode }) {
   return (
     <>
       <Box sx={{ display: 'flex' }}>
-        <SidebarProvider>
+        <LayoutProvider>
           <Navbar />
           <Sidebar />
-        </SidebarProvider>
+        </LayoutProvider>
         <Main>{children}</Main>
       </Box>
     </>

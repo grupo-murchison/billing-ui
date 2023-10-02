@@ -5,7 +5,7 @@ import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
-import { useSidebarContext } from './context/useSidebarContext';
+import { useLayoutContext } from './context/useLayoutContext';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -22,7 +22,7 @@ const AppBar = styled(MuiAppBar, {
 
 const Navbar = () => {
   const theme = useTheme();
-  const { toogleSidebar } = useSidebarContext();
+  const { toogleSidebar } = useLayoutContext();
 
   return (
     <AppBar position='fixed'>
