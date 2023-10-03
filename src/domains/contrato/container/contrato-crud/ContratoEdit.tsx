@@ -87,7 +87,6 @@ const ContratoEdit = () => {
     ),
   });
 
-  console.log('formErrors', formErrors);
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
@@ -350,7 +349,7 @@ const labelsAndComps = [
             }
           />
 
-          <TabLayout options={labelsAndComps} error={errors} ></TabLayout>
+          <TabLayout options={labelsAndComps} error={formErrors} ></TabLayout>
 
 
           {/* <DivisorProvisorio label='Datos Generales' /> */}

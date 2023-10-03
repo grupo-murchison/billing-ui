@@ -19,8 +19,9 @@ const TabLayout = ({options, error}: TabPros) => {
   const [tabValue, setTabValue] = useState(0);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
     setTabValue(newValue);
+    console.log(Object.keys(error).length > 0 ?  error : 'nada')
+    
   };
-  // console.log(error ?  error : 'nada')
 
   
 
@@ -37,14 +38,14 @@ const TabLayout = ({options, error}: TabPros) => {
       {
         options.map((el:labelAndComponent,index:number) => {
           const {  ...rest } = el;
-          return <Tab value={index} key={index} label={el.title} {...rest} onChange={()=> console.log(error)}/> 
+          return <Tab value={index} key={index} label={el.title} {...rest}/> 
         })
       }
       </Tabs>
       {
         options.map((el:labelAndComponent,index:number) => {
           return (
-            <TabPanel value={tabValue} key={index} index={index}>
+            <TabPanel value={tabValue} key={index} index={index} >
               {`Panel ${el.title}`}
               {el.renderelement}
             </TabPanel>
