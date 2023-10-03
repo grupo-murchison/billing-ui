@@ -3,15 +3,15 @@ import Form from '@app/components/Form/Form';
 import { Button, Paper, Stack } from '@mui/material';
 import { ClienteRepository } from '@domains/cliente/repository';
 import { DataGrid } from '@app/components/DataGrid';
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
 
-import { ClienteContext } from '@domains/cliente/contexts/cliente.context';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useDataGrid } from '@app/hooks';
 
 const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: AnyValue) => {
-  const { mainDataGrid } = useContext(ClienteContext);
+  const mainDataGrid = useDataGrid();
 
   useEffect(() => {
     mainDataGrid.load();

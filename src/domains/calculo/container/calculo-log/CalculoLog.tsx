@@ -27,7 +27,7 @@ import CustomChip from '@app/components/Chip/Chip';
 
 const CalculoLog = () => {
   const { mainDataGrid } = useContext(CalculoLogContext);
-  const [facturacionData, setFacturacionData] = useState({});
+  const [calculoData, setCalculoData] = useState({});
   const [openModal, setOpenModal] = useState(false);
 
   useEffect(() => {
@@ -65,7 +65,7 @@ const CalculoLog = () => {
 
   const onClickAbrirLogDetalle = (row: AnyValue) => {
     const datos = row;
-    setFacturacionData(datos);
+    setCalculoData(datos);
     setOpenModal(true);
   };
 
@@ -195,7 +195,7 @@ const CalculoLog = () => {
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Log Detalle'>
-        <DetalleFacturacionLog facturacionData={facturacionData} />
+        <DetalleFacturacionLog calculoData={calculoData} />
       </Modal>
     </>
   );

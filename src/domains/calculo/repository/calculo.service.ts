@@ -17,21 +17,6 @@ class CalculoService {
     return [response, error];
   };
 
-  static calculoFacturacionManual = async (contratoId: number): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(
-      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/facturacion/manual`, { contratoId: contratoId }),
-    );
-
-    return [response, error];
-  };
-
-  static calculoFacturacionMasiva = async (data: FormDataTypeCalculoFacturacionMasiva): Promise<HandlePromise> => {
-    const [response, error] = await AxiosUtils.handleResponse(
-      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/facturacion/automatica`, data),
-    );
-    return [response, error];
-  };
-
   /**
    * Campo id de la tabla calculo_contrato_concepto
    * @param calculoContratoConceptoId
@@ -71,6 +56,28 @@ class CalculoService {
       ApiProvider.get<AnyValue>(`${BASE_PATH}/anular/${calculoContratoId}`),
     );
 
+    return [response, error];
+  };
+
+  static getAllEventDetails = async (params: AnyValue): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/eventosByFilter`, { params }),
+    );
+    return [response, error];
+  };
+
+  static calculoFacturacionManual = async (contratoId: number): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/manual`, { contratoId: contratoId }),
+    );
+
+    return [response, error];
+  };
+
+  static calculoFacturacionMasiva = async (data: FormDataTypeCalculoFacturacionMasiva): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/automatica`, data),
+    );
     return [response, error];
   };
 

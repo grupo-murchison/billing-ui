@@ -8,8 +8,8 @@ import { CalculoReversion } from '@domains/calculo/container/calculo-reversion';
 import { EventoClientes } from '../../evento-cliente/container/index';
 import { CalculoMasiva } from '@domains/calculo/container/calculo-masiva';
 import { CalculoLog } from '../container/calculo-log';
-import { EventosServicios } from '@domains/evento-servicio/container';
-import { EventosServiciosProvider } from '@domains/evento-servicio/contexts/eventos.servicios.context';
+import { EventosServicios } from '@domains/calculo/container/eventos-servicio/container';
+import { EventosServiciosProvider } from '@domains/calculo/container/eventos-servicio/contexts/eventos.servicios.context';
 
 const CalculoRoutes = () => {
   return (

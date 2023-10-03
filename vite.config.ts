@@ -8,7 +8,7 @@ export default defineConfig(({ mode }) => {
   const env = loadEnv(mode, process.cwd(), '');
 
   return {
-    envDir:'./env',
+    envDir: './env',
     server: {
       host: '0.0.0.0',
       port: 8080,
@@ -21,6 +21,9 @@ export default defineConfig(({ mode }) => {
           secure: false,
           xfwd: true,
         },
+      },
+      hmr: {
+        overlay: false,
       },
     },
     plugins: [react(), tsconfigPaths(), eslint()],
