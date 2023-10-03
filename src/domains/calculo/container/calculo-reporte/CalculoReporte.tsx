@@ -22,7 +22,7 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
-import { CalculoReporteFilterSchema } from '@domains/calculo/schemas';
+import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repository/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
@@ -52,7 +52,7 @@ const CalculoReporte = () => {
       nroContrato: '',
       numeroSecuenciaCalculo: '',
     },
-    resolver: zodResolver(CalculoReporteFilterSchema),
+    resolver: zodResolver(ValidationSchemaCalculoReporteFilter),
   });
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(

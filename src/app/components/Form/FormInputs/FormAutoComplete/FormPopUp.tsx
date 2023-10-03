@@ -9,7 +9,6 @@ import { AxiosResponse } from 'axios';
 import { Box } from '@mui/material';
 import { Modal } from '@app/components/Modal';
 import ClienteAdvancedSearch from '@domains/cliente/container/cliente-dropdown/ClienteAdvancedSearch';
-import { ClienteProvider } from '@domains/cliente/contexts/cliente.context';
 
 export default function FormPopUp({
   options: optionsProps,
@@ -113,17 +112,15 @@ export default function FormPopUp({
         )}
       />
 
-      <ClienteProvider>
-        <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Búsqueda amplia Clientes'>
-          <ClienteAdvancedSearch
-            setInputValue={setInputValue}
-            setOpenModal={setOpenModal}
-            setOptions={setOptions}
-            resetField={resetField}
-            name={name}
-          />
-        </Modal>
-      </ClienteProvider>
+      <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Búsqueda amplia Clientes'>
+        <ClienteAdvancedSearch
+          setInputValue={setInputValue}
+          setOpenModal={setOpenModal}
+          setOptions={setOptions}
+          resetField={resetField}
+          name={name}
+        />
+      </Modal>
     </>
   );
 }

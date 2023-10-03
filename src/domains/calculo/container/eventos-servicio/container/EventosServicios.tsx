@@ -13,9 +13,9 @@ import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
-import { EventoServicioRepository } from '../repository';
+import { CalculoRepository } from '@domains/calculo/repository';
 import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
-import { EventosServicioCreateSchema, EventosServicioFormSchemaType } from '../schemas';
+import { ValidationSchemaEventosServicioFilters, EventosServicioFormSchemaType } from '../../../repository/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
@@ -40,7 +40,7 @@ const EventoServicio = () => {
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(EventosServicioCreateSchema),    
+    resolver: zodResolver(ValidationSchemaEventosServicioFilters),    
   });
 
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
@@ -148,7 +148,7 @@ const EventoServicio = () => {
               params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
           },
         ]}
-        repositoryFunc={EventoServicioRepository.getAllEventDetails}
+        repositoryFunc={CalculoRepository.getAllEventDetails}
       />
     </>
   );

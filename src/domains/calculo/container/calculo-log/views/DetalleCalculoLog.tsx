@@ -3,7 +3,7 @@ import Form from '@app/components/Form/Form';
 import { TextField } from '@mui/material';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 
-const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue }) => {
+const DetalleFacturacionLog = ({ calculoData }: { calculoData: AnyValue }) => {
   return (
     <>
       <Form>
@@ -12,7 +12,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
             <TextField
               id='contratoDescripcion'
               label='Descripción Contrato'
-              defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoClienteCodigo}
+              defaultValue={calculoData.calculoCabecera.calculoContratos[0].contratoClienteCodigo}
               fullWidth
               InputProps={{ readOnly: true }}
             />
@@ -21,7 +21,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
             <TextField
               id='contratoClienteCodigo'
               label='Número de Cliente'
-              defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoClienteDescripcion}
+              defaultValue={calculoData.calculoCabecera.calculoContratos[0].contratoClienteDescripcion}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -32,7 +32,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
             <TextField
               id='contratoNumero'
               label='Número Contrato'
-              defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoNumero}
+              defaultValue={calculoData.calculoCabecera.calculoContratos[0].contratoNumero}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -41,7 +41,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
             <TextField
               id='contratoDescripcion'
               label='Descripción Contrato'
-              defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].contratoDescripcion}
+              defaultValue={calculoData.calculoCabecera.calculoContratos[0].contratoDescripcion}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -52,7 +52,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
             <TextField
               id='periodoNumero'
               label='Periodo'
-              defaultValue={facturacionData.facturacionCabecera.facturacionContratos[0].periodoNumero}
+              defaultValue={calculoData.calculoCabecera.calculoContratos[0].periodoNumero}
               InputProps={{ readOnly: true }}
               fullWidth
             />
@@ -60,7 +60,7 @@ const DetalleFacturacionLog = ({ facturacionData }: { facturacionData: AnyValue 
         </Row>
       </Form>
       <DataGridBase
-        rows={facturacionData.detalles}
+        rows={calculoData.detalles}
         columns={[
           {
             field: 'tipoMensajeLog',
