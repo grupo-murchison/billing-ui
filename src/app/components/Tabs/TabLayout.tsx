@@ -25,9 +25,6 @@ const TabLayout = ({options}: TabPros) => {
   return (
     <>
       <Tabs value={tabValue} onChange={handleChangeTab}
-        TabIndicatorProps={{
-          style: {backgroundColor: "#D97D54"}
-        }}
         scrollButtons
         allowScrollButtonsMobile
         variant="scrollable"

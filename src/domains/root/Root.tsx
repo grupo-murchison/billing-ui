@@ -1,7 +1,5 @@
 import { withBreadcrumb } from '@app/hocs';
-
 function RootLayout() {
-
-  return (<></>);
+  return <></>;
 }
 export default withBreadcrumb(RootLayout);
