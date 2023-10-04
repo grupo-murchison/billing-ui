@@ -1,25 +1,27 @@
 import { Col, Row } from '@app/components';
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { DateLib } from '@libs';
 import { Paper } from '@mui/material';
 import { useCallback, useContext, useEffect } from 'react';
 
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { ClienteEventosContext } from '../../calculo/contexts';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { withBreadcrumb } from '@app/hocs';
-import { ClienteEventosBreadcrumb } from '@domains/calculo/constants';
-import { EventoClienteRepository } from '../repository';
-import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
-import { EventosClientesCreateSchema } from '../schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
+import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
+import { CalculoRepository } from '@domains/calculo/repository';
+import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
+import { ValidationSchemaEventosServicioFilters, EventosServicioFormSchemaType } from '../../../repository/schemas';
 
-const EventoClientes = () => {
-  const { mainDataGrid } = useContext(ClienteEventosContext);
+import { zodResolver } from '@hookform/resolvers/zod';
+import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
+
+const EventoServicio = () => {
+  const { mainDataGrid } = useContext(EventosServiciosContext);
 
   useEffect(() => {
     mainDataGrid.load();
@@ -31,25 +33,27 @@ const EventoClientes = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
+      numeroSecuenciaCalculo: '',
       clienteId: { value: '', code: '', label: '' },
+      contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
+      conceptoAcuerdoId: { value: '',  label: '' },
       fechaDesde: null,
       fechaHasta: null,
-      eventoId: [],
     },
-    resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: zodResolver(ValidationSchemaEventosServicioFilters),    
   });
 
-  const onSubmit: SubmitHandler<AnyValue> = useCallback(
+  const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
     async data => {
-      const eventosIds = data.eventoId.map((evento: AnyValue) => {
-        return evento.value;
-      });
       const filters = {
+        numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
+        nroContato: data.contrato ? data.contrato : undefined,
+        conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventoId: data.eventoId ? [...eventosIds] : undefined,
       };
+
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
@@ -60,10 +64,18 @@ const EventoClientes = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
+            <FormTextField control={control} label='Número Secuencia Calculo' name='numeroSecuenciaCalculo' disabled={isSubmitting} type='number'/>
           </Col>
           <Col sm={12} md={6}>
-            <EventosDropdownAutoComplete control={control} disabled={isSubmitting} label='Evento' name='eventoId' />
+            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
+          </Col>
+        </Row>
+        <Row>
+          <Col sm={12} md={6}>
+            <FormTextField control={control} disabled={isSubmitting} label='Número Contrato' name='contrato' />
+          </Col>
+          <Col sm={12} md={6}>
+            <ConcepoAcuerdoAutoComplete  control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
           </Col>
         </Row>
         <Row>
@@ -88,15 +100,13 @@ const EventoClientes = () => {
     </Paper>
   );
 
-  // const toolbarAdicionales = () => <>Custom Tollbar Cliente</>;
-
   return (
     <>
       {toolbar}
+
       <DataGrid
-        name='Eventos Del Cliente'
         hookRef={mainDataGrid.ref}
-        onClickNew={() => console.log('Click New')}
+        name='Eventos Por Servicio'
         columns={[
           { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115 },
           { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
@@ -104,7 +114,8 @@ const EventoClientes = () => {
             field: 'genEventoFechaCreacion',
             headerName: 'Fecha Creacion Evento',
             minWidth: 125,
-            valueGetter: params => (params?.value ? DateLib.beautifyDBString(params?.value.slice(0, 8)) : ''),
+            valueGetter: params =>
+              params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
           },
           { field: 'genCompania', headerName: 'Compania', minWidth: 100 },
           { field: 'genSistema', headerName: 'Sistema', minWidth: 80 },
@@ -118,30 +129,29 @@ const EventoClientes = () => {
           { field: 'evCantidadLitros', headerName: 'Cantidad Litros', minWidth: 125 },
           { field: 'evTipoCombustible', headerName: 'Tipo Combustible', minWidth: 135 },
           { field: 'evConcesionario', headerName: 'Concesionario', minWidth: 125 },
-          { field: 'evModelo', headerName: 'Modelo', minWidth: 180 },
           { field: 'evDaño', headerName: 'Daño', minWidth: 115 },
           { field: 'evTipoDaño', headerName: 'Tipo Daño', minWidth: 115 },
           { field: 'evCategorizacion', headerName: 'Categorizacion', minWidth: 130 },
+          { field: 'evModelo', headerName: 'Modelo', minWidth: 130  },
           { field: 'evPieza', headerName: 'Pieza', minWidth: 100 },
           { field: 'evEstado', headerName: 'Estado', minWidth: 115 },
           { field: 'evDUA', headerName: 'DUA', minWidth: 115 },
           { field: 'evTipoEmbarque', headerName: 'Tipo Embarque', minWidth: 130 },
           { field: 'evColor', headerName: 'Color', minWidth: 130 },
-          { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135 },
+          { field: 'evDimension', headerName: 'Dimension', minWidth: 130 },
+          { field: 'id', headerName: 'Identificador Evento', minWidth: 135 },
           {
             field: 'genEventoFechaEnvio',
             headerName: 'Fecha Envio Evento',
-            minWidth: 160,
+            minWidth: 135,
             valueGetter: params =>
               params?.value ? DateLib.fromFormatToFormat(params?.value, 'yyyyMMddHHmmss', 'yyyy-MM-dd HH:mm:ss') : '',
           },
         ]}
-        repositoryFunc={EventoClienteRepository.getAllEventDetails}
-        // toolbar={toolbarAdicionales}
-        // getRows={rows => console.log('rows', rows) }
+        repositoryFunc={CalculoRepository.getAllEventDetails}
       />
     </>
   );
 };
 
-export default withBreadcrumb(EventoClientes, ClienteEventosBreadcrumb);
+export default withBreadcrumb(EventoServicio, EventosServiciosBreadcrumb);
