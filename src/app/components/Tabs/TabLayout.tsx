@@ -1,29 +1,26 @@
 import { useState } from 'react';
+import Tab from '@app/components/Tabs/Tab';
 import Tabs from '@app/components/Tabs/Tabs';
 import TabPanel from '@app/components/Tabs/TabPanel';
-import { Tab, TabProps as TabsPropsMui } from '@mui/material';
+import { TabProps as TabsPropsMui } from '@mui/material';
 
-interface labelAndComponent extends TabsPropsMui {
-  title: string;
+interface optionsTabLayout extends TabsPropsMui {
+  label: string;
   renderelement: JSX.Element
+  isError?: boolean
   rest?: TabsPropsMui
 }
 
 type TabPros = {
-  options: labelAndComponent[]
-  error?: AnyValue
+  options: optionsTabLayout[]
 }
 
 
-const TabLayout = ({options, error}: TabPros) => {
+const TabLayout = ({options}: TabPros) => {
   const [tabValue, setTabValue] = useState(0);
   const handleChangeTab = (event: React.SyntheticEvent, newValue: number) => {
-    setTabValue(newValue);
-    console.log(Object.keys(error).length > 0 ?  error : 'nada')
-    
+    setTabValue(newValue);    
   };
-
-  
 
   return (
     <>
@@ -36,17 +33,17 @@ const TabLayout = ({options, error}: TabPros) => {
         variant="scrollable"
         >
       {
-        options.map((el:labelAndComponent,index:number) => {
+        options.map((el:optionsTabLayout,index:number) => {
           const {  ...rest } = el;
-          return <Tab value={index} key={index} label={el.title} {...rest}/> 
+          return <Tab key={index} value={index}  {...rest} isError={el?.isError}/> 
         })
       }
       </Tabs>
       {
-        options.map((el:labelAndComponent,index:number) => {
+        options.map((el:optionsTabLayout,index:number) => {
           return (
             <TabPanel value={tabValue} key={index} index={index} >
-              {`Panel ${el.title}`}
+              {`Panel ${el.label}`}
               {el.renderelement}
             </TabPanel>
           )
