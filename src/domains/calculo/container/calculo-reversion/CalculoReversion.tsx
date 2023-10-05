@@ -103,7 +103,7 @@ const CalculoReversion = () => {
             })
             .catch(error => {
               setErrorFromBackEnd(true);
-              setSnackbarMessage('Ocurrió un error!');
+              setSnackbarMessage(`Ocurrió un error!${error}`);
             })
             .finally(() => {
               setOpenBackdrop(false);
@@ -135,7 +135,7 @@ const CalculoReversion = () => {
             })
             .catch(error => {
               setErrorFromBackEnd(true);
-              setSnackbarMessage('Ocurrió un error!');
+              setSnackbarMessage(`Ocurrió un error! ${error}`);
             })
             .finally(() => {
               setOpenBackdrop(false);
