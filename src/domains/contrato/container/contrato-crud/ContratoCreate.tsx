@@ -6,7 +6,6 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Typography, Card, CardContent, CardHeader } from '@mui/material';
 
 import { Row, Col } from '@app/components';
-import { DivisorProvisorio } from '@app/components/Divider';
 import { JSONObject, JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
@@ -36,6 +35,7 @@ import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
+import TabLayout from '@app/components/Tabs/TabLayout';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -52,7 +52,7 @@ const ContratoCreate = () => {
     watch,
     control,
     resetField,
-    formState: { isSubmitting },
+    formState: { isSubmitting, errors: formErrors },
   } = useForm<FormDataTypeContratoCreate>({
     defaultValues: {
       clienteId: '',
@@ -229,6 +229,17 @@ const ContratoCreate = () => {
     </CardContent>
   );
 
+  const formHeaderFields = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId']
+  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato']
+  const planFacturacionFields = ['tipoPlanFacturacionId', 'reglaFechaPeriodoId']
+
+  const tabLayoutOptions = [
+    { label: 'Datos Generales', renderelement: formHeader, formFields: formHeaderFields, formErrors: formErrors },
+    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
+    { label: 'Plan Facturación', renderelement: planFacturacion, formFields: planFacturacionFields, formErrors: formErrors }
+  ]
+
+
   return (
     <>
       <Card sx={{ p: 3 }}>
@@ -240,18 +251,7 @@ const ContratoCreate = () => {
               </Typography>
             }
           />
-
-          <DivisorProvisorio label='Datos Generales' />
-
-          {formHeader}
-
-          <DivisorProvisorio label='Datos Contractuales' />
-
-          {datosContractuales}
-
-          <DivisorProvisorio label='Plan Facturación' />
-
-          {planFacturacion}
+          <TabLayout options={tabLayoutOptions} />
         </Form>
       </Card>
     </>

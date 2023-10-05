@@ -60,9 +60,11 @@ const ContratoDataGrid = () => {
               }
             })
             .catch(error => {
+              setErrorFromBackEnd(true)
               setToastMessage(error.message || 'Ocurrió un error inesperado.');
             })
             .finally(() => {
+              setErrorFromBackEnd(false)
               setOpenToast(true);
               confirmDialog.close();
               mainDataGrid.reload();

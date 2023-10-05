@@ -24,7 +24,7 @@ import { DateLib } from '@libs';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repository/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
+import { downloadPdfAxios } from '@app/utils/axios.util';
 // import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 import Toast from '@app/components/Toast/Toast';
 
