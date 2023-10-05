@@ -36,7 +36,6 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import TabLayout from '@app/components/Tabs/TabLayout';
-import { handleIsError } from '@app/components/DataGrid/helpers';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -235,9 +234,9 @@ const ContratoCreate = () => {
   const planFacturacionFields = ['tipoPlanFacturacionId', 'reglaFechaPeriodoId']
 
   const tabLayoutOptions = [
-    { label: 'Datos Generales', renderelement: formHeader, isError: handleIsError(formHeaderFields, formErrors) },
-    { label: 'Datos Contractuales', renderelement: datosContractuales, isError: handleIsError(datosContractualesFields, formErrors) },
-    { label: 'Plan Facturación', renderelement: planFacturacion, isError: handleIsError(planFacturacionFields, formErrors) }
+    { label: 'Datos Generales', renderelement: formHeader, formFields: formHeaderFields, formErrors: formErrors },
+    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
+    { label: 'Plan Facturación', renderelement: planFacturacion, formFields: planFacturacionFields, formErrors: formErrors }
   ]
 
 

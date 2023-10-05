@@ -38,20 +38,3 @@ export const pageSizeOptionsResolver = (
 
   return { pageSizeOptions: _pageSizeOptions, pageSize };
 };
-
-/**
- * Devuelve boolean para TabLayout. Revisa si hay un form error dentro de los formsFields
- * @param formFields
- * @param formErrors
- */
-export const handleIsError = (formFields: AnyValue, formErrors: AnyValue) => {
-  const keysOfErrors = Object.keys(formErrors);
-  const auxilarArray = [];
-
-  for (const fieldOfForm of formFields) {
-    const hasError = keysOfErrors.includes(fieldOfForm);
-    auxilarArray.push(hasError);
-  }
-  const result = auxilarArray.filter(el => el == true);
-  return result.length > 0 ? true : false;
-};

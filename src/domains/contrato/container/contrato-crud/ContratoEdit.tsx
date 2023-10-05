@@ -37,7 +37,6 @@ import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
 import TabLayout from '@app/components/Tabs/TabLayout';
-import { handleIsError } from '@app/components/DataGrid/helpers';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -334,10 +333,10 @@ const ContratoEdit = () => {
   const planFacturacionFields = ['pausado']
 
   const tabLayoutOptions = [
-    { label: 'Datos Generales', renderelement: formHeader, isError: handleIsError(datosGeneralesIsError, formErrors) },
-    { label: 'Datos Contractuales', renderelement: datosContractuales, isError: handleIsError(datosContractualesFields, formErrors) },
+    { label: 'Datos Generales', renderelement: formHeader, formFields: datosGeneralesIsError, formErrors: formErrors },
+    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
     { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
-    { label: 'Plan Facturación', renderelement: planFac, isError: handleIsError(planFacturacionFields, formErrors) },
+    { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
     { label: 'Variables Contrato', renderelement: varContr },
     { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
   ]
