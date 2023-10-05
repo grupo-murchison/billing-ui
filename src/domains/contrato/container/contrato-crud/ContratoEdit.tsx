@@ -8,7 +8,6 @@ import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/mate
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
 // import { JsonViewerProvisorio } from '@app/components/JsonTree';
-import { DivisorProvisorio } from '@app/components/Divider';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
@@ -164,18 +163,18 @@ const ContratoEdit = () => {
   const formHeader = (
     <CardContent>
       {/* <CardContent> */}
-            <Row>
-              <Col md={4}>
-                <FormTextField
-                  control={control}
-                  name='nroContrato'
-                  label='Nro. Contrato'
-                  InputProps={{ readOnly: true }}
-                  type='string'
-                />
-              </Col>
-            </Row>
-          {/* </CardContent> */}
+      <Row>
+        <Col md={4}>
+          <FormTextField
+            control={control}
+            name='nroContrato'
+            label='Nro. Contrato'
+            InputProps={{ readOnly: true }}
+            type='string'
+          />
+        </Col>
+      </Row>
+      {/* </CardContent> */}
 
       <Row>
         <Col md={6}>
@@ -303,59 +302,43 @@ const ContratoEdit = () => {
 
   const planFac = (
     <>
-    {planFacturacion}
+      {planFacturacion}
 
-    <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-      <Box style={{ width: '100%' }}>
-        <DataGridPlanFacturacion rows={periodos || []} />
-      </Box>
-    </Stack>
+      <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+        <Box style={{ width: '100%' }}>
+          <DataGridPlanFacturacion rows={periodos || []} />
+        </Box>
+      </Stack>
     </>
   )
 
   const varContr = (
     <>
       <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-          <Box style={{ width: '100%' }}>
-            <DataGridContratoVariables contratoId={contratoId} />
+        <Box style={{ width: '100%' }}>
+          <DataGridContratoVariables contratoId={contratoId} />
         </Box>
       </Stack>
     </>
   )
   const resumenPosicion = (
     <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-    <Box style={{ width: '100%' }}>
-      <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
-    </Box></Stack>
+      <Box style={{ width: '100%' }}>
+        <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
+      </Box></Stack>
   )
 
-// funcion que devuelve boolean si contiene o no error
-  const handleIsError = (
-      formFields: AnyValue,
-      formErrors: AnyValue
-    ) => {
-    const keysOfErrors = Object.keys(formErrors)
-    const auxilarArray = []
-
-    for (const fieldOfForm of formFields) {
-      const hasError = keysOfErrors.includes(fieldOfForm)
-      auxilarArray.push(hasError)
-    }
-    const result = auxilarArray.filter((el) => el == true)
-    return result.length > 0 ? true : false
-  }
-
-  const datosGeneralesIsError = [ 'clienteId',  'sociedadId',  'modeloAcuerdoId', 'tipoContratoId']
-  const datosContractualesFields = [ 'descripcion',  'fechaInicioContrato',  'fechaFinContrato']
-  const planFacturacionFields = [ 'pausado' ]
+  const datosGeneralesIsError = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId']
+  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato']
+  const planFacturacionFields = ['pausado']
 
   const tabLayoutOptions = [
-    {label:'Datos Generales', renderelement: formHeader, isError:handleIsError(datosGeneralesIsError, formErrors) },
-    {label:'Datos Contractuales', renderelement: datosContractuales, isError:handleIsError(datosContractualesFields, formErrors)},
-    {label:'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion},
-    {label:'Plan Facturación', renderelement: planFac, isError:handleIsError(planFacturacionFields, formErrors)},
-    {label:'Variables Contrato', renderelement: varContr},
-    {label:'Interlocutores', renderelement: interlocutores, disabled:true},
+    { label: 'Datos Generales', renderelement: formHeader, formFields: datosGeneralesIsError, formErrors: formErrors },
+    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
+    { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
+    { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
+    { label: 'Variables Contrato', renderelement: varContr },
+    { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
   ]
 
   return (
