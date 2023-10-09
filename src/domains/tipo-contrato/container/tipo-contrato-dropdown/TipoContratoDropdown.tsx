@@ -20,7 +20,7 @@ const TipoContratoDropdown = ({ ...props }: TipoContratoDropdownProps) => {
       });
   }, []);
 
-  return <FormSelect {...props} options={items} />;
+  return <FormSelect  {...props} options={items} />;
 };
 
 const TipoContratoDropdownAutoComplete = ({ ...props }: TipoContratoDropdownProps) => {

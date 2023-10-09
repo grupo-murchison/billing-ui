@@ -24,8 +24,10 @@ import { DateLib } from '@libs';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repository/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { blobToJSON, downloadPdfAxios } from '@app/utils/axios.util';
-import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
+import { downloadPdfAxios } from '@app/utils/axios.util';
+// import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
+import Toast from '@app/components/Toast/Toast';
+
 
 const CalculoReporte = () => {
   // const _navigate = useNavigate();
@@ -34,6 +36,17 @@ const CalculoReporte = () => {
   const [calculoContratoId, setCalculoContratoId] = useState<AnyValue>(null);
   const [periodo, setPeriodo] = useState<AnyValue>();
   const { mainDataGrid } = useContext(CalculoReporteContext);
+  const [toastMessage, setToastMessage] = useState('Datos enviados');
+  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
+  const [openToast, setOpenToast] = useState(false);
+
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenToast(false);
+  };
+
 
   useEffect(() => {
     mainDataGrid.load();
@@ -85,14 +98,10 @@ const CalculoReporte = () => {
         downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaCalculo}.pdf`);
       })
       .catch(async error => {
-        if (!error.response) {
-          console.log('Error desconocido:');
-          console.log(error);
-        } else {
-          const response = await blobToJSON(error.response.data);
-          console.log('Error blob:');
-          console.log(response);
-        }
+        setErrorFromBackEnd(true);
+        setToastMessage(error?.message || 'Ocurrió un error!');
+      }).finally(() => {
+        setOpenToast(true);
       });
   };
 
@@ -264,6 +273,9 @@ const CalculoReporte = () => {
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Detalle Cálculo'>
         <DetalleCalculo periodo={periodo} calculoContratoId={calculoContratoId} />
       </Modal>
+
+      <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
+
     </>
   );
 };

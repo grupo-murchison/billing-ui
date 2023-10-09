@@ -8,7 +8,6 @@ import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/mate
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
 // import { JsonViewerProvisorio } from '@app/components/JsonTree';
-import { DivisorProvisorio } from '@app/components/Divider';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { ContratoContext } from '@domains/contrato/contexts';
@@ -37,6 +36,7 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
+import TabLayout from '@app/components/Tabs/TabLayout';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -86,7 +86,6 @@ const ContratoEdit = () => {
     ),
   });
 
-  console.log('formErrors', formErrors);
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
@@ -163,6 +162,20 @@ const ContratoEdit = () => {
 
   const formHeader = (
     <CardContent>
+      {/* <CardContent> */}
+      <Row>
+        <Col md={4}>
+          <FormTextField
+            control={control}
+            name='nroContrato'
+            label='Nro. Contrato'
+            InputProps={{ readOnly: true }}
+            type='string'
+          />
+        </Col>
+      </Row>
+      {/* </CardContent> */}
+
       <Row>
         <Col md={6}>
           <ClienteDropdown name='clienteId' label='Cliente' control={control} disabled={isSubmitting} />
@@ -286,6 +299,48 @@ const ContratoEdit = () => {
 
   const interlocutores = <AlertInProgress message='Próximamente, aquí estará sección "Interlocutores".' />;
 
+
+  const planFac = (
+    <>
+      {planFacturacion}
+
+      <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+        <Box style={{ width: '100%' }}>
+          <DataGridPlanFacturacion rows={periodos || []} />
+        </Box>
+      </Stack>
+    </>
+  )
+
+  const varContr = (
+    <>
+      <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+        <Box style={{ width: '100%' }}>
+          <DataGridContratoVariables contratoId={contratoId} />
+        </Box>
+      </Stack>
+    </>
+  )
+  const resumenPosicion = (
+    <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
+      <Box style={{ width: '100%' }}>
+        <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
+      </Box></Stack>
+  )
+
+  const datosGeneralesIsError = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId']
+  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato']
+  const planFacturacionFields = ['pausado']
+
+  const tabLayoutOptions = [
+    { label: 'Datos Generales', renderelement: formHeader, formFields: datosGeneralesIsError, formErrors: formErrors },
+    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
+    { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
+    { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
+    { label: 'Variables Contrato', renderelement: varContr },
+    { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
+  ]
+
   return (
     <>
       <Card sx={{ p: 3 }}>
@@ -297,58 +352,7 @@ const ContratoEdit = () => {
               </Typography>
             }
           />
-
-          <DivisorProvisorio label='Datos Generales' />
-
-          <CardContent>
-            <Row>
-              <Col md={4}>
-                <FormTextField
-                  control={control}
-                  name='nroContrato'
-                  label='Nro. Contrato'
-                  InputProps={{ readOnly: true }}
-                  type='string'
-                />
-              </Col>
-            </Row>
-          </CardContent>
-
-          {formHeader}
-
-          <DivisorProvisorio label='Datos Contractuales' />
-
-          {datosContractuales}
-
-          <DivisorProvisorio label='Resumen Posiciones/Concepto Acuerdo' />
-
-          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <Box style={{ width: '100%' }}>
-              <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
-            </Box>
-          </Stack>
-
-          <DivisorProvisorio label='Plan Facturación' />
-
-          {planFacturacion}
-
-          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <Box style={{ width: '100%' }}>
-              <DataGridPlanFacturacion rows={periodos || []} />
-            </Box>
-          </Stack>
-
-          <DivisorProvisorio label='Variables Contrato' />
-
-          <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
-            <Box style={{ width: '100%' }}>
-              <DataGridContratoVariables contratoId={contratoId} />
-            </Box>
-          </Stack>
-
-          <DivisorProvisorio label='Interlocutores' />
-
-          {interlocutores}
+          <TabLayout options={tabLayoutOptions} />
         </Form>
       </Card>
     </>
