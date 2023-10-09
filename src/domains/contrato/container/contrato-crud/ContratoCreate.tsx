@@ -117,12 +117,12 @@ const ContratoCreate = () => {
       });
   }, [watch('tipoContratoId')]);
 
-  useEffect(() => {
-    TipoContratoRepository.getAllTiposContratoAsDropdown().then(response => {
-      const value = response.data.filter(el => el.code === 'CSPAUY')
-      resetField('tipoContratoId', { defaultValue: value[0].value })
-    });
-  }, []);
+  // useEffect(() => {
+  //   TipoContratoRepository.getAllTiposContratoAsDropdown().then(response => {
+  //     const value = response.data.filter(el => el.code === 'CSPAUY')
+  //     resetField('tipoContratoId', { defaultValue: value[0].value })
+  //   });
+  // }, []);
 
   useEffect(() => {
     const clienteId = watch('clienteId');
@@ -159,7 +159,7 @@ const ContratoCreate = () => {
           />
         </Col>
         <Col md={6}>
-          <TipoContratoDropdown control={control} name='tipoContratoId' label='Tipo Contrato' disabled={isSubmitting} />
+          <TipoContratoDropdown control={control} name='tipoContratoId' label='Tipo Contrato' disabled={isSubmitting} defaultValue={'CSPAUY'} />
         </Col>
       </Row>
       <Row>

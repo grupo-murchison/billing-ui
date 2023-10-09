@@ -12,12 +12,15 @@ function FormSelect({
   readOnly,
   onChange: onChangeProp,
   emptyOption,
+  defaultValue
 }: FormSelectProps) {
   const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }];
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
   const inputLabel = label || name;
+
+  const hasDefaultValue = defaultValue?.length > 0 ? true : false
 
   return (
     <Controller
@@ -29,7 +32,7 @@ function FormSelect({
           <Select
             readOnly={readOnly}
             {...field}
-            value={fullOptions.length > 0 ? field.value : ''}
+            value={hasDefaultValue === true ? defaultValue[0].value : fullOptions.length > 0 ? field.value : ''}
             label={inputLabel}
             onChange={(_, data) => {
               field.onChange(_);
@@ -59,6 +62,7 @@ export interface FormSelectProps extends FormInputsCommonProps {
   disabledEmpty?: boolean;
   emptyOption?: boolean;
   readOnly?: boolean;
+  defaultValue?: AnyValue
 }
 
 export default FormSelect;

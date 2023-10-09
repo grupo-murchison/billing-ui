@@ -8,6 +8,7 @@ import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/For
 import { FormAutocomplete } from '@app/components/Form/FormInputs/FormAutoComplete';
 
 const TipoContratoDropdown = ({ ...props }: TipoContratoDropdownProps) => {
+  const { defaultValue, ...rest } = props
   const [items, setItems] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
@@ -20,7 +21,8 @@ const TipoContratoDropdown = ({ ...props }: TipoContratoDropdownProps) => {
       });
   }, []);
 
-  return <FormSelect {...props} options={items} />;
+  const initialValue = items.filter(el => el.code === defaultValue)
+  return <FormSelect defaultValue={initialValue} {...rest} options={items} />;
 };
 
 const TipoContratoDropdownAutoComplete = ({ ...props }: TipoContratoDropdownProps) => {
