@@ -118,6 +118,13 @@ const ContratoCreate = () => {
   }, [watch('tipoContratoId')]);
 
   useEffect(() => {
+    TipoContratoRepository.getAllTiposContratoAsDropdown().then(response => {
+      const value = response.data.filter(el => el.code === 'CSPAUY')
+      resetField('tipoContratoId', { defaultValue: value[0].value })
+    });
+  }, []);
+
+  useEffect(() => {
     const clienteId = watch('clienteId');
     clienteId &&
       ClienteRepository.getClienteById(`${clienteId}`).then(response => {
