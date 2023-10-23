@@ -8,7 +8,7 @@ import { AutocompleteAdvancedSearchRenderInput } from './AutoCompleteRenderInput
 import { AxiosResponse } from 'axios';
 import { Box } from '@mui/material';
 import { Modal } from '@app/components/Modal';
-import ClienteAdvancedSearch from '@domains/cliente/container/cliente-dropdown/ClienteAdvancedSearch';
+import ModalFormPopUp from './ModalFormPopUp';
 
 export default function FormPopUp({
   options: optionsProps,
@@ -17,6 +17,9 @@ export default function FormPopUp({
   label,
   repositoryFunc,
   resetField,
+  columnsPopUp,
+  // toolbarPopUp,
+  repositoryFuncPopUp,
   ...props
 }: FormAsyncAutocomplete<DropdownItemType>) {
   const [open, setOpen] = React.useState(false);
@@ -26,7 +29,7 @@ export default function FormPopUp({
 
   const [openModal, setOpenModal] = React.useState(false);
 
-  const activarModal = () => {
+  const handleOpenModal = () => {
     setOpenModal(true);
   };
 
@@ -104,7 +107,7 @@ export default function FormPopUp({
                   label={label}
                   loading={loading}
                   error={error}
-                  onClickOpen={activarModal}
+                  onClickOpen={handleOpenModal}
                 />
               )}
             />
@@ -113,12 +116,14 @@ export default function FormPopUp({
       />
 
       <Modal isOpen={openModal} onClose={() => setOpenModal(false)} title='Búsqueda amplia Clientes'>
-        <ClienteAdvancedSearch
+        <ModalFormPopUp
           setInputValue={setInputValue}
           setOpenModal={setOpenModal}
           setOptions={setOptions}
           resetField={resetField}
           name={name}
+          repositoryFunc={repositoryFuncPopUp}
+          columns= {columnsPopUp}
         />
       </Modal>
     </>
@@ -129,6 +134,11 @@ export interface FormAsyncAutocomplete<T> extends FormInputsCommonProps {
   control: Control<AnyValue>;
   options?: AnyValue[];
   repositoryFunc: (params?: Partial<Record<string, unknown>>) => Promise<AxiosResponse<T[]>>;
-  //TODO buscar tipado resetField
   resetField: AnyValue;
+  toolbarPopUp?: AnyValue;
+  columnsPopUp?: AnyValue;
+  repositoryFuncPopUp?: AnyValue;
+  // DataGridProps?: {
+  //   repositoryFunc: AnyValue;
+  // };
 }

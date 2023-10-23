@@ -1,9 +1,9 @@
 import { Button, Stack, CircularProgress } from '@mui/material';
 import { ActionButtonsProps } from './form.interfaces';
 
-const FormActionButtons = ({ isSubmitting, handleClose, label }: ActionButtonsProps) => {
+const FormActionButtons = ({ isSubmitting, handleClose, label, handleConfirm }: ActionButtonsProps) => {
   return (
-    <Stack direction='row' justifyContent='end' gap={2} display={!label ? 'none' : 'flex'}>
+    <Stack direction='row' justifyContent='end' gap={2}>
       {handleClose && (
         <Button
           color='secondary'
@@ -16,16 +16,31 @@ const FormActionButtons = ({ isSubmitting, handleClose, label }: ActionButtonsPr
         </Button>
       )}
 
-      <ActionButton
-        isSubmitting={isSubmitting || false}
-        label={
-          (label === 'update' && 'Actualizar') ||
-          (label === 'search' && 'Buscar') ||
-          (label === 'create' && 'Crear') ||
-          label ||
-          ''
-        }
-      />
+      {label && (
+        <ActionButton
+          isSubmitting={isSubmitting || false}
+          label={
+            (label === 'update' && 'Actualizar') ||
+            (label === 'search' && 'Buscar') ||
+            (label === 'create' && 'Crear') ||
+            label ||
+            ''
+          }
+        />
+      )}
+
+      {handleConfirm && (
+        <Button
+          color='primary'
+          variant='contained'
+          // type='button'
+          disabled={isSubmitting}
+          onClick={handleConfirm}
+          sx={{ minWidth: '120px' }}
+        >
+          Confirmar
+        </Button>
+      )}
     </Stack>
   );
 };

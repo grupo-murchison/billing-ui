@@ -9,8 +9,9 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { useDataGrid } from '@app/hooks';
 import FormActionButtons from '@app/components/Form/FormActionButtons';
+import FormSelect from '../FormSelect';
 
-const ModalFormPopUp = ({ setOpenModal, setOptions, resetField, name, repositoryFunc, columns, toolbar }: AnyValue) => {
+const ModalFormPopUp = ({ setOpenModal, setOptions, resetField, name, repositoryFunc, columns}: AnyValue) => {
   const mainDataGrid = useDataGrid();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const ModalFormPopUp = ({ setOpenModal, setOptions, resetField, name, repository
       conceptoBusqueda: '',
       clienteId: '',
       descripcion: '',
-      paisId: '',
+      paisId: 3,
     },
   });
 
@@ -79,38 +80,40 @@ const ModalFormPopUp = ({ setOpenModal, setOptions, resetField, name, repository
     setOpenModal(false);
   };
 
-  // const toolbar = (
-  //   <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-  //     <Form isSubmitting={isSubmitting}>
-  //       <Row>
-  //         <Col md={6}>
-  //           <FormTextField
-  //             control={control}
-  //             disabled={isSubmitting}
-  //             label='Concepto Búsqueda'
-  //             name='conceptoBusqueda'
-  //           />
-  //         </Col>
-  //         <Col md={6}>
-  //           <FormTextField control={control} label='Cliente' name='codigo' />
-  //         </Col>
-  //       </Row>
-  //       <Row>
-  //         <Col md={6}>
-  //           <FormTextField control={control} label='Denominación' name='descripcion' />
-  //         </Col>
-  //         <Col md={6}>
-  //           <FormTextField control={control} disabled={isSubmitting} label='País' name='paisId' type='number' />
-  //         </Col>
-  //       </Row>
-  //       <Stack direction='row' justifyContent='end'>
-  //         <Button onClick={handleSubmit(onSubmit)} variant='contained' color='primary'>
-  //           Buscar
-  //         </Button>
-  //       </Stack>
-  //     </Form>
-  //   </Paper>
-  // );
+  
+
+  const toolbar = (
+    <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
+      <Form isSubmitting={isSubmitting}>
+        <Row>
+          <Col md={6}>
+            <FormTextField
+              control={control}
+              disabled={isSubmitting}
+              label='Concepto Búsqueda'
+              name='conceptoBusqueda'
+            />
+          </Col>
+          <Col md={6}>
+            <FormTextField control={control} label='Cliente' name='codigo' />
+          </Col>
+        </Row>
+        <Row>
+          <Col md={6}>
+            <FormTextField control={control} label='Denominación' name='descripcion' />
+          </Col>
+          <Col md={6}>
+            <FormSelect control={control} disabled label='País' name='paisId' options={[{value: 3, label: 'UY - URUGUAY'}]} />
+          </Col>
+        </Row>
+        <Stack direction='row' justifyContent='end'>
+          <Button onClick={handleSubmit(onSubmit)} variant='contained' color='primary'>
+            Buscar
+          </Button>
+        </Stack>
+      </Form>
+    </Paper>
+  );
 
   return (
     <>
