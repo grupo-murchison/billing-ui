@@ -35,10 +35,11 @@ const ProcedimientoQEdit = () => {
   const {
     reset,
     formState: { isSubmitting },
-    setValue,
     handleSubmit,
     control,
     watch,
+    setValue,
+    resetField
   } = useForm<ProcedimientoQEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -53,12 +54,17 @@ const ProcedimientoQEdit = () => {
 
   useEffect(() => {
     ProcedimientoQRepository.getProcedimientoQById(procedimientoQId || '').then(({ data }) => {
+      for (const property in data) {
+        if (data[property] === null) {
+          delete data[property]
+        }
+      }
       reset({
         ...data,
       });
       setIsDataFetched(true);
     });
-  }, [procedimientoQId, reset]);
+  }, [procedimientoQId]);
 
   const onSubmit: SubmitHandler<ProcedimientoQEditSchemaType> = useCallback(
     async data => {
@@ -74,22 +80,23 @@ const ProcedimientoQEdit = () => {
   }, [_navigate]);
 
   useEffect(() => {
-    const value = watch('tipoProcedimientoQId');
-    //   //TODO habria que comparar con el "code" de las options que viene del back
-    if (value === 1) {
-      setValue('procedimientoCustomId', null);
+    const value = watch('tipoProcedimientoQId').toString();
+    console.log("🚀 ~ file: ProcedimientoQEdit.tsx:83 ~ useEffect ~ value:", JSON.stringify(value))
+    if (value.includes('BUILT')) {
+      resetField('procedimientoCustomId');
       setDisablePBuiltin(false);
       setDisablePCustom(true);
-    } else if (value === 2) {
-      setValue('procedimientoBuiltinId', null);
+    } else if (value.includes('CUST')) {
+      resetField('procedimientoBuiltinId')
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else if (value === 3) {
-      setValue('procedimientoBuiltinId', null);
-      setValue('procedimientoCustomId', null);
+    } else if (value.includes('EXT')) {
+      resetField('procedimientoBuiltinId');
+      resetField('procedimientoCustomId');
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
+
   }, [watch('tipoProcedimientoQId')]);
 
   if (!isDataFetched) {
@@ -123,6 +130,7 @@ const ProcedimientoQEdit = () => {
               name='tipoProcedimientoQId'
               disabled={isSubmitting}
               label={`Tipo ${label.procedimientoQ}`}
+              emptyOption
             />
           </Col>
         </Row>

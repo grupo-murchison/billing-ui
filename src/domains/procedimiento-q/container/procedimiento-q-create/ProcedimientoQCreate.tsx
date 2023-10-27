@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -32,6 +32,7 @@ const ProcedimientoQCreate = () => {
     handleSubmit,
     formState: { isSubmitting },
     setValue,
+    watch
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -60,24 +61,43 @@ const ProcedimientoQCreate = () => {
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
 
-  const onChangeTipoProcedimientoCantidad = (data: AnyValue) => {
-    //TODO habria que comparar con el "code" de las options que viene del back
-    const label: string = data.props.children;
+  // const onChangeTipoProcedimientoCantidad = (data: AnyValue) => {
+  //   //TODO habria que comparar con el "code" de las options que viene del back
+  //   const label: string = data.props.children;
+  //   if (label.includes('BUILT')) {
+  //     setValue('procedimientoCustomId', '');
+  //     setDisablePBuiltin(false);
+  //     setDisablePCustom(true);
+  //   } else if (label.includes('CUST')) {
+  //     setValue('procedimientoBuiltinId', '');
+  //     setDisablePBuiltin(true);
+  //     setDisablePCustom(false);
+  //   } else if (label.includes('EXT')) {
+  //     setValue('procedimientoBuiltinId', '');
+  //     setValue('procedimientoCustomId', '');
+  //     setDisablePBuiltin(true);
+  //     setDisablePCustom(true);
+  //   }
+  // };
+
+  useEffect(() => {
+    const label = watch('tipoProcedimientoQId').toString();
     if (label.includes('BUILT')) {
-      setValue('procedimientoCustomId', null);
+      setValue('procedimientoCustomId', '');
       setDisablePBuiltin(false);
       setDisablePCustom(true);
     } else if (label.includes('CUST')) {
-      setValue('procedimientoBuiltinId', null);
+      setValue('procedimientoBuiltinId', '');
       setDisablePBuiltin(true);
       setDisablePCustom(false);
     } else if (label.includes('EXT')) {
-      setValue('procedimientoBuiltinId', null);
-      setValue('procedimientoCustomId', null);
+      setValue('procedimientoBuiltinId', '');
+      setValue('procedimientoCustomId', '');
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
-  };
+
+  }, [watch('tipoProcedimientoQId')]);
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
@@ -104,7 +124,7 @@ const ProcedimientoQCreate = () => {
         <Row>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
-              onChange={onChangeTipoProcedimientoCantidad}
+              // onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               disabled={isSubmitting}
