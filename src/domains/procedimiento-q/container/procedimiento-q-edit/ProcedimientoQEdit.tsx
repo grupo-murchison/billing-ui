@@ -38,7 +38,6 @@ const ProcedimientoQEdit = () => {
     handleSubmit,
     control,
     watch,
-    setValue,
     resetField
   } = useForm<ProcedimientoQEditSchemaType>({
     defaultValues: {
@@ -80,17 +79,16 @@ const ProcedimientoQEdit = () => {
   }, [_navigate]);
 
   useEffect(() => {
-    const value = watch('tipoProcedimientoQId').toString();
-    console.log("🚀 ~ file: ProcedimientoQEdit.tsx:83 ~ useEffect ~ value:", JSON.stringify(value))
-    if (value.includes('BUILT')) {
+    const code = watch('tipoProcedimientoQId');
+    if (code === 1) {
       resetField('procedimientoCustomId');
       setDisablePBuiltin(false);
       setDisablePCustom(true);
-    } else if (value.includes('CUST')) {
+    } else if (code === 2) {
       resetField('procedimientoBuiltinId')
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else if (value.includes('EXT')) {
+    } else if (code === 3) {
       resetField('procedimientoBuiltinId');
       resetField('procedimientoCustomId');
       setDisablePBuiltin(true);
