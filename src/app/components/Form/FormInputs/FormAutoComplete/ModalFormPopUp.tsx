@@ -1,7 +1,6 @@
 import { Col, Row } from '@app/components';
 import Form from '@app/components/Form/Form';
 import { Button, Paper, Stack } from '@mui/material';
-import { ClienteRepository } from '@domains/cliente/repository';
 import { DataGrid } from '@app/components/DataGrid';
 import { useCallback, useEffect, useState } from 'react';
 
@@ -9,8 +8,10 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { useDataGrid } from '@app/hooks';
+import FormActionButtons from '@app/components/Form/FormActionButtons';
+import FormSelect from '../FormSelect';
 
-const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: AnyValue) => {
+const ModalFormPopUp = ({ setOpenModal, setOptions, resetField, name, repositoryFunc, columns}: AnyValue) => {
   const mainDataGrid = useDataGrid();
 
   useEffect(() => {
@@ -26,7 +27,7 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
       conceptoBusqueda: '',
       clienteId: '',
       descripcion: '',
-      paisId: '',
+      paisId: 3,
     },
   });
 
@@ -57,7 +58,7 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
       }
     | Record<string, unknown>;
 
-  const confirmValue = () => {
+  const handleConfirm = () => {
     const { id, codigo, descripcion } = select;
 
     if (id != 0) {
@@ -75,9 +76,15 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
     setOpenModal(false);
   };
 
+  const handleClose = () => {
+    setOpenModal(false);
+  };
+
+  
+
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
+      <Form isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <FormTextField
@@ -96,9 +103,14 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
             <FormTextField control={control} label='Denominación' name='descripcion' />
           </Col>
           <Col md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='País' name='paisId' type='number' />
+            <FormSelect control={control} disabled label='País' name='paisId' options={[{value: 3, label: 'UY - URUGUAY'}]} />
           </Col>
         </Row>
+        <Stack direction='row' justifyContent='end'>
+          <Button onClick={handleSubmit(onSubmit)} variant='contained' color='primary'>
+            Buscar
+          </Button>
+        </Stack>
       </Form>
     </Paper>
   );
@@ -111,40 +123,14 @@ const ClienteAdvancedSearch = ({ setOpenModal, setOptions, resetField, name }: A
           setSelection(newSelection.row);
         }}
         hookRef={mainDataGrid.ref}
-        columns={[
-          {
-            field: 'conceptoBusqueda',
-            headerName: 'Concepto Búsqueda',
-            valueGetter: params => (params.row.conceptoBusqueda ? params.row.conceptoBusqueda : undefined),
-          },
-          {
-            field: 'codigo',
-            headerName: 'Cliente',
-            valueGetter: params => (params.row.codigo ? params.row.codigo : undefined),
-          },
-          {
-            field: 'descripcion',
-            headerName: 'Descripción',
-            valueGetter: params => (params.row.descripcion ? params.row.descripcion : undefined),
-          },
-          {
-            field: 'paisId',
-            headerName: 'País',
-            valueGetter: params => (params.row.paisCodigo ? params.row.paisCodigo : undefined),
-          },
-        ]}
-        repositoryFunc={ClienteRepository.getAllClienteByFilters}
+        columns={columns}
+        repositoryFunc={repositoryFunc}
       />
-      <Stack direction='row' justifyContent='end' gap={2} sx={{ my: 2 }}>
-        <Button onClick={() => setOpenModal(false)} variant='outlined' color='secondary'>
-          Cancelar
-        </Button>
-        <Button onClick={confirmValue} variant='contained' color='primary'>
-          Confirmar
-        </Button>
+      <Stack mt={2}>
+        <FormActionButtons isSubmitting={isSubmitting} handleClose={handleClose} handleConfirm={handleConfirm} />
       </Stack>
     </>
   );
 };
 
-export default ClienteAdvancedSearch;
+export default ModalFormPopUp;

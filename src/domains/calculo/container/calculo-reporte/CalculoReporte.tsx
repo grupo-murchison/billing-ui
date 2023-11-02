@@ -25,7 +25,7 @@ import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repository/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { downloadPdfAxios } from '@app/utils/axios.util';
-// import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
+import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 import Toast from '@app/components/Toast/Toast';
 
 
@@ -56,7 +56,7 @@ const CalculoReporte = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-    // resetField,
+    resetField,
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
@@ -122,15 +122,14 @@ const CalculoReporte = () => {
             <FormTextField control={control} label='Número de Contrato' name='nroContrato' type='number' />
           </Col>
           <Col sm={12} md={6}>
-            {/* <ClientePopUp
+            <ClientePopUp
               control={control}
               disabled={isSubmitting}
               label='Cliente'
               name='clienteId'
               resetField={resetField}
-            /> */}
-
-            <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
+            />
+            {/* <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' /> */}
           </Col>
         </Row>
         <Row>

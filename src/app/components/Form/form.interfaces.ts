@@ -11,6 +11,7 @@ export type ActionButtonsProps = {
   isSubmitting?: boolean;
   handleClose?: () => void;
   label?: string;
+  handleConfirm?: () => void;
 };
 
 type FixedLabel = 'search' | 'create' | 'update';

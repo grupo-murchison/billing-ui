@@ -15,9 +15,19 @@ function FormTextField({ control, name, label, ...props }: FormTextFieldProps) {
             {...props}
             {...field}
             label={inputLabel}
-            onChange={e => field.onChange(typeResolver(e.target.value, props.type))}
+            onChange={(ev) => {
+              const value = ev.target.value
+              const numericValue = parseFloat(value)
+              if  ( isNaN(numericValue) || value.length !== numericValue.toString().length ) {
+                  return field.onChange(value) 
+              }
+              return field.onChange(numericValue) 
+          }}
             error={!!error}
             helperText={error?.message}
+            inputRef={field.ref}
+            value={field.value}
+            onBlur={field.onBlur}
           />
         </FormControl>
       )}
@@ -30,18 +40,5 @@ type FormTextFieldProps = FormInputsCommonProps &
     control: Control<AnyValue>;
   };
 
-function typeResolver(value: string, type: React.InputHTMLAttributes<unknown>['type']) {
-  let _value;
-  switch (type) {
-    case 'number':
-      _value = Number.isNaN(+value) ? '' : +value;
-      break;
-
-    default:
-      _value = value;
-      break;
-  }
-  return _value;
-}
 
 export default FormTextField;
