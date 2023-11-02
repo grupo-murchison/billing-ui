@@ -6,8 +6,7 @@ import { TipoDatoRepository } from '@domains/tipo-dato/repository';
 
 import FormSelect, { FormSelectProps as FormSelectPropsMui } from '@app/components/Form/FormInputs/FormSelect';
 
-import { FormControl, FormHelperText, InputLabel, MenuItem, Select } from '@mui/material';
-import { Control, Controller } from 'react-hook-form';
+import { Control } from 'react-hook-form';
 import { FormInputsCommonProps } from '../../../../app/components/Form/form.interfaces';
 
 const TipoProcedimientoQDropdownController = ({ ...props }: TipoProcedimientoQDropdownProps) => {
