@@ -82,7 +82,7 @@ const DataGridBase = ({
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
-          autoHeight={false}
+          autoHeight={rows?.length > 0 ? false : true}
           loading={loading}
           localeText={{ ...localeText }}
           slots={{
@@ -106,7 +106,7 @@ const DataGridBase = ({
             },
           }}
           sx={{
-            height: rows?.length > 0 ? '80vh' : '45vh',
+            maxHeight: rows?.length > 0 ? '80vh' : '45vh',
 
             ...sxTable,
             ...sxHeader,
