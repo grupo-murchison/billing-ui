@@ -6,7 +6,7 @@ import { RepositoryUtils } from '@app/utils';
 
 import { ContratoService } from '@domains/contrato/repository/contrato.service';
 import {
-  getAllContratoFacturacionPaginated,
+  getAllContratoCalcularFacturacionPaginated,
   getAllContratoPaginatedSchema,
 } from '@domains/contrato/repository/contrato.schemas';
 
@@ -75,22 +75,18 @@ class ContratoRepository {
     return response;
   };
 
-  static getAllContratoFacturacionPaginated = async (params: RepositoryFuncParamsPaginated) => {
-    const response$ = from(ContratoService.getAllContratoFacturacionPaginated(params)).pipe(
+  static getAllContratoCalculosFacturacionPaginated = async (params: RepositoryFuncParamsPaginated) => {
+    const response$ = from(ContratoService.getAllContratoCalculosFacturacionPaginated(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
-      RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
+      RepositoryUtils.PIPES.validateWithSchema(getAllContratoCalcularFacturacionPaginated),
     );
     const response = await lastValueFrom(response$);
     return response;
   };
 
   static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>) => {
-    const response$ = from(ContratoService.getPlanFacturacionPeriodos(params)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-      // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
-    );
-    const response = await lastValueFrom(response$);
-    return response;
+    return await RepositoryUtils.fromRxjs(ContratoService.getPlanFacturacionPeriodos(params));
+    // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
   };
 }
 

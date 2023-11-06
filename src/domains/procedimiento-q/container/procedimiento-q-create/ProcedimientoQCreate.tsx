@@ -1,4 +1,4 @@
-import { useCallback, useContext, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -31,7 +31,8 @@ const ProcedimientoQCreate = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-    setValue,
+    watch,
+    resetField
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -41,7 +42,7 @@ const ProcedimientoQCreate = () => {
       procedimientoBuiltinId: '',
       procedimientoCustomId: '',
     },
-    resolver: zodResolver(ProcedimientoQCreateSchema),
+    resolver: zodResolver(ProcedimientoQCreateSchema), // TODO revisar y de ser necesario fixear validacion de create
   });
 
   const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
@@ -60,24 +61,24 @@ const ProcedimientoQCreate = () => {
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
   const [disablePCustom, setDisablePCustom] = useState(false);
 
-  const onChangeTipoProcedimientoCantidad = (data: AnyValue) => {
-    //TODO habria que comparar con el "code" de las options que viene del back
-    const label: string = data.props.children;
-    if (label.includes('BUILT')) {
-      setValue('procedimientoCustomId', null);
+  useEffect(() => {
+    const code = watch('tipoProcedimientoQId');
+    if (code === 1) {
+      resetField('procedimientoCustomId');
       setDisablePBuiltin(false);
       setDisablePCustom(true);
-    } else if (label.includes('CUST')) {
-      setValue('procedimientoBuiltinId', null);
+    } else if (code === 2) {
+      resetField('procedimientoBuiltinId')
       setDisablePBuiltin(true);
       setDisablePCustom(false);
-    } else if (label.includes('EXT')) {
-      setValue('procedimientoBuiltinId', null);
-      setValue('procedimientoCustomId', null);
+    } else if (code === 3) {
+      resetField('procedimientoBuiltinId');
+      resetField('procedimientoCustomId');
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
-  };
+
+  }, [watch('tipoProcedimientoQId')]);
 
   return (
     <Modal isOpen onClose={handleClose} title={`Nuevo ${label.procedimientoQ}`}>
@@ -104,7 +105,6 @@ const ProcedimientoQCreate = () => {
         <Row>
           <Col md={12}>
             <TipoProcedimientoQDropdownController
-              onChange={onChangeTipoProcedimientoCantidad}
               control={control}
               name='tipoProcedimientoQId'
               disabled={isSubmitting}

@@ -82,7 +82,7 @@ const DataGridBase = ({
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
-          autoHeight={rows?.length > 0 ? true : false}
+          autoHeight={rows?.length > 0 ? false : true}
           loading={loading}
           localeText={{ ...localeText }}
           slots={{
@@ -106,8 +106,8 @@ const DataGridBase = ({
             },
           }}
           sx={{
-            height: rows?.length > 0 ? undefined : '380px',
-            // maxHeight: 600, // TODO para sticky header se debe deshabilitar autoHeight
+            maxHeight: rows?.length > 0 ? '80vh' : '45vh',
+
             ...sxTable,
             ...sxHeader,
             ...sxRows,
