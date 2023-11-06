@@ -15,16 +15,20 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useConfirmDialog } from '@app/hooks';
 
 const ModeloAcuerdoCreate = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ModeloAcuerdoContext);
 
+  const confirmDialog = useConfirmDialog();
+
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    setError,
   } = useForm<ModeloAcuerdoCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -36,9 +40,24 @@ const ModeloAcuerdoCreate = () => {
 
   const onSubmit: SubmitHandler<ModeloAcuerdoCreateSchemaType> = useCallback(
     async data => {
-      await ModeloAcuerdoRepository.createModeloAcuerdo(data);
-      mainDataGrid.reload();
-      _navigate('/modelo-acuerdo');
+      await ModeloAcuerdoRepository.createModeloAcuerdo(data).then(exito => {
+        mainDataGrid.reload();
+        _navigate('/modelo-acuerdo');
+
+      }).catch(err => {
+        const error = JSON.parse(err.message)
+        if (error?.statusCode === 400) {
+          setError('codigo', {type: 'custom', message: error.message} );
+          confirmDialog.open({
+            type: 'reject',
+            title: 'No es posible realizar esta acción',
+            message: `${error.message}`,
+            onClickYes() {
+              confirmDialog.close()
+            }
+          });
+        }
+      })
     },
     [_navigate, mainDataGrid],
   );
