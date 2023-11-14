@@ -65,6 +65,9 @@ const DataGridBase = ({
     '& .MuiDataGrid-row:hover': {
       backgroundColor: '#CCCED0',
     },
+    '&.MuiDataGrid-root--densityCompact .MuiDataGrid-cell': { py: '8px' },
+    '&.MuiDataGrid-root--densityStandard .MuiDataGrid-cell': { py: '14px' },
+    '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px' },
   };
 
   helperGrid.columnsFlexResolver(columns);
@@ -81,6 +84,8 @@ const DataGridBase = ({
           initialState={{
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
+          getEstimatedRowHeight={() => 200}
+          getRowHeight={()=> 'auto'}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
           autoHeight={rows?.length > 0 ? false : true}
           loading={loading}
