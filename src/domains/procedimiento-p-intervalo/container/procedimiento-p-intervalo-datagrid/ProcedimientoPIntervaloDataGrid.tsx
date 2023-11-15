@@ -13,6 +13,7 @@ import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-interva
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
 import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
 import { Box, FormLabel, Typography } from '@mui/material';
+import { currencyFormatter } from '@libs/number';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
@@ -76,7 +77,7 @@ const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
               { field: 'intervalo', headerName: 'Intervalo' },
               { field: 'valorInicial', headerName: 'Valor Inicial' },
               { field: 'valorFinal', headerName: 'Valor Final' },
-              { field: 'precio', headerName: 'Precio' },
+              { field: 'precio', headerName: 'Precio', valueFormatter: ({ value }) => currencyFormatter.format(value)},
               {
                 field: 'acciones',
                 type: 'actions',
