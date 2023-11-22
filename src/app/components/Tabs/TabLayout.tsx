@@ -2,7 +2,8 @@ import { useState } from 'react';
 import Tab from '@app/components/Tabs/Tab';
 import Tabs from '@app/components/Tabs/Tabs';
 import TabPanel from '@app/components/Tabs/TabPanel';
-import { TabProps as TabsPropsMui } from '@mui/material';
+import { Box, TabProps as TabsPropsMui } from '@mui/material';
+import { borderBottom } from '@mui/system';
 
 interface optionsTabLayout extends TabsPropsMui {
   renderelement: JSX.Element;
@@ -43,6 +44,7 @@ const TabLayout = ({ options }: TabPros) => {
 
   return (
     <>
+    <Box sx={{ borderBottom: 1, borderColor: 'divider', }}>
       <Tabs value={tabValue} onChange={handleChangeTab} scrollButtons allowScrollButtonsMobile variant='scrollable'>
         {options.map((el: optionsTabLayout, index: number) => {
           const { formFields, formErrors, ...rest } = el;
@@ -51,6 +53,7 @@ const TabLayout = ({ options }: TabPros) => {
           return <Tab key={index} value={index} {...rest} isError={isError} />;
         })}
       </Tabs>
+      </Box>
       {options.map((el: optionsTabLayout, index: number) => {
         return (
           <TabPanel value={tabValue} key={index} index={index}>
@@ -58,7 +61,7 @@ const TabLayout = ({ options }: TabPros) => {
           </TabPanel>
         );
       })}
-    </>
+      </>
   );
 };
 export default TabLayout;
