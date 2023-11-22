@@ -3,7 +3,6 @@ import Tab from '@app/components/Tabs/Tab';
 import Tabs from '@app/components/Tabs/Tabs';
 import TabPanel from '@app/components/Tabs/TabPanel';
 import { Box, TabProps as TabsPropsMui } from '@mui/material';
-import { borderBottom } from '@mui/system';
 
 interface optionsTabLayout extends TabsPropsMui {
   renderelement: JSX.Element;
