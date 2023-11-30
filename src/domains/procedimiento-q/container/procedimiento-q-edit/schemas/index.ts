@@ -24,22 +24,22 @@ export const ProcedimientoQEditSchema: ZodType<FormDataProcedimientoQEdit> = z
       .string({ required_error: 'El campo es requerido.' })
       .min(1, { message: 'El campo es requerido.' })
       .max(50, { message: 'Ha superado el límite de caracteres' }),
-      tipoProcedimientoQId: z.number({
+    tipoProcedimientoQId: z.number({
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.required_error,
+    }),
+    procedimientoBuiltinId: z
+      .number({
         required_error: zodLocale.required_error,
         invalid_type_error: zodLocale.required_error,
-      }),
-      procedimientoBuiltinId: z
-        .number({
-          required_error: zodLocale.required_error,
-          invalid_type_error: zodLocale.required_error,
-        })
-        .nullable(),
-      procedimientoCustomId: z
-        .number({
-          required_error: zodLocale.required_error,
-          invalid_type_error: zodLocale.required_error,
-        })
-        .nullable(),
+      })
+      .nullable(),
+    procedimientoCustomId: z
+      .number({
+        required_error: zodLocale.required_error,
+        invalid_type_error: zodLocale.required_error,
+      })
+      .nullable(),
   })
   .refine(schema => (schema.tipoProcedimientoQId === 1 ? !!schema.procedimientoBuiltinId : true), {
     message: 'El campo es requerido.',

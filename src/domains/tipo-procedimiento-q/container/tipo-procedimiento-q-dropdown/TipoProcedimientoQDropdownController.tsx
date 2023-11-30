@@ -4,7 +4,10 @@ import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import { TipoDatoRepository } from '@domains/tipo-dato/repository';
 
-import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
+import FormSelect, { FormSelectProps as FormSelectPropsMui } from '@app/components/Form/FormInputs/FormSelect';
+
+import { Control } from 'react-hook-form';
+import { FormInputsCommonProps } from '../../../../app/components/Form/form.interfaces';
 
 const TipoProcedimientoQDropdownController = ({ ...props }: TipoProcedimientoQDropdownProps) => {
   const [options, setOptions] = useState<DropdownSchemaType>([]);
@@ -22,8 +25,22 @@ const TipoProcedimientoQDropdownController = ({ ...props }: TipoProcedimientoQDr
   return <FormSelect {...props} options={options} />;
 };
 
-interface TipoProcedimientoQDropdownProps extends Omit<FormSelectProps, 'options'> {
+interface TipoProcedimientoQDropdownProps extends Omit<FormSelectPropsMui, 'options'> {
   options?: undefined;
 }
 
 export default TipoProcedimientoQDropdownController;
+
+
+
+
+export interface FormSelectProps extends FormInputsCommonProps {
+  control: Control<AnyValue>;
+  options: AnyValue[];
+  disabledEmpty?: boolean;
+  emptyOption?: boolean;
+  readOnly?: boolean;
+}
+
+
+

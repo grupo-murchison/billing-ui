@@ -29,7 +29,9 @@ function FormSelect({
           <Select
             readOnly={readOnly}
             {...field}
-            value={fullOptions.length > 0 ? field.value : ''}
+            value={field.value === undefined ||
+              field.value === null ||
+              options.length === 0 ? '' : field.value}
             label={inputLabel}
             onChange={(_, data) => {
               field.onChange(_);
