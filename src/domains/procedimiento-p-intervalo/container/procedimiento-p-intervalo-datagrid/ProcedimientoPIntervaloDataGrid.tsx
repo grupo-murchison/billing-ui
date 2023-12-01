@@ -77,7 +77,12 @@ const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
               { field: 'intervalo', headerName: 'Intervalo' },
               { field: 'valorInicial', headerName: 'Valor Inicial' },
               { field: 'valorFinal', headerName: 'Valor Final' },
-              { field: 'precio', headerName: 'Precio', valueFormatter: ({ value }) => currencyFormatter.format(value)},
+              {
+                field: 'precio',
+                headerName: 'Precio',
+                valueFormatter: ({ value }) => currencyFormatter().format(value),
+                align: 'right',
+              },
               {
                 field: 'acciones',
                 type: 'actions',

@@ -49,7 +49,7 @@ export const DataGridPlanFacturacion = ({ rows }: { rows: AnyValue[] }) => {
         },
       ]}
       pageSizeOptions={[5, 10, 25]}
-      rowSelection={false}
+      // rowSelection={false}
     />
   );
 };

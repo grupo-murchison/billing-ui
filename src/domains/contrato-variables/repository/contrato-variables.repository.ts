@@ -18,6 +18,10 @@ class ContratoVariablesRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static updateContratoVariables = async (contratoVariables: Array<AnyValue>) => {
+    return await RepositoryUtils.fromRxjs(ContratoVariablesService.actualizarContratoVariables(contratoVariables));
+  };
 }
 
 export default ContratoVariablesRepository;

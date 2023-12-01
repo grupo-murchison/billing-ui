@@ -7,7 +7,7 @@ import AppMenu from './AppMenu';
 import { useLayoutContext } from './context/useLayoutContext';
 import { drawerWidthOpen, drawerWidthClosed } from './context/constants';
 
-import menuItems from './menuItems.config';
+import menuItems from '@app/routes/menuItems.config';
 
 const openedMixin = (theme: Theme): CSSObject => ({
   width: drawerWidthOpen,
