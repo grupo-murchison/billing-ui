@@ -1,9 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Collapse, List, ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
-import InboxIcon from '@mui/icons-material/MoveToInbox';
+import { ExpandLessIcon, ExpandMoreIcon, MoveToInboxIcon } from '@assets/icons';
 
-import ExpandLessIcon from '@mui/icons-material/ExpandLess';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import MenuItem from './MenuItem';
 import { IconRender } from './components';
 import { IMenuItemCollapse } from '../interfaces/menu-items.interface';
@@ -32,7 +30,7 @@ function MenuItemCollapse({ menuItem, level }: { menuItem: IMenuItemCollapse; le
     <>
       <ListItemButton onMouseEnter={handleMouseEnter} selected={isMenuActive}>
         <ListItemIcon sx={{ mr: '-1rem' }}>
-          <IconRender icon={menuItem?.icon || InboxIcon} level={level} />
+          <IconRender icon={menuItem?.icon || MoveToInboxIcon} level={level} />
         </ListItemIcon>
         <ListItemText primary={menuItem?.title} />
         {expand ? <ExpandLessIcon /> : <ExpandMoreIcon />}

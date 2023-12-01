@@ -5,7 +5,7 @@ import { zodId, zodLocale } from '@app/utils/zod.util';
 const ContratoVariablesSchema = z.object({
   id: z.number(),
   codigo: z.string().optional(),
-  valor: z.string({ required_error: zodLocale.required_error }).nonempty({ message: zodLocale.required_error }),
+  valor: z.string().min(1, zodLocale.required_error),
 });
 
 export type FormDataTypeContratoCreate = {
@@ -78,7 +78,7 @@ export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate>
   });
 
 const _ContratoEditSchema = z.object({
-  contratoVariables: z.array(ContratoVariablesSchema).optional(), // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
+  contratoVariables: z.array(ContratoVariablesSchema), // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
 });

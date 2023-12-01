@@ -187,13 +187,13 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
             field: 'importe',
             headerName: 'Precio Unitario',
             type: 'number',
-            valueFormatter: ({ value }) => currencyFormatter.format(value),
+            valueFormatter: ({ value }) => currencyFormatter().format(value),
           },
           {
             field: 'total',
             headerName: 'Total',
             type: 'number',
-            valueFormatter: ({ value }) => currencyFormatter.format(value),
+            valueFormatter: ({ value }) => currencyFormatter().format(value),
           },
           {
             field: 'monedaCodigo',

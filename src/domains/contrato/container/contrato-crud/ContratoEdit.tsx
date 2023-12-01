@@ -10,6 +10,7 @@ import { AlertInProgress } from '@app/components/Alerts';
 // import { JsonViewerProvisorio } from '@app/components/JsonTree';
 
 import { ContratoRepository } from '@domains/contrato/repository';
+
 import { ContratoContext } from '@domains/contrato/contexts';
 
 import { ValidationSchemaContratoEdit } from '@domains/contrato/container/contrato-crud/schemas';
@@ -25,7 +26,6 @@ import { ContratoEditBreadcrumb } from '@domains/contrato/constants';
 import { TipoPlanFacturacionDropdown } from '@domains/tipo-plan-facturacion/container/tipo-plan-facturacion-dropdown';
 import { ReglaFechaPeriodoDropdown } from '@domains/regla-fecha-periodo/container/regla-fecha-periodo-dropdown';
 import { ContratoVariablesDataGrid } from '@domains/contrato-variables/ContratoVariablesDataGrid';
-import { DataGridContratoVariables } from '@domains/contrato-variables/DataGridContratoVariables';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';
 
 import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
@@ -33,11 +33,12 @@ import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import TabLayout from '@app/components/Tabs/TabLayout';
+import Toast from '@app/components/Toast/Toast';
 
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
-import TabLayout from '@app/components/Tabs/TabLayout';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -48,8 +49,10 @@ const ContratoEdit = () => {
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
-  const [backUpModeloAcuerdo, setBackUpModeloAcuerdo] = useState<AnyValue>(null);
+  const [originalModeloAcuerdo, setOriginalModeloAcuerdo] = useState<AnyValue>(null);
   const [periodos, setPeriodos] = useState<AnyValue>(null);
+  const [contratoVariables, setContratoVariables] = useState<AnyValue>([]);
+  const [openToast, setOpenToast] = useState<boolean>(false);
 
   const {
     reset,
@@ -57,6 +60,7 @@ const ContratoEdit = () => {
     watch,
     control,
     resetField,
+    setValue,
     formState: { isSubmitting, dirtyFields, errors: formErrors },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
@@ -72,7 +76,7 @@ const ContratoEdit = () => {
       sociedadId: '',
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
-      contratoVariables: [{id: 0, codigo: '',  valor: ''}], // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
+      contratoVariables: [{ id: 0, codigo: '', valor: '' }], // TODO Requeridas solo si tipoProcedimientoQ.codigo === BUILT_IN, esto se debe mirar desde modelo acuerdo. Si se cambia Modelo Acuerdo, se eliminarán las variables y si corresponde se generarán nuevas.
     },
     resolver: zodResolver(
       ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
@@ -83,28 +87,33 @@ const ContratoEdit = () => {
             path: ['diaPeriodo'],
           });
         }
+
+        // if (tipoProcedimientoQ.codigo === BUILT_IN) {
+        //   ctx.addIssue({
+        //     message: zodLocale.required_error,
+        //     code: 'custom',
+        //     path: ['contratoVariables'],
+        //   });
+        // }
       }),
     ),
   });
 
-  // console.log('formErrors', formErrors);
-
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
-    async (data, event) => {
-      event?.stopPropagation();
+    async data => {
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
         fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
         fechaFinContrato: DateLib.parseToDBString(data.fechaFinContrato),
         id: contratoId,
+        listaVariables: data?.contratoVariables || undefined,
       };
 
-      console.log('Contrao Edit contratoVariables', data.contratoVariables);
-      // await ContratoRepository.updateContrato(submitData);
+      await ContratoRepository.updateContrato(submitData);
 
-      // mainDataGrid.reload();
-      // _navigate('/contrato');
+      mainDataGrid.reload();
+      _navigate('/contrato');
     },
     [_navigate, mainDataGrid],
   );
@@ -131,10 +140,15 @@ const ContratoEdit = () => {
         reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: planFacturacion?.diaPeriodo || '',
         pausado: planFacturacion?.pausado,
-        contratoVariables: [],
+        // contratoVariables: [],
+      });
+
+      ContratoRepository.variablesPorContratoProcedimientoQ({ contratoId: contratoId || '' }).then(({ data }) => {
+        setValue('contratoVariables', data.data);
+        setContratoVariables(data.data);
       });
       setPeriodos(planFacturacion?.periodos);
-      setBackUpModeloAcuerdo(modeloAcuerdo);
+      setOriginalModeloAcuerdo(modeloAcuerdo);
       setIsDataFetched(true);
     });
   }, [contratoId, reset]);
@@ -144,21 +158,25 @@ const ContratoEdit = () => {
   }, [watch('reglaFechaPeriodoId')]);
 
   useEffect(() => {
-    if (dirtyFields.modeloAcuerdoId && watch('modeloAcuerdoId') !== backUpModeloAcuerdo?.id) {
+    if (dirtyFields.modeloAcuerdoId && watch('modeloAcuerdoId') !== originalModeloAcuerdo?.id) {
       confirmDialog.open({
         type: 'warning',
         title: 'Advertencia',
-        message: `Si cambia el modelo acuerdo "${backUpModeloAcuerdo.codigo} - ${backUpModeloAcuerdo.descripcion}" por uno distinto, al guardar los cambios se eliminarán las variables del contrato y deberá volver a cargarlas manualmente.`,
+        message: `Si cambia el Modelo Acuerdo "${originalModeloAcuerdo.codigo} - ${originalModeloAcuerdo.descripcion}" por uno distinto, al guardar los cambios se eliminarán las variables del contrato y deberá volver a cargarlas manualmente.`,
         onClickYes: () => {
           confirmDialog.close();
         },
         onClickNot() {
-          resetField('modeloAcuerdoId', { defaultValue: backUpModeloAcuerdo?.id });
+          resetField('modeloAcuerdoId', { defaultValue: originalModeloAcuerdo?.id });
           confirmDialog.close();
         },
       });
     }
   }, [watch('modeloAcuerdoId')]);
+
+  useEffect(() => {
+    if (formErrors?.contratoVariables) setOpenToast(true);
+  }, [formErrors?.contratoVariables]);
 
   if (!isDataFetched) {
     return <></>;
@@ -303,7 +321,6 @@ const ContratoEdit = () => {
 
   const interlocutores = <AlertInProgress message='Próximamente, aquí estará sección "Interlocutores".' />;
 
-
   const planFac = (
     <>
       {planFacturacion}
@@ -314,36 +331,50 @@ const ContratoEdit = () => {
         </Box>
       </Stack>
     </>
-  )
+  );
 
   const varContr = (
     <>
       <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
         <Box style={{ width: '100%' }}>
-          <DataGridContratoVariables contratoId={contratoId} />
+          {/* <DataGridContratoVariables contratoId={contratoId} /> */}
+          <ContratoVariablesDataGrid
+            name='contratoVariables'
+            contratoId={contratoId}
+            errors={formErrors}
+            rows={contratoVariables}
+            setValue={setValue}
+          />
         </Box>
       </Stack>
     </>
-  )
+  );
+
   const resumenPosicion = (
     <Stack direction='row' justifyContent='center' alignItems='center' m={2}>
       <Box style={{ width: '100%' }}>
-        <DataGridConceptoAcuerdo rows={backUpModeloAcuerdo?.conceptosAcuerdo || []} />
-      </Box></Stack>
-  )
+        <DataGridConceptoAcuerdo rows={originalModeloAcuerdo?.conceptosAcuerdo || []} />
+      </Box>
+    </Stack>
+  );
 
-  const datosGeneralesIsError = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId']
-  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato']
-  const planFacturacionFields = ['pausado']
+  const datosGeneralesIsError = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId'];
+  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato'];
+  const planFacturacionFields = ['pausado'];
 
   const tabLayoutOptions = [
     { label: 'Datos Generales', renderelement: formHeader, formFields: datosGeneralesIsError, formErrors: formErrors },
-    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
+    {
+      label: 'Datos Contractuales',
+      renderelement: datosContractuales,
+      formFields: datosContractualesFields,
+      formErrors: formErrors,
+    },
     { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
     { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
-    { label: 'Variables Contrato', renderelement: varContr },
+    { label: 'Variables Contrato', renderelement: varContr, formFields: ['contratoVariables'], formErrors: formErrors },
     { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
-  ]
+  ];
 
   return (
     <>
@@ -359,6 +390,13 @@ const ContratoEdit = () => {
           <TabLayout options={tabLayoutOptions} />
         </Form>
       </Card>
+
+      <Toast
+        open={openToast}
+        onClose={() => setOpenToast(false)}
+        error
+        message='Debe cargar todos los valores de las Variables del Contrato'
+      />
     </>
   );
 };

@@ -58,7 +58,7 @@ const ProcedimientoPView = () => {
 
   return (
     <Modal isOpen onClose={handleClose} title='Ver Procedimiento Precio'>
-      <Form handleClose={handleClose} isSubmitting={isSubmitting}>
+      <Form isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>
             <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} fullWidth disabled />

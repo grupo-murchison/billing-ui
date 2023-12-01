@@ -1,4 +1,4 @@
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { FiberManualRecordIcon } from '@assets/icons';
 import { SvgIcon, Typography, useTheme } from '@mui/material';
 import { TIconRender } from '../../interfaces/menu-items.interface';
 
