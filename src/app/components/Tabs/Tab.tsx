@@ -1,5 +1,5 @@
 import { SvgIcon, Tab as TabMUI, TabProps as TabMuiProps } from '@mui/material';
-import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';
+import { FiberManualRecordIcon } from '@assets/icons';
 
 interface TabProps extends TabMuiProps {
   isError: boolean | undefined

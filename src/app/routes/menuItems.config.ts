@@ -1,8 +1,10 @@
 // assets
-import { IMenuItemGroup } from './interfaces/menu-items.interface';
+import { IMenuItemGroup } from '../../layout/interfaces/menu-items.interface';
 
 //nano
 import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
+
+import { ROUTES } from './constants';
 
 // ==============================|| DASHBOARD MENU ITEMS ||============================== //
 
@@ -36,7 +38,7 @@ const contrato: IMenuItemGroup = {
           id: 'contrato',
           title: 'Contrato',
           type: 'item',
-          url: '/contrato',
+          url: ROUTES.contrato,
           breadcrumbs: false,
         },
         {

@@ -1,7 +1,8 @@
 import { Link as RouterLink } from 'react-router-dom';
 
 import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
-import NavigateNextIcon from '@mui/icons-material/NavigateNext';
+import { NavigateNextIcon } from '@assets/icons';
+
 
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
   const breadcrumbs = [{ label: 'Inicio', path: '/' }].concat(items);

@@ -22,9 +22,11 @@ export {
 
   // E
   EditOutlined as EditOutlinedIcon,
+  ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
 
   // F
+  FiberManualRecord as FiberManualRecordIcon,
   FilterList as FilterListIcon,
   FilterAlt as FilterAltIcon,
   FileDownloadOutlined as FileDownloadOutlinedIcon,
@@ -47,6 +49,11 @@ export {
 
   // M
   Menu as MenuIcon,
+  ManageSearch as ManageSearchIcon,
+  MoveToInbox as MoveToInboxIcon,
+
+  // N
+  NavigateNext as NavigateNextIcon,
 
   // Q
   QuestionMark as QuestionMarkIcon,
