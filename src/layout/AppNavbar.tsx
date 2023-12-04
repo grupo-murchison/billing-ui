@@ -76,7 +76,7 @@ const Navbar = () => {
                 backgroundColor: theme.palette.secondary.main,
               }}
             />
-            <Typography variant='subtitle1'>Nombre de usuario</Typography>
+            <Typography variant='h6'>Nombre de usuario</Typography>
           </Stack>
         </Stack>
       </Toolbar>

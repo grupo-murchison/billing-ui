@@ -4,20 +4,13 @@ import { FormInputsCommonProps } from '../form.interfaces';
 
 function FormCheckbox({ control, name, label, labelPlacement }: FormCheckboxProps) {
   return (
-    <>
-      <InputLabel></InputLabel>
-      <Controller
-        name={name}
-        control={control}
-        render={({ field }) => (
-          <FormControlLabel
-            control={<Checkbox {...field} />}
-            label={label}
-            labelPlacement={labelPlacement || 'start'}
-          />
-        )}
-      />
-    </>
+    <Controller
+      name={name}
+      control={control}
+      render={({ field }) => (
+        <FormControlLabel control={<Checkbox {...field} />} label={label} labelPlacement={labelPlacement || 'start'} />
+      )}
+    />
   );
 }
 
