@@ -8,12 +8,13 @@ import FormSelect, { FormSelectProps as FormSelectPropsMui } from '@app/componen
 
 import { Control } from 'react-hook-form';
 import { FormInputsCommonProps } from '../../../../app/components/Form/form.interfaces';
+import { TipoProcedimientoQRepository } from '@domains/tipo-procedimiento-q/repository';
 
 const TipoProcedimientoQDropdownController = ({ ...props }: TipoProcedimientoQDropdownProps) => {
   const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    TipoDatoRepository.getAllTipoDatoAsDropdown()
+    TipoProcedimientoQRepository.getAllTipoProcedimientoQAsDropdown()
       .then(({ data }) => {
         setOptions(data);
       })

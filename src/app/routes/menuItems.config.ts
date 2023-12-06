@@ -178,6 +178,13 @@ const otros: IMenuItemGroup = {
           url: '/producto-softland',
           breadcrumbs: false,
         },
+        {
+          id: 'evento',
+          title: 'Evento',
+          type: 'item',
+          url: '/evento',
+          breadcrumbs: false,
+        },
       ],
     },
   ],

@@ -67,8 +67,8 @@ const ConceptoAcuerdoDataGrid = () => {
           { field: 'modeloAcuerdo', headerName: 'Modelo Acuerdo' },
           { field: 'descripcion', headerName: 'Descripción' },
           { field: 'tipoServicio', headerName: 'Tipo Servicio' },
-          { field: 'procedimientoQ', headerName: 'Pocedimiento Cantidad' },
-          { field: 'procedimientoP', headerName: 'Pocedimiento Precio' },
+          { field: 'procedimientoQ', headerName: 'Procedimiento Cantidad' },
+          { field: 'procedimientoP', headerName: 'Procedimiento Precio' },
           { field: 'procedimientoProductoSoftland', headerName: 'Pocedimiento Producto Softland' },
           {
             field: 'actions',

@@ -2,12 +2,12 @@ import { from, lastValueFrom } from 'rxjs';
 
 import { RepositoryUtils } from '@app/utils';
 
-import { TipoProcedimientoQService } from '@domains/tipo-procedimiento-q/repository/tipo-procedimiento-q.service';
+import { TipoDatoService } from './tipo-dato.service';
 import { getAllTipoDatoAsDropdownSchema } from '@domains/tipo-dato/repository/tipo-dato.schemas';
 
 class TipoDatoRepository {
   static getAllTipoDatoAsDropdown = async () => {
-    const response$ = from(TipoProcedimientoQService.getAllAsDropdown()).pipe(
+    const response$ = from(TipoDatoService.getAllAsDropdown()).pipe(
       RepositoryUtils.PIPES.getResponse(),
       RepositoryUtils.PIPES.validateWithSchema(getAllTipoDatoAsDropdownSchema),
     );
