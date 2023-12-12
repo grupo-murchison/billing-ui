@@ -1,11 +1,9 @@
 # Stage 1: Use yarn to build the app
 FROM node:14 as builder
-
 WORKDIR /usr/src/app
-
 # Instalar Dependencias
 COPY package.json yarn.lock ./
-RUN yarn
+RUN yarn --production=false
 
 # Params
 ARG NODE_ENV
