@@ -49,7 +49,7 @@ const ToolbarBase = ({ onClickNew, subComponent: SubComponent, ...props }: Toolb
           onClick={onClickNew}
           color='primary'
           variant='text'
-          sx={{ fontSize: '0.8125rem' }}
+          size='small'
           startIcon={<AddIcon />}
         >
           Alta

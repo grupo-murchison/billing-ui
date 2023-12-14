@@ -23,14 +23,13 @@ const Breadcrumb = ({ items }: BreadcrumbProps) => {
                 underline='hover'
                 variant='h4'
                 color='text.primary'
-                sx={{ fontWeight: 900 }}
               >
                 {item.label}
               </Link>
             );
           } else {
             return (
-              <Typography key={index} variant='h4' color='text.secondary' sx={{ fontWeight: 600 }}>
+              <Typography key={index} variant='h4' color='text.secondary'>
                 {item.label}
               </Typography>
             );

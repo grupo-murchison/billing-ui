@@ -17,27 +17,26 @@ function FormSelect({
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
 
-  const inputLabel = label || name;
-
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
         <FormControl fullWidth disabled={disabled} error={!!error?.message}>
-          <InputLabel>{inputLabel}</InputLabel>
+          <InputLabel htmlFor='custom-textfield' shrink={false} sx={{ position: 'absolute', top: 0, left: -14 }}>
+            {label || name}
+          </InputLabel>
+
           <Select
             readOnly={readOnly}
             {...field}
-            value={field.value === undefined ||
-              field.value === null ||
-              options.length === 0 ? '' : field.value}
-            label={inputLabel}
+            value={field.value === undefined || field.value === null || options.length === 0 ? '' : field.value}
             onChange={(_, data) => {
               field.onChange(_);
               onChangeProp && onChangeProp(data);
             }}
             MenuProps={{ disableScrollLock: true }}
+            sx={{ marginTop: '3.25rem' }}
           >
             {fullOptions.length <= 0 && <MenuItem value={emptyValues[0].value}>{emptyValues[0].label}</MenuItem>}
 
@@ -48,6 +47,7 @@ function FormSelect({
                 </MenuItem>
               ))}
           </Select>
+
           {!!error && <FormHelperText>{error?.message}</FormHelperText>}
         </FormControl>
       )}
