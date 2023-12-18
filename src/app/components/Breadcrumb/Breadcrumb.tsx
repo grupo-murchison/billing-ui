@@ -2,10 +2,14 @@ import { Link as RouterLink } from 'react-router-dom';
 
 import { Breadcrumbs, Link, Stack, Typography } from '@mui/material';
 import { NavigateNextIcon } from '@assets/icons';
+import { useTranslation } from 'react-i18next';
 
 
 const Breadcrumb = ({ items }: BreadcrumbProps) => {
-  const breadcrumbs = [{ label: 'Inicio', path: '/' }].concat(items);
+
+  const { t, i18n } = useTranslation();
+  
+  const breadcrumbs = [{ label: t('breadcrumb.inicio') , path: '/' }].concat(items);
 
   return (
     <Stack spacing={2} marginBottom={2}>

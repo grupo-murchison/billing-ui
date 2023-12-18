@@ -7,9 +7,14 @@ import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { CssBaseline } from '@mui/material';
 
+import { useTranslation} from 'react-i18next';
+
 import customTheme from '@assets/theme';
 
 const App = () => {
+  
+  const { t, i18n } = useTranslation();
+
   useEffect(() => {
     document.title = 'Billing';
   }, []);

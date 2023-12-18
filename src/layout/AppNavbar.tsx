@@ -21,6 +21,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Navbar = () => {
+  
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
 
