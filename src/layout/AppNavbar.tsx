@@ -6,6 +6,7 @@ import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
+import LanguageSelector from '@app/components/LanguageSelector/LanguageSelector';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -78,6 +79,8 @@ const Navbar = () => {
               }}
             />
             <Typography variant='h6'>Nombre de usuario</Typography>
+
+            <LanguageSelector/>
           </Stack>
         </Stack>
       </Toolbar>
