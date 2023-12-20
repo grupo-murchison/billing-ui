@@ -27,14 +27,14 @@ const EventoCampoCreate = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-    setError
+    setError,
   } = useForm<EventoCampoCreateSchemaType>({
     defaultValues: {
-      codigo:  '',
-      denominacion:  '',
-      descripcion:  '',
+      codigo: '',
+      denominacion: '',
+      descripcion: '',
       campo: '',
-      evento: eventoId ? (+eventoId) : '',
+      evento: eventoId ? +eventoId : '',
       tipoDatoId: '',
     },
     resolver: zodResolver(EventoCampoCreateSchema),
@@ -42,24 +42,25 @@ const EventoCampoCreate = () => {
 
   const onSubmit: SubmitHandler<EventoCampoCreateSchemaType> = useCallback(
     async data => {
-      console.log('data OnSubmit', data)
-      await EventoCampoRepository.createEventoCampo(data).then(exito => {
-        mainDataGrid.reload();
-        _navigate(`/evento/${eventoId}`);
-      }).catch(err => {
-        const error = JSON.parse(err.message)
-        if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
-          confirmDialog.open({
-            type: 'reject',
-            title: 'No es posible realizar esta acción',
-            message: `${error.message}`,
-            onClickYes() {
-              confirmDialog.close()
-            }
-          });
-        }
-      })
+      await EventoCampoRepository.createEventoCampo(data)
+        .then(exito => {
+          mainDataGrid.reload();
+          _navigate(`/evento/${eventoId}`);
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid, eventoId],
   );
@@ -80,7 +81,7 @@ const EventoCampoCreate = () => {
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
           <Col md={6}>
@@ -89,7 +90,7 @@ const EventoCampoCreate = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled value={1} label='Evento' name='evento' />
+            <FormTextField control={control} disabled label='Evento' name='evento' />
           </Col>
           <Col md={6}>
             {/* <FormTextField control={control} disabled={isSubmitting} label='Tipo Dato' name='tipoDatoId' /> */}

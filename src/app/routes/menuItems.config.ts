@@ -185,6 +185,13 @@ const otros: IMenuItemGroup = {
           url: '/evento',
           breadcrumbs: false,
         },
+        {
+          id: 'tablasDinamicas',
+          title: 'Tablas Dinámicas',
+          type: 'item',
+          url: '/tablas-dinamicas',
+          breadcrumbs: false,
+        },
       ],
     },
   ],

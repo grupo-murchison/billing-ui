@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -28,14 +28,14 @@ const EventoCampoEdit = () => {
     handleSubmit,
     formState: { isSubmitting },
     setError,
-    reset
+    reset,
   } = useForm<EventoCampoEditSchemaType>({
     defaultValues: {
-      codigo:  '',
-      denominacion:  '',
-      descripcion:  '',
+      codigo: '',
+      denominacion: '',
+      descripcion: '',
       campo: '',
-      evento: eventoId ? (+eventoId) : '',
+      evento: eventoId ? +eventoId : '',
       tipoDatoId: '',
     },
     resolver: zodResolver(EventoCampoEditSchema),
@@ -43,23 +43,25 @@ const EventoCampoEdit = () => {
 
   const onSubmit: SubmitHandler<EventoCampoEditSchemaType> = useCallback(
     async data => {
-      await EventoCampoRepository.updateEventoCampo({...data, id: Number(eventoCampoId)}).then(exito => {
-        mainDataGrid.reload();
-        _navigate(`/evento/${eventoId}`);
-      }).catch(err => {
-        const error = JSON.parse(err.message)
-        if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
-          confirmDialog.open({
-            type: 'reject',
-            title: 'No es posible realizar esta acción',
-            message: `${error.message}`,
-            onClickYes() {
-              confirmDialog.close()
-            }
-          });
-        }
-      })
+      await EventoCampoRepository.updateEventoCampo({ ...data, id: Number(eventoCampoId) })
+        .then(exito => {
+          mainDataGrid.reload();
+          _navigate(`/evento/${eventoId}`);
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid, eventoId],
   );
@@ -69,12 +71,10 @@ const EventoCampoEdit = () => {
   }, [_navigate, eventoId]);
 
   useEffect(() => {
-    EventoCampoRepository.getEventoCampoById(eventoCampoId || '').then(
-      ({ data }) => {
-        reset(data);
-      },
-    );
-  }, [eventoId, reset]);
+    EventoCampoRepository.getEventoCampoById(eventoCampoId || '').then(({ data }) => {
+      reset(data);
+    });
+  }, [eventoId, eventoCampoId, reset]);
 
   return (
     <Modal isOpen onClose={handleClose} title='Editar Campo'>
@@ -88,7 +88,7 @@ const EventoCampoEdit = () => {
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
           <Col md={6}>
@@ -97,7 +97,7 @@ const EventoCampoEdit = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled value={1} label='Evento' name='evento' />
+            <FormTextField control={control} disabled label='Evento' name='evento' />
           </Col>
           <Col md={6}>
             <TipoDatoDropdown control={control} name='tipoDatoId' disabled={isSubmitting} label='Tipo' />
