@@ -8,13 +8,11 @@ import { EventoRepository } from '@domains/evento/repository';
 import { EventoCampoRoutes } from '@domains/evento-campo/navigation';
 
 const EventoView = () => {
-
   const { eventoId } = useParams();
   const _navigate = useNavigate();
 
   const [eventoData, setEventoData] = useState<AnyValue>();
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-
 
   const handleClose = useCallback(() => {
     _navigate('/evento');
@@ -32,17 +30,19 @@ const EventoView = () => {
   }
 
   return (
-      <Modal isOpen onClose={handleClose} title='Detalle Evento'>
+    <Modal isOpen onClose={handleClose} title='Detalle Evento'>
       <Form>
         <Row>
-        <Col md={6}>
-            <TextField  label='Código' id='codigo' InputProps={{
+          <Col md={6}>
+            <TextField
+              label='Código'
+              id='codigo'
+              InputProps={{
                 readOnly: true,
               }}
               fullWidth
               defaultValue={eventoData.codigo}
-              />
-              
+            />
           </Col>
           <Col md={6}>
             <TextField
@@ -57,7 +57,7 @@ const EventoView = () => {
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <TextField
               id='descripcion'
               label='Descripción'
@@ -88,8 +88,8 @@ const EventoView = () => {
           </Typography>
         </FormLabel>
       </Box>
-      <EventoCampoRoutes eventoId={eventoData.id}/>
-      </Modal>
+      <EventoCampoRoutes />
+    </Modal>
   );
 };
 
