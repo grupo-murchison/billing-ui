@@ -36,11 +36,19 @@ Ingresar por terminal al root del proyecto y ejecutar
 # Construir la imagen desde Dockerfile
 $ docker build -t billing-ui .
 
+# Apuntando a .env.test
+$ docker build -t billing-ui --build-arg NODE_ENV=test .
+
+# Apuntando a .env.production
+$ docker build -t billing-ui --build-arg NODE_ENV=production .
+```
+
+```bash
 # Crear y Correr el contenedor
-$ docker run --name billingUI -p 8080:8080 billing-ui
+$ docker run --name billing-ui -p 8080:8080 billing-ui
 
 # Correr el contenedor ya creado.
-$ docker start -i billingUI
+$ docker start -i billing-ui
 ```
 
 Abrir el navegador en http://localhost:8080/

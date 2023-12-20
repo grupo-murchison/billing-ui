@@ -87,7 +87,9 @@ export default function AsyncAutocomplete({
           open={open}
           options={options}
           // renderOption={(option) => <span>{option.label}</span>}
-          renderInput={params => <AutocompleteRenderInput {...params} label={label} loading={loading} error={error} />}
+          renderInput={params => (
+            <AutocompleteRenderInput {...params} label={label || name} loading={loading} error={error} />
+          )}
           // value={value}
         />
       )}
