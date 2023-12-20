@@ -10,7 +10,7 @@ ARG NODE_ENV
 
 # Environment
 ENV mode $NODE_ENV
-# ENV NODE_ENV=production
+ENV NODE_ENV=production
 RUN echo "ARG NODE_ENV (mode):" $mode
 
 # BUILD APP
