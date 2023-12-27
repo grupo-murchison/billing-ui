@@ -34,13 +34,13 @@ const EventoServicio = () => {
   } = useForm<AnyValue>({
     defaultValues: {
       numeroSecuenciaCalculo: '',
-      clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
-      conceptoAcuerdoId: { value: '',  label: '' },
+      conceptoAcuerdoId: null,
       fechaDesde: null,
       fechaHasta: null,
     },
-    resolver: zodResolver(ValidationSchemaEventosServicioFilters),    
+    resolver: zodResolver(ValidationSchemaEventosServicioFilters),
   });
 
   const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
@@ -64,7 +64,7 @@ const EventoServicio = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} label='Número Secuencia Calculo' name='numeroSecuenciaCalculo' disabled={isSubmitting} type='number'/>
+            <FormTextField control={control} label='Número Secuencia Calculo' name='numeroSecuenciaCalculo' disabled={isSubmitting} type='number' />
           </Col>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
@@ -75,7 +75,7 @@ const EventoServicio = () => {
             <FormTextField control={control} disabled={isSubmitting} label='Número Contrato' name='contrato' />
           </Col>
           <Col sm={12} md={6}>
-            <ConcepoAcuerdoAutoComplete  control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
+            <ConcepoAcuerdoAutoComplete control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
           </Col>
         </Row>
         <Row>
@@ -132,7 +132,7 @@ const EventoServicio = () => {
           { field: 'evDaño', headerName: 'Daño', minWidth: 115 },
           { field: 'evTipoDaño', headerName: 'Tipo Daño', minWidth: 115 },
           { field: 'evCategorizacion', headerName: 'Categorizacion', minWidth: 130 },
-          { field: 'evModelo', headerName: 'Modelo', minWidth: 130  },
+          { field: 'evModelo', headerName: 'Modelo', minWidth: 130 },
           { field: 'evPieza', headerName: 'Pieza', minWidth: 100 },
           { field: 'evEstado', headerName: 'Estado', minWidth: 115 },
           { field: 'evDUA', headerName: 'DUA', minWidth: 115 },

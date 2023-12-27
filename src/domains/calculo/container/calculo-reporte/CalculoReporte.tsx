@@ -59,7 +59,7 @@ const CalculoReporte = () => {
     resetField,
   } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
       nroContrato: '',
