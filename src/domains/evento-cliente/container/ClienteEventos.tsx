@@ -31,7 +31,7 @@ const EventoClientes = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       fechaDesde: null,
       fechaHasta: null,
       eventoId: [],
@@ -137,8 +137,8 @@ const EventoClientes = () => {
           },
         ]}
         repositoryFunc={EventoClienteRepository.getAllEventDetails}
-        // toolbar={toolbarAdicionales}
-        // getRows={rows => console.log('rows', rows) }
+      // toolbar={toolbarAdicionales}
+      // getRows={rows => console.log('rows', rows) }
       />
     </>
   );
