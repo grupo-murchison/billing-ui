@@ -15,6 +15,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DatosDinamicosContext } from '../../contexts';
 import DatosDinamicosRepository from '../../repository/datos-dinamicos.repository';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
+import { TablasDinamicasDropdown } from '@domains/metadatos/tablas-dinamicas/container/tablas-dinamicas-dropdown';
 
 const DatosDinamicosCreate = () => {
   const _navigate = useNavigate();
@@ -72,7 +73,7 @@ const DatosDinamicosCreate = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled label='Tabla' name='tablaId' />
+            <TablasDinamicasDropdown control={control} disabled label='Tabla' name='tablaId' />
           </Col>
           <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Código' name='campoCodigo' />

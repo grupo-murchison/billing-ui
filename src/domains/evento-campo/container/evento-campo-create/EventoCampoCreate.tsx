@@ -15,6 +15,7 @@ import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { useConfirmDialog } from '@app/hooks';
 import { TipoDatoDropdown } from '@domains/tipo-dato/container/tipo-dato-dropdown';
+import { EventoDropdown } from '@domains/evento/container/evento-dropdown';
 
 const EventoCampoCreate = () => {
   const _navigate = useNavigate();
@@ -90,11 +91,10 @@ const EventoCampoCreate = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled label='Evento' name='evento' />
+            <EventoDropdown control={control} name='evento' readOnly label='Evento' />
           </Col>
           <Col md={6}>
-            {/* <FormTextField control={control} disabled={isSubmitting} label='Tipo Dato' name='tipoDatoId' /> */}
-            <TipoDatoDropdown control={control} name='tipoDatoId' disabled={isSubmitting} label='Tipo' />
+            <TipoDatoDropdown control={control} name='tipoDatoId' disabled={isSubmitting} label='Tipo Dato' />
           </Col>
         </Row>
       </Form>
