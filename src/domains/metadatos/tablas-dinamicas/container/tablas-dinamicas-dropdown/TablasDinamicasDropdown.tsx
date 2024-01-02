@@ -3,13 +3,13 @@ import { useEffect, useState } from 'react';
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
 import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
-import { EventoRepository } from '@domains/evento/repository';
+import { TablasDinamicasRepository } from '../../repository';
 
-const EventoDropdown = ({ ...props }: EventoDropdownProps) => {
+const TablasDinamicasDropdown = ({ ...props }: TablasDinamicasDropdownProps) => {
   const [options, setOptions] = useState<DropdownSchemaType>([]);
 
   useEffect(() => {
-    EventoRepository.getAllEventoAsDropdown()
+    TablasDinamicasRepository.getAllTablasDinamicasAsDropdown()
       .then(({ data }) => {
         setOptions(data);
       })
@@ -21,8 +21,8 @@ const EventoDropdown = ({ ...props }: EventoDropdownProps) => {
   return <FormSelect {...props} options={options} />;
 };
 
-interface EventoDropdownProps extends Omit<FormSelectProps, 'options'> {
+interface TablasDinamicasDropdownProps extends Omit<FormSelectProps, 'options'> {
   options?: undefined;
 }
 
-export default EventoDropdown;
+export default TablasDinamicasDropdown;
