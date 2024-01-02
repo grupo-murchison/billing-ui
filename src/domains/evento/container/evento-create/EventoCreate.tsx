@@ -42,11 +42,11 @@ const EventoCreate = () => {
     async data => {
       await EventoRepository.createEvento(data).then(exito => {
         mainDataGrid.reload();
-        _navigate('/evento');        
+        _navigate('/evento');
       }).catch(err => {
         const error = JSON.parse(err.message)
         if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
+          setError('codigo', { type: 'custom', message: error.message });
           confirmDialog.open({
             type: 'reject',
             title: 'No es posible realizar esta acción',
@@ -77,7 +77,7 @@ const EventoCreate = () => {
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
           <Col md={6}>
