@@ -18,7 +18,7 @@ const EventoRoutes = () => {
         }
       >
         <Route path='/evento/create' element={<EventoCreate />} />
-        <Route path='/evento/:eventoId/edit' element={<EventoEdit />} />
+        <Route path='/evento/:eventoId/edit/*' element={<EventoEdit />} />
         <Route path='/evento/:eventoId/*' element={<EventoView />} />
       </Route>
       <Route path='/evento/*' element={<Navigate to='/' replace />} />

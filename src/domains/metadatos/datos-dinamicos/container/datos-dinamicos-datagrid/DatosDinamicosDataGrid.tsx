@@ -1,6 +1,6 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
-import { useNavigate, Outlet, useParams } from 'react-router-dom';
+import { useNavigate, Outlet, useParams, useLocation } from 'react-router-dom';
 
 import { useConfirmDialog } from '@app/hooks';
 
@@ -17,19 +17,22 @@ const DatosDinamicosDataGrid = () => {
 
   const { mainDataGrid } = useContext(DatosDinamicosContext);
   const { tablaId } = useParams();
+  const url = useLocation();
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/tablas-dinamicas/${tablaId}/datos-dinamicos/create`);
+    _navigate(`/tablas-dinamicas/${tablaId}/edit/datos-dinamicos/create`);
   }, [_navigate]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/tablas-dinamicas/${tablaId}/datos-dinamicos/${id}/edit`);
+      _navigate(`/tablas-dinamicas/${tablaId}/edit/datos-dinamicos/${id}/edit`);
     },
     [_navigate],
   );
+
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
@@ -58,35 +61,42 @@ const DatosDinamicosDataGrid = () => {
   return (
     <>
       <DataGrid
-        onClickNew={handleClickCreate}
+        onClickNew={canEdit ? handleClickCreate : undefined}
         hookRef={mainDataGrid.ref}
         columns={[
           { field: 'campoCodigo', headerName: 'Código' },
           { field: 'campoValor', headerName: 'Valor' },
           { field: 'activo', headerName: 'Activo', valueGetter: params => (params.value ? 'Si' : 'No') },
           {
-            field: 'actions',
+            field: 'acciones',
             type: 'actions',
             headerName: 'Acciones',
             headerAlign: 'center',
             align: 'center',
             flex: 0.5,
-            getActions: params => [
-              <GridActionsCellItem
-                key={2}
-                icon={<EditOutlinedIcon />}
-                label='Editar'
-                onClick={() => handleClickEdit(params.row.id)}
-                showInMenu
-              />,
-              <GridActionsCellItem
-                key={3}
-                icon={<DeleteOutlineIcon />}
-                label='Eliminar'
-                onClick={() => handleClickDelete(params.row)}
-                showInMenu
-              />,
-            ],
+            getActions: params => {
+              return [
+                <>
+                  {canEdit && (
+                    <>
+                      <GridActionsCellItem
+                        key={2}
+                        icon={<EditOutlinedIcon />}
+                        label='Editar'
+                        onClick={() => handleClickEdit(params.row.id)}
+                      />
+                      ,
+                      <GridActionsCellItem
+                        key={3}
+                        icon={<DeleteOutlineIcon />}
+                        label='Eliminar'
+                        onClick={() => handleClickDelete(params.row)}
+                      />
+                    </>
+                  )}
+                </>,
+              ];
+            },
           },
         ]}
         repositoryFunc={DatosDinamicosRepository.getAllDatosDinamicosPaginated}

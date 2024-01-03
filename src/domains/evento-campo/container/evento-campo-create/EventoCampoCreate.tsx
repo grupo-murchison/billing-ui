@@ -46,7 +46,7 @@ const EventoCampoCreate = () => {
       await EventoCampoRepository.createEventoCampo(data)
         .then(exito => {
           mainDataGrid.reload();
-          _navigate(`/evento/${eventoId}`);
+          _navigate(`/evento/${eventoId}/edit`);
         })
         .catch(err => {
           const error = JSON.parse(err.message);
@@ -67,7 +67,7 @@ const EventoCampoCreate = () => {
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/evento/${eventoId}`);
+    _navigate(`/evento/${eventoId}/edit`);
   }, [_navigate, eventoId]);
 
   return (

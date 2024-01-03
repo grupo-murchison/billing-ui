@@ -44,7 +44,7 @@ const DatosDinamicosCreate = () => {
       await DatosDinamicosRepository.createDatosDinamicos(data)
         .then(exito => {
           mainDataGrid.reload();
-          _navigate(`/tablas-dinamicas/${tablaId}`);
+          _navigate(`/tablas-dinamicas/${tablaId}/edit`);
         })
         .catch(err => {
           const error = JSON.parse(err.message);
@@ -65,7 +65,7 @@ const DatosDinamicosCreate = () => {
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/tablas-dinamicas/${tablaId}`);
+    _navigate(`/tablas-dinamicas/${tablaId}/edit`);
   }, [_navigate]);
 
   return (

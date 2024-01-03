@@ -51,7 +51,7 @@ const DatosDinamicosEdit = () => {
   }, [tablaId, datoId, reset]);
 
   const handleClose = useCallback(() => {
-    _navigate(`/tablas-dinamicas/${tablaId}`);
+    _navigate(`/tablas-dinamicas/${tablaId}/edit`);
   }, [_navigate]);
 
   const onSubmit: SubmitHandler<DatosDinamicosEditSchemaType> = useCallback(
@@ -91,7 +91,7 @@ const DatosDinamicosEdit = () => {
             <TablasDinamicasDropdown control={control} disabled label='Tabla' name='tablaId' />
           </Col>
           <Col md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Código' name='campoCodigo' />
+            <FormTextField control={control} disabled label='Código' name='campoCodigo' />
           </Col>
         </Row>
         <Row>
