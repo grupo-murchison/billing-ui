@@ -37,7 +37,7 @@ const TablasDinamicasCreate = () => {
   const onSubmit: SubmitHandler<TablasDinamicasCreateSchemaType> = useCallback(
     async data => {
       await TablasDinamicasRepository.createTablasDinamicas(data)
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
           _navigate('/tablas-dinamicas');
         })

@@ -44,7 +44,7 @@ const EventoCampoCreate = () => {
   const onSubmit: SubmitHandler<EventoCampoCreateSchemaType> = useCallback(
     async data => {
       await EventoCampoRepository.createEventoCampo(data)
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
           _navigate(`/evento/${eventoId}/edit`);
         })

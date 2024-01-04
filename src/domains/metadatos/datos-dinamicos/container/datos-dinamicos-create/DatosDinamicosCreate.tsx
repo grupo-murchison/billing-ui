@@ -42,7 +42,7 @@ const DatosDinamicosCreate = () => {
   const onSubmit: SubmitHandler<DatosDinamicosCreateSchemaType> = useCallback(
     async data => {
       await DatosDinamicosRepository.createDatosDinamicos(data)
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
           _navigate(`/tablas-dinamicas/${tablaId}/edit`);
         })

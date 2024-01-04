@@ -54,7 +54,7 @@ const EventoEdit = () => {
   const onSubmit: SubmitHandler<EventoEditSchemaType> = useCallback(
     async data => {
       await EventoRepository.updateEvento({ ...data, id: Number(eventoId) })
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
           _navigate('/evento');
         })

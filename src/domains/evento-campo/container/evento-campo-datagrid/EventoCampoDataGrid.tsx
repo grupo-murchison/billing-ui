@@ -1,9 +1,9 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 import { useConfirmDialog } from '@app/hooks';
 import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { DataGrid } from '@app/components/DataGrid';
@@ -14,6 +14,7 @@ const EventoCampoDataGrid = () => {
 
   const { eventoId } = useParams();
   const url = useLocation();
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const confirmDialog = useConfirmDialog();
 
@@ -28,7 +29,16 @@ const EventoCampoDataGrid = () => {
     [_navigate, eventoId],
   );
 
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/evento/${eventoId}/edit/evento-campo/${id}`);
+      } else {
+        _navigate(`/evento/${eventoId}/evento-campo/${id}`);
+      }
+    },
+    [_navigate],
+  );
 
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
@@ -87,6 +97,12 @@ const EventoCampoDataGrid = () => {
             getActions: params => {
               return [
                 <>
+                  <GridActionsCellItem
+                    key={1}
+                    icon={<ViewIcon />}
+                    label='Vista'
+                    onClick={() => handleClickView(params.row.id)}
+                  />
                   {canEdit && (
                     <>
                       <GridActionsCellItem
@@ -95,7 +111,6 @@ const EventoCampoDataGrid = () => {
                         label='Editar'
                         onClick={() => handleClickEdit(params.row.id)}
                       />
-                      ,
                       <GridActionsCellItem
                         key={3}
                         icon={<DeleteOutlineIcon />}

@@ -45,9 +45,9 @@ const EventoCampoEdit = () => {
   const onSubmit: SubmitHandler<EventoCampoEditSchemaType> = useCallback(
     async data => {
       await EventoCampoRepository.updateEventoCampo({ ...data, id: Number(eventoCampoId) })
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
-          _navigate(`/evento/${eventoId}`);
+          _navigate(`/evento/${eventoId}/edit`);
         })
         .catch(err => {
           const error = JSON.parse(err.message);

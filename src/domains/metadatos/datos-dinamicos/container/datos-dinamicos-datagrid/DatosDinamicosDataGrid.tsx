@@ -8,7 +8,7 @@ import DataGrid from '@app/components/DataGrid/DataGrid';
 
 import { DatosDinamicosContext } from '../../contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 import { labelAndPath } from '../../constants';
 import DatosDinamicosRepository from '../../repository/datos-dinamicos.repository';
 
@@ -18,6 +18,7 @@ const DatosDinamicosDataGrid = () => {
   const { mainDataGrid } = useContext(DatosDinamicosContext);
   const { tablaId } = useParams();
   const url = useLocation();
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const confirmDialog = useConfirmDialog();
 
@@ -32,7 +33,16 @@ const DatosDinamicosDataGrid = () => {
     [_navigate],
   );
 
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/tablas-dinamicas/${tablaId}/edit/datos-dinamicos/${id}`);
+      } else {
+        _navigate(`/tablas-dinamicas/${tablaId}/datos-dinamicos/${id}`);
+      }
+    },
+    [_navigate],
+  );
 
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
@@ -77,6 +87,12 @@ const DatosDinamicosDataGrid = () => {
             getActions: params => {
               return [
                 <>
+                  <GridActionsCellItem
+                    key={1}
+                    icon={<ViewIcon />}
+                    label='Vista'
+                    onClick={() => handleClickView(params.row.id)}
+                  />
                   {canEdit && (
                     <>
                       <GridActionsCellItem
@@ -85,7 +101,6 @@ const DatosDinamicosDataGrid = () => {
                         label='Editar'
                         onClick={() => handleClickEdit(params.row.id)}
                       />
-                      ,
                       <GridActionsCellItem
                         key={3}
                         icon={<DeleteOutlineIcon />}
