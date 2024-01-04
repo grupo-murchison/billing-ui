@@ -17,7 +17,7 @@ const TablasDinamicasRoutes = () => {
         }
       >
         <Route path='/tablas-dinamicas/create' element={<TablasDinamicasCreate />} />
-        <Route path='/tablas-dinamicas/:tablaId/edit' element={<TablasDinamicasEdit />} />
+        <Route path='/tablas-dinamicas/:tablaId/edit/*' element={<TablasDinamicasEdit />} />
         <Route path='/tablas-dinamicas/:tablaId/*' element={<TablasDinamicasView />} />
       </Route>
       <Route path='/tablas-dinamicas/*' element={<Navigate to='/' replace />} />

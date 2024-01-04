@@ -13,6 +13,8 @@ import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { TablasDinamicasContext } from '../../contexts';
 import { TablasDinamicasEditSchema, TablasDinamicasEditSchemaType } from './schemas';
 import TablasDinamicasRepository from '../../repository/tablas-dinamicas.repository';
+import { Box, FormLabel, Typography } from '@mui/material';
+import { DatosDinamicosRoutes } from '@domains/metadatos/datos-dinamicos/navigation';
 
 const TablasDinamicasEdit = () => {
   const { tablaId } = useParams();
@@ -72,6 +74,14 @@ const TablasDinamicasEdit = () => {
           </Col>
         </Row>
       </Form>
+      <Box my={2}>
+        <FormLabel component='legend'>
+          <Typography variant='h6' component='div'>
+            Datos dinámicos
+          </Typography>
+        </FormLabel>
+      </Box>
+      <DatosDinamicosRoutes />
     </Modal>
   );
 };

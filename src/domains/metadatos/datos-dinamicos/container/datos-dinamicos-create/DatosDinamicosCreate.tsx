@@ -42,9 +42,9 @@ const DatosDinamicosCreate = () => {
   const onSubmit: SubmitHandler<DatosDinamicosCreateSchemaType> = useCallback(
     async data => {
       await DatosDinamicosRepository.createDatosDinamicos(data)
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
-          _navigate(`/tablas-dinamicas/${tablaId}`);
+          _navigate(`/tablas-dinamicas/${tablaId}/edit`);
         })
         .catch(err => {
           const error = JSON.parse(err.message);
@@ -65,7 +65,7 @@ const DatosDinamicosCreate = () => {
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/tablas-dinamicas/${tablaId}`);
+    _navigate(`/tablas-dinamicas/${tablaId}/edit`);
   }, [_navigate]);
 
   return (

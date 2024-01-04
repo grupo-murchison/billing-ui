@@ -45,9 +45,9 @@ const EventoCampoEdit = () => {
   const onSubmit: SubmitHandler<EventoCampoEditSchemaType> = useCallback(
     async data => {
       await EventoCampoRepository.updateEventoCampo({ ...data, id: Number(eventoCampoId) })
-        .then(exito => {
+        .then(() => {
           mainDataGrid.reload();
-          _navigate(`/evento/${eventoId}`);
+          _navigate(`/evento/${eventoId}/edit`);
         })
         .catch(err => {
           const error = JSON.parse(err.message);
@@ -68,7 +68,7 @@ const EventoCampoEdit = () => {
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/evento/${eventoId}`);
+    _navigate(`/evento/${eventoId}/edit`);
   }, [_navigate, eventoId]);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ const EventoCampoEdit = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' />
+            <FormTextField control={control} disabled label='Código' name='codigo' />
           </Col>
           <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Denominación' name='denominacion' />

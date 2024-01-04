@@ -1,9 +1,9 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
-import { Outlet, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 import { useConfirmDialog } from '@app/hooks';
 import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { DataGrid } from '@app/components/DataGrid';
@@ -13,18 +13,31 @@ const EventoCampoDataGrid = () => {
   const { mainDataGrid } = useContext(EventoCampoContext);
 
   const { eventoId } = useParams();
+  const url = useLocation();
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/evento/${eventoId}/evento-campo/create`);
+    _navigate(`/evento/${eventoId}/edit/evento-campo/create`);
   }, [_navigate, eventoId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/evento/${eventoId}/evento-campo/${id}/edit`);
+      _navigate(`/evento/${eventoId}/edit/evento-campo/${id}/edit`);
     },
     [_navigate, eventoId],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/evento/${eventoId}/edit/evento-campo/${id}`);
+      } else {
+        _navigate(`/evento/${eventoId}/evento-campo/${id}`);
+      }
+    },
+    [_navigate],
   );
 
   const handleClickDelete = useCallback(
@@ -54,7 +67,7 @@ const EventoCampoDataGrid = () => {
   return (
     <>
       <DataGrid
-        onClickNew={handleClickCreate}
+        onClickNew={canEdit ? handleClickCreate : undefined}
         hookRef={mainDataGrid.ref}
         repositoryFunc={EventoCampoRepository.getAllEventoCampoPaginated}
         columns={[
@@ -81,20 +94,34 @@ const EventoCampoDataGrid = () => {
             headerAlign: 'center',
             align: 'center',
             flex: 0.5,
-            getActions: params => [
-              <GridActionsCellItem
-                key={2}
-                icon={<EditOutlinedIcon />}
-                label='Editar'
-                onClick={() => handleClickEdit(params.row.id)}
-              />,
-              <GridActionsCellItem
-                key={3}
-                icon={<DeleteOutlineIcon />}
-                label='Eliminar'
-                onClick={() => handleClickDelete(params.row)}
-              />,
-            ],
+            getActions: params => {
+              return [
+                <>
+                  <GridActionsCellItem
+                    key={1}
+                    icon={<ViewIcon />}
+                    label='Vista'
+                    onClick={() => handleClickView(params.row.id)}
+                  />
+                  {canEdit && (
+                    <>
+                      <GridActionsCellItem
+                        key={2}
+                        icon={<EditOutlinedIcon />}
+                        label='Editar'
+                        onClick={() => handleClickEdit(params.row.id)}
+                      />
+                      <GridActionsCellItem
+                        key={3}
+                        icon={<DeleteOutlineIcon />}
+                        label='Eliminar'
+                        onClick={() => handleClickDelete(params.row)}
+                      />
+                    </>
+                  )}
+                </>,
+              ];
+            },
           },
         ]}
       />
