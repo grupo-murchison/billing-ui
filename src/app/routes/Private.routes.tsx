@@ -18,6 +18,7 @@ import { CalculoRoutes } from '@domains/calculo/navigation';
 import { EventoRoutes } from '@domains/evento/navigation';
 import { TablasDinamicasRoutes } from '@domains/metadatos/tablas-dinamicas/navigation';
 import RootRoute from '@domains/root/Root.route';
+import { AlertaRoutes } from '@domains/alertas/navigation';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -38,9 +39,10 @@ const PrivateRoutes = () => {
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
         <CalculoRoutes />
-        <EventoRoutes/>
-        <TablasDinamicasRoutes/>
+        <EventoRoutes />
+        <TablasDinamicasRoutes />
         <RootRoute />
+        <AlertaRoutes />
       </MainLayout>
     </ComponentInjectorProvider>
   );

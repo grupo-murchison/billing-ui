@@ -192,6 +192,13 @@ const otros: IMenuItemGroup = {
           url: '/tablas-dinamicas',
           breadcrumbs: false,
         },
+        {
+          id: 'alertasAlarams',
+          title: 'Alerta/Alarma',
+          type: 'item',
+          url: '/alerta',
+          breadcrumbs: false,
+        },
       ],
     },
   ],
