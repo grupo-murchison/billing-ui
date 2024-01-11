@@ -61,6 +61,7 @@ const ContratoEdit = () => {
     control,
     resetField,
     setValue,
+    getValues,
     formState: { isSubmitting, dirtyFields, errors: formErrors },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {
@@ -206,9 +207,9 @@ const ContratoEdit = () => {
           <SociedadDropdown control={control} name='sociedadId' label='Sociedad' disabled={isSubmitting} />
         </Col>
       </Row>
-      <Row>
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-        {/* <Col md={6}>
+      {/* <Row> */}
+      {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
+      {/* <Col md={6}>
           <ClienteDropdown
             control={control}
             id='destinatarioId'
@@ -217,8 +218,8 @@ const ContratoEdit = () => {
             // value={watch('destinatarioId')}
           />
         </Col> */}
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-      </Row>
+      {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
+      {/* </Row> */}
       <Row>
         <Col md={6}>
           <ModeloAcuerdoDropdown
@@ -272,7 +273,7 @@ const ContratoEdit = () => {
       <Row>
         <Col md={4}>
           {/* TODO reemplzar por el select de estados la pantalla Facturacion, sin emptyOptions */}
-          <FormCheckbox control={control} name='pausado' label='Pausado' />
+          <FormCheckbox control={control} name='pausado' label='Pausado' checked={getValues('pausado')} />
         </Col>
       </Row>
       <Row>

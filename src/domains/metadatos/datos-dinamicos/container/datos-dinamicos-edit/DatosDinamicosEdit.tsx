@@ -31,13 +31,13 @@ const DatosDinamicosEdit = () => {
     formState: { isSubmitting },
     handleSubmit,
     control,
+    getValues,
     setError,
   } = useForm<DatosDinamicosEditSchemaType>({
     defaultValues: {
       tablaId: tablaId ? +tablaId : '',
       campoCodigo: '',
       campoValor: '',
-      //TODO resolver el campo "activo" al abrir la pantalla
       activo: false,
     },
     resolver: zodResolver(DatosDinamicosEditSchema),
@@ -99,7 +99,14 @@ const DatosDinamicosEdit = () => {
             <FormTextField control={control} disabled={isSubmitting} label='Valor' name='campoValor' />
           </Col>
           <Col md={6}>
-            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' disabled={isSubmitting} />
+            <FormCheckbox
+              control={control}
+              name='activo'
+              label='Activo'
+              labelPlacement='end'
+              disabled={isSubmitting}
+              checked={getValues('activo')}
+            />
           </Col>
         </Row>
       </Form>
