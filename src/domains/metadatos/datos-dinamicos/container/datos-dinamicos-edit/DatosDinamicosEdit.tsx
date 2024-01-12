@@ -37,7 +37,6 @@ const DatosDinamicosEdit = () => {
       tablaId: tablaId ? +tablaId : '',
       campoCodigo: '',
       campoValor: '',
-      //TODO resolver el campo "activo" al abrir la pantalla
       activo: false,
     },
     resolver: zodResolver(DatosDinamicosEditSchema),
