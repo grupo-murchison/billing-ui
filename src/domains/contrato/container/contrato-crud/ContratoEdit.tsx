@@ -61,7 +61,6 @@ const ContratoEdit = () => {
     control,
     resetField,
     setValue,
-    getValues,
     formState: { isSubmitting, dirtyFields, errors: formErrors },
   } = useForm<FormDataContratoEditType>({
     defaultValues: {

@@ -31,7 +31,6 @@ const DatosDinamicosEdit = () => {
     formState: { isSubmitting },
     handleSubmit,
     control,
-    getValues,
     setError,
   } = useForm<DatosDinamicosEditSchemaType>({
     defaultValues: {

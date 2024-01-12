@@ -30,7 +30,6 @@ const ProductoSoftlandEdit = () => {
     handleSubmit,
     reset,
     control,
-    getValues,
     formState: { isSubmitting },
   } = useForm<ProductoSoftlandEditSchemaType>({
     defaultValues: {
@@ -102,7 +101,7 @@ const ProductoSoftlandEdit = () => {
             />
           </Col>
           <Col md={6}>
-            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' />
+            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
