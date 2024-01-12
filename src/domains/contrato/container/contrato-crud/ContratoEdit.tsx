@@ -273,7 +273,7 @@ const ContratoEdit = () => {
       <Row>
         <Col md={4}>
           {/* TODO reemplzar por el select de estados la pantalla Facturacion, sin emptyOptions */}
-          <FormCheckbox control={control} name='pausado' label='Pausado' checked={getValues('pausado')} />
+          <FormCheckbox control={control} name='pausado' label='Pausado' />
         </Col>
       </Row>
       <Row>

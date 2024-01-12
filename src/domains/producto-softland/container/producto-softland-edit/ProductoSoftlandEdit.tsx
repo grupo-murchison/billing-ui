@@ -102,13 +102,7 @@ const ProductoSoftlandEdit = () => {
             />
           </Col>
           <Col md={6}>
-            <FormCheckbox
-              control={control}
-              name='activo'
-              label='Activo'
-              labelPlacement='end'
-              checked={getValues('activo')}
-            />
+            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' />
           </Col>
         </Row>
       </Form>

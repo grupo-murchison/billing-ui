@@ -99,14 +99,7 @@ const DatosDinamicosEdit = () => {
             <FormTextField control={control} disabled={isSubmitting} label='Valor' name='campoValor' />
           </Col>
           <Col md={6}>
-            <FormCheckbox
-              control={control}
-              name='activo'
-              label='Activo'
-              labelPlacement='end'
-              disabled={isSubmitting}
-              checked={getValues('activo')}
-            />
+            <FormCheckbox control={control} name='activo' label='Activo' labelPlacement='end' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
