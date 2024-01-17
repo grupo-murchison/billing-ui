@@ -16,7 +16,7 @@ import { ConceptoAcuerdoRoutes } from '@domains/concepto-acuerdo/navigation';
 import { ContratoRoutes } from '@domains/contrato/navigation';
 import { CalculoRoutes } from '@domains/calculo/navigation';
 import { EventoRoutes } from '@domains/evento/navigation';
-import { TablasDinamicasRoutes } from '@domains/metadatos/tablas-dinamicas/navigation';
+import { TablaDinamicaRoutes } from '@domains/metadatos/tabla-dinamica/navigation';
 import RootRoute from '@domains/root/Root.route';
 
 const PrivateRoutes = () => {
@@ -38,8 +38,8 @@ const PrivateRoutes = () => {
         <ConceptoAcuerdoRoutes />
         <ContratoRoutes />
         <CalculoRoutes />
-        <EventoRoutes/>
-        <TablasDinamicasRoutes/>
+        <EventoRoutes />
+        <TablaDinamicaRoutes />
         <RootRoute />
       </MainLayout>
     </ComponentInjectorProvider>

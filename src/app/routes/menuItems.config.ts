@@ -186,10 +186,10 @@ const otros: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
-          id: 'tablasDinamicas',
-          title: 'Tablas Dinámicas',
+          id: 'tablaDinamica',
+          title: 'Tabla Dinámica',
           type: 'item',
-          url: '/tablas-dinamicas',
+          url: '/tabla-dinamica',
           breadcrumbs: false,
         },
       ],
