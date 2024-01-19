@@ -17,17 +17,19 @@ export const EventoCampoEditSchema: ZodType<FormDataTypeEventoCampoEdit> = z.obj
     .string({ required_error: 'El campo es requerido.' })
     .min(1, { message: 'El campo es requerido.' })
     .max(250, { message: 'Ha superado el límite de caracteres' }),
-  evento: z.number({ required_error: 'El campo es requerido.' }),
+  eventoId: z.number({ required_error: 'El campo es requerido.' }),
   tipoDatoId: z.number({ required_error: 'El campo es requerido.' }),
+  tablaDinamicaId: z.number({ required_error: 'El campo es requerido.' }).nullable(),
 });
 
 export type FormDataTypeEventoCampoEdit = {
   codigo: string;
   denominacion: string;
   descripcion: string;
-  campo:string;
-  evento: number | string;
+  campo: string;
+  eventoId: number | string;
   tipoDatoId: number | string;
+  tablaDinamicaId: number | string | null;
 };
 
 export type EventoCampoEditSchemaType = z.infer<typeof EventoCampoEditSchema>;

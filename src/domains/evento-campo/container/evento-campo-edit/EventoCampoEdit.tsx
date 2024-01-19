@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { useForm, SubmitHandler } from 'react-hook-form';
 
@@ -16,6 +16,7 @@ import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { useConfirmDialog } from '@app/hooks';
 import { TipoDatoDropdown } from '@domains/tipo-dato/container/tipo-dato-dropdown';
 import { EventoDropdown } from '@domains/evento/container/evento-dropdown';
+import { TablaDinamicaDropdown } from '@domains/metadatos/tabla-dinamica/container/tabla-dinamica-dropdown';
 
 const EventoCampoEdit = () => {
   const _navigate = useNavigate();
@@ -23,6 +24,7 @@ const EventoCampoEdit = () => {
 
   const { mainDataGrid } = useContext(EventoCampoContext);
   const confirmDialog = useConfirmDialog();
+  const [disableTablaDinamica, setDisableTablaDinamica] = useState(false);
 
   const {
     control,
@@ -30,13 +32,15 @@ const EventoCampoEdit = () => {
     formState: { isSubmitting },
     setError,
     reset,
+    watch,
+    resetField,
   } = useForm<EventoCampoEditSchemaType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
       descripcion: '',
       campo: '',
-      evento: eventoId ? +eventoId : '',
+      eventoId: eventoId ? +eventoId : '',
       tipoDatoId: '',
     },
     resolver: zodResolver(EventoCampoEditSchema),
@@ -77,6 +81,17 @@ const EventoCampoEdit = () => {
     });
   }, [eventoId, eventoCampoId, reset]);
 
+  useEffect(() => {
+    const code = watch('tipoDatoId');
+    if (code === 4) {
+      resetField('tablaDinamicaId');
+      setDisableTablaDinamica(false);
+    } else {
+      resetField('tablaDinamicaId');
+      setDisableTablaDinamica(true);
+    }
+  }, [watch('tipoDatoId')]);
+
   return (
     <Modal isOpen onClose={handleClose} title='Editar Campo'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
@@ -97,11 +112,19 @@ const EventoCampoEdit = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
-            <EventoDropdown control={control} name='evento' disabled label='Evento' />
+          <Col md={4}>
+            <EventoDropdown control={control} name='eventoId' disabled label='Evento' />
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <TipoDatoDropdown control={control} name='tipoDatoId' disabled={isSubmitting} label='Tipo' />
+          </Col>
+          <Col md={4}>
+            <TablaDinamicaDropdown
+              control={control}
+              name='tablaDinamicaId'
+              disabled={isSubmitting || disableTablaDinamica}
+              label='Tabla dinámica'
+            />
           </Col>
         </Row>
       </Form>
