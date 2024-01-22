@@ -88,6 +88,16 @@ const EventoCampoDataGrid = () => {
             headerName: 'Campo',
           },
           {
+            field: 'tipoDatoId',
+            headerName: 'Tipo Dato',
+            valueGetter: ({ row }) => row?.tipoDato?.codigo || '',
+          },
+          {
+            field: 'tablaDinamicaId',
+            headerName: 'Tabla Dinámica',
+            valueGetter: ({ row }) => row?.tablaDinamica?.nombre || '',
+          },
+          {
             field: 'acciones',
             type: 'actions',
             headerName: 'Acciones',

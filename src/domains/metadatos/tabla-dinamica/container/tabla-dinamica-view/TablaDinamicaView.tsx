@@ -48,7 +48,7 @@ const TablaDinamicaView = () => {
   }
 
   return (
-    <Modal isOpen onClose={handleClose} title='Ver Tabla Dinámica'>
+    <Modal isOpen onClose={handleClose} title='Tabla Dinámica'>
       <Form isSubmitting={isSubmitting}>
         <Row>
           <Col md={6}>

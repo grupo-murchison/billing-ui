@@ -9,6 +9,7 @@ import { EventoCampoEditSchema, EventoCampoEditSchemaType } from '../evento-camp
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { EventoDropdown } from '@domains/evento/container/evento-dropdown';
 import { TipoDatoDropdown } from '@domains/tipo-dato/container/tipo-dato-dropdown';
+import { TablaDinamicaDropdown } from '@domains/metadatos/tabla-dinamica/container/tabla-dinamica-dropdown';
 
 const EventoCampoView = () => {
   const { eventoId, eventoCampoId } = useParams();
@@ -45,7 +46,7 @@ const EventoCampoView = () => {
       denominacion: '',
       descripcion: '',
       campo: '',
-      evento: eventoId ? +eventoId : '',
+      eventoId: eventoId ? +eventoId : '',
       tipoDatoId: '',
     },
     resolver: zodResolver(EventoCampoEditSchema),
@@ -55,7 +56,7 @@ const EventoCampoView = () => {
     return <></>;
   }
   return (
-    <Modal isOpen onClose={handleClose} title='Detalle Evento Campo'>
+    <Modal isOpen onClose={handleClose} title='Campo del Evento'>
       <Form>
         <Row>
           <Col md={6}>
@@ -74,11 +75,14 @@ const EventoCampoView = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
-            <EventoDropdown control={control} name='evento' readOnly label='Evento' />
+          <Col md={4}>
+            <EventoDropdown control={control} name='eventoId' readOnly label='Evento' />
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <TipoDatoDropdown control={control} name='tipoDatoId' readOnly label='Tipo' />
+          </Col>
+          <Col md={4}>
+            <TablaDinamicaDropdown control={control} name='tablaDinamicaId' readOnly label='Tabla dinámica' />
           </Col>
         </Row>
       </Form>

@@ -3,17 +3,12 @@ import { from, lastValueFrom } from 'rxjs';
 import { RepositoryUtils } from '@app/utils';
 
 import { EventoCampoService } from './evento-campo.service';
-import {
-  getAllEventoCampoAsDropdownSchema,
-} from './evento-campo.schemas';
+import { getAllEventoCampoAsDropdownSchema } from './evento-campo.schemas';
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class EventoCampoRepository {
-
-  static getAllEventoCampoPaginated = async (params: RepositoryFuncParamsPaginated) => {
-    const response$ = from(EventoCampoService.getAllPaginated(params)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-    );
+  static getAllEventoCampoPaginated = async (params: RepositoryFuncParamsPaginated, eventoId?: number) => {
+    const response$ = from(EventoCampoService.getAllPaginated(params)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };
@@ -34,9 +29,7 @@ class EventoCampoRepository {
   };
 
   static getEventoCampoByEventoId = async (eventoId: string) => {
-    const response$ = from(EventoCampoService.getByEventoId(eventoId)).pipe(
-      RepositoryUtils.PIPES.getResponse(),
-    );
+    const response$ = from(EventoCampoService.getByEventoId(eventoId)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;
   };

@@ -47,7 +47,7 @@ const DatoDinamicoView = () => {
     return <></>;
   }
   return (
-    <Modal isOpen onClose={handleClose} title='Detalles Dato Dinámico'>
+    <Modal isOpen onClose={handleClose} title='Dato Dinámico'>
       <Form>
         <Row>
           <Col md={6}>
