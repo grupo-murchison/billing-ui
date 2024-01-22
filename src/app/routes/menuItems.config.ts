@@ -2,7 +2,14 @@
 import { IMenuItemGroup } from '../../layout/interfaces/menu-items.interface';
 
 //nano
-import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
+import {
+  DescriptionIcon,
+  InventoryIcon,
+  AccountTreeIcon,
+  ReceiptIcon,
+  DashboardIcon,
+  MediationIcon,
+} from '@assets/icons';
 
 import { ROUTES } from './constants';
 
@@ -161,23 +168,16 @@ const facturaciones: IMenuItemGroup = {
   ],
 };
 
-const otros: IMenuItemGroup = {
-  id: 'otros',
+const eventos: IMenuItemGroup = {
+  id: 'eventos',
   type: 'group',
   children: [
     {
-      id: 'otros',
-      title: 'Otros',
+      id: 'eventos',
+      title: 'Eventos',
       type: 'collapse',
-      icon: InventoryIcon,
+      icon: MediationIcon,
       children: [
-        {
-          id: 'productoSoftland',
-          title: 'Producto Softland',
-          type: 'item',
-          url: '/producto-softland',
-          breadcrumbs: false,
-        },
         {
           id: 'evento',
           title: 'Evento',
@@ -197,6 +197,28 @@ const otros: IMenuItemGroup = {
   ],
 };
 
-const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, otros];
+const otros: IMenuItemGroup = {
+  id: 'otros',
+  type: 'group',
+  children: [
+    {
+      id: 'otros',
+      title: 'Otros',
+      type: 'collapse',
+      icon: InventoryIcon,
+      children: [
+        {
+          id: 'productoSoftland',
+          title: 'Producto Softland',
+          type: 'item',
+          url: '/producto-softland',
+          breadcrumbs: false,
+        },
+      ],
+    },
+  ],
+};
+
+const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, eventos, otros];
 
 export default menuItems;

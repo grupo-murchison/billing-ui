@@ -87,7 +87,7 @@ const EventoCampoCreate = () => {
   }, [watch('tipoDatoId')]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Nuevo Campo'>
+    <Modal isOpen onClose={handleClose} title='Nuevo Campo del Evento'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='create'>
         <Row>
           <Col md={6}>
