@@ -76,7 +76,7 @@ class CalculoService {
 
   static calculoFacturacionMasiva = async (data: FormDataTypeCalculoFacturacionMasiva): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/automatica`, data),
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/automatico`, data),
     );
     return [response, error];
   };

@@ -79,9 +79,10 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
           <TextField
             label={'Total Calculado'}
             name='ccTotalCalculado'
-            value={detalle ? detalle[0]?.ccTotalCalculado : ''}
+            value={detalle ? currencyFormatter().format(Number(detalle[0]?.ccTotalCalculado)) : ''}
             inputProps={{
               readOnly: true,
+              style: { textAlign: 'right' }
             }}
             InputProps={{
               startAdornment: (
@@ -90,7 +91,6 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
                 </InputAdornment>
               ),
             }}
-            type='number'
             fullWidth
           />
         </Col>
@@ -187,13 +187,13 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
             field: 'importe',
             headerName: 'Precio Unitario',
             type: 'number',
-            valueFormatter: ({ value }) => currencyFormatter().format(value),
+            valueFormatter: ({ value }) => currencyFormatter({ symbol: true }).format(value),
           },
           {
             field: 'total',
             headerName: 'Total',
             type: 'number',
-            valueFormatter: ({ value }) => currencyFormatter().format(value),
+            valueFormatter: ({ value }) => currencyFormatter({ symbol: true }).format(value),
           },
           {
             field: 'monedaCodigo',

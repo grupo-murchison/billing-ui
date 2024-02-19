@@ -4,9 +4,9 @@ type Style = 'currency' | 'decimal' | 'percent' | 'unit';
 
 // const options: Intl.NumberFormatOptions = {}
 
-export const currencyFormatter = (currency?: Currency) =>
+export const currencyFormatter = (param?: { symbol?: boolean; currency?: Currency }) =>
   new Intl.NumberFormat('es-AR', {
-    style: 'currency',
-    currency: currency || 'USD',
+    style: param?.symbol ? 'currency' : undefined,
+    currency: param?.currency || 'USD',
     currencyDisplay: 'narrowSymbol',
   });
