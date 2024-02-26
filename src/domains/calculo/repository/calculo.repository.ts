@@ -84,7 +84,7 @@ class CalculoRepository {
   static getCalculoLog = async (params: AnyValue) => {
     const response$ = from(CalculoService.getCalculoLog(params)).pipe(
       RepositoryUtils.PIPES.getResponse(),
-      RepositoryUtils.PIPES.validateWithSchema(getAllCalculoLogSchema),
+      // RepositoryUtils.PIPES.validateWithSchema(getAllCalculoLogSchema),
     );
     const response = await lastValueFrom(response$);
     return response;
