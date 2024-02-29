@@ -193,10 +193,10 @@ const otros: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
-          id: 'alertasAlarams',
-          title: 'Alerta/Alarma',
+          id: 'eventoError',
+          title: 'Evento con Errores',
           type: 'item',
-          url: '/alerta',
+          url: '/evento-error',
           breadcrumbs: false,
         },
       ],

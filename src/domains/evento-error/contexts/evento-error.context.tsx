@@ -7,15 +7,15 @@ const initialContext: InitialContext = {
   mainDataGrid: useDataGrid.initialValues,
 };
 
-const AlertaContext = createContext(initialContext);
+const EventoErrorContext = createContext(initialContext);
 
-const AlertaProvider = ({ children }: AlertaProviderProps) => {
+const EventoErrorProvider = ({ children }: EventoErrorProviderProps) => {
   const mainDataGrid = useDataGrid();
 
-  return <AlertaContext.Provider value={{ mainDataGrid }}>{children}</AlertaContext.Provider>;
+  return <EventoErrorContext.Provider value={{ mainDataGrid }}>{children}</EventoErrorContext.Provider>;
 };
 
-type AlertaProviderProps = {
+type EventoErrorProviderProps = {
   children?: ReactNode;
 };
 
@@ -23,4 +23,4 @@ type InitialContext = {
   mainDataGrid: typeof useDataGrid.initialValues;
 };
 
-export { AlertaContext, AlertaProvider };
+export { EventoErrorContext, EventoErrorProvider };
