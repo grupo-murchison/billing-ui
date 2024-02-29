@@ -47,7 +47,6 @@ const EventoErrorDataGrid = () => {
 
   const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
-      console.log("🚀 ~ AlertaDataGrid ~ data:", data)
       const eventosIds = data.eventoId.map((evento: AnyValue) => {
         return evento.value;
       });

@@ -3,7 +3,6 @@ import { from, lastValueFrom } from 'rxjs';
 import { RepositoryUtils } from '@app/utils';
 
 import { EventoErrorService } from './evento-error.service';
-import { getAllEventoAsDropdownSchema, getAllEventoPaginatedSchema } from './evento-error.schemas';
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class EventoErrorRepository {
@@ -13,7 +12,6 @@ class EventoErrorRepository {
       // RepositoryUtils.PIPES.validateWithSchema(getAllEventoPaginatedSchema),
     );
     const response = await lastValueFrom(response$);
-    console.log('🚀 ~ EventoRepository ~ getAllEventoPaginated= ~ response:', response);
     return response;
   };
 }

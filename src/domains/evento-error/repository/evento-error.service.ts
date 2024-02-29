@@ -13,7 +13,6 @@ class EventoErrorService {
       ApiProvider.get<AnyValue>(`${this.BASE_PATH}/all/pagination`, { params }),
     );
 
-    console.log('🚀 ~ AlertaService ~ getAllPaginated= ~ response:', response);
     return [response, error];
   };
 }
