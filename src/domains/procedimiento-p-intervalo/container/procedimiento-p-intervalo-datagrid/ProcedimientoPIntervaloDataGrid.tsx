@@ -75,12 +75,22 @@ const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
             hookRef={mainDataGrid.ref}
             columns={[
               { field: 'intervalo', headerName: 'Intervalo' },
-              { field: 'valorInicial', headerName: 'Valor Inicial' },
-              { field: 'valorFinal', headerName: 'Valor Final' },
+              {
+                field: 'valorInicial',
+                headerName: 'Valor Inicial',
+                valueFormatter: ({ value }) => currencyFormatter().format(value),
+                align: 'right',
+              },
+              {
+                field: 'valorFinal',
+                headerName: 'Valor Final',
+                valueFormatter: ({ value }) => currencyFormatter().format(value),
+                align: 'right',
+              },
               {
                 field: 'precio',
                 headerName: 'Precio',
-                valueFormatter: ({ value }) => currencyFormatter().format(value),
+                valueFormatter: ({ value }) => currencyFormatter({ symbol: true }).format(value),
                 align: 'right',
               },
               {

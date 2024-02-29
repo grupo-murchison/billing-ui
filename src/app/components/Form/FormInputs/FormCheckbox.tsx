@@ -8,7 +8,13 @@ function FormCheckbox({ control, name, label, labelPlacement }: FormCheckboxProp
       name={name}
       control={control}
       render={({ field }) => (
-        <FormControlLabel control={<Checkbox {...field} />} label={label} labelPlacement={labelPlacement || 'start'} />
+        <FormControlLabel
+          control={<Checkbox {...field} />}
+          label={label}
+          labelPlacement={labelPlacement || 'start'}
+          checked={field.value}
+          inputRef={field.ref}
+        />
       )}
     />
   );

@@ -206,9 +206,9 @@ const ContratoEdit = () => {
           <SociedadDropdown control={control} name='sociedadId' label='Sociedad' disabled={isSubmitting} />
         </Col>
       </Row>
-      <Row>
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-        {/* <Col md={6}>
+      {/* <Row> */}
+      {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
+      {/* <Col md={6}>
           <ClienteDropdown
             control={control}
             id='destinatarioId'
@@ -217,8 +217,8 @@ const ContratoEdit = () => {
             // value={watch('destinatarioId')}
           />
         </Col> */}
-        {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
-      </Row>
+      {/* <Col md={6}>{cliente && <JsonViewerProvisorio object={cliente} label='Cliente' />}</Col> */}
+      {/* </Row> */}
       <Row>
         <Col md={6}>
           <ModeloAcuerdoDropdown

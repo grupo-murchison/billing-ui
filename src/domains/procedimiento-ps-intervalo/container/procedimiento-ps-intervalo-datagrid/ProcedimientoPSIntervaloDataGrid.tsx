@@ -14,7 +14,7 @@ import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-inter
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
@@ -63,7 +63,7 @@ const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
       <Box mt={4} mb={3}>
         <FormLabel component='legend'>
           <Typography variant='h6' component='div'>
-            Intervalos Procedimiento Prroducto Softland
+            Intervalos Procedimiento Producto Softland
           </Typography>
         </FormLabel>
       </Box>

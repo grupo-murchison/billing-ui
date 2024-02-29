@@ -2,7 +2,14 @@
 import { IMenuItemGroup } from '../../layout/interfaces/menu-items.interface';
 
 //nano
-import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
+import {
+  DescriptionIcon,
+  InventoryIcon,
+  AccountTreeIcon,
+  ReceiptIcon,
+  DashboardIcon,
+  MediationIcon,
+} from '@assets/icons';
 
 import { ROUTES } from './constants';
 
@@ -161,6 +168,35 @@ const facturaciones: IMenuItemGroup = {
   ],
 };
 
+const eventos: IMenuItemGroup = {
+  id: 'eventos',
+  type: 'group',
+  children: [
+    {
+      id: 'eventos',
+      title: 'Eventos',
+      type: 'collapse',
+      icon: MediationIcon,
+      children: [
+        {
+          id: 'evento',
+          title: 'Evento',
+          type: 'item',
+          url: '/evento',
+          breadcrumbs: false,
+        },
+        {
+          id: 'tablaDinamica',
+          title: 'Tabla Dinámica',
+          type: 'item',
+          url: '/tabla-dinamica',
+          breadcrumbs: false,
+        },
+      ],
+    },
+  ],
+};
+
 const otros: IMenuItemGroup = {
   id: 'otros',
   type: 'group',
@@ -178,32 +214,11 @@ const otros: IMenuItemGroup = {
           url: '/producto-softland',
           breadcrumbs: false,
         },
-        {
-          id: 'evento',
-          title: 'Evento',
-          type: 'item',
-          url: '/evento',
-          breadcrumbs: false,
-        },
-        {
-          id: 'tablasDinamicas',
-          title: 'Tablas Dinámicas',
-          type: 'item',
-          url: '/tablas-dinamicas',
-          breadcrumbs: false,
-        },
-        {
-          id: 'eventoError',
-          title: 'Evento con Errores',
-          type: 'item',
-          url: '/evento-error',
-          breadcrumbs: false,
-        },
       ],
     },
   ],
 };
 
-const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, otros];
+const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, eventos, otros];
 
 export default menuItems;

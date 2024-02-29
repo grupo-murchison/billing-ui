@@ -32,17 +32,17 @@ const ProcedimientoQCreate = () => {
     handleSubmit,
     formState: { isSubmitting },
     watch,
-    resetField
+    resetField,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
       descripcion: '',
       denominacion: '',
       tipoProcedimientoQId: '',
-      procedimientoBuiltinId: '',
-      procedimientoCustomId: '',
+      procedimientoBuiltinId: null,
+      procedimientoCustomId: null,
     },
-    resolver: zodResolver(ProcedimientoQCreateSchema), // TODO revisar y de ser necesario fixear validacion de create
+    resolver: zodResolver(ProcedimientoQCreateSchema),
   });
 
   const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
@@ -68,7 +68,7 @@ const ProcedimientoQCreate = () => {
       setDisablePBuiltin(false);
       setDisablePCustom(true);
     } else if (code === 2) {
-      resetField('procedimientoBuiltinId')
+      resetField('procedimientoBuiltinId');
       setDisablePBuiltin(true);
       setDisablePCustom(false);
     } else if (code === 3) {
@@ -77,7 +77,6 @@ const ProcedimientoQCreate = () => {
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
-
   }, [watch('tipoProcedimientoQId')]);
 
   return (

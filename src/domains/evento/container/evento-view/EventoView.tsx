@@ -8,7 +8,7 @@ import { EventoRepository } from '@domains/evento/repository';
 import { EventoCampoRoutes } from '@domains/evento-campo/navigation';
 import { TipoNegocioDropdown } from '@domains/tipo-negocio/container/tipo-negocio-dropdown';
 import { useForm } from 'react-hook-form';
-import { EventoEditSchema, EventoEditSchemaType } from './schemas';
+import { EventoViewSchema, EventoViewSchemaType } from './schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
@@ -29,14 +29,14 @@ const EventoView = () => {
     });
   }, [eventoId]);
 
-  const { control, reset } = useForm<EventoEditSchemaType>({
+  const { control, reset } = useForm<EventoViewSchemaType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
       descripcion: '',
       tipoNegocioId: '',
     },
-    resolver: zodResolver(EventoEditSchema),
+    resolver: zodResolver(EventoViewSchema),
   });
 
   if (!isDataFetched) {
