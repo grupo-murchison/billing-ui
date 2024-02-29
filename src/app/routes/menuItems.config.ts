@@ -192,6 +192,13 @@ const eventos: IMenuItemGroup = {
           url: '/tabla-dinamica',
           breadcrumbs: false,
         },
+        {
+          id: 'eventoError',
+          title: 'Evento con Error',
+          type: 'item',
+          url: '/evento-error',
+          breadcrumbs: false,
+        },
       ],
     },
   ],
