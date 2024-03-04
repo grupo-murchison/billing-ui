@@ -12,8 +12,15 @@ import {
   KeyboardArrowLeftIcon,
   KeyboardArrowRightIcon,
 } from '@assets/icons';
+import { FilterOptions } from './FormDatePickerV2';
 
-export default function FormDatePickerMenu() {
+export default function FormDatePickerMenu({
+  setSelectedFilter,
+  selectedFilter,
+}: {
+  setSelectedFilter: React.Dispatch<React.SetStateAction<FilterOptions>>;
+  selectedFilter: FilterOptions;
+}) {
   const [anchorEl, setAnchorEl] = React.useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
@@ -22,6 +29,13 @@ export default function FormDatePickerMenu() {
   const handleClose = () => {
     setAnchorEl(null);
   };
+
+  const handleMenuItemClick = (option: FilterOptions) => {
+    setSelectedFilter(option);
+    setAnchorEl(null);
+  };
+
+  console.log('selectedFilter', selectedFilter);
   return (
     <>
       <IconButton
@@ -36,36 +50,61 @@ export default function FormDatePickerMenu() {
       </IconButton>
       <Paper sx={{ width: 320, maxWidth: '100%' }}>
         <Menu anchorEl={anchorEl} id='filter-menu' open={open} onClose={handleClose} onClick={handleClose}>
-          <MenuItem>
+          <MenuItem onClick={event => handleMenuItemClick('=')}>
             <ListItemIcon>
               <EqualIcon fontSize='small' />
             </ListItemIcon>
             <ListItemText>Igual</ListItemText>
-            <ListItemIcon sx={{ pl: 3, pr: 0 }}>
-              {/* <CheckIcon color='primary' /> */}
-            </ListItemIcon>
+            {selectedFilter === '=' ? (
+              <ListItemIcon sx={{ pl: 3, pr: 0 }}>
+                {' '}
+                <CheckIcon color='primary' />{' '}
+              </ListItemIcon>
+            ) : (
+              ''
+            )}{' '}
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={event => handleMenuItemClick('>=')}>
             <ListItemIcon>
               <KeyboardArrowRightIcon fontSize='small' />
             </ListItemIcon>
             <ListItemText>Mayor o Igual a</ListItemText>
-            <ListItemIcon>{/* <CheckIcon color='primary' /> */}</ListItemIcon>
+            {selectedFilter === '>=' ? (
+              <ListItemIcon sx={{ pl: 3, pr: 0 }}>
+                {' '}
+                <CheckIcon color='primary' />{' '}
+              </ListItemIcon>
+            ) : (
+              ''
+            )}
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={event => handleMenuItemClick('<=')}>
             <ListItemIcon>
               <KeyboardArrowLeftIcon fontSize='small' />
             </ListItemIcon>
             <ListItemText>Menor o Igual a</ListItemText>
+            {selectedFilter === '<=' ? (
+              <ListItemIcon sx={{ pl: 3, pr: 0 }}>
+                {' '}
+                <CheckIcon color='primary' />{' '}
+              </ListItemIcon>
+            ) : (
+              ''
+            )}
           </MenuItem>
-          <MenuItem>
+          <MenuItem onClick={event => handleMenuItemClick('between')}>
             <ListItemIcon>
               <HeightIcon fontSize='small' sx={{ transform: 'rotate(90deg)' }} />
             </ListItemIcon>
             <ListItemText>Entre</ListItemText>
-            <ListItemIcon sx={{ pl: 3, pr: 0 }}>
-              <CheckIcon color='primary' />
-            </ListItemIcon>
+            {selectedFilter === 'between' ? (
+              <ListItemIcon sx={{ pl: 3, pr: 0 }}>
+                {' '}
+                <CheckIcon color='primary' />{' '}
+              </ListItemIcon>
+            ) : (
+              ''
+            )}
           </MenuItem>
         </Menu>
       </Paper>

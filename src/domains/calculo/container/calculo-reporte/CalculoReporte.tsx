@@ -18,7 +18,6 @@ import { DetalleCalculo } from '@domains/calculo/container/calculo';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
 // import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
@@ -27,7 +26,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 import Toast from '@app/components/Toast/Toast';
-
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
 
 const CalculoReporte = () => {
   // const _navigate = useNavigate();
@@ -47,7 +46,6 @@ const CalculoReporte = () => {
     setOpenToast(false);
   };
 
-
   useEffect(() => {
     mainDataGrid.load();
   }, [mainDataGrid]);
@@ -60,8 +58,7 @@ const CalculoReporte = () => {
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: { value: '', code: '', label: '' },
-      fechaDesde: null,
-      fechaHasta: null,
+      rangoFechas: null,
       nroContrato: '',
       numeroSecuenciaCalculo: '',
     },
@@ -72,8 +69,8 @@ const CalculoReporte = () => {
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
       };
@@ -100,7 +97,8 @@ const CalculoReporte = () => {
       .catch(async error => {
         setErrorFromBackEnd(true);
         setToastMessage(error?.message || 'Ocurrió un error!');
-      }).finally(() => {
+      })
+      .finally(() => {
         setOpenToast(true);
       });
   };
@@ -134,20 +132,7 @@ const CalculoReporte = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Cálculo Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
@@ -274,7 +259,6 @@ const CalculoReporte = () => {
       </Modal>
 
       <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
-
     </>
   );
 };

@@ -1,20 +1,19 @@
 @use 'src/assets/scss/variables.module' as VARS;
 
 $datepicker__background-color: #fff !default;
-$datepicker__border-color: #aeaeae !default;
+$datepicker__border-color: #b5b0b0 !default;
 $datepicker__highlighted-color: #3dcc4a !default;
 $datepicker__holidays-color: #ff6803 !default;
 $datepicker__muted-color: #ccc !default;
 // $datepicker__selected-color: #216ba5 !default;
-$datepicker__selected-color: VARS.$primaryMain !default;
-$datepicker__text-color: #000 !default;
+$datepicker__main-color: VARS.$greenMain !default;
+$datepicker__selected-color: VARS.$greenSelected !default;
+$datepicker__icon-color: VARS.$graySilver !default;
+$datepicker__text-color: VARS.$graySilver !default;
 $datepicker__header-color: #000 !default;
-$datepicker__navigation-disabled-color: lighten(
-  $datepicker__muted-color,
-  10%
-) !default;
+$datepicker__navigation-disabled-color: lighten($datepicker__muted-color, 10%) !default;
 $datepicker__border-radius: VARS.$borderRadius !default;
-$datepicker__day-margin: 0.166rem !default;
+$datepicker__day-margin: 0.1rem !default;
 $datepicker__font-size: 0.8rem !default;
 // $datepicker__font-family: "Helvetica Neue", helvetica, arial, sans-serif !default;
 $datepicker__item-size: 1.7rem !default;
