@@ -54,7 +54,7 @@ const EventoErrorDataGrid = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
         fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
-        eventoId: data.eventoId ? [...eventosIds] : undefined,
+        eventosId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -107,8 +107,8 @@ const EventoErrorDataGrid = () => {
         columns={[
           { field: 'source_system', headerName: 'Evento Origen' },
           { field: 'type', headerName: 'Tipo Evento' },
-          { field: 'createdDate', headerName: 'Fecha Creacion', },
-          { field: 'createdUser', headerName: 'Usuario Creacion' },
+          { field: 'createdAt', headerName: 'Fecha Creacion', },
+          { field: 'createdBy', headerName: 'Usuario Creacion' },
           { field: 'clientId', headerName: 'Cliente ID' },
           { field: 'status', headerName: 'Status' },
           {

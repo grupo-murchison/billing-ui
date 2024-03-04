@@ -150,13 +150,6 @@ const facturaciones: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
-          id: 'calculoFacturacionEventosCliente',
-          title: 'Eventos Del Cliente',
-          type: 'item',
-          url: '/calculo-facturacion/eventos-cliente',
-          breadcrumbs: false,
-        },
-        {
           id: 'calculoFacturacionEventosServiciosCliente',
           title: 'Eventos Por Servicios ',
           type: 'item',
@@ -183,6 +176,13 @@ const eventos: IMenuItemGroup = {
           title: 'Evento',
           type: 'item',
           url: '/evento',
+          breadcrumbs: false,
+        },
+        {
+          id: 'calculoFacturacionEventosCliente',
+          title: 'Eventos Del Cliente',
+          type: 'item',
+          url: '/calculo-facturacion/eventos-cliente',
           breadcrumbs: false,
         },
         {
