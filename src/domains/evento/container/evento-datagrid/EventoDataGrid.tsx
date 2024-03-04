@@ -36,7 +36,7 @@ const EventoDataGrid = () => {
     },
     [_navigate],
   );
-  
+
   const handleClickDelete = useCallback(
     (row: AnyValue) => {
       confirmDialog.open({
@@ -44,9 +44,20 @@ const EventoDataGrid = () => {
         identifier: `${row.codigo}`,
         type: 'delete',
         async onClickYes() {
-          await EventoRepository.deleteEventoById(row.id);
-          confirmDialog.close();
-          mainDataGrid.reload();
+          await EventoRepository.deleteEventoById(row.id).then(() => {
+            confirmDialog.close()
+            mainDataGrid.reload();
+          }).catch(error => {
+
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${JSON.parse(error.message).message}`,
+              onClickYes() {
+                confirmDialog.close()
+              }
+            })
+          });
         },
       });
     },

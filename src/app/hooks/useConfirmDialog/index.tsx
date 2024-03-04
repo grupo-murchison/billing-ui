@@ -38,7 +38,7 @@ type OpenDialog = (params: {
   title?: string;
   identifier?: string;
   entity?: string;
-  onClickYes: () => void;
+  onClickYes: () => void | Promise<void>;
   onClickNot?: () => void;
 }) => void;
 

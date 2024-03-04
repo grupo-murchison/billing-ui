@@ -15,6 +15,8 @@ import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { useConfirmDialog } from '@app/hooks';
 import { TipoDatoDropdown } from '@domains/tipo-dato/container/tipo-dato-dropdown';
+import { EventoDropdown } from '@domains/evento/container/evento-dropdown';
+import { TablaDinamicaDropdown } from '@domains/metadatos/tabla-dinamica/container/tabla-dinamica-dropdown';
 
 const EventoCampoEdit = () => {
   const _navigate = useNavigate();
@@ -22,20 +24,23 @@ const EventoCampoEdit = () => {
 
   const { mainDataGrid } = useContext(EventoCampoContext);
   const confirmDialog = useConfirmDialog();
+  const [disableTablaDinamica, setDisableTablaDinamica] = useState(false);
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
     setError,
-    reset
+    reset,
+    watch,
+    resetField,
   } = useForm<EventoCampoEditSchemaType>({
     defaultValues: {
-      codigo:  '',
-      denominacion:  '',
-      descripcion:  '',
+      codigo: '',
+      denominacion: '',
+      descripcion: '',
       campo: '',
-      evento: eventoId ? (+eventoId) : '',
+      eventoId: eventoId ? +eventoId : '',
       tipoDatoId: '',
     },
     resolver: zodResolver(EventoCampoEditSchema),
@@ -43,52 +48,63 @@ const EventoCampoEdit = () => {
 
   const onSubmit: SubmitHandler<EventoCampoEditSchemaType> = useCallback(
     async data => {
-      await EventoCampoRepository.updateEventoCampo({...data, id: Number(eventoCampoId)}).then(exito => {
-        mainDataGrid.reload();
-        _navigate(`/evento/${eventoId}`);
-      }).catch(err => {
-        const error = JSON.parse(err.message)
-        if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
-          confirmDialog.open({
-            type: 'reject',
-            title: 'No es posible realizar esta acción',
-            message: `${error.message}`,
-            onClickYes() {
-              confirmDialog.close()
-            }
-          });
-        }
-      })
+      await EventoCampoRepository.updateEventoCampo({ ...data, id: Number(eventoCampoId) })
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate(`/evento/${eventoId}/edit`);
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid, eventoId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/evento/${eventoId}`);
+    _navigate(`/evento/${eventoId}/edit`);
   }, [_navigate, eventoId]);
 
   useEffect(() => {
-    EventoCampoRepository.getEventoCampoById(eventoCampoId || '').then(
-      ({ data }) => {
-        reset(data);
-      },
-    );
-  }, [eventoId, reset]);
+    EventoCampoRepository.getEventoCampoById(eventoCampoId || '').then(({ data }) => {
+      reset(data);
+    });
+  }, [eventoId, eventoCampoId, reset]);
+
+  useEffect(() => {
+    const code = watch('tipoDatoId');
+    if (code === 4) {
+      resetField('tablaDinamicaId');
+      setDisableTablaDinamica(false);
+    } else {
+      resetField('tablaDinamicaId');
+      setDisableTablaDinamica(true);
+    }
+  }, [watch('tipoDatoId')]);
 
   return (
-    <Modal isOpen onClose={handleClose} title='Editar Campo'>
+    <Modal isOpen onClose={handleClose} title='Editar Campo del Evento'>
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Código' name='codigo' />
+            <FormTextField control={control} disabled label='Código' name='codigo' />
           </Col>
           <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Denominación' name='denominacion' />
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
           <Col md={6}>
@@ -96,11 +112,19 @@ const EventoCampoEdit = () => {
           </Col>
         </Row>
         <Row>
-          <Col md={6}>
-            <FormTextField control={control} disabled value={1} label='Evento' name='evento' />
+          <Col md={4}>
+            <EventoDropdown control={control} name='eventoId' disabled label='Evento' />
           </Col>
-          <Col md={6}>
+          <Col md={4}>
             <TipoDatoDropdown control={control} name='tipoDatoId' disabled={isSubmitting} label='Tipo' />
+          </Col>
+          <Col md={4}>
+            <TablaDinamicaDropdown
+              control={control}
+              name='tablaDinamicaId'
+              disabled={isSubmitting || disableTablaDinamica}
+              label='Tabla dinámica'
+            />
           </Col>
         </Row>
       </Form>

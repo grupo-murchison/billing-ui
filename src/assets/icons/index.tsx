@@ -54,6 +54,7 @@ export {
   Menu as MenuIcon,
   ManageSearch as ManageSearchIcon,
   MoveToInbox as MoveToInboxIcon,
+  Mediation as MediationIcon,
 
   // N
   NavigateNext as NavigateNextIcon,

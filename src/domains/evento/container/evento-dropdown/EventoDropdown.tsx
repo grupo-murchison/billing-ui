@@ -1,40 +1,28 @@
-import { useContext } from 'react';
-import { Select, MenuItem, FormControl, InputLabel, FormHelperText, SelectChangeEvent } from '@mui/material';
+import { useEffect, useState } from 'react';
 
-import { ProcedimientoCustomContext } from '@domains/procedimiento-custom/contexts';
+import { DropdownSchemaType } from '@app/utils/zod.util';
 
-const EventoDropdown = ({ id, label, disabled, error, helperText, value, ...props }: EventoDropdownProps) => {
-  const {
-    state: { eventos },
-  } = useContext(ProcedimientoCustomContext);
+import FormSelect, { FormSelectProps } from '@app/components/Form/FormInputs/FormSelect';
+import { EventoRepository } from '@domains/evento/repository';
 
-  return (
-    <FormControl fullWidth error={error} disabled={disabled}>
-      <InputLabel>{label}</InputLabel>
-      <Select id={id} label={label} value={value} {...props}>
-        <MenuItem value="" disabled>
-          <em>Ninguno</em>
-        </MenuItem>
-        {eventos.map(({ code, label, value }) => (
-          <MenuItem key={value} value={code}>
-            {`${code} - ${label}`}
-          </MenuItem>
-        ))}
-      </Select>
-      {helperText && <FormHelperText>{helperText}</FormHelperText>}
-    </FormControl>
-  );
+const EventoDropdown = ({ ...props }: EventoDropdownProps) => {
+  const [options, setOptions] = useState<DropdownSchemaType>([]);
+
+  useEffect(() => {
+    EventoRepository.getAllEventoAsDropdown()
+      .then(({ data }) => {
+        setOptions(data);
+      })
+      .catch(() => {
+        setOptions([]);
+      });
+  }, []);
+
+  return <FormSelect {...props} options={options} />;
 };
 
-type EventoDropdownProps = {
-  id?: string;
-  label: string;
-  error?: boolean;
-  helperText?: string;
-  disabled?: boolean;
-  value?: string;
-  required?: boolean;
-  onChange?: (event: SelectChangeEvent) => void;
-};
+interface EventoDropdownProps extends Omit<FormSelectProps, 'options'> {
+  options?: undefined;
+}
 
 export default EventoDropdown;

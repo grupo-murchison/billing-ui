@@ -22,12 +22,11 @@ const EventoCreate = () => {
   const { mainDataGrid } = useContext(EventoContext);
   const confirmDialog = useConfirmDialog();
 
-
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
-    setError
+    setError,
   } = useForm<EventoCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -40,23 +39,25 @@ const EventoCreate = () => {
 
   const onSubmit: SubmitHandler<EventoCreateSchemaType> = useCallback(
     async data => {
-      await EventoRepository.createEvento(data).then(exito => {
-        mainDataGrid.reload();
-        _navigate('/evento');        
-      }).catch(err => {
-        const error = JSON.parse(err.message)
-        if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
-          confirmDialog.open({
-            type: 'reject',
-            title: 'No es posible realizar esta acción',
-            message: `${error.message}`,
-            onClickYes() {
-              confirmDialog.close()
-            }
-          });
-        }
-      })
+      await EventoRepository.createEvento(data)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/evento');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );
@@ -77,11 +78,16 @@ const EventoCreate = () => {
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
+          <Col md={6}>
             <FormTextField control={control} disabled={isSubmitting} label='Descripción' name='descripcion' />
           </Col>
           <Col md={6}>
-            <TipoNegocioDropdown control={control} name='tipoNegocioId' disabled={isSubmitting} label='Tipo de negocio' />
+            <TipoNegocioDropdown
+              control={control}
+              name='tipoNegocioId'
+              disabled={isSubmitting}
+              label='Tipo de negocio'
+            />
           </Col>
         </Row>
       </Form>

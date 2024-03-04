@@ -40,24 +40,25 @@ const ModeloAcuerdoCreate = () => {
 
   const onSubmit: SubmitHandler<ModeloAcuerdoCreateSchemaType> = useCallback(
     async data => {
-      await ModeloAcuerdoRepository.createModeloAcuerdo(data).then(exito => {
-        mainDataGrid.reload();
-        _navigate('/modelo-acuerdo');
-
-      }).catch(err => {
-        const error = JSON.parse(err.message)
-        if (error?.statusCode === 400) {
-          setError('codigo', {type: 'custom', message: error.message} );
-          confirmDialog.open({
-            type: 'reject',
-            title: 'No es posible realizar esta acción',
-            message: `${error.message}`,
-            onClickYes() {
-              confirmDialog.close()
-            }
-          });
-        }
-      })
+      await ModeloAcuerdoRepository.createModeloAcuerdo(data)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/modelo-acuerdo');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

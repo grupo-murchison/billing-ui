@@ -11,11 +11,14 @@ export const EventosClientesCreateSchema = z
       { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
     ),
     eventoId: z
-      .array(z.object({
-        value: z.number(),
-        code: z.string(),
-        label: z.string(),
-      })).optional(),
+      .array(
+        z.object({
+          value: z.number(),
+          code: z.string(),
+          label: z.string(),
+        }),
+      )
+      .optional(),
     fechaHasta: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
     fechaDesde: z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
   })

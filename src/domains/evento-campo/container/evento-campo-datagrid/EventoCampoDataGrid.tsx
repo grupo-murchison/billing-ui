@@ -1,31 +1,43 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect } from 'react';
 
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 import { useConfirmDialog } from '@app/hooks';
 import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { DataGrid } from '@app/components/DataGrid';
 
-
-const EventoCampoDataGrid = (evento?: AnyValue) => {
+const EventoCampoDataGrid = () => {
   const _navigate = useNavigate();
   const { mainDataGrid } = useContext(EventoCampoContext);
 
   const { eventoId } = useParams();
+  const url = useLocation();
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const confirmDialog = useConfirmDialog();
-  
+
   const handleClickCreate = useCallback(() => {
-    _navigate(`/evento/${eventoId}/evento-campo/create`);
+    _navigate(`/evento/${eventoId}/edit/evento-campo/create`);
   }, [_navigate, eventoId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/evento/${eventoId}/evento-campo/${id}/edit`);
+      _navigate(`/evento/${eventoId}/edit/evento-campo/${id}/edit`);
     },
     [_navigate, eventoId],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/evento/${eventoId}/edit/evento-campo/${id}`);
+      } else {
+        _navigate(`/evento/${eventoId}/evento-campo/${id}`);
+      }
+    },
+    [_navigate],
   );
 
   const handleClickDelete = useCallback(
@@ -43,7 +55,7 @@ const EventoCampoDataGrid = (evento?: AnyValue) => {
     },
     [confirmDialog, mainDataGrid],
   );
-  
+
   useEffect(() => {
     mainDataGrid.load({
       fixedFilters: {
@@ -52,55 +64,80 @@ const EventoCampoDataGrid = (evento?: AnyValue) => {
     });
   }, [mainDataGrid, eventoId]);
 
-
   return (
-    <DataGrid
-    onClickNew={handleClickCreate}
-    hookRef={mainDataGrid.ref}
-    repositoryFunc={EventoCampoRepository.getAllEventoCampoPaginated}
-      columns={[
-        {
-          field: 'codigo',
-          headerName: 'Código',
-        },
-        {
-          field: 'descripcion',
-          headerName: 'Descripción',
-        },
-        {
-          field: 'denominacion',
-          headerName: 'Denominación',
-        },
-        {
-          field: 'campo',
-          headerName: 'Campo',
-        },
-        {
-          field: 'acciones',
-          type: 'actions',
-          headerName: 'Acciones',
-          headerAlign: 'center',
-          align: 'center',
-          flex: 0.5,
-          getActions: params => [
-            <GridActionsCellItem
-              key={2}
-              icon={<EditOutlinedIcon />}
-              label='Editar'
-              onClick={() => handleClickEdit(params.row.id)}
-            />,
-            <GridActionsCellItem
-              key={3}
-              icon={<DeleteOutlineIcon />}
-              label='Eliminar'
-              onClick={() => handleClickDelete(params.row)}
-            />,
-          ],
-        },
-      ]}
-      
-    />
+    <>
+      <DataGrid
+        onClickNew={canEdit ? handleClickCreate : undefined}
+        hookRef={mainDataGrid.ref}
+        repositoryFunc={EventoCampoRepository.getAllEventoCampoPaginated}
+        columns={[
+          {
+            field: 'codigo',
+            headerName: 'Código',
+          },
+          {
+            field: 'descripcion',
+            headerName: 'Descripción',
+          },
+          {
+            field: 'denominacion',
+            headerName: 'Denominación',
+          },
+          {
+            field: 'campo',
+            headerName: 'Campo',
+          },
+          {
+            field: 'tipoDatoId',
+            headerName: 'Tipo Dato',
+            valueGetter: ({ row }) => row?.tipoDato?.codigo || '',
+          },
+          {
+            field: 'tablaDinamicaId',
+            headerName: 'Tabla Dinámica',
+            valueGetter: ({ row }) => row?.tablaDinamica?.nombre || '',
+          },
+          {
+            field: 'acciones',
+            type: 'actions',
+            headerName: 'Acciones',
+            headerAlign: 'center',
+            align: 'center',
+            flex: 0.5,
+            getActions: params => {
+              return [
+                <>
+                  <GridActionsCellItem
+                    key={1}
+                    icon={<ViewIcon />}
+                    label='Vista'
+                    onClick={() => handleClickView(params.row.id)}
+                  />
+                  {canEdit && (
+                    <>
+                      <GridActionsCellItem
+                        key={2}
+                        icon={<EditOutlinedIcon />}
+                        label='Editar'
+                        onClick={() => handleClickEdit(params.row.id)}
+                      />
+                      <GridActionsCellItem
+                        key={3}
+                        icon={<DeleteOutlineIcon />}
+                        label='Eliminar'
+                        onClick={() => handleClickDelete(params.row)}
+                      />
+                    </>
+                  )}
+                </>,
+              ];
+            },
+          },
+        ]}
+      />
+      <Outlet />
+    </>
   );
-}
+};
 
 export default EventoCampoDataGrid;

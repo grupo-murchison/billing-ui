@@ -2,7 +2,14 @@
 import { IMenuItemGroup } from '../../layout/interfaces/menu-items.interface';
 
 //nano
-import { DescriptionIcon, InventoryIcon, AccountTreeIcon, ReceiptIcon, DashboardIcon } from '@assets/icons';
+import {
+  DescriptionIcon,
+  InventoryIcon,
+  AccountTreeIcon,
+  ReceiptIcon,
+  DashboardIcon,
+  MediationIcon,
+} from '@assets/icons';
 
 import { ROUTES } from './constants';
 
@@ -143,6 +150,35 @@ const facturaciones: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
+          id: 'calculoFacturacionEventosServiciosCliente',
+          title: 'Eventos Por Servicios ',
+          type: 'item',
+          url: '/calculo-facturacion/eventos-servicios-cliente',
+          breadcrumbs: false,
+        },
+      ],
+    },
+  ],
+};
+
+const eventos: IMenuItemGroup = {
+  id: 'eventos',
+  type: 'group',
+  children: [
+    {
+      id: 'eventos',
+      title: 'Eventos',
+      type: 'collapse',
+      icon: MediationIcon,
+      children: [
+        {
+          id: 'evento',
+          title: 'Evento',
+          type: 'item',
+          url: '/evento',
+          breadcrumbs: false,
+        },
+        {
           id: 'calculoFacturacionEventosCliente',
           title: 'Eventos Del Cliente',
           type: 'item',
@@ -150,10 +186,17 @@ const facturaciones: IMenuItemGroup = {
           breadcrumbs: false,
         },
         {
-          id: 'calculoFacturacionEventosServiciosCliente',
-          title: 'Eventos Por Servicios ',
+          id: 'tablaDinamica',
+          title: 'Tabla Dinámica',
           type: 'item',
-          url: '/calculo-facturacion/eventos-servicios-cliente',
+          url: '/tabla-dinamica',
+          breadcrumbs: false,
+        },
+        {
+          id: 'eventoError',
+          title: 'Evento con Error',
+          type: 'item',
+          url: '/evento-error',
           breadcrumbs: false,
         },
       ],
@@ -178,18 +221,11 @@ const otros: IMenuItemGroup = {
           url: '/producto-softland',
           breadcrumbs: false,
         },
-        {
-          id: 'evento',
-          title: 'Evento',
-          type: 'item',
-          url: '/evento',
-          breadcrumbs: false,
-        },
       ],
     },
   ],
 };
 
-const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, otros];
+const menuItems: IMenuItemGroup[] = [dashboard, contrato, facturaciones, eventos, otros];
 
 export default menuItems;

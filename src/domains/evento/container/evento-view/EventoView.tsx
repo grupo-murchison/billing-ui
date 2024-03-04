@@ -1,20 +1,22 @@
 import { Row, Col, Modal } from '@app/components';
-import { Box, FormLabel, TextField, Typography } from '@mui/material';
+import { Box, FormLabel, Typography } from '@mui/material';
 
 import Form from '@app/components/Form/Form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { EventoRepository } from '@domains/evento/repository';
 import { EventoCampoRoutes } from '@domains/evento-campo/navigation';
+import { TipoNegocioDropdown } from '@domains/tipo-negocio/container/tipo-negocio-dropdown';
+import { useForm } from 'react-hook-form';
+import { EventoViewSchema, EventoViewSchemaType } from './schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 const EventoView = () => {
-
   const { eventoId } = useParams();
   const _navigate = useNavigate();
 
-  const [eventoData, setEventoData] = useState<AnyValue>();
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
-
 
   const handleClose = useCallback(() => {
     _navigate('/evento');
@@ -22,62 +24,65 @@ const EventoView = () => {
 
   useEffect(() => {
     EventoRepository.getEventoById(eventoId || '').then(({ data }) => {
-      setEventoData(data);
+      reset(data);
       setIsDataFetched(true);
     });
   }, [eventoId]);
 
+  const { control, reset } = useForm<EventoViewSchemaType>({
+    defaultValues: {
+      codigo: '',
+      denominacion: '',
+      descripcion: '',
+      tipoNegocioId: '',
+    },
+    resolver: zodResolver(EventoViewSchema),
+  });
+
   if (!isDataFetched) {
     return <></>;
   }
-
   return (
-      <Modal isOpen onClose={handleClose} title='Detalle Evento'>
+    <Modal isOpen onClose={handleClose} title='Detalle Evento'>
       <Form>
         <Row>
-        <Col md={6}>
-            <TextField  label='Código' id='codigo' InputProps={{
+          <Col md={6}>
+            <FormTextField
+              control={control}
+              label='Código'
+              fullWidth
+              name='codigo'
+              InputProps={{
                 readOnly: true,
               }}
-              fullWidth
-              defaultValue={eventoData.codigo}
-              />
-              
+            />
           </Col>
           <Col md={6}>
-            <TextField
-              id='denominacion'
+            <FormTextField
+              control={control}
               label='Denominación'
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={eventoData.denominacion}
               fullWidth
+              name='denominacion'
             />
           </Col>
         </Row>
         <Row>
-        <Col md={6}>
-            <TextField
-              id='descripcion'
+          <Col md={6}>
+            <FormTextField
+              control={control}
               label='Descripción'
               InputProps={{
                 readOnly: true,
               }}
-              defaultValue={eventoData.descripcion}
               fullWidth
+              name='descripcion'
             />
           </Col>
           <Col md={6}>
-            <TextField
-              id='tipoNegocioId'
-              label='Tipo de negocio'
-              InputProps={{
-                readOnly: true,
-              }}
-              defaultValue={eventoData.tipoNegocioId}
-              fullWidth
-            />
+            <TipoNegocioDropdown control={control} name='tipoNegocioId' readOnly label='Tipo de negocio' />{' '}
           </Col>
         </Row>
       </Form>
@@ -88,8 +93,8 @@ const EventoView = () => {
           </Typography>
         </FormLabel>
       </Box>
-      <EventoCampoRoutes eventoId={eventoData.id}/>
-      </Modal>
+      <EventoCampoRoutes />
+    </Modal>
   );
 };
 

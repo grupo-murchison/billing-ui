@@ -35,6 +35,7 @@ export const debugSchema = async (data: AnyValue, context: AnyValue, options: An
 
 export const zodLocale = {
   required_error: 'El campo es requerido.',
+  invalid_type_error: 'El tipo de dato es incorrecto',
   numberPositive: 'Debe ser mayor a 0',
   stringMax: (cant?: number) => `Ha superado el límite de ${cant || ''} caracteres`,
 };

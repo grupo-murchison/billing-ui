@@ -1,19 +1,20 @@
 import z, { ZodType } from 'zod';
+import { zodId, zodLocale } from '@app/utils/zod.util';
 
 export const EventoCreateSchema: ZodType<FormDataTypeEventoCreate> = z.object({
   codigo: z
-    .string({ required_error: 'El campo es requerido.' })
-    .min(1, { message: 'El campo es requerido.' })
-    .max(50, { message: 'Ha superado el límite de caracteres' }),
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(50, { message: zodLocale.stringMax(250) }),
   denominacion: z
-    .string({ required_error: 'El campo es requerido.' })
-    .min(1, { message: 'El campo es requerido.' })
-    .max(250, { message: 'Ha superado el límite de caracteres' }),
-    descripcion: z
-    .string({ required_error: 'El campo es requerido.' })
-    .min(1, { message: 'El campo es requerido.' })
-    .max(250, { message: 'Ha superado el límite de caracteres' }),
-  tipoNegocioId: z.number({ required_error: 'El campo es requerido.' }),
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(50, { message: zodLocale.stringMax(250) }),
+  descripcion: z
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(50, { message: zodLocale.stringMax(250) }),
+  tipoNegocioId: zodId,
 });
 
 export type FormDataTypeEventoCreate = {

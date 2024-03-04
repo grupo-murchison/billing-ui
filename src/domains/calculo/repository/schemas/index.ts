@@ -1,3 +1,4 @@
+import { zodLocale } from '@app/utils/zod.util';
 import z from 'zod';
 
 export const ValidationSchemaEventosServicioFilters = z
@@ -18,7 +19,6 @@ export const ValidationSchemaEventosServicioFilters = z
     conceptoAcuerdoId: z.object(
       {
         value: z.number({ required_error: 'El campos es requerido.' }),
-        // code: z.string({ required_error: 'El campos es requerido.' }),
         label: z.string({ required_error: 'El campos es requerido.' }),
       },
       { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
@@ -52,17 +52,17 @@ export const ValidationSchemaCalculoReporteFilter = z.object({
   clienteId: z
     .object(
       {
-        value: z.number({ required_error: 'El campo es requerido.' }),
-        code: z.string({ required_error: 'El campo es requerido.' }),
-        label: z.string({ required_error: 'El campo es requerido.' }),
+        value: z.number({ required_error: zodLocale.required_error }),
+        code: z.string({ required_error: zodLocale.required_error }),
+        label: z.string({ required_error: zodLocale.required_error }),
       },
-      { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
+      { required_error: zodLocale.required_error, invalid_type_error: zodLocale.invalid_type_error },
     )
     .nullable(),
   numeroSecuenciaCalculo: z
     .number({
-      required_error: 'El campo es requerido.',
-      invalid_type_error: 'El campo es requerido.',
+      required_error: zodLocale.required_error,
+      invalid_type_error: zodLocale.invalid_type_error,
     })
     .nullable()
     .or(z.literal('')),

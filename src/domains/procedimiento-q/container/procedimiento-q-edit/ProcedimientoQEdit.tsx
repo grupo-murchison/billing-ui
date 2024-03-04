@@ -38,15 +38,16 @@ const ProcedimientoQEdit = () => {
     handleSubmit,
     control,
     watch,
-    resetField
+    setValue,
+    resetField,
   } = useForm<ProcedimientoQEditSchemaType>({
     defaultValues: {
       codigo: '',
       descripcion: '',
       denominacion: '',
       tipoProcedimientoQId: '',
-      procedimientoBuiltinId: '',
-      procedimientoCustomId: '',
+      procedimientoBuiltinId: null,
+      procedimientoCustomId: null,
     },
     resolver: zodResolver(ProcedimientoQEditSchema),
   });
@@ -55,7 +56,7 @@ const ProcedimientoQEdit = () => {
     ProcedimientoQRepository.getProcedimientoQById(procedimientoQId || '').then(({ data }) => {
       for (const property in data) {
         if (data[property] === null) {
-          delete data[property]
+          delete data[property];
         }
       }
       reset({
@@ -81,20 +82,19 @@ const ProcedimientoQEdit = () => {
   useEffect(() => {
     const code = watch('tipoProcedimientoQId');
     if (code === 1) {
-      resetField('procedimientoCustomId');
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(false);
       setDisablePCustom(true);
     } else if (code === 2) {
-      resetField('procedimientoBuiltinId')
+      setValue('procedimientoBuiltinId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(false);
     } else if (code === 3) {
-      resetField('procedimientoBuiltinId');
-      resetField('procedimientoCustomId');
+      setValue('procedimientoBuiltinId', null);
+      setValue('procedimientoCustomId', null);
       setDisablePBuiltin(true);
       setDisablePCustom(true);
     }
-
   }, [watch('tipoProcedimientoQId')]);
 
   if (!isDataFetched) {
