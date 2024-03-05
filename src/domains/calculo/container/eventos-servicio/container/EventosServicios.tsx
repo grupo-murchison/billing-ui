@@ -49,8 +49,8 @@ const EventoServicio = () => {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         nroContato: data.contrato ? data.contrato : undefined,
         conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
-        fechaDesde: data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
-        fechaHasta: data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
+        fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
       };
 
       mainDataGrid.load({ fixedFilters: { ...filters } });

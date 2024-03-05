@@ -27,6 +27,7 @@ import { downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
 import Toast from '@app/components/Toast/Toast';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDesktopDatePickerV2 from '@app/components/Form/FormInputs/FormDatePickerV2';
 
 const CalculoReporte = () => {
   // const _navigate = useNavigate();
@@ -69,8 +70,8 @@ const CalculoReporte = () => {
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
-        fechaHasta: data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
+        fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
       };
@@ -127,7 +128,6 @@ const CalculoReporte = () => {
               name='clienteId'
               resetField={resetField}
             />
-            {/* <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' /> */}
           </Col>
         </Row>
         <Row>

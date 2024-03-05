@@ -21,12 +21,14 @@ import { ProcedimientoQContext } from '@domains/procedimiento-q/contexts';
 import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
 import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
 import ProcedimientoCustomDropdownController from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdownController';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoQEdit = () => {
   const { procedimientoQId } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProcedimientoQContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [disablePBuiltin, setDisablePBuiltin] = useState(false);
@@ -39,7 +41,7 @@ const ProcedimientoQEdit = () => {
     control,
     watch,
     setValue,
-    resetField,
+    setError,
   } = useForm<ProcedimientoQEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -68,9 +70,25 @@ const ProcedimientoQEdit = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoQEditSchemaType> = useCallback(
     async data => {
-      await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) });
-      mainDataGrid.reload();
-      _navigate('/procedimiento-q');
+      await ProcedimientoQRepository.updateProcedimientoQ({ ...data, id: Number(procedimientoQId) })
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-q');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );
@@ -106,7 +124,7 @@ const ProcedimientoQEdit = () => {
       <Form onSubmit={handleSubmit(onSubmit)} handleClose={handleClose} isSubmitting={isSubmitting} label='update'>
         <Row>
           <Col md={6}>
-            <FormTextField control={control} label='Código' name='codigo' disabled fullWidth />
+            <FormTextField control={control} label='Código' name='codigo' fullWidth />
           </Col>
           <Col md={6}>
             <FormTextField

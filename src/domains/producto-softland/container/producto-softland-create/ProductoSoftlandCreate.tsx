@@ -17,16 +17,19 @@ import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 import type { ProductoSoftlandCreateSchemaType } from '@domains/producto-softland/container/producto-softland-create/schemas';
 
 import { DateLib } from '@libs';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProductoSoftlandCreate = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProductoSoftlandContext);
+  const confirmDialog = useConfirmDialog();
 
   const {
     handleSubmit,
     control,
     formState: { isSubmitting },
+    setError,
   } = useForm<ProductoSoftlandCreateSchemaType>({
     defaultValues: {
       activo: false,
@@ -45,10 +48,25 @@ const ProductoSoftlandCreate = () => {
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
       };
 
-      await ProductoSoftlandRepository.createProductoSoftland(submitData);
-
-      mainDataGrid.reload();
-      _navigate('/producto-softland');
+      await ProductoSoftlandRepository.createProductoSoftland(submitData)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/producto-softland');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

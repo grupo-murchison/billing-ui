@@ -36,6 +36,7 @@ import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicke
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import TabLayout from '@app/components/Tabs/TabLayout';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();
@@ -58,8 +59,7 @@ const ContratoCreate = () => {
       clienteId: '',
       descripcion: '',
       diaPeriodo: '',
-      fechaInicioContrato: null,
-      fechaFinContrato: null,
+      rangoFechas: null,
       modeloAcuerdoId: '',
       reglaFechaPeriodoId: '',
       sociedadId: '',
@@ -85,8 +85,10 @@ const ContratoCreate = () => {
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
-        fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
-        fechaFinContrato: DateLib.parseToDBString(data.fechaFinContrato),
+        fechaInicioContrato:
+          data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaFinContrato:
+          data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
       };
 
       await ContratoRepository.createContrato(submitData);
@@ -119,8 +121,8 @@ const ContratoCreate = () => {
 
   useEffect(() => {
     TipoContratoRepository.getAllTiposContratoAsDropdown().then(response => {
-      const value = response.data.filter(el => el.code === 'CSPAUY')
-      resetField('tipoContratoId', { defaultValue: value[0].value })
+      const value = response.data.filter(el => el.code === 'CSPAUY');
+      resetField('tipoContratoId', { defaultValue: value[0].value });
     });
   }, []);
 
@@ -176,20 +178,7 @@ const ContratoCreate = () => {
           <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
         <Col md={6}>
-          <FormDesktopDatePicker
-            control={control}
-            disabled={isSubmitting}
-            label='Fecha Inicio Contrato'
-            name='fechaInicioContrato'
-          />
-        </Col>
-        <Col md={6}>
-          <FormDesktopDatePicker
-            control={control}
-            disabled={isSubmitting}
-            label='Fecha Fin Contrato'
-            name='fechaFinContrato'
-          />
+          <FormDateRangePicker control={control} label='Fecha Contrato' name='rangoFechas' disabled={isSubmitting} />
         </Col>
       </Row>
     </CardContent>
@@ -236,16 +225,25 @@ const ContratoCreate = () => {
     </CardContent>
   );
 
-  const formHeaderFields = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId']
-  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato']
-  const planFacturacionFields = ['tipoPlanFacturacionId', 'reglaFechaPeriodoId']
+  const formHeaderFields = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId'];
+  const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato'];
+  const planFacturacionFields = ['tipoPlanFacturacionId', 'reglaFechaPeriodoId'];
 
   const tabLayoutOptions = [
     { label: 'Datos Generales', renderelement: formHeader, formFields: formHeaderFields, formErrors: formErrors },
-    { label: 'Datos Contractuales', renderelement: datosContractuales, formFields: datosContractualesFields, formErrors: formErrors },
-    { label: 'Plan Facturación', renderelement: planFacturacion, formFields: planFacturacionFields, formErrors: formErrors }
-  ]
-
+    {
+      label: 'Datos Contractuales',
+      renderelement: datosContractuales,
+      formFields: datosContractualesFields,
+      formErrors: formErrors,
+    },
+    {
+      label: 'Plan Facturación',
+      renderelement: planFacturacion,
+      formFields: planFacturacionFields,
+      formErrors: formErrors,
+    },
+  ];
 
   return (
     <>

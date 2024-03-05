@@ -1,8 +1,7 @@
-import { useState } from 'react';
+import { ForwardedRef, forwardRef, useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { DesktopDatePickerProps } from '@mui/x-date-pickers';
-import { FormControl, InputLabel } from '@mui/material';
-// import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
+import { FormControl, FormHelperText, InputLabel, TextField } from '@mui/material';
 
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
@@ -15,6 +14,12 @@ type DateState = Date | null;
 
 function FormDateRangePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   const [dateRange, setDateRange] = useState<DateState[]>([null, null]);
+
+  const ExampleCustomInput = forwardRef(
+    ({ value, onClick }: ExampleCustomInputProps, ref: ForwardedRef<HTMLInputElement>) => (
+      <TextField onClick={onClick} value={value} ref={ref} fullWidth />
+    ),
+  );
 
   return (
     <Controller
@@ -43,13 +48,20 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
               wrapperClassName='MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1t3q0d-MuiFormControl-root-MuiTextField-root'
               className='react-datepicker__base'
               dateFormat='dd/MM/yyyy'
-              clearButtonClassName='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator'
+              customInput={<ExampleCustomInput />}
             />
+            {!!error && <FormHelperText>{error?.message}</FormHelperText>}
+            {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
           </FormControl>
         </>
       )}
     />
   );
+}
+
+interface ExampleCustomInputProps {
+  value: Date | null;
+  onClick: () => void;
 }
 
 interface FormDesktopDatePickerProps extends DesktopDatePickerProps<Date> {
