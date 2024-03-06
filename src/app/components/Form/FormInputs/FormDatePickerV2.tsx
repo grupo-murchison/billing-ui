@@ -1,7 +1,7 @@
-import { forwardRef, useState } from 'react';
+import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { DesktopDatePickerProps } from '@mui/x-date-pickers';
-import { Button, FormControl, InputLabel, TextField } from '@mui/material';
+import { FormControl, InputLabel } from '@mui/material';
 // import { DateRangePicker } from '@mui/x-date-pickers-pro/DateRangePicker';
 
 import ReactDatePicker, { registerLocale } from 'react-datepicker';
@@ -9,8 +9,9 @@ import es from 'date-fns/locale/es';
 registerLocale('es', es);
 
 import { EventIcon } from '@assets/icons';
-import FormDatePickerMenu from './FormDatePickerMenu';
-import { DateLib } from '@libs';
+// import FormDatePickerMenu from './FormDatePickerMenu';
+// import { DateLib } from '@libs';
+import DatePickerCustomRenderInpunt from './DatePickerRenderInpunt';
 
 export type FilterOptions = '=' | '>=' | '<=' | 'between';
 type DateState = Date | null;
@@ -110,10 +111,6 @@ type DateState = Date | null;
 function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   const [dateRange, setDateRange] = useState<DateState[]>([null, null]);
 
-  const ExampleCustomInput = forwardRef(({ value, onClick }: ExampleCustomInputProps, ref: any) => (
-    <TextField onClick={onClick} value={value} ref={ref} fullWidth />
-  ));
-
   return (
     <Controller
       name={name}
@@ -141,7 +138,7 @@ function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }
               wrapperClassName='MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1t3q0d-MuiFormControl-root-MuiTextField-root'
               className='react-datepicker__base'
               dateFormat='dd/MM/yyyy'
-              // customInput={<ExampleCustomInput />}
+              customInput={<DatePickerCustomRenderInpunt />}
             />
             {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
           </FormControl>
@@ -216,11 +213,6 @@ interface FormDesktopDatePickerProps extends DesktopDatePickerProps<Date> {
   inputFormat?: string;
   name: string;
   label: string;
-}
-
-interface ExampleCustomInputProps {
-  value: any;
-  onClick: any;
 }
 
 export default FormDesktopDatePickerV2;
