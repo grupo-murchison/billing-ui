@@ -18,12 +18,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoPEdit = () => {
   const { procedimientoPId } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProcedimientoPContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
@@ -32,6 +34,7 @@ const ProcedimientoPEdit = () => {
     formState: { isSubmitting },
     handleSubmit,
     control,
+    setError,
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -53,9 +56,25 @@ const ProcedimientoPEdit = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoPEditSchemaType> = useCallback(
     async data => {
-      await ProcedimientoPRepository.updateProcedimientoP({ ...data, id: Number(procedimientoPId) });
-      mainDataGrid.reload();
-      _navigate('/procedimiento-p');
+      await ProcedimientoPRepository.updateProcedimientoP({ ...data, id: Number(procedimientoPId) })
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-p');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

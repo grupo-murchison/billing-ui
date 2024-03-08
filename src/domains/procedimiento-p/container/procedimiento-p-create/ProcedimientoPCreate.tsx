@@ -17,16 +17,19 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoPCreate = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProcedimientoPContext);
+  const confirmDialog = useConfirmDialog();
 
   const {
     control,
     handleSubmit,
     formState: { isSubmitting },
+    setError,
   } = useForm<ProcedimientoPCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -38,9 +41,25 @@ const ProcedimientoPCreate = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoPCreateSchemaType> = useCallback(
     async data => {
-      await ProcedimientoPRepository.createProcedimientoP(data);
-      mainDataGrid.reload();
-      _navigate('/procedimiento-p');
+      await ProcedimientoPRepository.createProcedimientoP(data)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-p');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

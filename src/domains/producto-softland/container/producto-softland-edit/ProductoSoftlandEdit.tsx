@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Modal, Row, Col } from '@app/components';
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
@@ -17,12 +17,14 @@ import { ProductoSoftlandContext } from '@domains/producto-softland/contexts';
 import type { ProductoSoftlandEditSchemaType } from '@domains/producto-softland/container/producto-softland-edit/schemas';
 
 import { DateLib } from '@libs';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProductoSoftlandEdit = () => {
   const { id } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProductoSoftlandContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
@@ -31,6 +33,7 @@ const ProductoSoftlandEdit = () => {
     reset,
     control,
     formState: { isSubmitting },
+    setError,
   } = useForm<ProductoSoftlandEditSchemaType>({
     defaultValues: {
       activo: false,
@@ -49,10 +52,25 @@ const ProductoSoftlandEdit = () => {
         fechaCambioEstado: DateLib.parseToDBString(data.fechaCambioEstado),
       };
 
-      await ProductoSoftlandRepository.updateProductoSoftland(submitData);
-
-      mainDataGrid.reload();
-      _navigate('/producto-softland');
+      await ProductoSoftlandRepository.updateProductoSoftland(submitData)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/producto-softland');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

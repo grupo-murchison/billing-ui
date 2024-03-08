@@ -23,12 +23,14 @@ import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 import { findPropertyByCode, findPropertyById, mapearParametros } from '@app/utils/formHelpers.util';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid, state, dispatch } = useContext(ProcedimientoCustomContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const {
@@ -39,6 +41,7 @@ const ProcedimientoCustomEdit = () => {
     formState: { isSubmitting },
     trigger,
     setValue,
+    setError,
   } = useForm<ProcedimientoCustomEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -142,8 +145,19 @@ const ProcedimientoCustomEdit = () => {
           mainDataGrid.reload();
           _navigate('/procedimiento-custom');
         })
-        .catch(error => {
-          dispatch({ type: ACTION_TYPES.SET_ERROR, payload: { error: error } });
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
         });
     },
     [_navigate, mainDataGrid],

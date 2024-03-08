@@ -1,6 +1,5 @@
 import { Col, Row } from '@app/components';
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { DateLib } from '@libs';
 import { Paper } from '@mui/material';
@@ -17,6 +16,7 @@ import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
 import { EventosClientesCreateSchema } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoClientes = () => {
   const { mainDataGrid } = useContext(ClienteEventosContext);
@@ -32,8 +32,7 @@ const EventoClientes = () => {
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: null,
-      fechaDesde: null,
-      fechaHasta: null,
+      rangoFechas: null,
       eventoId: [],
     },
     resolver: zodResolver(EventosClientesCreateSchema),
@@ -46,8 +45,8 @@ const EventoClientes = () => {
       });
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         eventoId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -68,20 +67,7 @@ const EventoClientes = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Evento Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
@@ -137,8 +123,8 @@ const EventoClientes = () => {
           },
         ]}
         repositoryFunc={EventoClienteRepository.getAllEventDetails}
-      // toolbar={toolbarAdicionales}
-      // getRows={rows => console.log('rows', rows) }
+        // toolbar={toolbarAdicionales}
+        // getRows={rows => console.log('rows', rows) }
       />
     </>
   );

@@ -17,7 +17,7 @@ import { EventoErrorRepository } from '@domains/evento-error/repository';
 import { EventoErroresDataGridBreadcrumb } from '@domains/evento-error/constants';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { EventosDropdownAutoComplete } from '@domains/evento-cliente/container/cliente-dropdown';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import { DateLib } from '@libs';
 import { EventoErrorContext } from '@domains/evento-error/contexts';
 

@@ -32,7 +32,7 @@ import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import TabLayout from '@app/components/Tabs/TabLayout';
 import Toast from '@app/components/Toast/Toast';
 

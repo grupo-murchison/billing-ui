@@ -14,7 +14,6 @@ import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import Toast from '@app/components/Toast/Toast';
 
 import { withBreadcrumb } from '@app/hocs';
@@ -33,6 +32,7 @@ import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import CalculoReversionLog from './views/CalculoReversionLog';
 import { useConfirmDialog } from '@app/hooks';
 import CustomChip from '@app/components/Chip/Chip';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const CalculoReversion = () => {
   // const _navigate = useNavigate();
@@ -61,9 +61,8 @@ const CalculoReversion = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: null,
-      fechaDesde: null,
-      fechaHasta: null,
+      clienteId: { value: '', code: '', label: '' },
+      rangoFechas: null,
       nroContrato: '',
       numeroSecuenciaCalculo: '',
     },
@@ -74,8 +73,8 @@ const CalculoReversion = () => {
     async data => {
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
       };
@@ -177,20 +176,7 @@ const CalculoReversion = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Cálculo Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>

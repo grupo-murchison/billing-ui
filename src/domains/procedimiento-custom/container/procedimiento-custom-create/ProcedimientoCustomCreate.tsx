@@ -21,11 +21,13 @@ import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
 import { findPropertyByCode, mapearParametros } from '@app/utils/formHelpers.util';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
 
   const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
+  const confirmDialog = useConfirmDialog();
 
   const {
     control,
@@ -33,6 +35,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
     watch,
     formState: { isSubmitting },
     setValue,
+    setError,
   } = useForm<ProcedimientoCustomCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -78,10 +81,25 @@ const ProcedimientoCustomCreate = forwardRef(() => {
       });
 
       const apiPayload = parseToNull(data);
-      await ProcedimientoCustomRepository.createProcedimientoCustom(apiPayload);
-
-      mainDataGrid.reload();
-      _navigate('/procedimiento-custom');
+      await ProcedimientoCustomRepository.createProcedimientoCustom(apiPayload)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-custom');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

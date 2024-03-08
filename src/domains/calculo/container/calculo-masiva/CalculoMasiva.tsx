@@ -12,7 +12,7 @@ import { CalculoRepository } from '@domains/calculo/repository';
 import { CalculoFacturacionMasivaBreadcrumb } from '@domains/calculo/constants';
 
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import Toast from '@app/components/Toast/Toast';
 

@@ -21,11 +21,13 @@ import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import ProcedimientoBuiltinDropdownController from '@domains/procedimiento-builtin/container/procedimiento-builtin-dropdown/ProcedimientoBuiltinDropdownController';
 import ProcedimientoCustomDropdownController from '@domains/procedimiento-custom/container/procedimiento-custom-dropdown/ProcedimientoCustomDropdownController';
 import TipoProcedimientoQDropdownController from '@domains/tipo-procedimiento-q/container/tipo-procedimiento-q-dropdown/TipoProcedimientoQDropdownController';
+import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoQCreate = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ProcedimientoQContext);
+  const confirmDialog = useConfirmDialog();
 
   const {
     control,
@@ -33,6 +35,7 @@ const ProcedimientoQCreate = () => {
     formState: { isSubmitting },
     watch,
     resetField,
+    setError,
   } = useForm<ProcedimientoQCreateSchemaType>({
     defaultValues: {
       codigo: '',
@@ -47,9 +50,25 @@ const ProcedimientoQCreate = () => {
 
   const onSubmit: SubmitHandler<ProcedimientoQCreateSchemaType> = useCallback(
     async data => {
-      await ProcedimientoQRepository.createProcedimientoQ(data);
-      mainDataGrid.reload();
-      _navigate('/procedimiento-q');
+      await ProcedimientoQRepository.createProcedimientoQ(data)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/procedimiento-q');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );

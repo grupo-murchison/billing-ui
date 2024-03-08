@@ -13,6 +13,7 @@ export {
   CancelScheduleSend as CancelScheduleSendIcon,
   Cancel as CancelIcon,
   Category as CategoryIcon,
+  Check as CheckIcon,
 
   // D
   Dashboard as DashboardIcon,
@@ -24,6 +25,7 @@ export {
   EditOutlined as EditOutlinedIcon,
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
+  Event as EventIcon,
 
   // F
   FiberManualRecord as FiberManualRecordIcon,
@@ -43,6 +45,7 @@ export {
   // H
   Home as HomeIcon,
   HelpOutline as HelpIcon,
+  Height as HeightIcon,
 
   // I
   Inventory as InventoryIcon,
@@ -76,3 +79,5 @@ export {
   // W
   WarningRounded as WarningIcon,
 } from '@mui/icons-material';
+
+export { default as EqualIcon } from './EqualIcon';
