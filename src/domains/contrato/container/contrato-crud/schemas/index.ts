@@ -24,28 +24,31 @@ export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate>
   clienteId: zodId,
   modeloAcuerdoId: z.number({
     required_error: zodLocale.required_error,
-    invalid_type_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
   }),
   reglaFechaPeriodoId: z.number({
     required_error: zodLocale.required_error,
-    invalid_type_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
   }),
   tipoContratoId: z.number({
     required_error: zodLocale.required_error,
-    invalid_type_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
   }),
   tipoPlanFacturacionId: z.number({
     required_error: zodLocale.required_error,
-    invalid_type_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
   }),
-  sociedadId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
+  sociedadId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
   descripcion: z
     .string({ required_error: zodLocale.required_error })
     .min(1, { message: zodLocale.required_error })
     .max(250, { message: zodLocale.stringMax(250) }),
-  rangoFechas: z.array(
-    z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }),
-  ),
+  rangoFechas: z
+    .array(z.date({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.invalid_type_error }))
+    .min(2, zodLocale.required_error),
   diaPeriodo: z
     .number({ required_error: zodLocale.required_error })
     .positive({ message: zodLocale.numberPositive })

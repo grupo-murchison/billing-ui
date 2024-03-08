@@ -59,7 +59,7 @@ const ContratoCreate = () => {
       clienteId: '',
       descripcion: '',
       diaPeriodo: '',
-      rangoFechas: null,
+      rangoFechas: [],
       modeloAcuerdoId: '',
       reglaFechaPeriodoId: '',
       sociedadId: '',
@@ -177,6 +177,8 @@ const ContratoCreate = () => {
         <Col md={12}>
           <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
+      </Row>
+      <Row>
         <Col md={6}>
           <FormDateRangePicker control={control} label='Fecha Contrato' name='rangoFechas' disabled={isSubmitting} />
         </Col>

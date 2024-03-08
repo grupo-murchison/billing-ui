@@ -40,10 +40,9 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
               icon={<EventIcon />}
               showIcon
               showPopperArrow={false}
-              wrapperClassName='MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1t3q0d-MuiFormControl-root-MuiTextField-root'
-              // className='react-datepicker__base'
+              wrapperClassName='MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yhqr8v-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root'
               dateFormat='dd/MM/yyyy'
-              customInput={<DatePickerCustomRenderInpunt />}
+              customInput={<DatePickerCustomRenderInpunt error={error} />}
             />
             {!!error && <FormHelperText>{error?.message}</FormHelperText>}
             {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
