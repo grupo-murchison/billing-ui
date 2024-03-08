@@ -16,7 +16,7 @@ import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
 import { EventosClientesCreateSchema } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
-import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoClientes = () => {
   const { mainDataGrid } = useContext(ClienteEventosContext);

@@ -7,7 +7,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import { Modal, Row, Col } from '@app/components';
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
+import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 

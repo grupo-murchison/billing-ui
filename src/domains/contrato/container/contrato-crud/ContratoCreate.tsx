@@ -32,11 +32,10 @@ import { ContratoCreateBreadcrumb } from '@domains/contrato/constants';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import TabLayout from '@app/components/Tabs/TabLayout';
-import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const ContratoCreate = () => {
   const _navigate = useNavigate();

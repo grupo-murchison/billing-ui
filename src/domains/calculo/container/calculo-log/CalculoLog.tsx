@@ -23,7 +23,7 @@ import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleCalculoLog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomChip from '@app/components/Chip/Chip';
-import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const CalculoLog = () => {
   const { mainDataGrid } = useContext(CalculoLogContext);

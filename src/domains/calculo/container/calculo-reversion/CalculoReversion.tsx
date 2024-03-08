@@ -32,7 +32,7 @@ import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import CalculoReversionLog from './views/CalculoReversionLog';
 import { useConfirmDialog } from '@app/hooks';
 import CustomChip from '@app/components/Chip/Chip';
-import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const CalculoReversion = () => {
   // const _navigate = useNavigate();

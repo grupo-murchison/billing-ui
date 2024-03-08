@@ -14,11 +14,11 @@ import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
 import { CalculoRepository } from '@domains/calculo/repository';
 import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
-import { ValidationSchemaEventosServicioFilters, EventosServicioFormSchemaType } from '../../../repository/schemas';
+import { ValidationSchemaEventosServicioFilters } from '../../../repository/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
-import FormDateRangePicker from '@app/components/Form/FormInputs/FormDateRangePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoServicio = () => {
   const { mainDataGrid } = useContext(EventosServiciosContext);
