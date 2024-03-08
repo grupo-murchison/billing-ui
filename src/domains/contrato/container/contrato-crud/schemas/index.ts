@@ -17,7 +17,7 @@ export type FormDataTypeContratoCreate = {
   sociedadId: number | string;
   tipoContratoId: number | string;
   tipoPlanFacturacionId: number | string;
-  rangoFechas: Date[] | null;
+  fechaInicioFinContrato: [Date, Date] | null;
 };
 
 export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate> = z.object({
@@ -46,9 +46,24 @@ export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate>
     .string({ required_error: zodLocale.required_error })
     .min(1, { message: zodLocale.required_error })
     .max(250, { message: zodLocale.stringMax(250) }),
-  rangoFechas: z
-    .array(z.date({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.invalid_type_error }))
-    .min(2, zodLocale.required_error),
+  fechaInicioFinContrato: z.tuple(
+    [
+      z.date({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
+      z.date({
+        required_error: zodLocale.required_error + ' Complete la segunda fecha',
+        invalid_type_error: ' Complete la segunda fecha',
+      }),
+    ],
+    {
+      errorMap: (issue, ctx) => {
+        if (issue.code === z.ZodIssueCode.too_small) {
+          return { message: zodLocale.required_error };
+        }
+
+        return { message: ctx.defaultError };
+      },
+    },
+  ),
   diaPeriodo: z
     .number({ required_error: zodLocale.required_error })
     .positive({ message: zodLocale.numberPositive })

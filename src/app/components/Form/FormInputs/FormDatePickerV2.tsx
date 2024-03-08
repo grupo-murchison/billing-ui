@@ -26,7 +26,7 @@ type DateState = Date | null;
 //       control={control}
 //       render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
 //         <>
-//           <FormControl fullWidth error={!!error?.message}>
+//           <FormControl fullWidth error={!!error}>
 //             <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
 //               {label || name}
 //             </InputLabel>
@@ -78,7 +78,7 @@ type DateState = Date | null;
 //       control={control}
 //       render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
 //         <>
-//           <FormControl fullWidth error={!!error?.message}>
+//           <FormControl fullWidth error={!!error}>
 //             <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
 //               {label || name}
 //             </InputLabel>
@@ -108,6 +108,10 @@ type DateState = Date | null;
 //   );
 // }
 
+/**
+ * Componente experimental en desarrollo. Debe mutar su comportamiento por desición del usuario
+ * en base una funcionalidad adicional de tipo filtros o comandos preestablecidos
+ */
 function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   const [dateRange, setDateRange] = useState<DateState[]>([null, null]);
 
@@ -117,7 +121,7 @@ function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }
       control={control}
       render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
         <>
-          <FormControl fullWidth error={!!error?.message}>
+          <FormControl fullWidth error={!!error}>
             <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
               {label || name}
             </InputLabel>
@@ -138,7 +142,7 @@ function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }
               wrapperClassName='MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1t3q0d-MuiFormControl-root-MuiTextField-root'
               className='react-datepicker__base'
               dateFormat='dd/MM/yyyy'
-              customInput={<DatePickerCustomRenderInpunt />}
+              customInput={<DatePickerCustomRenderInpunt error={error} />}
             />
             {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
           </FormControl>
@@ -179,7 +183,7 @@ function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }
 //       control={control}
 //       render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
 //         <>
-//           <FormControl fullWidth error={!!error?.message}>
+//           <FormControl fullWidth error={!!error}>
 //             <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
 //               {label || name}
 //             </InputLabel>

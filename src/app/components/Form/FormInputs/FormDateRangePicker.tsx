@@ -10,9 +10,12 @@ registerLocale('es', es);
 import { EventIcon } from '@assets/icons';
 import DatePickerCustomRenderInpunt from './DatePickerRenderInpunt';
 
-export type FilterOptions = '=' | '>=' | '<=' | 'between';
 type DateState = Date | null;
 
+/**
+ * Este componente es solo para Rango de Fechas en donde se requiera como obligatorio una fecha Desde/Hasta.
+ * Sin componentes ni funcionalidades adicionales.
+ */
 function FormDateRangePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
   const [dateRange, setDateRange] = useState<DateState[]>([null, null]);
 
@@ -20,35 +23,41 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
     <Controller
       name={name}
       control={control}
-      render={({ field: { onChange, value, ...field }, fieldState: { error } }) => (
-        <>
-          <FormControl fullWidth error={!!error?.message}>
-            <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
-              {label || name}
-            </InputLabel>
-            <ReactDatePicker
-              locale='es'
-              selectsRange={true}
-              startDate={dateRange[0]}
-              endDate={dateRange[1]}
-              onChange={(dates: DateState[]) => {
-                setDateRange(dates);
-                onChange(dates);
-              }}
-              placeholderText='dd / MM / yyyy'
-              isClearable={true}
-              icon={<EventIcon />}
-              showIcon
-              showPopperArrow={false}
-              wrapperClassName='MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yhqr8v-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root'
-              dateFormat='dd/MM/yyyy'
-              customInput={<DatePickerCustomRenderInpunt error={error} />}
-            />
-            {!!error && <FormHelperText>{error?.message}</FormHelperText>}
-            {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
-          </FormControl>
-        </>
-      )}
+      render={({ field: { onChange, value, ...field }, fieldState: { error } }) => {
+        if (error instanceof Array) {
+          error.forEach(x => (error = x));
+        }
+
+        return (
+          <>
+            <FormControl fullWidth error={!!error}>
+              <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
+                {label || name}
+              </InputLabel>
+              <ReactDatePicker
+                {...field}
+                locale='es'
+                selectsRange={true}
+                startDate={dateRange[0]}
+                endDate={dateRange[1]}
+                onChange={(dates: DateState[]) => {
+                  setDateRange(dates);
+                  onChange(dates);
+                }}
+                placeholderText='dd / MM / yyyy'
+                isClearable={true}
+                icon={<EventIcon />}
+                showIcon
+                showPopperArrow={false}
+                wrapperClassName='MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yhqr8v-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root'
+                dateFormat='dd/MM/yyyy'
+                customInput={<DatePickerCustomRenderInpunt error={error} />}
+              />
+              {!!error && <FormHelperText>{error?.message}</FormHelperText>}
+            </FormControl>
+          </>
+        );
+      }}
     />
   );
 }

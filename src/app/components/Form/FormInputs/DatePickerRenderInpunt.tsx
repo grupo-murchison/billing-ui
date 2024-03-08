@@ -11,7 +11,6 @@ interface DatePickerRenderCustomInpuntProps {
 
 const DatePickerCustomRenderInpunt = forwardRef(
   ({ value, onClick, error }: DatePickerRenderCustomInpuntProps, ref: ForwardedRef<HTMLInputElement>) => {
-    console.log('error', error);
     return <TextField onClick={onClick} value={value} ref={ref} fullWidth error={!!error} />;
   },
 );

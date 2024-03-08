@@ -59,7 +59,7 @@ const ContratoCreate = () => {
       clienteId: '',
       descripcion: '',
       diaPeriodo: '',
-      rangoFechas: [],
+      fechaInicioFinContrato: [],
       modeloAcuerdoId: '',
       reglaFechaPeriodoId: '',
       sociedadId: '',
@@ -86,9 +86,9 @@ const ContratoCreate = () => {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
         fechaInicioContrato:
-          data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+          data.fechaInicioFinContrato && data.fechaInicioFinContrato[0] ? DateLib.parseToDBString(data.fechaInicioFinContrato[0]) : undefined,
         fechaFinContrato:
-          data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
+          data.fechaInicioFinContrato && data.fechaInicioFinContrato[1] ? DateLib.parseToDBString(data.fechaInicioFinContrato[1]) : undefined,
       };
 
       await ContratoRepository.createContrato(submitData);
@@ -180,7 +180,7 @@ const ContratoCreate = () => {
       </Row>
       <Row>
         <Col md={6}>
-          <FormDateRangePicker control={control} label='Fecha Contrato' name='rangoFechas' disabled={isSubmitting} />
+          <FormDateRangePicker control={control} label='Fecha Contrato' name='fechaInicioFinContrato' disabled={isSubmitting} />
         </Col>
       </Row>
     </CardContent>
