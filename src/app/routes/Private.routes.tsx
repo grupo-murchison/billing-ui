@@ -19,7 +19,7 @@ import { EventoRoutes } from '@domains/evento/navigation';
 import { TablaDinamicaRoutes } from '@domains/metadatos/tabla-dinamica/navigation';
 import RootRoute from '@domains/root/Root.route';
 import { EventoErrorRoutes } from '@domains/evento-error/navigation';
-
+import { EventoCargaRoutes } from '@domains/evento-carga/navigation/';
 
 const PrivateRoutes = () => {
   const { isAuthenticated } = useContext(AuthContext);
@@ -44,6 +44,7 @@ const PrivateRoutes = () => {
         <TablaDinamicaRoutes />
         <RootRoute />
         <EventoErrorRoutes />
+        <EventoCargaRoutes />
       </MainLayout>
     </ComponentInjectorProvider>
   );

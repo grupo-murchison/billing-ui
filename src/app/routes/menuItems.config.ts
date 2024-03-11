@@ -199,6 +199,13 @@ const eventos: IMenuItemGroup = {
           url: '/evento-error',
           breadcrumbs: false,
         },
+        {
+          id: 'eventoCarga',
+          title: 'Evento Carga',
+          type: 'item',
+          url: '/evento-carga',
+          breadcrumbs: false,
+        },
       ],
     },
   ],

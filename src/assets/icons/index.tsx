@@ -13,6 +13,7 @@ export {
   CancelScheduleSend as CancelScheduleSendIcon,
   Cancel as CancelIcon,
   Category as CategoryIcon,
+  Check as CheckIcon,
 
   // D
   Dashboard as DashboardIcon,
