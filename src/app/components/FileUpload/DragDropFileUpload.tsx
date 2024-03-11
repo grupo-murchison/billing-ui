@@ -8,9 +8,10 @@ type DragDropFileUploadProps = {
   loading: boolean;
   multiple?: boolean;
   name: string;
+  disabled?: boolean;
 };
 
-function DragDropFileUpload({ onFileUpload, accept, loading, multiple }: DragDropFileUploadProps) {
+function DragDropFileUpload({ onFileUpload, accept, loading, multiple, disabled }: DragDropFileUploadProps) {
   const [isDragActive, setIsDragActive] = useState(false);
   const theme = useTheme();
 
@@ -65,6 +66,7 @@ function DragDropFileUpload({ onFileUpload, accept, loading, multiple }: DragDro
         multiple={multiple}
         type='file'
         onChange={handleChange}
+        disabled={disabled}
       />
       <label htmlFor='raised-button-file'>
         <Box display='flex' flexDirection='column' alignItems='center'>

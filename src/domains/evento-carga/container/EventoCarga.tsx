@@ -4,11 +4,17 @@ import EventoCargaRepository from '@domains/evento-carga/repository/evento-carga
 import { useState } from 'react';
 import { EventoCargaBreadcrumb } from '../constants';
 import { useConfirmDialog } from '@app/hooks';
+import { Box, Typography } from '@mui/material';
 
 function EventoCarga() {
   const [loadingFile, setLoadingFile] = useState(false);
 
   const confirmDialog = useConfirmDialog();
+
+  const condicionesEventoCarga = [
+    `El archivo debe ser tipo excel en formato .xlsx`,
+    `Los eventos deben estar cargados en una hoja/solapa llamada "eventos" en minúsculas.`,
+  ];
 
   const onFileUpload = async (file: FileList) => {
     setLoadingFile(true);
@@ -26,7 +32,6 @@ function EventoCarga() {
         });
       })
       .catch(err => {
-        // TODO Puede devolver status code 400. Capturar y mostrar el mensaje en dialogo de notificacion.
         const error = JSON.parse(err.message);
 
         if (error && error.statusCode === 400) {
@@ -47,11 +52,19 @@ function EventoCarga() {
 
   return (
     <>
+      <Box my={3}>
+        {condicionesEventoCarga.map((condicion, index) => (
+          <Typography variant='h6' component='div' key={index}>
+            {condicion}
+          </Typography>
+        ))}
+      </Box>
       <DragDropFileUpload
         name='eventos-carga'
         onFileUpload={onFileUpload}
         accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // solo archivos .xlsx
         loading={loadingFile}
+        disabled={loadingFile}
       />
     </>
   );
