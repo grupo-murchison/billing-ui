@@ -49,7 +49,6 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
                 icon={<EventIcon />}
                 showIcon
                 showPopperArrow={false}
-                wrapperClassName='MuiInputBase-root MuiOutlinedInput-root MuiInputBase-colorPrimary MuiInputBase-formControl  css-1yhqr8v-MuiInputBase-root-MuiOutlinedInput-root-MuiSelect-root'
                 dateFormat='dd/MM/yyyy'
                 customInput={<DatePickerCustomRenderInpunt error={error} />}
               />
