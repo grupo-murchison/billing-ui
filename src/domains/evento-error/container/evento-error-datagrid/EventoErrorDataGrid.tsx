@@ -17,9 +17,9 @@ import { EventoErrorRepository } from '@domains/evento-error/repository';
 import { EventoErroresDataGridBreadcrumb } from '@domains/evento-error/constants';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { EventosDropdownAutoComplete } from '@domains/evento-cliente/container/cliente-dropdown';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import { DateLib } from '@libs';
 import { EventoErrorContext } from '@domains/evento-error/contexts';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoErrorDataGrid = () => {
   const _navigate = useNavigate();
@@ -52,8 +52,8 @@ const EventoErrorDataGrid = () => {
       });
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data?.rangoFechas?.[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data?.rangoFechas?.[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         eventosId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -84,20 +84,7 @@ const EventoErrorDataGrid = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Evento Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
