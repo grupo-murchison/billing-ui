@@ -61,6 +61,13 @@ const EventoErrorDataGrid = () => {
     [mainDataGrid],
   );
 
+  const handleClickView = useCallback(
+    (id: number) => {
+      _navigate(`/evento-error/${id}`);
+    },
+    [_navigate],
+  );
+
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
@@ -105,6 +112,7 @@ const EventoErrorDataGrid = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
+          { field: 'id', headerName: 'Id' },
           { field: 'source_system', headerName: 'Evento Origen' },
           { field: 'type', headerName: 'Tipo Evento' },
           { field: 'createdAt', headerName: 'Fecha Creacion', },
@@ -123,7 +131,7 @@ const EventoErrorDataGrid = () => {
                 key={1}
                 icon={<ViewIcon />}
                 label='Vista'
-                onClick={() => console.log(params.row.id)}
+                onClick={() => handleClickView(params.row.id)}
                 showInMenu
               />,
             ],

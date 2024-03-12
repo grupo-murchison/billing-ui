@@ -1,52 +1,99 @@
-// import { useCallback, useEffect, useState } from 'react';
+import { Row, Col, Modal } from '@app/components';
+import { Box, FormLabel, Typography } from '@mui/material';
 
-// import { useNavigate, useParams } from 'react-router-dom';
+import Form from '@app/components/Form/Form';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useCallback, useEffect, useState } from 'react';
+import { EventoRepository } from '@domains/evento/repository';
+import { EventoCampoRoutes } from '@domains/evento-campo/navigation';
+import { TipoNegocioDropdown } from '@domains/tipo-negocio/container/tipo-negocio-dropdown';
+import { useForm } from 'react-hook-form';
+// import { EventoViewSchema, EventoViewSchemaType } from './schemas';
+import { zodResolver } from '@hookform/resolvers/zod';
+import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { Modal, Row, Col } from '@app/components';
-
-// import { MonedaDropdown } from '@domains/moneda/container/moneda-dropdown';
-
-// import { ProcedimientoPRepository } from '@domains/procedimiento-p/repository';
-
-// import { ProcedimientoPIntervaloWithinProcedimientoPRoutes } from '@domains/procedimiento-p-intervalo/navigation';
-
-// import { TextField } from '@mui/material';
-
-// import { zodResolver } from '@hookform/resolvers/zod';
-
-// import { useForm } from 'react-hook-form';
-// import Form from '@app/components/Form/Form';
-// // import { ProcedimientoPEditSchema, ProcedimientoPEditSchemaType } from './schemas';
-
-//TODO: complete
 const EventoErrorView = () => {
+    const { eventoId } = useParams();
+    const _navigate = useNavigate();
 
+    const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
+    const handleClose = useCallback(() => {
+        _navigate('/evento-error');
+    }, [_navigate]);
+
+    useEffect(() => {
+        EventoRepository.getEventoById(eventoId || '').then(({ data }) => {
+            reset(data);
+            setIsDataFetched(true);
+        });
+    }, [eventoId]);
+
+    const { control, reset } = useForm<any>({
+        defaultValues: {
+            codigo: '',
+            denominacion: '',
+            descripcion: '',
+            tipoNegocioId: '',
+        },
+        // resolver: zodResolver(EventoViewSchema),
+    });
+
+    if (!isDataFetched) {
+        return <></>;
+    }
     return (
-        <Modal isOpen onClose={() => { console.log('click') }} title='Ver Procedimiento Precio'>
-            {/* <Form isSubmitting={isSubmitting}>
+        <Modal isOpen onClose={handleClose} title='Detalle Evento'>
+            <Form>
                 <Row>
                     <Col md={6}>
-                        <TextField id='codigo' label='Código' defaultValue={procedimientoPData.codigo} fullWidth disabled />
+                        <FormTextField
+                            control={control}
+                            label='Código'
+                            fullWidth
+                            name='codigo'
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                        />
                     </Col>
                     <Col md={6}>
-                        <TextField
-                            id='denominacion'
+                        <FormTextField
+                            control={control}
                             label='Denominación'
-                            defaultValue={procedimientoPData.denominacion}
+                            InputProps={{
+                                readOnly: true,
+                            }}
                             fullWidth
-                            disabled
+                            name='denominacion'
                         />
                     </Col>
                 </Row>
                 <Row>
                     <Col md={6}>
-                        <MonedaDropdown control={control} name='monedaId' disabled label='Moneda' />
+                        <FormTextField
+                            control={control}
+                            label='Descripción'
+                            InputProps={{
+                                readOnly: true,
+                            }}
+                            fullWidth
+                            name='descripcion'
+                        />
+                    </Col>
+                    <Col md={6}>
+                        <TipoNegocioDropdown control={control} name='tipoNegocioId' readOnly label='Tipo de negocio' />{' '}
                     </Col>
                 </Row>
             </Form>
-
-            <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={procedimientoPData.codigo} /> */}
+            <Box my={2}>
+                <FormLabel component='legend'>
+                    <Typography variant='h6' component='div'>
+                        Campos del evento
+                    </Typography>
+                </FormLabel>
+            </Box>
+            <EventoCampoRoutes />
         </Modal>
     );
 };
