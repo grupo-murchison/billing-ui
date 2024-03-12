@@ -24,8 +24,8 @@ function EventoCarga() {
         console.log('THEN', x);
         confirmDialog.open({
           type: 'ok',
-          title: 'Archivo Enviado Correctamente',
-          message: 'El archivo ya se encuentra cargado',
+          title: 'Archivo Procesado Correctamente',
+          message: 'El archivo ya se encuentra procesado',
           onClickYes() {
             confirmDialog.close();
           },
