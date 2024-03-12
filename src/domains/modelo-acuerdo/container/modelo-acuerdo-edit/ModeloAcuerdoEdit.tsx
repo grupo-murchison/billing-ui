@@ -15,12 +15,14 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { ModeloAcuerdoContext } from '@domains/modelo-acuerdo/contexts';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useConfirmDialog } from '@app/hooks';
 
 const ModeloAcuerdoEdit = () => {
   const { modeloAcuerdoId } = useParams();
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(ModeloAcuerdoContext);
+  const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 
@@ -29,6 +31,7 @@ const ModeloAcuerdoEdit = () => {
     handleSubmit,
     reset,
     formState: { isSubmitting },
+    setError,
   } = useForm<ModeloAcuerdoEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -39,9 +42,25 @@ const ModeloAcuerdoEdit = () => {
 
   const onSubmit: SubmitHandler<ModeloAcuerdoEditSchemaType> = useCallback(
     async data => {
-      await ModeloAcuerdoRepository.updateModeloAcuerdo(data, +modeloAcuerdoId!);
-      mainDataGrid.reload();
-      _navigate('/modelo-acuerdo');
+      await ModeloAcuerdoRepository.updateModeloAcuerdo(data, +modeloAcuerdoId!)
+        .then(() => {
+          mainDataGrid.reload();
+          _navigate('/modelo-acuerdo');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          if (error?.statusCode === 400) {
+            setError('codigo', { type: 'custom', message: error.message });
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible realizar esta acción',
+              message: `${error.message}`,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );
