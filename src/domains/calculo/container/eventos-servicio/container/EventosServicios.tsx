@@ -1,6 +1,5 @@
 import { Col, Row } from '@app/components';
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { DateLib } from '@libs';
@@ -15,10 +14,11 @@ import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
 import { CalculoRepository } from '@domains/calculo/repository';
 import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
-import { ValidationSchemaEventosServicioFilters, EventosServicioFormSchemaType } from '../../../repository/schemas';
+import { ValidationSchemaEventosServicioFilters } from '../../../repository/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoServicio = () => {
   const { mainDataGrid } = useContext(EventosServiciosContext);
@@ -37,21 +37,20 @@ const EventoServicio = () => {
       clienteId: null,
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
       conceptoAcuerdoId: null,
-      fechaDesde: null,
-      fechaHasta: null,
+      rangoFechas: null,
     },
     resolver: zodResolver(ValidationSchemaEventosServicioFilters),
   });
 
-  const onSubmit: SubmitHandler<EventosServicioFormSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(
     async data => {
       const filters = {
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         nroContato: data.contrato ? data.contrato : undefined,
         conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
       };
 
       mainDataGrid.load({ fixedFilters: { ...filters } });
@@ -64,7 +63,13 @@ const EventoServicio = () => {
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} label='Número Secuencia Calculo' name='numeroSecuenciaCalculo' disabled={isSubmitting} type='number' />
+            <FormTextField
+              control={control}
+              label='Número Secuencia Calculo'
+              name='numeroSecuenciaCalculo'
+              disabled={isSubmitting}
+              type='number'
+            />
           </Col>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
@@ -75,25 +80,17 @@ const EventoServicio = () => {
             <FormTextField control={control} disabled={isSubmitting} label='Número Contrato' name='contrato' />
           </Col>
           <Col sm={12} md={6}>
-            <ConcepoAcuerdoAutoComplete control={control} disabled={isSubmitting} label='Concepto Acuerdo' name='conceptoAcuerdoId' />
+            <ConcepoAcuerdoAutoComplete
+              control={control}
+              disabled={isSubmitting}
+              label='Concepto Acuerdo'
+              name='conceptoAcuerdoId'
+            />
           </Col>
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Evento Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>

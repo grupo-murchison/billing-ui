@@ -57,29 +57,21 @@ export type FormDataTypeCalculoFacturacionMasiva = {
   sinMensajesLogInfo: boolean;
 };
 
-export const CalculoLogSchema = z
-  .object({
-    numeroSecuenciaCalculo: z.number().nullish().or(z.literal('')),
-    nroContrato: z.number().nullish().or(z.literal('')),
-    clienteId: z
-      .object({
-        value: z.number({ required_error: 'El campo es requerido.' }).or(z.literal('')),
-        code: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
-        label: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
-      })
-      .nullable()
-      .optional(),
-    fechaHasta: z
-      .date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' })
-      .nullable(),
-    fechaDesde: z
-      .date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' })
-      .nullable(),
-  })
-  .refine(({ fechaDesde, fechaHasta }) => fechaHasta == null || fechaDesde == null || fechaHasta >= fechaDesde, {
-    message: 'Fecha hasta debe ser mayor o igual a Fecha desde',
-    path: ['fechaHasta'],
-  });
+export const CalculoLogSchema = z.object({
+  numeroSecuenciaCalculo: z.number().nullish().or(z.literal('')),
+  nroContrato: z.number().nullish().or(z.literal('')),
+  clienteId: z
+    .object({
+      value: z.number({ required_error: 'El campo es requerido.' }).or(z.literal('')),
+      code: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
+      label: z.string({ required_error: 'El campo es requerido.' }).or(z.literal('')),
+    })
+    .nullable()
+    .optional(),
+  rangoFechas: z
+    .array(z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }))
+    .nullable(),
+});
 
 export const getAllFacturasPaginatedSchema = ZodUtils.withPagination(FacturasRowDataGridSchema);
 export const getAllFacturasReportePaginatedSchema = ZodUtils.withPagination(FacturasReporteDataGridSchema);

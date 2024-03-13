@@ -12,70 +12,63 @@ export type FormDataTypeContratoCreate = {
   clienteId: number | string;
   descripcion: string;
   diaPeriodo: number | string;
-  fechaInicioContrato: Date | null;
-  fechaFinContrato: Date | null;
   modeloAcuerdoId: number | string;
   reglaFechaPeriodoId: number | string;
   sociedadId: number | string;
   tipoContratoId: number | string;
   tipoPlanFacturacionId: number | string;
+  fechaInicioFinContrato: [Date, Date] | null;
 };
 
-export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate> = z
-  .object({
-    clienteId: zodId,
-    modeloAcuerdoId: z.number({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    reglaFechaPeriodoId: z.number({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    tipoContratoId: z.number({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    tipoPlanFacturacionId: z.number({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    sociedadId: z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
-    descripcion: z
-      .string({ required_error: zodLocale.required_error })
-      .min(1, { message: zodLocale.required_error })
-      .max(250, { message: zodLocale.stringMax(250) }),
-    fechaInicioContrato: z.date({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    fechaFinContrato: z.date({
-      required_error: zodLocale.required_error,
-      invalid_type_error: zodLocale.required_error,
-    }),
-    diaPeriodo: z
-      .number({ required_error: zodLocale.required_error })
-      .positive({ message: zodLocale.numberPositive })
-      .or(z.literal('')),
-  })
-  .superRefine((fields, ctx) => {
-    // * por si se requiere validar que haya una difenrencia mínima de días entre las fechas
-    // if (differenceInDays(fields.fechaFinContrato, fields.fechaInicioContrato) < 14) {
-    //   ctx.addIssue({
-    //     message: 'Debe ser 15 días mayor a Fecha Inicio Contrato',
-    //     code: 'custom',
-    //     path: ['fechaFinContrato'],
-    //   });
-    // }
+export const ValidationSchemaContratoCreate: ZodType<FormDataTypeContratoCreate> = z.object({
+  clienteId: zodId,
+  modeloAcuerdoId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
+  reglaFechaPeriodoId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
+  tipoContratoId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
+  tipoPlanFacturacionId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
+  sociedadId: z.number({
+    required_error: zodLocale.required_error,
+    invalid_type_error: zodLocale.invalid_type_error,
+  }),
+  descripcion: z
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(250, { message: zodLocale.stringMax(250) }),
+  fechaInicioFinContrato: z.tuple(
+    [
+      z.date({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error }),
+      z.date({
+        required_error: zodLocale.required_error + ' Complete la segunda fecha',
+        invalid_type_error: ' Complete la segunda fecha',
+      }),
+    ],
+    {
+      errorMap: (issue, ctx) => {
+        if (issue.code === z.ZodIssueCode.too_small) {
+          return { message: zodLocale.required_error };
+        }
 
-    if (fields.fechaFinContrato < fields.fechaInicioContrato) {
-      ctx.addIssue({
-        message: 'Debe ser mayor o igual a Fecha Inicio Contrato',
-        code: 'custom',
-        path: ['fechaFinContrato'],
-      });
-    }
-  });
+        return { message: ctx.defaultError };
+      },
+    },
+  ),
+  diaPeriodo: z
+    .number({ required_error: zodLocale.required_error })
+    .positive({ message: zodLocale.numberPositive })
+    .or(z.literal('')),
+});
 
 const _ContratoEditSchema = z.object({
   contratoVariables: z.array(ContratoVariablesSchema), // Requeridas solo si tipoProcedimientoQ.codigo === BUILT

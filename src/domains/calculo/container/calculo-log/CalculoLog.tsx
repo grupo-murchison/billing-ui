@@ -12,7 +12,6 @@ import { CalculoRepository } from '@domains/calculo/repository';
 import { CalculoLogBreadcrumb } from '@domains/calculo/constants';
 
 import Form from '@app/components/Form/Form';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker';
 import { DateLib } from '@libs';
 import { CalculoLogSchema } from '@domains/calculo/repository/calculo.schemas';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
@@ -24,6 +23,7 @@ import { ViewIcon } from '@assets/icons';
 import DetalleFacturacionLog from './views/DetalleCalculoLog';
 import { zodResolver } from '@hookform/resolvers/zod';
 import CustomChip from '@app/components/Chip/Chip';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const CalculoLog = () => {
   const { mainDataGrid } = useContext(CalculoLogContext);
@@ -43,8 +43,7 @@ const CalculoLog = () => {
       numeroSecuenciaCalculo: '',
       nroContrato: '',
       clienteId: { value: '', code: '', label: '' },
-      fechaDesde: null,
-      fechaHasta: null,
+      rangoFechas: null,
     },
     resolver: zodResolver(CalculoLogSchema),
   });
@@ -55,8 +54,8 @@ const CalculoLog = () => {
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         nroContrato: data.nroContrato ? data.nroContrato : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -91,20 +90,7 @@ const CalculoLog = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Cálculo Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Cálculo Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
