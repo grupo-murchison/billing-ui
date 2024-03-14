@@ -37,7 +37,7 @@ const EventoServicio = () => {
       clienteId: null,
       contrato: '', // TODO deber sen un filtro más avanzado, ver documentación
       conceptoAcuerdoId: null,
-      rangoFechas: null,
+      rangoFechas: [],
     },
     resolver: zodResolver(ValidationSchemaEventosServicioFilters),
   });

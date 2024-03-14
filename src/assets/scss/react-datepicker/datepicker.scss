@@ -22,6 +22,7 @@
   display: inline-block;
   position: relative;
   text-transform: capitalize;
+  min-height: 320px;
 }
 
 .react-datepicker-wraper:focused {
@@ -54,7 +55,7 @@
 }
 
 .react-datepicker-popper {
-  z-index: 1;
+  z-index: 1300;
 
   &[data-placement^='bottom'] {
     padding-top: $datepicker__triangle-size + 2px;
