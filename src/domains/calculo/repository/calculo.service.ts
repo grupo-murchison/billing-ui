@@ -88,8 +88,8 @@ class CalculoService {
     return [response, error];
   };
 
-  static downloadProforma = async (calculoContratoId: string): Promise<HandlePromise> => {
-    const body = { tipoFormato: 'PDF', calculoContratoId: calculoContratoId };
+  static downloadProforma = async (calculoContratoId: string, contratoId: string): Promise<HandlePromise> => {
+    const body = { tipoFormato: 'PDF', calculoContratoId: calculoContratoId, contratoId: contratoId };
 
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProviderBilligReport.post('proforma', body, {
