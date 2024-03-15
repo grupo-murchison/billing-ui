@@ -90,7 +90,7 @@ class CalculoRepository {
     return response;
   };
 
-  static downloadProforma = async (calculoContratoId: string, contratoId: string) => {
+  static downloadProforma = async (calculoContratoId: number, contratoId: number) => {
     return await RepositoryUtils.fromRxjs(CalculoService.downloadProforma(calculoContratoId, contratoId));
   };
 }
