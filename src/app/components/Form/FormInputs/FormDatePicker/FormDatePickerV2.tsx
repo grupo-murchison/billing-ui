@@ -142,7 +142,7 @@ function FormDesktopDatePickerV2({ control, name, label, inputFormat, ...props }
               wrapperClassName='MuiFormControl-root MuiFormControl-fullWidth MuiTextField-root css-1t3q0d-MuiFormControl-root-MuiTextField-root'
               className='react-datepicker__base'
               dateFormat='dd/MM/yyyy'
-              customInput={<DatePickerCustomRenderInpunt error={error} />}
+              customInput={<DatePickerCustomRenderInpunt error={!!error} />}
             />
             {/* <FormDatePickerMenu setSelectedFilter={setSelectedFilter} selectedFilter={selectedFilter} /> */}
           </FormControl>

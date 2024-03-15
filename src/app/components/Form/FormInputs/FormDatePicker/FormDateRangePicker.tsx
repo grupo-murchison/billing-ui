@@ -1,4 +1,3 @@
-import { useState } from 'react';
 import { Control, Controller } from 'react-hook-form';
 import { DesktopDatePickerProps } from '@mui/x-date-pickers';
 import { FormControl, FormHelperText, InputLabel } from '@mui/material';
@@ -7,7 +6,6 @@ import ReactDatePicker, { registerLocale } from 'react-datepicker';
 import es from 'date-fns/locale/es';
 registerLocale('es', es);
 
-import { EventIcon } from '@assets/icons';
 import DatePickerCustomRenderInpunt from './DatePickerRenderInpunt';
 
 type DateState = Date | null;
@@ -17,8 +15,6 @@ type DateState = Date | null;
  * Sin componentes ni funcionalidades adicionales.
  */
 function FormDateRangePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
-  const [dateRange, setDateRange] = useState<DateState[]>([null, null]);
-
   return (
     <Controller
       name={name}
@@ -28,29 +24,38 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
           error.forEach(x => (error = x));
         }
 
+        const valueIsArray = Array.isArray(value);
+        if (!valueIsArray) {
+          console.error(`FormDateRangePicker: Tipo "${value}"no soportado, debe enviar un Array []`);
+          value = [];
+        }
+
+        const selectsRange = true;
+
         return (
           <>
             <FormControl fullWidth error={!!error}>
-              <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
+              <InputLabel htmlFor='range-datepicker' sx={{ position: 'absolute', top: 0, left: -14 }}>
                 {label || name}
               </InputLabel>
               <ReactDatePicker
                 {...field}
                 locale='es'
-                selectsRange={true}
-                startDate={dateRange[0]}
-                endDate={dateRange[1]}
+                selectsRange={selectsRange}
+                startDate={(valueIsArray && value[0]) || null}
+                endDate={(valueIsArray && value[1]) || null}
                 onChange={(dates: DateState[]) => {
-                  setDateRange(dates);
-                  onChange(dates);
+                  onChange(Array.isArray(dates) ? dates : []);
                 }}
-                placeholderText='dd / MM / yyyy'
-                isClearable={true}
-                icon={<EventIcon />}
-                showIcon
+                placeholderText='DD / MM / YYYY - DD / MM / YYYY'
+                dateFormat={inputFormat || 'dd / MM / yyyy'}
+                isClearable
+                clearButtonTitle='Limpiar'
                 showPopperArrow={false}
-                dateFormat='dd/MM/yyyy'
-                customInput={<DatePickerCustomRenderInpunt error={error} />}
+                adjustDateOnChange={!selectsRange} //! no utilizar esta prop con range
+                customInput={<DatePickerCustomRenderInpunt error={!!error} />}
+                // popperClassName='react-datepicker-popper' // concatena con la clase react-datepicker-popper
+                // calendarClassName='react-datepicker' // concatena con la clase react-datepicker
               />
               {!!error && <FormHelperText>{error?.message}</FormHelperText>}
             </FormControl>
