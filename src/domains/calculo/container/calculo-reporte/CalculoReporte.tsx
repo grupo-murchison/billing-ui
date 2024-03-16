@@ -88,7 +88,7 @@ const CalculoReporte = () => {
   const handleVerProforma = async (row: AnyValue) => {
     setCalculoContratoId(row.contratos[0]?.id); //* id de la tabla calculo_contrato
 
-    CalculoRepository.downloadProforma(row.contratos[0]?.id)
+    CalculoRepository.downloadProforma(row.contratos[0]?.id, row.contratos[0]?.contratoId)
       .then(res => {
         // const fileName = getFileNameHeaders(res.headers);
         downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaCalculo}.pdf`);
