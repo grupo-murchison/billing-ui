@@ -25,14 +25,14 @@ const DatePickerCustomRenderInpunt = forwardRef(
         InputProps={{
           startAdornment: (
             <InputAdornment position='start'>
-              <IconButton aria-label='open calendar' onClick={onClick} edge='start'>
+              <IconButton aria-label='open calendar' onClick={onClick} edge='start' size='small'>
                 <EventIcon />
               </IconButton>
             </InputAdornment>
           ),
           endAdornment: filterDeshabilitadoAproposito ? null : (
             <InputAdornment position='end'>
-              <IconButton aria-label='open calendar' onClick={onClickFilter} edge='start' style={{ marginRight: 10 }}>
+              <IconButton aria-label='open filter' onClick={onClickFilter} edge='start' size='small' style={{ marginRight: 10 }}>
                 <FilterAltIcon />
               </IconButton>
             </InputAdornment>

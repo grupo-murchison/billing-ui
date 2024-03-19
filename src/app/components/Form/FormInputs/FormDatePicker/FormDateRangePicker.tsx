@@ -54,6 +54,8 @@ function FormDateRangePicker({ control, name, label, inputFormat, ...props }: Fo
                 showPopperArrow={false}
                 adjustDateOnChange={!selectsRange} //! no utilizar esta prop con range
                 customInput={<DatePickerCustomRenderInpunt error={!!error} />}
+                popperPlacement='top-start'
+                clearButtonClassName='MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium MuiAutocomplete-clearIndicator css-1t4w124'
                 // popperClassName='react-datepicker-popper' // concatena con la clase react-datepicker-popper
                 // calendarClassName='react-datepicker' // concatena con la clase react-datepicker
               />

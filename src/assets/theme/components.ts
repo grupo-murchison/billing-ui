@@ -51,27 +51,14 @@ export const components: Components = {
       },
     },
   },
-
-  // MuiInputBase: {
-  //   styleOverrides: {
-  //     root: {
-  //       'outline': `0px ${colors.text.disabled} solid`,
-  //       'border': '0px solid green',
-  //       '&.Mui-focused': {
-  //         // color: colors.primary.main,
-  //         backgroundColor: alpha(colors.primary.main, 0.05),
-  //         outline: '2px solid red',
-  //       },
-  //     },
-  //   },
-  // },
-
-  // MuiOutlinedInput: {
-  //   styleOverrides: {
-  //     input: {
-  //       En inspector actualmente figura 16.5px 14px
-  //       padding: '14px',
-  //     },
-  //   },
-  // },
+  MuiTextField: {
+    defaultProps: {
+      size: 'small',
+    },
+  },
+  MuiFormControl: {
+    defaultProps: {
+      size: 'small',
+    },
+  },
 };

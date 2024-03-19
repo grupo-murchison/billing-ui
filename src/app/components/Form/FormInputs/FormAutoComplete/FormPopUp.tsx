@@ -83,7 +83,6 @@ export default function FormPopUp({
         name={name}
         control={control}
         render={({ field, fieldState: { error } }) => (
-          <Box>
             <Autocomplete
               {...props}
               {...field}
@@ -111,7 +110,6 @@ export default function FormPopUp({
                 />
               )}
             />
-          </Box>
         )}
       />
 
