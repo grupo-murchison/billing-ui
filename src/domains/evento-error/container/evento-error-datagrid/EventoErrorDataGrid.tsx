@@ -17,9 +17,9 @@ import { EventoErrorRepository } from '@domains/evento-error/repository';
 import { EventoErroresDataGridBreadcrumb } from '@domains/evento-error/constants';
 import { ClienteDropdownAutoComplete } from '@domains/cliente/container/cliente-dropdown';
 import { EventosDropdownAutoComplete } from '@domains/evento-cliente/container/cliente-dropdown';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import { DateLib } from '@libs';
 import { EventoErrorContext } from '@domains/evento-error/contexts';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const EventoErrorDataGrid = () => {
   const _navigate = useNavigate();
@@ -52,13 +52,20 @@ const EventoErrorDataGrid = () => {
       });
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        fechaDesde: data.fechaDesde ? DateLib.parseToDBString(data.fechaDesde) : undefined,
-        fechaHasta: data.fechaHasta ? DateLib.parseToDBString(data.fechaHasta) : undefined,
+        fechaDesde: data?.rangoFechas?.[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
+        fechaHasta: data?.rangoFechas?.[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
         eventosId: data.eventoId ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
     [mainDataGrid],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      _navigate(`/evento-error/${id}`);
+    },
+    [_navigate],
   );
 
 
@@ -77,20 +84,7 @@ const EventoErrorDataGrid = () => {
         </Row>
         <Row>
           <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Desde'
-              name='fechaDesde'
-              disabled={isSubmitting}
-            />
-          </Col>
-          <Col md={6}>
-            <FormDesktopDatePicker
-              control={control}
-              label='Fecha Evento Hasta'
-              name='fechaHasta'
-              disabled={isSubmitting}
-            />
+            <FormDateRangePicker control={control} label='Evento Fecha' name='rangoFechas' disabled={isSubmitting} />
           </Col>
         </Row>
       </Form>
@@ -105,12 +99,13 @@ const EventoErrorDataGrid = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'source_system', headerName: 'Evento Origen' },
-          { field: 'type', headerName: 'Tipo Evento' },
-          { field: 'createdAt', headerName: 'Fecha Creacion', },
-          { field: 'createdBy', headerName: 'Usuario Creacion' },
+          { field: 'evento_revision_cabecera_id', headerName: 'Id' },
+          { field: 'sourceEventId', headerName: 'Evento Origen' },
+          { field: 'type', headerName: 'Tipo Evento'  },
+          { field: 'FechaHoraEvento', headerName: 'Fecha Creacion', },
+          { field: 'createdUser', headerName: 'Usuario Creacion' },
           { field: 'clientId', headerName: 'Cliente ID' },
-          { field: 'status', headerName: 'Status' },
+          { field: 'targetType', headerName: 'Tipo Destino' },
           {
             field: 'actions',
             type: 'actions',
@@ -123,7 +118,7 @@ const EventoErrorDataGrid = () => {
                 key={1}
                 icon={<ViewIcon />}
                 label='Vista'
-                onClick={() => console.log(params.row.id)}
+                onClick={() => handleClickView(params.row.evento_revision_cabecera_id)}
                 showInMenu
               />,
             ],

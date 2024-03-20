@@ -14,6 +14,14 @@ class EventoErrorRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+  static readonly getEventoById = async (id: string) => {
+    const response$ = from(EventoErrorService.getEventoById(id)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+      // RepositoryUtils.PIPES.validateWithSchema(getAllEventoPaginatedSchema),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default EventoErrorRepository;
