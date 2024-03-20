@@ -99,13 +99,13 @@ const EventoErrorDataGrid = () => {
       <DataGrid
         hookRef={mainDataGrid.ref}
         columns={[
-          { field: 'id', headerName: 'Id' },
-          { field: 'source_system', headerName: 'Evento Origen' },
-          { field: 'type', headerName: 'Tipo Evento' },
-          { field: 'createdAt', headerName: 'Fecha Creacion', },
-          { field: 'createdBy', headerName: 'Usuario Creacion' },
+          { field: 'evento_revision_cabecera_id', headerName: 'Id' },
+          { field: 'sourceEventId', headerName: 'Evento Origen' },
+          { field: 'type', headerName: 'Tipo Evento'  },
+          { field: 'FechaHoraEvento', headerName: 'Fecha Creacion', },
+          { field: 'createdUser', headerName: 'Usuario Creacion' },
           { field: 'clientId', headerName: 'Cliente ID' },
-          { field: 'status', headerName: 'Status' },
+          { field: 'targetType', headerName: 'Tipo Destino' },
           {
             field: 'actions',
             type: 'actions',
@@ -118,7 +118,7 @@ const EventoErrorDataGrid = () => {
                 key={1}
                 icon={<ViewIcon />}
                 label='Vista'
-                onClick={() => handleClickView(params.row.id)}
+                onClick={() => handleClickView(params.row.evento_revision_cabecera_id)}
                 showInMenu
               />,
             ],

@@ -4,37 +4,46 @@ import { Box, FormLabel, Typography } from '@mui/material';
 import Form from '@app/components/Form/Form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
-import { EventoRepository } from '@domains/evento/repository';
-import { EventoCampoRoutes } from '@domains/evento-campo/navigation';
-import { TipoNegocioDropdown } from '@domains/tipo-negocio/container/tipo-negocio-dropdown';
+
 import { useForm } from 'react-hook-form';
-// import { EventoViewSchema, EventoViewSchemaType } from './schemas';
-import { zodResolver } from '@hookform/resolvers/zod';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import DataGridBase from '@app/components/DataGrid/DataGridBase';
+import { EventoErrorRepository } from '@domains/evento-error/repository';
 
 const EventoErrorView = () => {
     const { eventoId } = useParams();
     const _navigate = useNavigate();
 
     const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
+    const [errorsDataGrid, setErrorsDataGrid] = useState<Array<any>>([]);
+
 
     const handleClose = useCallback(() => {
         _navigate('/evento-error');
     }, [_navigate]);
 
     useEffect(() => {
-        EventoRepository.getEventoById(eventoId || '').then(({ data }) => {
-            reset(data);
+        EventoErrorRepository.getEventoById(eventoId || '').then(({ data }) => {
+            const values = {
+                numeroEvento: data[0]?.evento_revision_cabecera_id, // numero evento
+                clientId: data[0]?.clientId, // cliente
+                codigoEvento: data[0]?.type, // codigo evento
+                fecha: data[0]?.createdSource,// fecha
+            }
+
+            reset(values);
             setIsDataFetched(true);
+            setErrorsDataGrid(data?.errors)
         });
     }, [eventoId]);
 
     const { control, reset } = useForm<any>({
         defaultValues: {
-            codigo: '',
-            denominacion: '',
-            descripcion: '',
-            tipoNegocioId: '',
+            numeroEvento: '',
+            clientId: '',
+            codigoEvento: '',
+            fecha: '',
+
         },
         // resolver: zodResolver(EventoViewSchema),
     });
@@ -43,15 +52,15 @@ const EventoErrorView = () => {
         return <></>;
     }
     return (
-        <Modal isOpen onClose={handleClose} title='Detalle Evento'>
+        <Modal isOpen onClose={handleClose} title='Log Detalle'>
             <Form>
                 <Row>
                     <Col md={6}>
                         <FormTextField
                             control={control}
-                            label='Código'
+                            label='Numero Evento'
                             fullWidth
-                            name='codigo'
+                            name='numeroEvento'
                             InputProps={{
                                 readOnly: true,
                             }}
@@ -60,12 +69,12 @@ const EventoErrorView = () => {
                     <Col md={6}>
                         <FormTextField
                             control={control}
-                            label='Denominación'
+                            label='Cliente'
                             InputProps={{
                                 readOnly: true,
                             }}
                             fullWidth
-                            name='denominacion'
+                            name='clientId'
                         />
                     </Col>
                 </Row>
@@ -73,27 +82,42 @@ const EventoErrorView = () => {
                     <Col md={6}>
                         <FormTextField
                             control={control}
-                            label='Descripción'
+                            label='Codigo Evento'
                             InputProps={{
                                 readOnly: true,
                             }}
                             fullWidth
-                            name='descripcion'
+                            name='codigoEvento'
                         />
                     </Col>
                     <Col md={6}>
-                        <TipoNegocioDropdown control={control} name='tipoNegocioId' readOnly label='Tipo de negocio' />{' '}
+                        <FormTextField
+                            control={control}
+                            label={'Fecha'}
+                            name='fecha'
+                            inputProps={{ readOnly: true }}
+                            fullWidth
+                        />
                     </Col>
                 </Row>
             </Form>
             <Box my={2}>
                 <FormLabel component='legend'>
                     <Typography variant='h6' component='div'>
-                        Campos del evento
+                        Detalles de los Errores
                     </Typography>
                 </FormLabel>
             </Box>
-            <EventoCampoRoutes />
+            <DataGridBase rows={errorsDataGrid} columns={[
+                {
+                    field: 'id',
+                    headerName: 'Tipo de Mensaje',
+                    flex: 0.2,
+                },
+                {
+                    field: 'mensaje',
+                    headerName: 'Descripcion'
+                }]} />
         </Modal>
     );
 };

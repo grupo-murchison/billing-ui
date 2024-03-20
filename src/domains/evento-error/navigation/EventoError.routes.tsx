@@ -17,7 +17,7 @@ const EventoErrorRoutes = () => {
             >
             </Route>
             <Route path='/evento-error/*' element={<Navigate to='/' replace />} />
-            <Route path='/evento-error/:eventoId/*' element={<EventoErrorView />} />
+            <Route path='/evento-error/:eventoId' element={<EventoErrorView />} />
         </Routes>
     );
 };
