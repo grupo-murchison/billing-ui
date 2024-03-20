@@ -11,9 +11,8 @@ import { CircularProgress, Stack } from '@mui/material';
 
 import { useTheme } from '@mui/material/styles';
 
-import { CancelIcon, DeleteOutlineIcon, WarningIcon } from '@assets/icons';
+import { CancelIcon, DeleteOutlineIcon, WarningIcon, CheckIcon } from '@assets/icons';
 
-// TODO: Update is loading prop in order to show some loading animation.
 const ConfirmDialog = ({
   identifier,
   entity,
@@ -54,7 +53,7 @@ const ConfirmDialog = ({
       )}
 
       {type === 'ok' && (
-        <OkDialog message={'Demo'} title={'Demo'} isLoading={isLoading} handleClickYes={handleClickYes} />
+        <OkDialog message={message} title={title} isLoading={isLoading} handleClickYes={handleClickYes} />
       )}
 
       {type === 'warning' && (
@@ -88,20 +87,45 @@ const ConfirmDialog = ({
   );
 };
 
-const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogInternalProps) => (
-  <>
-    <DialogTitle>{title || 'Servicio Creado con éxito'}</DialogTitle>
-    <DialogContent>
-      <DialogContentText>{message}</DialogContentText>
-    </DialogContent>
-    <DialogActions>
-      <Button onClick={handleClickYes} disabled={isLoading} color='primary' variant='contained'>
-        {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
-        OK
-      </Button>
-    </DialogActions>
-  </>
-);
+const OkDialog = ({ message, title, isLoading, handleClickYes }: ConfirmDialogInternalProps) => {
+  const theme = useTheme();
+
+  return (
+    <Stack padding={4} textAlign='center'>
+      <CheckIcon
+        sx={{
+          color: theme.palette.common.white,
+          backgroundColor: theme.palette.primary.main,
+          borderRadius: '100%',
+          padding: 1,
+          width: '100px',
+          height: '100px',
+          m: 'auto',
+        }}
+      />
+      <DialogTitle variant='h3' color={theme.palette.primary.main}>
+        {title || 'Servicio creado con éxito'}
+      </DialogTitle>
+      <DialogContent>
+        <DialogContentText>{message}</DialogContentText>
+      </DialogContent>
+      <DialogActions sx={{ display: 'flex', justifyContent: 'center', gap: 3 }}>
+        <Button
+          onClick={handleClickYes}
+          disabled={isLoading}
+          variant='contained'
+          sx={{
+            'backgroundColor': theme.palette.primary.main,
+            ':hover': { backgroundColor: theme.palette.primary.dark },
+          }}
+        >
+          {isLoading && <CircularProgress color='primary' size={15} sx={{ marginLeft: '5px' }} />}
+          OK
+        </Button>
+      </DialogActions>
+    </Stack>
+  );
+};
 
 const DeleteDialog = ({
   isLoading,

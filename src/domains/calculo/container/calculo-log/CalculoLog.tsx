@@ -43,7 +43,7 @@ const CalculoLog = () => {
       numeroSecuenciaCalculo: '',
       nroContrato: '',
       clienteId: { value: '', code: '', label: '' },
-      rangoFechas: null,
+      rangoFechas: [],
     },
     resolver: zodResolver(CalculoLogSchema),
   });

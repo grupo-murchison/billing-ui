@@ -49,8 +49,8 @@ const AutocompleteAdvancedSearchRenderInput = ({
       InputProps={{
         ...params.InputProps,
         startAdornment: (
-          <IconButton onClick={onClickOpen} size='small'>
-            <ManageSearchIcon />
+          <IconButton onClick={onClickOpen} size='small' sx={{py: 0.4}}>
+            <ManageSearchIcon fontSize='inherit' />
           </IconButton>
         ),
         endAdornment: (

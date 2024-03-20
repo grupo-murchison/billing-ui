@@ -32,7 +32,7 @@ const EventoClientes = () => {
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: null,
-      rangoFechas: null,
+      rangoFechas: [],
       eventoId: [],
     },
     resolver: zodResolver(EventosClientesCreateSchema),

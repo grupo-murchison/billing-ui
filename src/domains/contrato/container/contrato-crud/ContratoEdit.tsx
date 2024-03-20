@@ -32,7 +32,7 @@ import { DataGridPlanFacturacion, DataGridConceptoAcuerdo } from './views';
 import Form from '@app/components/Form/Form';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
+import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 import TabLayout from '@app/components/Tabs/TabLayout';
 import Toast from '@app/components/Toast/Toast';
 
@@ -67,8 +67,7 @@ const ContratoEdit = () => {
       clienteId: '',
       descripcion: '',
       diaPeriodo: '',
-      fechaInicioContrato: null,
-      fechaFinContrato: null,
+      fechaInicioFinContrato: [],
       modeloAcuerdoId: '',
       nroContrato: '',
       reglaFechaPeriodoId: '',
@@ -104,8 +103,14 @@ const ContratoEdit = () => {
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
-        fechaInicioContrato: DateLib.parseToDBString(data.fechaInicioContrato),
-        fechaFinContrato: DateLib.parseToDBString(data.fechaFinContrato),
+        fechaInicioContrato:
+          data.fechaInicioFinContrato &&
+          data.fechaInicioFinContrato[0] &&
+          DateLib.parseToDBString(data.fechaInicioFinContrato[0]),
+        fechaFinContrato:
+          data.fechaInicioFinContrato &&
+          data.fechaInicioFinContrato[1] &&
+          DateLib.parseToDBString(data.fechaInicioFinContrato[1]),
         id: contratoId,
         listaVariables: data?.contratoVariables || undefined,
       };
@@ -132,10 +137,10 @@ const ContratoEdit = () => {
         nroContrato: contrato?.nroContrato,
         sociedadId: contrato?.sociedadId,
         tipoContratoId: contrato?.tipoContratoId,
-        fechaInicioContrato: DateLib.parseFromDBString(
-          DateLib.parseToDBString(new Date(contrato.fechaInicioContrato)) || '',
-        ),
-        fechaFinContrato: DateLib.parseFromDBString(DateLib.parseToDBString(new Date(contrato.fechaFinContrato)) || ''),
+        fechaInicioFinContrato: [
+          DateLib.parseFromDBString(DateLib.parseToDBString(new Date(contrato.fechaInicioContrato)) || ''),
+          DateLib.parseFromDBString(DateLib.parseToDBString(new Date(contrato.fechaFinContrato)) || ''),
+        ],
         tipoPlanFacturacionId: planFacturacion?.tipoPlanFacturacionId,
         reglaFechaPeriodoId: planFacturacion?.reglaFechaPeriodoId,
         diaPeriodo: planFacturacion?.diaPeriodo || '',
@@ -246,21 +251,11 @@ const ContratoEdit = () => {
           <FormTextField control={control} disabled={isSubmitting} name='descripcion' label='Descripción' multiline />
         </Col>
         <Col md={6}>
-          <FormDesktopDatePicker
+          <FormDateRangePicker
             control={control}
+            label='Fecha Inicio-Fin Contrato'
+            name='fechaInicioFinContrato'
             disabled={isSubmitting}
-            label='Fecha Inicio Contrato'
-            name='fechaInicioContrato'
-            readOnly
-          />
-        </Col>
-        <Col md={6}>
-          <FormDesktopDatePicker
-            control={control}
-            disabled={isSubmitting}
-            label='Fecha Fin Contrato'
-            name='fechaFinContrato'
-            readOnly
           />
         </Col>
       </Row>
