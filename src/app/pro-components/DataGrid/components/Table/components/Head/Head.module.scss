@@ -1,0 +1,23 @@
+@use 'src/assets/scss/variables.module.scss' as VARS;
+
+.head {
+  tr {
+    th {
+      background-color: VARS.$textDisabled;
+
+      border: 1px solid VARS.$secondaryMain;
+      border-bottom: none;
+
+      color: VARS.$color-white;
+      text-align: left;
+
+      height: 60px;
+
+      padding: 0 0.87rem;
+
+      font-size: 0.95rem;
+
+      text-transform: capitalize;
+    }
+  }
+}

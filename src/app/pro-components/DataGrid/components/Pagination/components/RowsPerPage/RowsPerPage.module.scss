@@ -1,0 +1,23 @@
+@use 'src/assets/scss/variables.module.scss' as VARS;
+
+.rows-per-page {
+  display: flex;
+  align-items: center;
+
+  > label {
+    font-weight: normal;
+    // font-size: 0.875rem;
+
+    color: VARS.$secondaryMain;
+
+    margin-right: 8px;
+  }
+
+  > select {
+    outline: none;
+    border: none;
+    background-color: transparent;
+
+    font-weight: bold;
+  }
+}

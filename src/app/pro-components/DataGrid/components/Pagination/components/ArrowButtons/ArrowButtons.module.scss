@@ -1,0 +1,24 @@
+@use 'src/assets/scss/variables.module.scss' as VARS;
+
+.arrow-buttons {
+  display: flex;
+  align-items: center;
+
+  > button {
+    display: flex;
+    align-items: center;
+
+    outline: none;
+    border: none;
+    background-color: transparent;
+
+    padding: 0;
+    margin: 0;
+
+    > svg {
+      font-size: 1.125rem;
+
+      color: VARS.$secondaryMain;
+    }
+  }
+}
