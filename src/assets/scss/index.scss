@@ -1,0 +1,33 @@
+@use 'src/assets/scss/variables.module' as VARS;
+@use 'src/assets/scss/react-datepicker/datepicker';
+
+// * {
+//   margin: 0;
+//   padding: 0;
+//   box-sizing: border-box;
+// }
+
+span.muted {
+  color: VARS.$textDisabled;
+}
+
+// Overrides
+
+.MuiModal-root {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5rem;
+}
+
+button {
+  cursor: pointer;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.jc-end {
+  justify-content: end;
+}
