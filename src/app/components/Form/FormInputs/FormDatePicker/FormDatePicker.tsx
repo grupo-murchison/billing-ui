@@ -10,7 +10,7 @@ function FormDesktopDatePicker({ control, name, label, inputFormat, ...props }: 
       control={control}
       render={({ field: { onChange, value }, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error?.message}>
-          <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
+          <InputLabel htmlFor={name} sx={{ position: 'absolute', top: 0, left: -14 }}>
             {label || name}
           </InputLabel>
 

@@ -7,6 +7,7 @@ interface DatePickerRenderCustomInpuntProps {
   value?: Date | null;
   onClick?: () => void;
   error: boolean;
+  name?: string;
 }
 
 const DatePickerCustomRenderInpunt = forwardRef(
@@ -18,6 +19,7 @@ const DatePickerCustomRenderInpunt = forwardRef(
     return (
       <TextField
         {...props}
+        id={props?.name}
         value={value}
         ref={ref}
         fullWidth
@@ -32,7 +34,13 @@ const DatePickerCustomRenderInpunt = forwardRef(
           ),
           endAdornment: filterDeshabilitadoAproposito ? null : (
             <InputAdornment position='end'>
-              <IconButton aria-label='open filter' onClick={onClickFilter} edge='start' size='small' style={{ marginRight: 10 }}>
+              <IconButton
+                aria-label='open filter'
+                onClick={onClickFilter}
+                edge='start'
+                size='small'
+                style={{ marginRight: 10 }}
+              >
                 <FilterAltIcon />
               </IconButton>
             </InputAdornment>
