@@ -1,4 +1,4 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { Box, Paper, Typography, IconButton, useTheme, alpha, CircularProgress } from '@mui/material';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
 
@@ -11,8 +11,9 @@ type DragDropFileUploadProps = {
   disabled?: boolean;
 };
 
-function DragDropFileUpload({ onFileUpload, accept, loading, multiple, disabled }: DragDropFileUploadProps) {
+function DragDropFileUpload({ onFileUpload, accept, loading, multiple, disabled, name }: DragDropFileUploadProps) {
   const [isDragActive, setIsDragActive] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   const theme = useTheme();
 
   const handleDragOver = useCallback((event: React.DragEvent<HTMLDivElement>) => {
@@ -29,20 +30,23 @@ function DragDropFileUpload({ onFileUpload, accept, loading, multiple, disabled 
     (event: React.DragEvent<HTMLDivElement>) => {
       event.preventDefault();
       setIsDragActive(false);
-      if (event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      if (!disabled && !loading && event.dataTransfer.files && event.dataTransfer.files[0]) {
         onFileUpload(event.dataTransfer.files);
       }
     },
-    [onFileUpload],
+    [onFileUpload, loading, disabled],
   );
 
   const handleChange = useCallback(
     (event: React.ChangeEvent<HTMLInputElement>) => {
-      if (event.target.files && event.target.files.length > 0) {
+      if (!disabled && !loading && event.target.files && event.target.files[0]) {
         onFileUpload(event.target.files);
       }
+
+      // Limpiar el valor del inpunt para permitir recargar el mismo archivo. Útil por ejemplo si da error y queremos reenviar
+      if (fileInputRef.current) fileInputRef.current.value = '';
     },
-    [onFileUpload],
+    [onFileUpload, loading, disabled],
   );
 
   return (
@@ -55,29 +59,37 @@ function DragDropFileUpload({ onFileUpload, accept, loading, multiple, disabled 
         border: isDragActive ? '2px solid primary' : '1.5px dashed #aaa',
         padding: 4,
         textAlign: 'center',
-        cursor: 'pointer',
-        background: isDragActive ? alpha(theme.palette.primary.light, 0.5) : theme.palette.common.white,
+        cursor: disabled || loading ? 'not-allowed' : 'pointer',
+        background:
+          !disabled && !loading && isDragActive ? alpha(theme.palette.primary.light, 0.5) : theme.palette.common.white,
       }}
     >
       <input
+        id={name}
+        name={name}
+        ref={fileInputRef}
         accept={accept}
         style={{ display: 'none' }}
-        id='raised-button-file'
         multiple={multiple}
         type='file'
         onChange={handleChange}
-        disabled={disabled}
+        disabled={disabled || loading}
       />
-      <label htmlFor='raised-button-file'>
+      <label htmlFor={name}>
         <Box display='flex' flexDirection='column' alignItems='center'>
           {loading ? (
             <CircularProgress />
           ) : (
-            <IconButton color={isDragActive ? 'inherit' : 'primary'} aria-label='upload picture' component='span'>
+            <IconButton
+              color={isDragActive ? 'inherit' : 'primary'}
+              aria-label='upload file'
+              component='span'
+              disabled={disabled || loading}
+            >
               <CloudUploadIcon sx={{ fontSize: 60 }} />
             </IconButton>
           )}
-          <Typography sx={{ cursor: 'pointer' }}>
+          <Typography sx={{ cursor: disabled || loading ? 'not-allowed' : 'pointer' }}>
             Arrastre y suelte aquí su archivo o haga click para seleccionar
           </Typography>
         </Box>

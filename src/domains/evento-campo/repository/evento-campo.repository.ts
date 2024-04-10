@@ -7,7 +7,7 @@ import { getAllEventoCampoAsDropdownSchema } from './evento-campo.schemas';
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 class EventoCampoRepository {
-  static getAllEventoCampoPaginated = async (params: RepositoryFuncParamsPaginated, eventoId?: number) => {
+  static getAllEventoCampoPaginated = async (params: RepositoryFuncParamsPaginated) => {
     const response$ = from(EventoCampoService.getAllPaginated(params)).pipe(RepositoryUtils.PIPES.getResponse());
     const response = await lastValueFrom(response$);
     return response;

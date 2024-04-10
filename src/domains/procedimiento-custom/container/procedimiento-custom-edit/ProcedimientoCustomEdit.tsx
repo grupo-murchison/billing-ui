@@ -17,7 +17,6 @@ import { Box, InputAdornment } from '@mui/material';
 
 import { label } from '@domains/procedimiento-custom/constants';
 
-import { ACTION_TYPES } from '@domains/procedimiento-custom/contexts/procedimiento-custom.state';
 import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
@@ -29,7 +28,7 @@ const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
   const _navigate = useNavigate();
 
-  const { mainDataGrid, state, dispatch } = useContext(ProcedimientoCustomContext);
+  const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
   const confirmDialog = useConfirmDialog();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);

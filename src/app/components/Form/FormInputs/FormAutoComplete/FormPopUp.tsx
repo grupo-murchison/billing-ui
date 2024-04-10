@@ -6,7 +6,6 @@ import { FormInputsCommonProps } from '../../form.interfaces';
 import { DropdownItemType, DropdownSchemaType } from '@app/utils/zod.util';
 import { AutocompleteAdvancedSearchRenderInput } from './AutoCompleteRenderInput';
 import { AxiosResponse } from 'axios';
-import { Box } from '@mui/material';
 import { Modal } from '@app/components/Modal';
 import ModalFormPopUp from './ModalFormPopUp';
 

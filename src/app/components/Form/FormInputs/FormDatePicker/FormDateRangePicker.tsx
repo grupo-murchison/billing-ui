@@ -14,7 +14,7 @@ type DateState = Date | null;
  * Este componente es solo para Rango de Fechas en donde se requiera como obligatorio una fecha Desde/Hasta.
  * Sin componentes ni funcionalidades adicionales.
  */
-function FormDateRangePicker({ control, name, label, inputFormat, ...props }: FormDesktopDatePickerProps) {
+function FormDateRangePicker({ control, name, label, inputFormat }: FormDesktopDatePickerProps) {
   return (
     <Controller
       name={name}

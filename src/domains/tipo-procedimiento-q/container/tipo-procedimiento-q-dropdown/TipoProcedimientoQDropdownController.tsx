@@ -2,8 +2,6 @@ import { useEffect, useState } from 'react';
 
 import { DropdownSchemaType } from '@app/utils/zod.util';
 
-import { TipoDatoRepository } from '@domains/tipo-dato/repository';
-
 import FormSelect, { FormSelectProps as FormSelectPropsMui } from '@app/components/Form/FormInputs/FormSelect';
 
 import { Control } from 'react-hook-form';

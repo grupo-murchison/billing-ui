@@ -7,7 +7,6 @@ import { RepositoryUtils } from '@app/utils';
 import { CalculoService } from './calculo.service';
 import {
   FormDataTypeCalculoFacturacionMasiva,
-  getAllCalculoLogSchema,
   getAllFacturasReportePaginatedSchema,
 } from './calculo.schemas';
 
