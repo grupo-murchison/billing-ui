@@ -16,18 +16,20 @@ function FormSelect({
   const emptyValues = [{ value: '', label: 'Ninguno', disabled: disabledEmpty }];
 
   const fullOptions = emptyOption ? emptyValues.concat(options) : options;
-
+  const selectId = `select-${name}`;
   return (
     <Controller
       name={name}
       control={control}
       render={({ field, fieldState: { error } }) => (
         <FormControl fullWidth disabled={disabled} error={!!error?.message}>
-          <InputLabel htmlFor='custom-textfield' shrink={false} sx={{ position: 'absolute', top: 0, left: -14 }}>
+          <InputLabel id={selectId} sx={{ position: 'absolute', top: 0, left: -14 }}>
             {label || name}
           </InputLabel>
 
           <Select
+            labelId={selectId}
+            id={name}
             readOnly={readOnly}
             {...field}
             value={field.value === undefined || field.value === null || options.length === 0 ? '' : field.value}

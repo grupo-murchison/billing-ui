@@ -9,13 +9,14 @@ function FormTextField({ control, name, label, ...props }: FormTextFieldProps) {
       name={name}
       render={({ field, fieldState: { error } }) => (
         <FormControl fullWidth error={!!error}>
-          <InputLabel htmlFor='custom-textfield' sx={{ position: 'absolute', top: 0, left: -14 }}>
+          <InputLabel htmlFor={name} sx={{ position: 'absolute', top: 0, left: -14 }}>
             {label || name}
           </InputLabel>
 
           <TextField
             {...props}
             {...field}
+            id={name}
             onChange={ev => {
               const value = ev.target.value;
               const numericValue = parseFloat(value);
