@@ -10,12 +10,20 @@ function DataGridSoporte({ facturacionContratoConceptoId }: { facturacionContrat
   const [eventos, setEventos] = useState<AnyValue>();
   const [loading, setLoading] = useState(false);
 
+
   useEffect(() => {
     if (facturacionContratoConceptoId) {
       setLoading(true);
       CalculoRepository.getEventos(String(facturacionContratoConceptoId))
         .then(({ data }) => {
+          const eventosConcatenados: any = []
           setEventos(data[0]?.eventos);
+
+          for (const el of data) {
+            eventosConcatenados.push(...el.eventos)
+          }
+
+          setEventos(eventosConcatenados);
         })
         .catch()
         .finally(() => setLoading(false));

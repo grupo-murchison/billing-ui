@@ -38,8 +38,7 @@ const EventoErrorDataGrid = () => {
   } = useForm<AnyValue>({
     defaultValues: {
       clienteId: null,
-      fechaDesde: null,
-      fechaHasta: null,
+      rangoFechas: [],
       eventoId: [],
     },
     // resolver: zodResolver(EventosClientesCreateSchema),
@@ -101,7 +100,7 @@ const EventoErrorDataGrid = () => {
         columns={[
           { field: 'evento_revision_cabecera_id', headerName: 'Id' },
           { field: 'sourceEventId', headerName: 'Evento Origen' },
-          { field: 'type', headerName: 'Tipo Evento'  },
+          { field: 'type', headerName: 'Tipo Evento' },
           { field: 'FechaHoraEvento', headerName: 'Fecha Creacion', },
           { field: 'createdUser', headerName: 'Usuario Creacion' },
           { field: 'clientId', headerName: 'Cliente ID' },
