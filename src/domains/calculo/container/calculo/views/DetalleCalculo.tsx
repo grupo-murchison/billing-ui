@@ -98,7 +98,7 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
           <TextField
             label={'Desde'}
             name='periodoLiquidacionDesde'
-            value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionDesde.slice(0, 8))}
+            value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionDesde?.slice(0, 8))}
             inputProps={{ readOnly: true }}
             fullWidth
           />
@@ -107,7 +107,7 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
           <TextField
             label={'Hasta'}
             name='periodoLiquidacionHasta'
-            value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionHasta.slice(0, 8))}
+            value={DateLib.beautifyDBString(periodo?.contratos[0]?.periodoLiquidacionHasta?.slice(0, 8))}
             inputProps={{ readOnly: true }}
             fullWidth
           />
