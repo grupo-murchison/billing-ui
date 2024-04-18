@@ -95,7 +95,7 @@ const CalculoReporte = () => {
       })
       .catch(async error => {
         setErrorFromBackEnd(true);
-        setToastMessage(error?.message || 'Ocurrió un error!');
+        setToastMessage(error?.error || 'Ocurrió un error!');
       })
       .finally(() => {
         setOpenToast(true);

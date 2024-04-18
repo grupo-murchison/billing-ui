@@ -15,7 +15,12 @@ function DataGridSoporte({ facturacionContratoConceptoId }: { facturacionContrat
       setLoading(true);
       CalculoRepository.getEventos(String(facturacionContratoConceptoId))
         .then(({ data }) => {
-          setEventos(data[0]?.eventos);
+          const eventosConcatenados: any = []
+          for (const el of data) {
+            eventosConcatenados.push(...el.eventos)
+          }
+
+          setEventos(eventosConcatenados);
         })
         .catch()
         .finally(() => setLoading(false));
