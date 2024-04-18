@@ -14,7 +14,7 @@ export const EventoCampoEditSchema: ZodType<FormDataTypeEventoCampoEdit> = z
     descripcion: z
       .string({ required_error: zodLocale.required_error })
       .min(1, { message: zodLocale.required_error })
-      .max(50, { message: zodLocale.stringMax(250) }),
+      .max(250, { message: zodLocale.stringMax(250) }),
     campo: z
       .string({ required_error: zodLocale.required_error })
       .min(1, { message: zodLocale.required_error })
