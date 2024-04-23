@@ -53,7 +53,7 @@ import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
 import { FiberManualRecordIcon } from '@assets/icons';
 import DragDropFileUpload from '@app/components/FileUpload/DragDropFileUpload';
-import { downloadPdfAxios } from '@app/utils/axios.util';
+// import { downloadPdfAxios } from '@app/utils/axios.util';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -404,7 +404,7 @@ const ContratoEdit = () => {
   const onFileUpload = async (file: FileList) => {
     setLoadingFile(true);
     const curl = {
-      rutaImagenes: '/home/assert/git/billing- reports/reports/billing/calculo/proforma/logos/murchison-uy.png',
+      rutaImagenes: '/home/assert/git/billing-reports/reports/billing/calculo/proforma/logos/murchison-uy.png',
       rutaDatos:
         'http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services/api/v1/calculos/report/conceptoByCalculoContrato/',
     };
@@ -452,10 +452,11 @@ const ContratoEdit = () => {
   };
 
   const downloadProforma = async () => {
-    await ContratoRepository.downloadProforma(fileProforma.id).then(data => {
-      console.log('downloadProforma', data);
-    });
+    // await ContratoRepository.downloadProforma(fileProforma.id).then(data => {
+    //   console.log('downloadProforma', data);
+    // });
     // await downloadPdfAxios(fileProforma.data.data, `proforma.jasper`);
+    return
   };
 
   const cargaProforma = (
