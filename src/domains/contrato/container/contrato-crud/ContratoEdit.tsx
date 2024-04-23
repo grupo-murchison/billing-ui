@@ -3,7 +3,19 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate, useParams } from 'react-router-dom';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Box, Card, CardContent, CardHeader, Stack, Typography } from '@mui/material';
+import {
+  Box,
+  Card,
+  CardContent,
+  CardHeader,
+  List,
+  ListItem,
+  ListItemIcon,
+  ListItemText,
+  Stack,
+  TextField,
+  Typography,
+} from '@mui/material';
 
 import { Row, Col } from '@app/components';
 import { AlertInProgress } from '@app/components/Alerts';
@@ -39,6 +51,9 @@ import Toast from '@app/components/Toast/Toast';
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
+import { FiberManualRecordIcon } from '@assets/icons';
+import DragDropFileUpload from '@app/components/FileUpload/DragDropFileUpload';
+// import { downloadPdfAxios } from '@app/utils/axios.util';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -53,6 +68,9 @@ const ContratoEdit = () => {
   const [periodos, setPeriodos] = useState<AnyValue>(null);
   const [contratoVariables, setContratoVariables] = useState<AnyValue>([]);
   const [openToast, setOpenToast] = useState<boolean>(false);
+  const [loadingFile, setLoadingFile] = useState(false);
+  const [fileProforma, setFileProforma] = useState<AnyValue>(null);
+  const [refreshProforma, setRefreshProforma] = useState<boolean>(false);
 
   const {
     reset,
@@ -182,6 +200,34 @@ const ContratoEdit = () => {
   useEffect(() => {
     if (formErrors?.contratoVariables) setOpenToast(true);
   }, [formErrors?.contratoVariables]);
+
+  useEffect(() => {
+    setFileProforma(null);
+    if (contratoId) {
+      ContratoRepository.getFileProforma(+contratoId).then(({ data }) => {
+        setFileProforma(data);
+      });
+    }
+    setRefreshProforma(false);
+  }, [refreshProforma]);
+
+  const handleClickDeleteProforma = useCallback(
+    (contratoId: number) => {
+      console.log('habdleClickDelete');
+      confirmDialog.open({
+        identifier: `${contratoId}`,
+        entity: 'Proforma asociada al contrato',
+        type: 'delete',
+        async onClickYes() {
+          await ContratoRepository.deleteProformaByContratoId(contratoId);
+          setRefreshProforma(true);
+          confirmDialog.close();
+          mainDataGrid.reload();
+        },
+      });
+    },
+    [confirmDialog, mainDataGrid],
+  );
 
   if (!isDataFetched) {
     return <></>;
@@ -353,6 +399,139 @@ const ContratoEdit = () => {
     </Stack>
   );
 
+  const condicionesCargaProforma = [`El archivo debe ser en formato .jasper`];
+
+  const onFileUpload = async (file: FileList) => {
+    setLoadingFile(true);
+    const curl = {
+      rutaImagenes: '/home/assert/git/billing-reports/reports/billing/calculo/proforma/logos/murchison-uy.png',
+      rutaDatos:
+        'http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services/api/v1/calculos/report/conceptoByCalculoContrato/',
+    };
+
+    if (contratoId) {
+      await ContratoRepository.uploadFileProforma(file[0], +contratoId, curl)
+        .then(() => {
+          confirmDialog.open({
+            type: 'ok',
+            title: 'Archivo Enviado Correctamente',
+            message: 'El archivo fue subido al servidor.',
+            onClickYes() {
+              confirmDialog.close();
+            },
+          });
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+
+          if (error && error.statusCode === 400) {
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No es posible cargar este archivo',
+              message: error?.message,
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          } else {
+            confirmDialog.open({
+              type: 'reject',
+              title: 'No fue posible cargar el archivo',
+              message: error?.message || error || 'Error Desconocido',
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        })
+        .finally(() => {
+          setRefreshProforma(true);
+          setLoadingFile(false);
+        });
+    }
+  };
+
+  const downloadProforma = async () => {
+    // await ContratoRepository.downloadProforma(fileProforma.id).then(data => {
+    //   console.log('downloadProforma', data);
+    // });
+    // await downloadPdfAxios(fileProforma.data.data, `proforma.jasper`);
+    return
+  };
+
+  const cargaProforma = (
+    <>
+      {fileProforma ? (
+        <Stack>
+          <Typography onClick={downloadProforma}>Descargar Proforma</Typography>
+          {/* <Button
+            onClick={() => {
+              handleClickDelete(fileProforma.contratoId);
+            }}
+          >
+            <DeleteOutlineIcon />
+          </Button> */}
+          <Typography
+            onClick={() => {
+              handleClickDeleteProforma(fileProforma.contratoId);
+            }}
+          >
+            Eliminar Proforma
+          </Typography>
+        </Stack>
+      ) : (
+        <Stack>
+          <Row>
+            <Col md={6}>
+              <TextField
+                label={'Ruta Imagenes'}
+                name='rutaImagenes'
+                value='/home/assert/git/billing-reports/reports/billing/calculo/proforma/logos/murchison-uy.png'
+                inputProps={{ readOnly: true }}
+                fullWidth
+              />
+            </Col>
+            <Col md={6}>
+              <TextField
+                label={'Ruta Datos'}
+                name='rutaDatos'
+                value='http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services/api/v1/calculos/report/conceptoByCalculoContrato/'
+                inputProps={{ readOnly: true }}
+                fullWidth
+              />
+            </Col>
+          </Row>
+          <Box>
+            <List>
+              {condicionesCargaProforma.map((condicion, index) => (
+                <ListItem key={index}>
+                  <ListItemIcon>
+                    <FiberManualRecordIcon fontSize='inherit' />
+                  </ListItemIcon>
+                  <ListItemText
+                    primary={
+                      <Typography variant='h4' component='div'>
+                        {condicion}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </Box>
+
+          <DragDropFileUpload
+            name='carga-proforma'
+            onFileUpload={onFileUpload}
+            accept='application/jrxml'
+            loading={loadingFile}
+            disabled={loadingFile}
+          />
+        </Stack>
+      )}
+    </>
+  );
+
   const datosGeneralesIsError = ['clienteId', 'sociedadId', 'modeloAcuerdoId', 'tipoContratoId'];
   const datosContractualesFields = ['descripcion', 'fechaInicioContrato', 'fechaFinContrato'];
   const planFacturacionFields = ['pausado'];
@@ -368,6 +547,7 @@ const ContratoEdit = () => {
     { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
     { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
     { label: 'Variables Contrato', renderelement: varContr, formFields: ['contratoVariables'], formErrors: formErrors },
+    { label: 'Carga Proforma', renderelement: cargaProforma },
     { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
   ];
 

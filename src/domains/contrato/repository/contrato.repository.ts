@@ -88,6 +88,26 @@ class ContratoRepository {
     return await RepositoryUtils.fromRxjs(ContratoService.getPlanFacturacionPeriodos(params));
     // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
   };
+
+  static getFileProforma = async (contratoId: number) => {
+    return await RepositoryUtils.fromRxjs(ContratoService.getFileProforma(contratoId));
+  };
+
+  static uploadFileProforma = async (file: File, contratoId: number, body: any) => {
+    return await RepositoryUtils.fromRxjs(ContratoService.uploadFileProforma(file, contratoId, body));
+  };
+
+  static downloadProforma = async (id: number) => {
+    return await RepositoryUtils.fromRxjs(ContratoService.downloadProforma(id));
+  };
+
+  static deleteProformaByContratoId = async (contratoId: number) => {
+    const response$ = from(ContratoService.deleteProformaByContratoId(contratoId)).pipe(
+      RepositoryUtils.PIPES.getResponse(),
+    );
+    const response = await lastValueFrom(response$);
+    return response;
+  };
 }
 
 export default ContratoRepository;

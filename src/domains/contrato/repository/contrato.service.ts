@@ -68,7 +68,9 @@ class ContratoService {
   };
 
   //==============================  Endpoints Para Patalla Cálculo
-  static getAllContratoCalculosFacturacionPaginated = async (params: RepositoryFuncParamsPaginated): Promise<HandlePromise> => {
+  static getAllContratoCalculosFacturacionPaginated = async (
+    params: RepositoryFuncParamsPaginated,
+  ): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/filter`, { params }),
     );
@@ -79,6 +81,44 @@ class ContratoService {
   static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
       ApiProvider.get<AnyValue>(`${BASE_PATH}/periodos/filter`, { params }),
+    );
+
+    return [response, error];
+  };
+
+  static getFileProforma = async (contratoId: number): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/proforma/${contratoId}`),
+    );
+
+    return [response, error];
+  };
+
+  static uploadFileProforma = async (file: File, contratoId: number, body: any): Promise<HandlePromise> => {
+    const formData = new FormData();
+    formData.append('file', file);
+    formData.append('request', JSON.stringify(body));
+
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.post<AnyValue>(`${BASE_PATH}/upload/proforma/${contratoId}`, formData, {
+        headers: { 'Content-type': 'multipart/form-data' },
+      }),
+    );
+
+    return [response, error];
+  };
+
+  static downloadProforma = async (id: number): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/proforma/download/${id}`),
+    );
+
+    return [response, error];
+  };
+
+  static deleteProformaByContratoId = async (contratoId: number): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.delete<AnyValue>(`${BASE_PATH}/proforma/${contratoId}`),
     );
 
     return [response, error];
