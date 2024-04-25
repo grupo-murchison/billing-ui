@@ -61,7 +61,7 @@ const CalculoReversion = () => {
     formState: { isSubmitting },
   } = useForm<AnyValue>({
     defaultValues: {
-      clienteId: { value: '', code: '', label: '' },
+      clienteId: null,
       rangoFechas: [],
       nroContrato: '',
       numeroSecuenciaCalculo: '',

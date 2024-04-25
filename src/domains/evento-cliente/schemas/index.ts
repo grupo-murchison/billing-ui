@@ -8,7 +8,7 @@ export const EventosClientesCreateSchema = z.object({
       label: z.string({ required_error: 'El campo es requerido.' }),
     },
     { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
-  ),
+  ).nullable(),
   eventoId: z
     .array(
       z.object({
