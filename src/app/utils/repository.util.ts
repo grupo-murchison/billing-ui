@@ -5,8 +5,8 @@ import z from 'zod';
 
 import type { HandlePromise } from './axios.util';
 
-const getResponse = () => {
-  return map(([response, error]: HandlePromise) => {
+const getResponse = <T>() => {
+  return map(([response, error]: HandlePromise<T>) => {
     if (response) {
       return response;
     }
@@ -48,10 +48,10 @@ function pipeFromArray<T, R>(fns: Array<UnaryFunction<T, R>>): UnaryFunction<T, 
   };
 }
 
-export const fromRxjs = async (axiosService: Promise<HandlePromise>, ...operations: OperatorFunction<AnyValue, AnyValue>[]) => {
+export const fromRxjs = async <T>(axiosService: Promise<HandlePromise<T>>, ...operations: OperatorFunction<AnyValue, AnyValue>[]) => {
   const response$ = from(axiosService).pipe(getResponse(), pipeFromArray(operations));
 
-  const response = await lastValueFrom(response$);
+  const response = await lastValueFrom<AxiosResponse<T>>(response$);
   return response;
 };
 

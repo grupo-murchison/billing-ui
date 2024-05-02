@@ -1,12 +1,12 @@
 import type { AxiosPromise, AxiosResponse, AxiosError, AxiosResponseHeaders } from 'axios';
 
-export const handleResponse = (promise: AxiosPromise): Promise<HandlePromise> => {
+export const handleResponse = <T>(promise: AxiosPromise<T>): Promise<HandlePromise<T>> => {
   return new Promise(resolve => {
     promise.then(response => resolve([response, undefined])).catch(error => resolve([undefined, error]));
   });
 };
 
-export type HandlePromise = [Undefined<AxiosResponse>, Undefined<AxiosError>];
+export type HandlePromise<T> = [Undefined<AxiosResponse<T>>, Undefined<AxiosError>];
 
 export const downloadPdfAxios = (file: AnyValue, fileName = 'descarga.pdf') => {
   const url = window.URL.createObjectURL(new Blob([file]));
