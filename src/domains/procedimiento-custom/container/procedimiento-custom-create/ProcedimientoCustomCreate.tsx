@@ -20,7 +20,7 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { findPropertyByCode, mapearParametros } from '@app/utils/formHelpers.util';
+import { findEventoCampoByCode, findPropertyByCode, mapearParametros } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoCustomCreate = forwardRef(() => {
@@ -52,7 +52,18 @@ const ProcedimientoCustomCreate = forwardRef(() => {
 
   const onSubmit = useCallback(
     async (data: ProcedimientoCustomCreateSchemaType) => {
-      const { funciones, eventos, eventosCampo, acciones } = state;
+      const { funciones, eventos, eventosCampo, acciones, datoDinamico } = state;
+      const filtroCampoCode = findEventoCampoByCode(eventosCampo, watch('filtroCampoCode'));
+      const isDatoDinamico = filtroCampoCode?.tipoDato === 4 ? true : false;
+      let datoDinamicoValue = '';
+      if (isDatoDinamico) {
+        const objeto = findPropertyByCode(datoDinamico, watch('filtroValue'));
+        if (objeto) {
+          const [, valor] = objeto.label.split(' - ');
+          datoDinamicoValue = valor;
+        }
+      }
+
       const parseToNull = ({
         funcionCode,
         accionCode,
@@ -71,7 +82,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
           ? {
               eventoCampoAgrupacionId: null,
               eventoCampoFiltroId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
-              expresionFiltro: `${filtroValue}`,
+              expresionFiltro: isDatoDinamico ? `${datoDinamicoValue}` : `${filtroValue}`,
             }
           : {
               eventoCampoAgrupacionId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
@@ -233,16 +244,28 @@ const ProcedimientoCustomCreate = forwardRef(() => {
               />
             </Col>
             <Col md={4}>
-              <FormTextField
-                control={control}
-                disabled={isSubmitting || watch('accionCode') !== 'FIL'}
-                label='Valor'
-                name='filtroValue'
-                InputProps={{
-                  startAdornment: <InputAdornment position='start'>=</InputAdornment>,
-                }}
-                fullWidth
-              />
+              {findEventoCampoByCode(state.eventosCampo, watch('filtroCampoCode'))?.tipoDato === 4 ? (
+                <FormSelect
+                  label='Valor'
+                  name='filtroValue'
+                  control={control}
+                  disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                  options={mapearParametros(
+                    state.datoDinamico.filter(({ parentCode }) => parentCode === watch('filtroCampoCode')),
+                  )}
+                />
+              ) : (
+                <FormTextField
+                  control={control}
+                  disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                  label='Valor'
+                  name='filtroValue'
+                  InputProps={{
+                    startAdornment: <InputAdornment position='start'>=</InputAdornment>,
+                  }}
+                  fullWidth
+                />
+              )}
             </Col>
           </Row>
         </Box>
