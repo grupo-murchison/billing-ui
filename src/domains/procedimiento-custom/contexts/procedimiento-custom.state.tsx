@@ -1,10 +1,13 @@
 import { DropdownSchemaType } from '@app/utils/zod.util';
+import { EventoCampoDropdownSchemaType } from '@domains/evento-campo/repository/evento-campo.schemas';
 
 export type ProcedimientoCustomState = {
   funciones: DropdownSchemaType;
   eventos: DropdownSchemaType;
-  eventosCampo: DropdownSchemaType;
+  eventosCampo: EventoCampoDropdownSchemaType;
   acciones: DropdownSchemaType;
+  tablaDinamica: DropdownSchemaType;
+  datoDinamico: DropdownSchemaType;
   eventoCodeSelected?: string;
   error: AnyValue;
 };
@@ -19,6 +22,8 @@ export const initialState: ProcedimientoCustomState = {
   eventos: [],
   eventosCampo: [],
   acciones: [],
+  tablaDinamica: [],
+  datoDinamico: [],
   error: null,
 };
 
