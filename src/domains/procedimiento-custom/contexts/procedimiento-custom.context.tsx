@@ -13,6 +13,8 @@ import { FuncionRepository } from '@domains/funcion/repository';
 import { EventoRepository } from '@domains/evento/repository';
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { AccionRepository } from '@domains/accion/repository';
+import { TablaDinamicaRepository } from '@domains/metadatos/tabla-dinamica/repository';
+import { DatoDinamicoRepository } from '@domains/metadatos/dato-dinamico/repository';
 
 type InitialContext = {
   mainDataGrid: typeof useDataGrid.initialValues;
@@ -44,11 +46,20 @@ const ProcedimientoCustomProvider = ({ children }: ProcedimientoCustomProviderPr
 
   const fetchEntities = async () => {
     try {
-      const [{ data: funciones }, { data: eventos }, { data: eventosCampo }, { data: acciones }] = await Promise.all([
+      const [
+        { data: funciones },
+        { data: eventos },
+        { data: eventosCampo },
+        { data: acciones },
+        { data: tablaDinamica },
+        { data: datoDinamico },
+      ] = await Promise.all([
         await FuncionRepository.getAllFuncionAsDropdown(),
         await EventoRepository.getAllEventoAsDropdown(),
         await EventoCampoRepository.getAllEventoCampoAsDropdown(),
         await AccionRepository.getAllAccionAsDropdown(),
+        await TablaDinamicaRepository.getAllTablaDinamicaAsDropdown(),
+        await DatoDinamicoRepository.getAllDatoDinamicoAsDropdown(),
       ]);
 
       dispatch({
@@ -58,6 +69,8 @@ const ProcedimientoCustomProvider = ({ children }: ProcedimientoCustomProviderPr
           eventos,
           eventosCampo,
           acciones,
+          tablaDinamica,
+          datoDinamico,
         },
       });
     } catch (error) {

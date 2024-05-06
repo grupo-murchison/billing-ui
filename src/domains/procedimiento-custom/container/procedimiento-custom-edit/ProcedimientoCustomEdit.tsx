@@ -21,7 +21,13 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { findPropertyByCode, findPropertyById, mapearParametros } from '@app/utils/formHelpers.util';
+import {
+  findEventoCampoByCode,
+  findPropertyByCode,
+  findPropertyById,
+  findPropertyByLabel,
+  mapearParametros,
+} from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
 
 const ProcedimientoCustomEdit = () => {
@@ -82,8 +88,9 @@ const ProcedimientoCustomEdit = () => {
 
   const fetchProcedimientoCustom = () => {
     ProcedimientoCustomRepository.getProcedimientoCustomById(id || '').then(({ data }) => {
-      const { funciones, eventos, eventosCampo, acciones } = state;
-
+      const { funciones, eventos, eventosCampo, acciones, datoDinamico } = state;
+      const eventoCampoCode = findPropertyById(eventosCampo, data.eventoCampoFiltroId)?.code;
+      const isDatoDinamico = findEventoCampoByCode(eventosCampo, eventoCampoCode)?.tipoDato === 4 ? true : false;
       const accionCode = findPropertyById(acciones, data.accionId)?.code || '';
 
       const values = {
@@ -95,7 +102,9 @@ const ProcedimientoCustomEdit = () => {
       };
 
       if (accionCode === 'FIL') {
-        values.filtroValue = data?.expresionFiltro;
+        values.filtroValue = isDatoDinamico
+          ? findPropertyByLabel(datoDinamico, data.expresionFiltro)?.code
+          : data?.expresionFiltro;
         values.filtroCampoCode = findPropertyById(eventosCampo, data?.eventoCampoFiltroId)?.code || '';
       } else if (accionCode === 'AGR') {
         values.filtroCampoCode = findPropertyById(eventosCampo, data?.eventoCampoAgrupacionId)?.code || '';
@@ -109,7 +118,19 @@ const ProcedimientoCustomEdit = () => {
 
   const onSubmit = useCallback(
     async (data: ProcedimientoCustomEditSchemaType) => {
-      const { funciones, eventos, eventosCampo, acciones } = state;
+      const { funciones, eventos, eventosCampo, acciones, datoDinamico } = state;
+      const isDatoDinamico =
+        findEventoCampoByCode(eventosCampo, watch('filtroCampoCode'))?.tipoDato === 4 ? true : false;
+
+      let datoDinamicoValue = '';
+      if (isDatoDinamico) {
+        const objeto = findPropertyByCode(datoDinamico, watch('filtroValue'));
+        if (objeto) {
+          const [, valor] = objeto.label.split(' - ');
+          datoDinamicoValue = valor;
+        }
+      }
+
       const parseToNull = ({
         funcionCode,
         accionCode,
@@ -128,7 +149,7 @@ const ProcedimientoCustomEdit = () => {
           ? {
               eventoCampoAgrupacionId: null,
               eventoCampoFiltroId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
-              expresionFiltro: `${filtroValue}`,
+              expresionFiltro: isDatoDinamico ? `${datoDinamicoValue}` : `${filtroValue}`,
             }
           : {
               eventoCampoAgrupacionId: findPropertyByCode(eventosCampo, filtroCampoCode)?.value || null,
@@ -276,16 +297,28 @@ const ProcedimientoCustomEdit = () => {
               />
             </Col>
             <Col md={4}>
-              <FormTextField
-                control={control}
-                disabled={isSubmitting || watch('accionCode') !== 'FIL'}
-                label='Valor'
-                name='filtroValue'
-                InputProps={{
-                  startAdornment: <InputAdornment position='start'>=</InputAdornment>,
-                }}
-                fullWidth
-              />
+              {findEventoCampoByCode(state.eventosCampo, watch('filtroCampoCode'))?.tipoDato === 4 ? (
+                <FormSelect
+                  label='Valor'
+                  name='filtroValue'
+                  control={control}
+                  disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                  options={mapearParametros(
+                    state.datoDinamico.filter(({ parentCode }) => parentCode === watch('filtroCampoCode')),
+                  )}
+                />
+              ) : (
+                <FormTextField
+                  control={control}
+                  disabled={isSubmitting || watch('accionCode') !== 'FIL'}
+                  label='Valor'
+                  name='filtroValue'
+                  InputProps={{
+                    startAdornment: <InputAdornment position='start'>=</InputAdornment>,
+                  }}
+                  fullWidth
+                />
+              )}
             </Col>
           </Row>
         </Box>
