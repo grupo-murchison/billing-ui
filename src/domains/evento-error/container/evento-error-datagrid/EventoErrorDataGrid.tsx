@@ -99,12 +99,13 @@ const EventoErrorDataGrid = () => {
         hookRef={mainDataGrid.ref}
         columns={[
           { field: 'evento_revision_cabecera_id', headerName: 'Id' },
+          { field: 'eventoId', headerName: 'Evento TOS Id' },
           { field: 'sourceEventId', headerName: 'Evento Origen' },
           { field: 'type', headerName: 'Tipo Evento' },
-          { field: 'FechaHoraEvento', headerName: 'Fecha Creacion', },
+          { field: 'FechaHoraEvento', headerName: 'Fecha Creacion' },
           { field: 'createdUser', headerName: 'Usuario Creacion' },
           { field: 'clientId', headerName: 'Cliente ID' },
-          { field: 'targetType', headerName: 'Tipo Destino' },
+          { field: 'targetId', headerName: 'VIN' },
           {
             field: 'actions',
             type: 'actions',
