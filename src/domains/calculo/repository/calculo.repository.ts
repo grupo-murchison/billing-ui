@@ -25,8 +25,8 @@ class CalculoRepository {
     );
   };
 
-  static calculoFacturacionManual = async (contratoId: number) => {
-    const response$ = from(CalculoService.calculoFacturacionManual(contratoId)).pipe(
+  static calculoFacturacionManual = async (contratoId: number, planFacturacionId: number, periodoNumber: number) => {
+    const response$ = from(CalculoService.calculoFacturacionManual(contratoId, planFacturacionId, periodoNumber)).pipe(
       RepositoryUtils.PIPES.getResponse(),
     );
     const response = await lastValueFrom(response$);
