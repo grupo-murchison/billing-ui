@@ -102,6 +102,20 @@ const CalculoReporte = () => {
       });
   };
 
+
+
+  const getContratoToShow = (contratos: Array<any>) => {
+    //*cuando facturo mas de un periodo existen varios contratos y el ultimo tiene la informacion correcta a mostrar   
+    if(!contratos || contratos === undefined || contratos.length === 0){
+      console.log(contratos)
+      return []
+    } else {
+      return contratos[contratos.length > 1 ? contratos.length -1 : 0]
+
+    }
+  }
+
+
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
       <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
@@ -137,43 +151,7 @@ const CalculoReporte = () => {
     </Paper>
   );
 
-  // const CustomActions = () => {
-  //   const theme = useTheme();
 
-  //   const sxButton: SxProps = {
-  //     'fontSize': '0.75rem',
-  //     // mx: 1.5,
-  //     ':hover': {
-  //       backgroundColor: theme.palette.primary.light,
-  //       color: theme.palette.common.white,
-  //       transition: 'ease-out',
-  //       transitionDuration: '0.3s',
-  //     },
-  //   };
-
-  //   return (
-  //     <>
-  //       <Stack direction='row' justifyContent='center'>
-  //         <Button
-  //           color='primary'
-  //           variant='text'
-  //           // onClick={handleClose}
-  //           sx={{ ...sxButton }}
-  //         >
-  //           Ver Soporte
-  //         </Button>
-  //         <Button
-  //           color='primary'
-  //           variant='text'
-  //           // onClick={handleClose}
-  //           sx={{ ...sxButton }}
-  //         >
-  //           Ver Proforma
-  //         </Button>
-  //       </Stack>
-  //     </>
-  //   );
-  // };
 
   return (
     <>
@@ -192,29 +170,29 @@ const CalculoReporte = () => {
             field: 'contratoClienteCodigo',
             headerName: 'Nro. Cliente',
             flex: 0.8,
-            valueGetter: params => params.row?.contratos[0]?.contratoClienteCodigo || '',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.contratoClienteCodigo || '',
           },
           {
             field: 'denominación',
             headerName: 'Denominación',
-            valueGetter: params => params.row?.contratos[0]?.contratoClienteDescripcion || '',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.contratoClienteDescripcion || '',
           },
           {
             field: 'contratoNro',
             headerName: 'Nro. Contrato',
             flex: 0.9,
-            valueGetter: params => params.row?.contratos[0]?.contratoNumero || '',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.contratoNumero || '',
           },
           {
             field: 'contratoDescripcion',
             headerName: 'Descripción Contrato',
             flex: 2,
-            valueGetter: params => params.row?.contratos[0]?.contratoDescripcion || '',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.contratoDescripcion || '',
           },
           {
             field: 'periodo',
             headerName: 'Período',
-            valueGetter: params => params.row?.contratos[0]?.periodoNumero || '',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.periodoNumero || '',
             flex: 0.5,
           },
           {

@@ -42,10 +42,12 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
     }
   }, [contratoId, openSackbar]);
 
-  const onClickCalcular = () => {
+  const onClickCalcular = (row: any) => {
     setOpenBackdrop(true);
+
+
     if (contratoId) {
-      CalculoRepository.calculoFacturacionManual(contratoId)
+      CalculoRepository.calculoFacturacionManual(contratoId, row.contratoPlanFacturacionId, row.periodo)
         .then(({ data }) => {
           setSnackbarMessage(
             `Proceso ejecutado correctamente. Se generó el Número de Secuencia de Calculo: ${data?.numeroSecuenciaCalculo}`,
@@ -140,7 +142,7 @@ function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
                   </Tooltip>
                 }
                 label='Calcular'
-                onClick={onClickCalcular}
+                onClick={()=> onClickCalcular(params.row)}
                 // showInMenu
                 disabled={handleDisableCalcular(params.row, planFacturacion?.periodos)}
               />,

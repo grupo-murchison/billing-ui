@@ -66,9 +66,9 @@ class CalculoService {
     return [response, error];
   };
 
-  static calculoFacturacionManual = async (contratoId: number): Promise<HandlePromise> => {
+  static calculoFacturacionManual = async (contratoId: number, planFacturacionId: number, periodoId: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/manual`, { contratoId: contratoId }),
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/manual`, { contratoId, planFacturacionId, periodoId  }),
     );
 
     return [response, error];
