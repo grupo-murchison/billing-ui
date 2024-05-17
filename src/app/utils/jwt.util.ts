@@ -1,4 +1,4 @@
-import {jwtDecode} from 'jwt-decode';
+import jwt_decode, { JwtPayload }  from 'jwt-decode';
 
 export const isTokenExpired = (token: string | null ): boolean => {
   try {
@@ -6,7 +6,8 @@ export const isTokenExpired = (token: string | null ): boolean => {
       return true;
     }
   
-    const { exp } = jwtDecode(token);
+    const decodedToken: JwtPayload = jwt_decode(token);
+    const exp = decodedToken?.exp
     if (!exp) {
       console.log('token expirado', exp)
       return true;
