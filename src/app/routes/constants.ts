@@ -1,8 +1,8 @@
 export const ROUTES = {
   contrato: 'contrato',
+  login: {
+    base: "auth",
+    login: "login"
+  }
 };
 
-export const LOGIN = {
-  base: "/login",
-  auth: "/auth/login"
-}

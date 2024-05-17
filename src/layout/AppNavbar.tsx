@@ -80,8 +80,6 @@ const Navbar = () => {
               }}
             />
             <Typography variant='h6'>Nombre de usuario <button onClick={logout}>logout</button></Typography>
-            {/* <button onClick={() => allowAccess('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0ZzFAdGVzdC5jb20iLCJpYXQiOjE3MTU4ODgwMDAsImV4cCI6MTcxMDAwMDAwMCwiYXVkIjoiQklMTElOR19VSSIsImlzcyI6IkxPR0lOX1NFUlZJQ0UiLCJzdWIiOiI1In0.XguTCshllu21m92JDnGRNGTkse-xfrhWa919Bj9OeEo')}>cambiar token</button> */}
-            {/* <button onClick={() => allowAccess("undefined")}>cambiar token 2</button> */}
           </Stack>
         </Stack>
       </Toolbar>

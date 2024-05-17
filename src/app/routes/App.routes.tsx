@@ -1,20 +1,20 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import PrivateRoutes from '@app/routes/Private.routes';
 
 import { AuthRoutes } from '@domains/auth/navigation';
 
-import { LOGIN } from '@app/routes'
+import { ROUTES } from '@app/routes'
 
 const AppRoutes = () => {
 
-  const BASEPATH = LOGIN.base
-
+  const BASEPATH = ROUTES.login.base
+  const LOGINPATH = ROUTES.login.login
   return (
     <BrowserRouter>
       <Routes>
-        <Route path='/auth/*' element={<AuthRoutes />} />
-        <Route path={`${BASEPATH}/*`} element={<AuthRoutes />} />
+        <Route path={`/${BASEPATH}/*`} element={<AuthRoutes />} />
+        <Route path={`/${LOGINPATH}/*`} element={<Navigate to={`/${BASEPATH}/${LOGINPATH}`} replace />} />
         <Route path='/*' element={<PrivateRoutes />} />
       </Routes>
     </BrowserRouter>
