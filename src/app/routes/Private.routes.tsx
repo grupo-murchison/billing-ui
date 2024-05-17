@@ -1,6 +1,6 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 
-import { Navigate } from 'react-router-dom';
+import { Navigate, useLocation } from 'react-router-dom';
 
 import { AuthContext, ComponentInjectorProvider } from '@app/contexts';
 
@@ -20,9 +20,18 @@ import { TablaDinamicaRoutes } from '@domains/metadatos/tabla-dinamica/navigatio
 import RootRoute from '@domains/root/Root.route';
 import { EventoErrorRoutes } from '@domains/evento-error/navigation';
 import { EventoCargaRoutes } from '@domains/evento-carga/navigation/';
+import { isTokenExpired } from '@app/utils/jwt.util';
 
 const PrivateRoutes = () => {
-  const { isAuthenticated } = useContext(AuthContext);
+  const { isAuthenticated, token, logout } = useContext(AuthContext);
+
+  //* me fijo cada vez que cambia de ruta si el token sigue siendo valido
+  const location = useLocation();
+  useEffect(() => {
+    if (!token || isTokenExpired(token)) {
+      logout();
+    }
+  }, [location, token, logout]);
 
   if (!isAuthenticated) {
     return <Navigate to='/auth/login' replace />;

@@ -23,6 +23,7 @@ import './AuthLogin.scss';
 const AuthLogin = () => {
   const _navigate = useNavigate();
 
+  const [isLoginFailed, setIsLoginFailed] = useState(false)
   const { allowAccess } = useContext(AuthContext);
   const { handleSubmit, control, register } = useForm({
     defaultValues: {
@@ -35,23 +36,24 @@ const AuthLogin = () => {
 
   const onSubmit: SubmitHandler<FormDataLogin> = useCallback(
     async data => {
+      setIsLoginFailed(false)
       await AuthRepository.login({ username: data.username, password: data.password })
         .then(async response => {
           // TODO esto es solo para pruebas de conexion con backend. Falta terminar de desarrollar la funcionalidad y ruteo.
-
           console.info('auth info', response.data);
+          const accessToken = response.data.access_token
 
           // TODO este se debe invocar donde corresponda ( acá no, no tiene sentido )
           await AuthRepository.validateToken(response.data.access_token).then(response => {
             console.info('Token válido? status code 200, sino lanza un 401: ', response.status, response.data);
           });
 
-          // TODO revisar que hace este allowAccess()
-          allowAccess();
+          allowAccess(accessToken);
           _navigate('/');
         })
         .catch(error => {
-          // TODO mostrar mensajes de error (feedback al usuario ) según corresponda
+          //TODO: setear en el back distintos mensajes de error para mostrar en componente
+          setIsLoginFailed(true)
           console.error('Longin falló');
         });
     },
@@ -79,6 +81,11 @@ const AuthLogin = () => {
             <div className='lc__advice'>
               <span className='muted'>Ingrese credenciales para continuar</span>
             </div>
+            {isLoginFailed &&  
+              <div className='lc__advice'>
+                <span className='muted' >Error al iniciar sesión, credenciales invalidas</span>
+              </div>
+            }
           </Grid>
           <Grid xs={12}>
             <form onSubmit={handleSubmit(onSubmit)}>

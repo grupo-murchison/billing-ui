@@ -6,6 +6,8 @@ import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
+import { AuthContext } from '@app/contexts';
+import { useContext } from 'react';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -21,6 +23,7 @@ const AppBar = styled(MuiAppBar, {
 }));
 
 const Navbar = () => {
+  const {logout, allowAccess} = useContext(AuthContext)
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
 
@@ -76,7 +79,9 @@ const Navbar = () => {
                 backgroundColor: theme.palette.secondary.main,
               }}
             />
-            <Typography variant='h6'>Nombre de usuario</Typography>
+            <Typography variant='h6'>Nombre de usuario <button onClick={logout}>logout</button></Typography>
+            {/* <button onClick={() => allowAccess('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InN0ZzFAdGVzdC5jb20iLCJpYXQiOjE3MTU4ODgwMDAsImV4cCI6MTcxMDAwMDAwMCwiYXVkIjoiQklMTElOR19VSSIsImlzcyI6IkxPR0lOX1NFUlZJQ0UiLCJzdWIiOiI1In0.XguTCshllu21m92JDnGRNGTkse-xfrhWa919Bj9OeEo')}>cambiar token</button> */}
+            {/* <button onClick={() => allowAccess("undefined")}>cambiar token 2</button> */}
           </Stack>
         </Stack>
       </Toolbar>
