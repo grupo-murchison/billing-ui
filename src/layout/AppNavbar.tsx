@@ -3,11 +3,14 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
 import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
 import { AuthContext } from '@app/contexts';
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -22,11 +25,54 @@ const AppBar = styled(MuiAppBar, {
   boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
 }));
 
-const Navbar = () => {
+const UserMenu = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {logout, allowAccess} = useContext(AuthContext)
+  const open = Boolean(anchorEl);
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <div>
+      <Button
+        aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-haspopup="true"
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        Nombre de usuario
+      </Button>
+      <Menu
+        aria-labelledby="demo-positioned-button"
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+        transformOrigin={{
+          vertical: 'top',
+          horizontal: 'left',
+        }}
+      >
+
+        <MenuItem onClick={logout}>Logout</MenuItem>
+      </Menu>
+    </div>
+  );
+}
+
+
+const Navbar = () => {
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
 
+  
   return (
     <AppBar position='fixed'>
       <Toolbar>
@@ -79,7 +125,8 @@ const Navbar = () => {
                 backgroundColor: theme.palette.secondary.main,
               }}
             />
-            <Typography variant='h6'>Nombre de usuario <button onClick={logout}>logout</button></Typography>
+            <UserMenu/>
+            {/* <Typography variant='h6'>Nombre de usuario</Typography>k */}
           </Stack>
         </Stack>
       </Toolbar>

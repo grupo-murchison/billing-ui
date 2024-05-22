@@ -24,6 +24,7 @@ const AuthLogin = () => {
   const _navigate = useNavigate();
 
   const [isLoginFailed, setIsLoginFailed] = useState(false)
+  const [loginFailedMessage, setLoginFailedMessage] = useState('')
   const { allowAccess } = useContext(AuthContext);
   const { handleSubmit, control, register } = useForm({
     defaultValues: {
@@ -53,6 +54,7 @@ const AuthLogin = () => {
         })
         .catch(error => {
           //TODO: setear en el back distintos mensajes de error para mostrar en componente
+          setLoginFailedMessage('Error al iniciar sesión')
           setIsLoginFailed(true)
           console.error('Longin falló');
         });
@@ -83,7 +85,7 @@ const AuthLogin = () => {
             </div>
             {isLoginFailed &&  
               <div className='lc__advice'>
-                <span className='muted' >Error al iniciar sesión, credenciales invalidas</span>
+                <span className='muted' >{loginFailedMessage}</span>
               </div>
             }
           </Grid>
