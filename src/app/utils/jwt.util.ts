@@ -20,3 +20,27 @@ export const isTokenExpired = (token: string | null ): boolean => {
     return true
   }
 };
+
+export const getUserNameByJwt = (): string => {
+
+  const token = localStorage.getItem('token')
+
+  try {
+    if (!token) {
+      return 'Nombre de Usuario'
+    }
+  
+    const decodedToken: AnyValue = jwt_decode(token);
+    const username = decodedToken?.username
+    if (!username) {
+      console.log('Sin nombre de usuario', decodedToken)
+      return 'Nombre de Usuario'
+    } else {
+      return username
+    }
+
+  } catch (error) {
+    console.log(error)
+    return 'Nombre de Usuario'
+  }
+};

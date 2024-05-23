@@ -12,6 +12,8 @@ import { useLayoutContext } from './context/useLayoutContext';
 import { AuthContext } from '@app/contexts';
 import { useContext, useState } from 'react';
 
+import { getUserNameByJwt } from '@app/utils/jwt.util';
+
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
 }
@@ -27,8 +29,11 @@ const AppBar = styled(MuiAppBar, {
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const {logout, allowAccess} = useContext(AuthContext)
+  const {logout} = useContext(AuthContext)
   const open = Boolean(anchorEl);
+
+  const userName = getUserNameByJwt()
+
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
   };
@@ -40,27 +45,17 @@ const UserMenu = () => {
     <div>
       <Button
         aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="true"
+        aria-haspopup="menu"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-        Nombre de usuario
+      <Typography variant='h6'>{userName}</Typography>
       </Button>
       <Menu
-        aria-labelledby="demo-positioned-button"
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
-        anchorOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
-        transformOrigin={{
-          vertical: 'top',
-          horizontal: 'left',
-        }}
       >
-
         <MenuItem onClick={logout}>Logout</MenuItem>
       </Menu>
     </div>
@@ -72,7 +67,6 @@ const Navbar = () => {
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
 
-  
   return (
     <AppBar position='fixed'>
       <Toolbar>
@@ -126,7 +120,6 @@ const Navbar = () => {
               }}
             />
             <UserMenu/>
-            {/* <Typography variant='h6'>Nombre de usuario</Typography>k */}
           </Stack>
         </Stack>
       </Toolbar>
