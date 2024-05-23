@@ -6,7 +6,10 @@ export const handleResponse = <T>(promise: AxiosPromise<T>): Promise<HandlePromi
   });
 };
 
-export type HandlePromise<T> = [Undefined<AxiosResponse<T>>, Undefined<AxiosError>];
+/**
+ * Se debería agregar el type en donde se utilice para que no tome siempre AnyValue. Ejemplo  HandlePromise<CustomType>
+ */
+export type HandlePromise<T = AnyValue> = [Undefined<AxiosResponse<T>>, Undefined<AxiosError>];
 
 export const downloadPdfAxios = (file: AnyValue, fileName = 'descarga.pdf') => {
   const url = window.URL.createObjectURL(new Blob([file]));
