@@ -56,7 +56,7 @@ const AuthLogin = () => {
         .catch(error => {
           const { statusCode } = JSON.parse(error.message)
           if( statusCode === 401 ) {
-            setLoginFailedMessage('Error al iniciar sesión')
+            setLoginFailedMessage('Credenciales Invalidas')
             setIsLoginFailed(true)
           }else if ( statusCode >= 400 ) {
             setLoginFailedMessage('Error del servidor')
