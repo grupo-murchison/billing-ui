@@ -62,7 +62,7 @@ const AuthLogin = () => {
             setLoginFailedMessage('Error del servidor')
             setIsLoginFailed(true)
           } else {
-            setLoginFailedMessage('Error en la Red')
+            setLoginFailedMessage(JSON.parse(error.message))
             setIsLoginFailed(true)
           }      
         });
