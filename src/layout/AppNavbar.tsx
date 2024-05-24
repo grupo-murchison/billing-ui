@@ -51,7 +51,10 @@ const UserMenu = () => {
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-      {open ? <KeyboardArrowUpIcon  /> : <KeyboardArrowDownIcon />}
+      {open 
+        ? <KeyboardArrowUpIcon sx={{ color: theme.palette.text.primary}} />
+        : <KeyboardArrowDownIcon sx={{ color: theme.palette.text.primary}}/>
+      }
       </Button>
       <Menu
         anchorEl={anchorEl}
@@ -82,9 +85,9 @@ const ProfileAvatar = (  ) => {
     return initials;
   }
   return (    
-    <Avatar 
+    <Avatar alt='Icono Usuario'
     sx={{
-      backgroundColor: theme.palette.secondary,
+      backgroundColor: theme.palette.secondary.light,
     }}> {getInitials(userName)} </Avatar>
   );
 }
