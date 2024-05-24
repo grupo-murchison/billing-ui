@@ -5,7 +5,16 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Card, Unstable_Grid2 as Grid, FormControlLabel, Checkbox, Button, IconButton, Typography, useTheme } from '@mui/material';
+import {
+  Card,
+  Unstable_Grid2 as Grid,
+  FormControlLabel,
+  Checkbox,
+  Button,
+  IconButton,
+  Typography,
+  useTheme,
+} from '@mui/material';
 
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -22,10 +31,10 @@ import './AuthLogin.scss';
 
 const AuthLogin = () => {
   const _navigate = useNavigate();
-  const theme = useTheme()
+  const theme = useTheme();
 
-  const [isLoginFailed, setIsLoginFailed] = useState(false)
-  const [loginFailedMessage, setLoginFailedMessage] = useState('')
+  const [isLoginFailed, setIsLoginFailed] = useState(false);
+  const [loginFailedMessage, setLoginFailedMessage] = useState('');
   const { allowAccess } = useContext(AuthContext);
   const { handleSubmit, control, register } = useForm({
     defaultValues: {
@@ -38,12 +47,12 @@ const AuthLogin = () => {
 
   const onSubmit: SubmitHandler<FormDataLogin> = useCallback(
     async data => {
-      setIsLoginFailed(false)
+      setIsLoginFailed(false);
       await AuthRepository.login({ username: data.username, password: data.password })
         .then(async response => {
           // TODO esto es solo para pruebas de conexion con backend. Falta terminar de desarrollar la funcionalidad y ruteo.
           console.info('auth info', response.data);
-          const accessToken = response.data.access_token
+          const accessToken = response.data.access_token;
 
           // TODO este se debe invocar donde corresponda ( acá no, no tiene sentido )
           await AuthRepository.validateToken(response.data.access_token).then(response => {
@@ -54,17 +63,17 @@ const AuthLogin = () => {
           _navigate('/');
         })
         .catch(error => {
-          const { statusCode } = JSON.parse(error.message)
-          if( statusCode === 401 ) {
-            setLoginFailedMessage('Credenciales Invalidas')
-            setIsLoginFailed(true)
-          }else if ( statusCode >= 400 ) {
-            setLoginFailedMessage('Error del servidor')
-            setIsLoginFailed(true)
+          const { statusCode } = JSON.parse(error.message);
+          if (statusCode === 401) {
+            setLoginFailedMessage('Credenciales Invalidas');
+            setIsLoginFailed(true);
+          } else if (statusCode >= 400) {
+            setLoginFailedMessage('Error del servidor');
+            setIsLoginFailed(true);
           } else {
-            setLoginFailedMessage(JSON.parse(error.message))
-            setIsLoginFailed(true)
-          }      
+            setLoginFailedMessage(JSON.parse(error.message));
+            setIsLoginFailed(true);
+          }
         });
     },
     [allowAccess, _navigate],
@@ -91,11 +100,11 @@ const AuthLogin = () => {
             <div className='lc__advice'>
               <span className='muted'>Ingrese credenciales para continuar</span>
             </div>
-            {isLoginFailed &&  
+            {isLoginFailed && (
               <div className='lc__advice'>
-                <Typography sx={{color: theme.palette.error.main}} >{loginFailedMessage}</Typography>
+                <Typography sx={{ color: theme.palette.error.main }}>{loginFailedMessage}</Typography>
               </div>
-            }
+            )}
           </Grid>
           <Grid xs={12}>
             <form onSubmit={handleSubmit(onSubmit)}>

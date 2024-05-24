@@ -2,12 +2,11 @@ import { Routes, Route, Navigate } from 'react-router-dom';
 
 import { AuthLogin } from '@domains/auth/container/auth-login';
 
-import { ROUTES } from '@app/routes'
+import { ROUTES } from '@app/routes';
 
 const AuthRoutes = () => {
-
-  const LOGINPATH = ROUTES.login.login
-  const BASEPATH = ROUTES.login.base
+  const LOGINPATH = ROUTES.login.login;
+  const BASEPATH = ROUTES.login.base;
 
   return (
     <Routes>

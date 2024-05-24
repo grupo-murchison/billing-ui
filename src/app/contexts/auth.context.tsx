@@ -1,10 +1,10 @@
 import { useLocalStorage } from '@app/hooks';
-import { createContext, useCallback,  useState } from 'react';
+import { createContext, useCallback, useState } from 'react';
 import type { ReactNode } from 'react';
 
 interface InitialState {
   isAuthenticated: boolean;
-  token: string,
+  token: string;
   allowAccess: (token: string) => void;
   logout: () => void;
 }
@@ -17,14 +17,14 @@ const initialState: InitialState = {
     //** */
   },
   logout: () => {
-     //** */
+    //** */
   },
 };
 
 const AuthContext = createContext(initialState);
 
 const AuthProvider = ({ children }: AuthProviderProps) => {
-  const [token, setToken] = useLocalStorage('token', undefined)
+  const [token, setToken] = useLocalStorage('token', undefined);
   const [isAuthenticated, setIsAuthenticated] = useState(!!token);
 
   const logout = () => {
@@ -37,13 +37,13 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsAuthenticated(true);
   }, []);
 
-  return <AuthContext.Provider value={{isAuthenticated, token, allowAccess, logout}}>{children}</AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ isAuthenticated, token, allowAccess, logout }}>{children}</AuthContext.Provider>
+  );
 };
 
 type AuthProviderProps = {
   children: ReactNode;
 };
-
-
 
 export { AuthProvider, AuthContext };

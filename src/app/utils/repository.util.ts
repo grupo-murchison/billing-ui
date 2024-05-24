@@ -48,7 +48,10 @@ function pipeFromArray<T, R>(fns: Array<UnaryFunction<T, R>>): UnaryFunction<T, 
   };
 }
 
-export const fromRxjs = async <T>(axiosService: Promise<HandlePromise<T>>, ...operations: OperatorFunction<AnyValue, AnyValue>[]) => {
+export const fromRxjs = async <T>(
+  axiosService: Promise<HandlePromise<T>>,
+  ...operations: OperatorFunction<AnyValue, AnyValue>[]
+) => {
   const response$ = from(axiosService).pipe(getResponse(), pipeFromArray(operations));
 
   const response = await lastValueFrom<AxiosResponse<T>>(response$);

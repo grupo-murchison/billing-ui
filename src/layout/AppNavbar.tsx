@@ -6,7 +6,14 @@ import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { MenuIcon, SearchIcon, QuestionMarkIcon, KeyboardArrowUpIcon, KeyboardArrowDownIcon, ExitToAppIcon } from '@assets/icons';
+import {
+  MenuIcon,
+  SearchIcon,
+  QuestionMarkIcon,
+  KeyboardArrowUpIcon,
+  KeyboardArrowDownIcon,
+  ExitToAppIcon,
+} from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
 import { AuthContext } from '@app/contexts';
 import { useContext, useState } from 'react';
@@ -28,11 +35,11 @@ const AppBar = styled(MuiAppBar, {
 
 const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
-  const {logout} = useContext(AuthContext)
+  const { logout } = useContext(AuthContext);
   const open = Boolean(anchorEl);
   const theme = useTheme();
 
-  const userName = getUserNameByJwt()
+  const userName = getUserNameByJwt();
 
   const handleClick = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorEl(event.currentTarget);
@@ -42,18 +49,19 @@ const UserMenu = () => {
   };
 
   return (
-    <Box display="flex" alignItems="center">
+    <Box display='flex' alignItems='center'>
       <Typography variant='h6'>{userName}</Typography>
       <IconButton
         aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="listbox"
+        aria-haspopup='listbox'
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-      {open 
-        ? <KeyboardArrowUpIcon sx={{ color: theme.palette.text.primary}} />
-        : <KeyboardArrowDownIcon sx={{ color: theme.palette.text.primary}}/>
-      }
+        {open ? (
+          <KeyboardArrowUpIcon sx={{ color: theme.palette.text.primary }} />
+        ) : (
+          <KeyboardArrowDownIcon sx={{ color: theme.palette.text.primary }} />
+        )}
       </IconButton>
       <Menu
         anchorEl={anchorEl}
@@ -65,36 +73,45 @@ const UserMenu = () => {
           },
         }}
       >
-        <MenuItem onClick={logout} sx={{
-          'color': theme.palette.getContrastText(theme.palette.text.primary),
-        }}><ExitToAppIcon/> Cerrar Sesión
+        <MenuItem
+          onClick={logout}
+          sx={{
+            color: theme.palette.getContrastText(theme.palette.text.primary),
+          }}
+        >
+          <ExitToAppIcon /> Cerrar Sesión
         </MenuItem>
       </Menu>
     </Box>
   );
-}
+};
 
-const ProfileAvatar = (  ) => {
-  const theme = useTheme()
-  const userName = getUserNameByJwt()
+const ProfileAvatar = () => {
+  const theme = useTheme();
+  const userName = getUserNameByJwt();
 
   const getInitials = (name: string) => {
     const nameArray = name.split(' ');
     const initials = nameArray.map((part: string) => part[0].toUpperCase()).join('');
     return initials;
-  }
-  return (    
-    <Avatar alt='Icono Usuario'
-    sx={{
-      backgroundColor: theme.palette.secondary.light,
-    }}> {getInitials(userName)} </Avatar>
+  };
+  return (
+    <Avatar
+      alt='Icono Usuario'
+      sx={{
+        backgroundColor: theme.palette.secondary.light,
+      }}
+    >
+      {' '}
+      {getInitials(userName)}{' '}
+    </Avatar>
   );
-}
+};
 
 const Navbar = () => {
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
- 
+
   return (
     <AppBar position='fixed'>
       <Toolbar>
@@ -140,8 +157,8 @@ const Navbar = () => {
             >
               <QuestionMarkIcon />
             </IconButton>
-            <ProfileAvatar/>
-            <UserMenu/>
+            <ProfileAvatar />
+            <UserMenu />
           </Stack>
         </Stack>
       </Toolbar>

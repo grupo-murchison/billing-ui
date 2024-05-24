@@ -4,12 +4,11 @@ import PrivateRoutes from '@app/routes/Private.routes';
 
 import { AuthRoutes } from '@domains/auth/navigation';
 
-import { ROUTES } from '@app/routes'
+import { ROUTES } from '@app/routes';
 
 const AppRoutes = () => {
-
-  const BASEPATH = ROUTES.login.base
-  const LOGINPATH = ROUTES.login.login
+  const BASEPATH = ROUTES.login.base;
+  const LOGINPATH = ROUTES.login.login;
   return (
     <BrowserRouter>
       <Routes>
