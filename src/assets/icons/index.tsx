@@ -26,6 +26,7 @@ export {
   ExpandLess as ExpandLessIcon,
   ExpandMore as ExpandMoreIcon,
   Event as EventIcon,
+  ExitToApp as ExitToAppIcon,
 
   // F
   FiberManualRecord as FiberManualRecordIcon,

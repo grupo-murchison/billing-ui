@@ -3,9 +3,22 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
 
-import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
+import {
+  MenuIcon,
+  SearchIcon,
+  QuestionMarkIcon,
+  KeyboardArrowUpIcon,
+  KeyboardArrowDownIcon,
+  ExitToAppIcon,
+} from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
+import { AuthContext } from '@app/contexts';
+import { useContext, useState } from 'react';
+
+import { getUserNameByJwt } from '@app/utils/jwt.util';
 
 interface AppBarProps extends MuiAppBarProps {
   open?: boolean;
@@ -19,6 +32,81 @@ const AppBar = styled(MuiAppBar, {
   backgroundColor: theme.palette.background.paper,
   boxShadow: '0px 0px 0px -1px rgba(0,0,0,0.2),0px 0px 0px 0px rgba(0,0,0,0.14),0px 1px 10px 0px rgba(0,0,0,0.12)',
 }));
+
+const UserMenu = () => {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const { logout } = useContext(AuthContext);
+  const open = Boolean(anchorEl);
+  const theme = useTheme();
+
+  const userName = getUserNameByJwt();
+
+  const handleClick = (event: React.MouseEvent<HTMLElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  return (
+    <Box display='flex' alignItems='center'>
+      <Typography variant='h6'>{userName}</Typography>
+      <IconButton
+        aria-controls={open ? 'demo-positioned-menu' : undefined}
+        aria-haspopup='listbox'
+        aria-expanded={open ? 'true' : undefined}
+        onClick={handleClick}
+      >
+        {open ? (
+          <KeyboardArrowUpIcon sx={{ color: theme.palette.text.primary }} />
+        ) : (
+          <KeyboardArrowDownIcon sx={{ color: theme.palette.text.primary }} />
+        )}
+      </IconButton>
+      <Menu
+        anchorEl={anchorEl}
+        open={open}
+        onClose={handleClose}
+        sx={{
+          '& .MuiPaper-root': {
+            backgroundColor: theme.palette.text.primary, // Cambia el color de fondo aquí
+          },
+        }}
+      >
+        <MenuItem
+          onClick={logout}
+          sx={{
+            color: theme.palette.getContrastText(theme.palette.text.primary),
+          }}
+        >
+          <ExitToAppIcon /> Cerrar Sesión
+        </MenuItem>
+      </Menu>
+    </Box>
+  );
+};
+
+const ProfileAvatar = () => {
+  const theme = useTheme();
+  const userName = getUserNameByJwt();
+
+  const getInitials = (name: string) => {
+    const nameArray = name.split(' ');
+    const initials = nameArray.map((part: string) => part[0].toUpperCase()).join('');
+    return initials;
+  };
+  return (
+    <Avatar
+      alt='Icono Usuario'
+      sx={{
+        backgroundColor: theme.palette.secondary.light,
+      }}
+    >
+      {' '}
+      {getInitials(userName)}{' '}
+    </Avatar>
+  );
+};
 
 const Navbar = () => {
   const theme = useTheme();
@@ -69,14 +157,8 @@ const Navbar = () => {
             >
               <QuestionMarkIcon />
             </IconButton>
-            <Avatar
-              alt='profile user'
-              // src={avatar1}
-              sx={{
-                backgroundColor: theme.palette.secondary.main,
-              }}
-            />
-            <Typography variant='h6'>Nombre de usuario</Typography>
+            <ProfileAvatar />
+            <UserMenu />
           </Stack>
         </Stack>
       </Toolbar>

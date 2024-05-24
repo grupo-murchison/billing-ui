@@ -1,12 +1,15 @@
 import type { AxiosPromise, AxiosResponse, AxiosError, AxiosResponseHeaders } from 'axios';
 
-export const handleResponse = (promise: AxiosPromise): Promise<HandlePromise> => {
+export const handleResponse = <T>(promise: AxiosPromise<T>): Promise<HandlePromise<T>> => {
   return new Promise(resolve => {
     promise.then(response => resolve([response, undefined])).catch(error => resolve([undefined, error]));
   });
 };
 
-export type HandlePromise = [Undefined<AxiosResponse>, Undefined<AxiosError>];
+/**
+ * Se debería agregar el type en donde se utilice para que no tome siempre AnyValue. Ejemplo  HandlePromise<CustomType>
+ */
+export type HandlePromise<T = AnyValue> = [Undefined<AxiosResponse<T>>, Undefined<AxiosError>];
 
 export const downloadPdfAxios = (file: AnyValue, fileName = 'descarga.pdf') => {
   const url = window.URL.createObjectURL(new Blob([file]));
