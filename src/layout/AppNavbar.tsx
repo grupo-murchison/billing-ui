@@ -7,7 +7,7 @@ import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
-import { MenuIcon, SearchIcon, QuestionMarkIcon } from '@assets/icons';
+import { MenuIcon, SearchIcon, QuestionMarkIcon, KeyboardArrowUpIcon, KeyboardArrowDownIcon, ExitToAppIcon } from '@assets/icons';
 import { useLayoutContext } from './context/useLayoutContext';
 import { AuthContext } from '@app/contexts';
 import { useContext, useState } from 'react';
@@ -31,6 +31,7 @@ const UserMenu = () => {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const {logout} = useContext(AuthContext)
   const open = Boolean(anchorEl);
+  const theme = useTheme();
 
   const userName = getUserNameByJwt()
 
@@ -42,31 +43,56 @@ const UserMenu = () => {
   };
 
   return (
-    <div>
+    <Box display="flex" alignItems="center">
+      <Typography variant='h6'>{userName}</Typography>
       <Button
         aria-controls={open ? 'demo-positioned-menu' : undefined}
-        aria-haspopup="menu"
+        aria-haspopup="listbox"
         aria-expanded={open ? 'true' : undefined}
         onClick={handleClick}
       >
-      <Typography variant='h6'>{userName}</Typography>
+      {open ? <KeyboardArrowUpIcon  /> : <KeyboardArrowDownIcon />}
       </Button>
       <Menu
         anchorEl={anchorEl}
         open={open}
         onClose={handleClose}
+        sx={{
+          '& .MuiPaper-root': {
+            backgroundColor: theme.palette.text.primary, // Cambia el color de fondo aquí
+          },
+        }}
       >
-        <MenuItem onClick={logout}>Logout</MenuItem>
+        <MenuItem onClick={logout} sx={{
+          'color': theme.palette.getContrastText(theme.palette.text.primary),
+        }}><ExitToAppIcon/> Cerrar Sesión
+        </MenuItem>
       </Menu>
-    </div>
+    </Box>
   );
 }
 
+const ProfileAvatar = (  ) => {
+  const theme = useTheme()
+  const userName = getUserNameByJwt()
+
+  const getInitials = (name: string) => {
+    const nameArray = name.split(' ');
+    const initials = nameArray.map((part: string) => part[0].toUpperCase()).join('');
+    return initials;
+  }
+  return (    
+    <Avatar 
+    sx={{
+      backgroundColor: theme.palette.secondary,
+    }}> {getInitials(userName)} </Avatar>
+  );
+}
 
 const Navbar = () => {
   const theme = useTheme();
   const { toogleSidebar } = useLayoutContext();
-
+ 
   return (
     <AppBar position='fixed'>
       <Toolbar>
@@ -112,13 +138,7 @@ const Navbar = () => {
             >
               <QuestionMarkIcon />
             </IconButton>
-            <Avatar
-              alt='profile user'
-              // src={avatar1}
-              sx={{
-                backgroundColor: theme.palette.secondary.main,
-              }}
-            />
+            <ProfileAvatar/>
             <UserMenu/>
           </Stack>
         </Stack>

@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { Card, Unstable_Grid2 as Grid, FormControlLabel, Checkbox, Button, IconButton } from '@mui/material';
+import { Card, Unstable_Grid2 as Grid, FormControlLabel, Checkbox, Button, IconButton, Typography, useTheme } from '@mui/material';
 
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
@@ -22,6 +22,7 @@ import './AuthLogin.scss';
 
 const AuthLogin = () => {
   const _navigate = useNavigate();
+  const theme = useTheme()
 
   const [isLoginFailed, setIsLoginFailed] = useState(false)
   const [loginFailedMessage, setLoginFailedMessage] = useState('')
@@ -85,7 +86,7 @@ const AuthLogin = () => {
             </div>
             {isLoginFailed &&  
               <div className='lc__advice'>
-                <span className='muted' >{loginFailedMessage}</span>
+                <Typography sx={{color: theme.palette.error.main}} >{loginFailedMessage}</Typography>
               </div>
             }
           </Grid>
@@ -121,7 +122,7 @@ const AuthLogin = () => {
                 </Grid>
                 <Grid sm={6}>
                   <div className='lc__recover-password'>
-                    <span>Olvidó su contraseña?</span>
+                    <span>¿Olvidó su contraseña?</span>
                   </div>
                 </Grid>
                 <Grid xs={12}>
