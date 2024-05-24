@@ -134,7 +134,7 @@ const AuthLogin = () => {
                 </Grid>
                 <Grid xs={12}>
                   <Button variant='contained' fullWidth size='large' type='submit'>
-                    INICIAR SESIÓN
+                    Iniciar Sesión
                   </Button>
                 </Grid>
               </Grid>
