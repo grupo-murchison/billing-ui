@@ -50,14 +50,7 @@ const AuthLogin = () => {
       setIsLoginFailed(false);
       await AuthRepository.login({ username: data.username, password: data.password })
         .then(async response => {
-          // TODO esto es solo para pruebas de conexion con backend. Falta terminar de desarrollar la funcionalidad y ruteo.
-          console.info('auth info', response.data);
           const accessToken = response.data.access_token;
-
-          // TODO este se debe invocar donde corresponda ( acá no, no tiene sentido )
-          await AuthRepository.validateToken(response.data.access_token).then(response => {
-            console.info('Token válido? status code 200, sino lanza un 401: ', response.status, response.data);
-          });
 
           allowAccess(accessToken);
           _navigate('/');
