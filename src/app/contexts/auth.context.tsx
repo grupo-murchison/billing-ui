@@ -1,27 +1,23 @@
 import { useLocalStorage } from '@app/hooks';
-import { isTokenExpired } from '@app/utils/jwt.util';
-import { createContext, useCallback, useEffect, useMemo, useState } from 'react';
+import { createContext, useCallback,  useState } from 'react';
 import type { ReactNode } from 'react';
-
-type LoginFunction = (token: string) => void;
-type LogoutFunction = () => void;
 
 interface InitialState {
   isAuthenticated: boolean;
   token: string,
-  allowAccess: LoginFunction;
-  logout: LogoutFunction;
+  allowAccess: (token: string) => void;
+  logout: () => void;
 }
 
 // Estado inicial
 const initialState: InitialState = {
   isAuthenticated: false,
   token: '',
-  allowAccess: (token: string) => {
-    /**/
+  allowAccess: () => {
+    //** */
   },
   logout: () => {
-    /**/
+     //** */
   },
 };
 
@@ -41,15 +37,7 @@ const AuthProvider = ({ children }: AuthProviderProps) => {
     setIsAuthenticated(true);
   }, []);
 
-  const value = useMemo(() => ({
-    isAuthenticated,
-    token,
-    allowAccess,
-    logout,
-  }), [isAuthenticated, token, allowAccess, logout]);
-
-
-  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{isAuthenticated, token, allowAccess, logout}}>{children}</AuthContext.Provider>;
 };
 
 type AuthProviderProps = {
