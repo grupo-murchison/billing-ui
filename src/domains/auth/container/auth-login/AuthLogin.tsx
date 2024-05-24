@@ -54,10 +54,17 @@ const AuthLogin = () => {
           _navigate('/');
         })
         .catch(error => {
-          //TODO: setear en el back distintos mensajes de error para mostrar en componente
-          setLoginFailedMessage('Error al iniciar sesión')
-          setIsLoginFailed(true)
-          console.error('Longin falló');
+          const { statusCode } = JSON.parse(error.message)
+          if( statusCode === 401 ) {
+            setLoginFailedMessage('Error al iniciar sesión')
+            setIsLoginFailed(true)
+          }else if ( statusCode >= 400 ) {
+            setLoginFailedMessage('Error del servidor')
+            setIsLoginFailed(true)
+          } else {
+            setLoginFailedMessage('Error en la Red')
+            setIsLoginFailed(true)
+          }      
         });
     },
     [allowAccess, _navigate],

@@ -3,7 +3,6 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Typography from '@mui/material/Typography';
 import { Avatar, Box, Stack, styled, useTheme } from '@mui/material';
-import Button from '@mui/material/Button';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 
@@ -45,7 +44,7 @@ const UserMenu = () => {
   return (
     <Box display="flex" alignItems="center">
       <Typography variant='h6'>{userName}</Typography>
-      <Button
+      <IconButton
         aria-controls={open ? 'demo-positioned-menu' : undefined}
         aria-haspopup="listbox"
         aria-expanded={open ? 'true' : undefined}
@@ -55,7 +54,7 @@ const UserMenu = () => {
         ? <KeyboardArrowUpIcon sx={{ color: theme.palette.text.primary}} />
         : <KeyboardArrowDownIcon sx={{ color: theme.palette.text.primary}}/>
       }
-      </Button>
+      </IconButton>
       <Menu
         anchorEl={anchorEl}
         open={open}
