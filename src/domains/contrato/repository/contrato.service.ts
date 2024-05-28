@@ -4,6 +4,7 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
+import { ResponsePlanFacturacion } from '@domains/calculo/repository/schemas/types';
 
 const BASE_PATH = 'v1/contratos';
 
@@ -78,9 +79,11 @@ class ContratoService {
     return [response, error];
   };
 
-  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>): Promise<HandlePromise> => {
+  static getPlanFacturacionPeriodos = async (
+    params: Record<'contratoId', number>,
+  ): Promise<HandlePromise<ResponsePlanFacturacion>> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/periodos/filter`, { params }),
+      ApiProvider.get<ResponsePlanFacturacion>(`${BASE_PATH}/periodos/filter`, { params }),
     );
 
     return [response, error];

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useState } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { TextField, Tooltip } from '@mui/material';
 import { GridActionsCellItem } from '@mui/x-data-grid';
@@ -17,139 +17,160 @@ import { ScheduleSendIcon } from '@assets/icons';
 import { CalculoContext } from '@domains/calculo/contexts';
 import DetalleFacturacion from './DetalleCalculo';
 import CustomChip from '@app/components/Chip/Chip';
+import { Periodo } from '@domains/calculo/repository/schemas/types';
 
 function PlanDeFacturacion({ contratoId }: { contratoId: number | undefined }) {
-  const [planFacturacion, setPlanFacturacion] = useState<AnyValue>(null);
+  const [periodos, setPeriodos] = useState<Periodo[]>([]);
   const [loading, setLoading] = useState(false);
   const [openBackdrop, setOpenBackdrop] = useState(false);
   const [openSackbar, setOpenSackbar] = useState(false);
   const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
   const [snackbarMessage, setSnackbarMessage] = useState('Periodo Calculado Correctamente!');
-  const [periodo, setPeriodo] = useState<AnyValue>(null);
+  const [periodo, setPeriodo] = useState<Periodo>();
+  const [updatingPeriod, setUpdatingPeriod] = useState<number | null>(null);
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const { isPeriodoCalculado, handleDisableCalcular } = useContext(CalculoContext);
+  const { handleDisableCalcular } = useContext(CalculoContext);
 
-  useEffect(() => {
+  const fetchPlanFacturacion = useCallback(async () => {
     if (contratoId) {
       setLoading(true);
-      ContratoRepository.getPlanFacturacionPeriodos({ contratoId })
+      await ContratoRepository.getPlanFacturacionPeriodos({ contratoId })
         .then(({ data }) => {
-          setPlanFacturacion(data.data[0]);
+          const updatedPeriodos = data.data[0].periodos.map((periodo: Periodo) => ({
+            ...periodo,
+            disabled: handleDisableCalcular(periodo, data.data[0].periodos),
+          }));
+          setPeriodos(updatedPeriodos);
         })
         .catch()
         .finally(() => setLoading(false));
     }
-  }, [contratoId, openSackbar]);
+  }, [contratoId]);
 
-  const onClickCalcular = (row: any) => {
+  useEffect(() => {
+    fetchPlanFacturacion();
+  }, [fetchPlanFacturacion]);
+
+  const onClickCalcular = async (row: any) => {
     setOpenBackdrop(true);
-
+    setUpdatingPeriod(row.id);
 
     if (contratoId) {
-      CalculoRepository.calculoFacturacionManual(contratoId, row.contratoPlanFacturacionId, row.periodo)
-        .then(({ data }) => {
+      await CalculoRepository.calculoFacturacionManual(contratoId, row.contratoPlanFacturacionId, row.periodo)
+        .then(async ({ data }) => {
           setSnackbarMessage(
             `Proceso ejecutado correctamente. Se generó el Número de Secuencia de Calculo: ${data?.numeroSecuenciaCalculo}`,
           );
+          const updatedPeriodos = periodos.map(periodo =>
+            periodo.id === row.id ? { ...periodo, estado: 'CALCULADO', disabled: true } : periodo,
+          );
+          setPeriodos(updatedPeriodos);
         })
         .catch(error => {
           setSnackbarMessage(error?.message);
           setErrorFromBackEnd(true);
         })
         .finally(() => {
-          setOpenBackdrop(false);
-          setOpenSackbar(true);
+          setTimeout(async () => {
+            setOpenBackdrop(false);
+            setOpenSackbar(true);
+            setUpdatingPeriod(null);
+            // Como son dos servicios diferentes, hay un delay entre calcular y el impacto en la base para el fetch de la Grilla
+            await fetchPlanFacturacion();
+          }, 4000);
         });
     }
   };
+
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const onClickVerDetalle = (row: AnyValue) => {
+  const onClickVerDetalle = (row: Periodo) => {
     setPeriodo(row);
   };
 
   return (
     <>
-      <Row>
-        <Col sm={12} md={4}>
-          <TextField
-            label={'Fecha Cálculo'}
-            name='fechaCalculo'
-            //* Se debe completar con la fecha del dia. (por ahora no es un campo editable)
-            value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
-            inputProps={{ readOnly: true }}
-            fullWidth
-          />
-        </Col>
-      </Row>
+      <>
+        <Row>
+          <Col sm={12} md={4}>
+            <TextField
+              label={'Fecha Cálculo'}
+              name='fechaCalculo'
+              //* Se debe completar con la fecha del dia. (por ahora no es un campo editable)
+              value={DateLib.beautifyDBString(DateLib.parseToDBString(new Date()))}
+              inputProps={{ readOnly: true }}
+              fullWidth
+            />
+          </Col>
+        </Row>
 
-      <DataGridBase
-        rows={planFacturacion?.periodos || []}
-        loading={loading}
-        columns={[
-          {
-            field: 'periodo',
-            headerName: 'Periodo',
-          },
-          {
-            field: 'liquidacionDesde',
-            headerName: 'Desde',
-            valueGetter: params => DateLib.beautifyDBString(params.value),
-          },
-          {
-            field: 'liquidacionHasta',
-            headerName: 'Hasta',
-            valueGetter: params => DateLib.beautifyDBString(params.value),
-          },
-          {
-            field: 'fechaFacturacion', // TODO debe cambiar en la API por fechaCalculo o similar
-            headerName: 'Fecha Cálculo',
-            valueGetter: params => DateLib.beautifyDBString(params.value),
-          },
-          {
-            field: 'estado',
-            headerName: 'Estado',
-            renderCell: params => {
-              return <CustomChip estado={params.value} />;
+        <DataGridBase
+          rows={periodos}
+          loading={loading}
+          columns={[
+            {
+              field: 'periodo',
+              headerName: 'Periodo',
             },
-          },
-          {
-            field: 'actions',
-            type: 'actions',
-            headerName: 'Acciones',
-            headerAlign: 'center',
-            align: 'center',
-            flex: 0.5,
-            getActions: params => [
-              // isPeriodoCalculado(params?.row?.estado) ? (
-              //   <GridActionsCellItem
-              //     key={1}
-              //     icon={<ViewIcon />}
-              //     label='Detalle'
-              //     onClick={() => onClickVerDetalle(params.row)}
-              //     showInMenu
-              //   />
-              // ) : (
-              //   <></>
-              // ),
-              <GridActionsCellItem
-                key={2}
-                icon={
-                  <Tooltip title='Calcular' placement='left'>
-                    <ScheduleSendIcon
-                      color={handleDisableCalcular(params.row, planFacturacion?.periodos) ? 'disabled' : 'inherit'}
-                    />
-                  </Tooltip>
-                }
-                label='Calcular'
-                onClick={()=> onClickCalcular(params.row)}
-                // showInMenu
-                disabled={handleDisableCalcular(params.row, planFacturacion?.periodos)}
-              />,
-            ],
-          },
-        ]}
-      />
+            {
+              field: 'liquidacionDesde',
+              headerName: 'Desde',
+              valueGetter: params => DateLib.beautifyDBString(params.value),
+            },
+            {
+              field: 'liquidacionHasta',
+              headerName: 'Hasta',
+              valueGetter: params => DateLib.beautifyDBString(params.value),
+            },
+            {
+              field: 'fechaFacturacion', // TODO debe cambiar en la API por fechaCalculo o similar
+              headerName: 'Fecha Cálculo',
+              valueGetter: params => DateLib.beautifyDBString(params.value),
+            },
+            {
+              field: 'estado',
+              headerName: 'Estado',
+              renderCell: params => {
+                return <CustomChip estado={params.value} />;
+              },
+            },
+            {
+              field: 'actions',
+              type: 'actions',
+              headerName: 'Acciones',
+              headerAlign: 'center',
+              align: 'center',
+              flex: 0.5,
+              getActions: params => [
+                // isPeriodoCalculado(params?.row?.estado) ? (
+                //   <GridActionsCellItem
+                //     key={1}
+                //     icon={<ViewIcon />}
+                //     label='Detalle'
+                //     onClick={() => onClickVerDetalle(params.row)}
+                //     showInMenu
+                //   />
+                // ) : (
+                //   <></>
+                // ),
+                <GridActionsCellItem
+                  key={2}
+                  icon={
+                    <Tooltip title='Calcular' placement='left'>
+                      <ScheduleSendIcon
+                        color={updatingPeriod === params.row.id || params.row.disabled ? 'disabled' : 'inherit'}
+                      />
+                    </Tooltip>
+                  }
+                  label='Calcular'
+                  onClick={() => onClickCalcular(params.row)}
+                  // showInMenu
+                  disabled={updatingPeriod === params.row.id || params.row.disabled}
+                />,
+              ],
+            },
+          ]}
+        />
+      </>
 
       {periodo && <DetalleFacturacion periodo={periodo} />}
 

@@ -84,9 +84,8 @@ class ContratoRepository {
     return response;
   };
 
-  static getPlanFacturacionPeriodos = async (params: Partial<Record<'contratoId', number>>) => {
+  static getPlanFacturacionPeriodos = async (params: Record<'contratoId', number>) => {
     return await RepositoryUtils.fromRxjs(ContratoService.getPlanFacturacionPeriodos(params));
-    // RepositoryUtils.PIPES.validateWithSchema(getAllContratoFacturacionPaginated),
   };
 
   static getFileProforma = async (contratoId: number) => {
