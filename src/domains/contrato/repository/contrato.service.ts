@@ -110,7 +110,9 @@ class ContratoService {
 
   static downloadProforma = async (id: number): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/proforma/download/${id}`),
+      ApiProvider.get<AnyValue>(`${BASE_PATH}/proforma/binary/download/${id}`, {
+        responseType: 'blob'
+      }),
     );
 
     return [response, error];
@@ -121,6 +123,13 @@ class ContratoService {
       ApiProvider.delete<AnyValue>(`${BASE_PATH}/proforma/${contratoId}`),
     );
 
+    return [response, error];
+  };
+
+  static getParametroByCode = async(code: string): Promise<HandlePromise> => {
+    const [response, error] = await AxiosUtils.handleResponse(
+      ApiProvider.get<AnyValue>(`v1/parametros/${code}`),
+    );
     return [response, error];
   };
 }

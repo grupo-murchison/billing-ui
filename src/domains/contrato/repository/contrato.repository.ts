@@ -108,6 +108,11 @@ class ContratoRepository {
     const response = await lastValueFrom(response$);
     return response;
   };
+
+  static getParametroByCode = async (code: string) => {
+    return await RepositoryUtils.fromRxjs(ContratoService.getParametroByCode(code));
+  };
+
 }
 
 export default ContratoRepository;
