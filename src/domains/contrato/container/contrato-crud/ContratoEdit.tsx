@@ -52,8 +52,8 @@ import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
 import { DeleteOutlineIcon, DownloadIcon, FiberManualRecordIcon } from '@assets/icons';
-import DragDropFileUpload from '@app/components/FileUpload/DragDropFileUpload';
 import { downloadPdfAxios } from '@app/utils/axios.util';
+import FormDragAndDropFileUpload from '@app/components/Form/FormInputs/FormDragAndDropFileUpload';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -68,10 +68,8 @@ const ContratoEdit = () => {
   const [periodos, setPeriodos] = useState<AnyValue>(null);
   const [contratoVariables, setContratoVariables] = useState<AnyValue>([]);
   const [openToast, setOpenToast] = useState<boolean>(false);
-  const [loadingFile, setLoadingFile] = useState(false);
   const [filePlantillaProforma, setFilePlantillaProforma] = useState<AnyValue>(null);
   const [refreshProforma, setRefreshProforma] = useState<boolean>(false);
-  const [fileToSend, setFileToSend] = useState<AnyValue>(null)
 
   const {
     reset,
@@ -95,6 +93,7 @@ const ContratoEdit = () => {
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
       contratoVariables: [{ id: 0, codigo: '', valor: '' }], // TODO Requeridas solo si tipoProcedimientoQ.codigo === BUILT_IN, esto se debe mirar desde modelo acuerdo. Si se cambia Modelo Acuerdo, se eliminarán las variables y si corresponde se generarán nuevas.
+      fileProforma: null,
     },
     resolver: zodResolver(
       ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
@@ -119,6 +118,7 @@ const ContratoEdit = () => {
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
+      const { fileProforma } = data;
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
@@ -134,58 +134,51 @@ const ContratoEdit = () => {
         listaVariables: data?.contratoVariables || undefined,
       };
 
-      await ContratoRepository.updateContrato(submitData);
-      if (contratoId && fileToSend) {
-        console.log('enviando al back')
-        
+      if (contratoId && fileProforma) {
         const curl = {
           logoProforma: 'murchison-uy.png',
         };
-
-      await ContratoRepository.uploadFileProforma(fileToSend, +contratoId, curl)
-        .then(() => {
-          // confirmDialog.open({
-          //   type: 'ok',
-          //   title: 'Archivo Enviado Correctamente',
-          //   message: 'El archivo fue subido al servidor.',
-          //   onClickYes() {
-          //     confirmDialog.close();
-          //   },
-          // });
-                mainDataGrid.reload();
-                _navigate('/contrato');
-        })
-        .catch(err => {
-          const error = JSON.parse(err.message);
-
-          if (error && error.statusCode === 400) {
+        await ContratoRepository.uploadFileProforma(fileProforma, +contratoId, curl)
+          .then(() => {
             confirmDialog.open({
-              type: 'reject',
-              title: 'No es posible cargar este archivo',
-              message: error?.message,
+              type: 'ok',
+              title: 'Archivo Enviado Correctamente',
+              message: 'El archivo fue subido al servidor.',
               onClickYes() {
                 confirmDialog.close();
               },
             });
-          } else {
-            confirmDialog.open({
-              type: 'reject',
-              title: 'No fue posible cargar el archivo',
-              message: error?.message || error || 'Error Desconocido',
-              onClickYes() {
-                confirmDialog.close();
-              },
-            });
-          }
-        })
-        .finally(() => {
-          setRefreshProforma(true);
-          setLoadingFile(false);
-        });
+            mainDataGrid.reload();
+            _navigate('/contrato');
+          })
+          .catch(err => {
+            const error = JSON.parse(err.message);
+
+            if (error && error.statusCode === 400) {
+              confirmDialog.open({
+                type: 'reject',
+                title: 'No es posible cargar este archivo',
+                message: error?.message,
+                onClickYes() {
+                  confirmDialog.close();
+                },
+              });
+            } else {
+              confirmDialog.open({
+                type: 'reject',
+                title: 'No fue posible cargar el archivo',
+                message: error?.message || error || 'Error Desconocido',
+                onClickYes() {
+                  confirmDialog.close();
+                },
+              });
+            }
+          });
       }
+      await ContratoRepository.updateContrato(submitData);
 
-      // mainDataGrid.reload();
-      // _navigate('/contrato');
+      mainDataGrid.reload();
+      _navigate('/contrato');
     },
     [_navigate, mainDataGrid],
   );
@@ -449,111 +442,11 @@ const ContratoEdit = () => {
 
   const condicionesCargaProforma = [`El archivo debe ser en formato .jasper`];
 
-  // const onFileUploadOriginal = async (file: FileList) => {
-  //   setLoadingFile(true);
-  //   const curl = {
-  //     logoProforma: 'murchison-uy.png',
-  //   };
-
-  //   if (contratoId) {
-  //     await ContratoRepository.uploadFileProforma(file[0], +contratoId, curl)
-  //       .then(() => {
-  //         confirmDialog.open({
-  //           type: 'ok',
-  //           title: 'Archivo Enviado Correctamente',
-  //           message: 'El archivo fue subido al servidor.',
-  //           onClickYes() {
-  //             confirmDialog.close();
-  //           },
-  //         });
-  //       })
-  //       .catch(err => {
-  //         const error = JSON.parse(err.message);
-
-  //         if (error && error.statusCode === 400) {
-  //           confirmDialog.open({
-  //             type: 'reject',
-  //             title: 'No es posible cargar este archivo',
-  //             message: error?.message,
-  //             onClickYes() {
-  //               confirmDialog.close();
-  //             },
-  //           });
-  //         } else {
-  //           confirmDialog.open({
-  //             type: 'reject',
-  //             title: 'No fue posible cargar el archivo',
-  //             message: error?.message || error || 'Error Desconocido',
-  //             onClickYes() {
-  //               confirmDialog.close();
-  //             },
-  //           });
-  //         }
-  //       })
-  //       .finally(() => {
-  //         setRefreshProforma(true);
-  //         setLoadingFile(false);
-  //       });
-  //   }
-  // };
-
-  const onFileUpload = async (file: FileList) => {
-    setLoadingFile(true);
-    const curl = {
-      logoProforma: 'murchison-uy.png',
-    };
-    console.log('onFileUpload', file)
-
-    // if (contratoId) {
-    //   await ContratoRepository.uploadFileProforma(file[0], +contratoId, curl)
-    //     .then(() => {
-    //       confirmDialog.open({
-    //         type: 'ok',
-    //         title: 'Archivo Enviado Correctamente',
-    //         message: 'El archivo fue subido al servidor.',
-    //         onClickYes() {
-    //           confirmDialog.close();
-    //         },
-    //       });
-    //     })
-    //     .catch(err => {
-    //       const error = JSON.parse(err.message);
-
-    //       if (error && error.statusCode === 400) {
-    //         confirmDialog.open({
-    //           type: 'reject',
-    //           title: 'No es posible cargar este archivo',
-    //           message: error?.message,
-    //           onClickYes() {
-    //             confirmDialog.close();
-    //           },
-    //         });
-    //       } else {
-    //         confirmDialog.open({
-    //           type: 'reject',
-    //           title: 'No fue posible cargar el archivo',
-    //           message: error?.message || error || 'Error Desconocido',
-    //           onClickYes() {
-    //             confirmDialog.close();
-    //           },
-    //         });
-    //       }
-    //     })
-    //     .finally(() => {
-    //       setRefreshProforma(true);
-    //       setLoadingFile(false);
-    //     });
-    // }
-    setFileToSend(file[0]);
-    setLoadingFile(false);
-    
-  };
-  
   const downloadProforma = async () => {
     await ContratoRepository.downloadProforma(filePlantillaProforma.contratoId).then(data => {
       downloadPdfAxios(data.data, `plantilla_proforma.jasper`);
     });
-    return
+    return;
   };
 
   const cargaPlantillaProforma = (
@@ -593,15 +486,7 @@ const ContratoEdit = () => {
               ))}
             </List>
           </Box>
-
-          <DragDropFileUpload
-            name='carga-proforma'
-            onFileUpload={onFileUpload}
-            accept='application/jrxml'
-            loading={loadingFile}
-            disabled={loadingFile}
-            fileToSend={fileToSend}
-          />
+          <FormDragAndDropFileUpload control={control} name='fileProforma' accept='application/jrxml' />
         </Stack>
       )}
     </>
@@ -652,5 +537,3 @@ const ContratoEdit = () => {
 };
 
 export default withBreadcrumb(ContratoEdit, ContratoEditBreadcrumb);
-
-

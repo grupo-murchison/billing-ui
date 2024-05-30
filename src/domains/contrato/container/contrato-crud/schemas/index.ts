@@ -74,6 +74,7 @@ const _ContratoEditSchema = z.object({
   contratoVariables: z.array(ContratoVariablesSchema), // Requeridas solo si tipoProcedimientoQ.codigo === BUILT
   nroContrato: z.string().optional(), // * Aunque el valor es numérico en la DB se guarda como string
   pausado: z.boolean().nullable().optional(),
+  fileProforma: z.any().nullable().optional(),
 });
 
 export const ValidationSchemaContratoEdit = z.intersection(ValidationSchemaContratoCreate, _ContratoEditSchema);

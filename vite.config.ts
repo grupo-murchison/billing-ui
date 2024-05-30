@@ -5,10 +5,11 @@ import tsconfigPaths from 'vite-tsconfig-paths';
 import eslint from 'vite-plugin-eslint';
 
 export default defineConfig(({ mode }) => {
-  const env = loadEnv(mode, process.cwd(), '');
+  const envDir = process.cwd() + '/env';
+  const env = loadEnv(mode, envDir, '');
 
   return {
-    envDir: './env',
+    envDir,
     server: {
       host: '0.0.0.0',
       port: 8080,

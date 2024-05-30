@@ -23,6 +23,7 @@ const FormActionButtons = ({ isSubmitting, handleClose, label, handleConfirm }: 
             (label === 'update' && 'Actualizar') ||
             (label === 'search' && 'Buscar') ||
             (label === 'create' && 'Crear') ||
+            (label === 'send' && 'Enviar') ||
             label ||
             ''
           }
