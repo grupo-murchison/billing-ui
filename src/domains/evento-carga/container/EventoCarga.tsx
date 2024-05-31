@@ -1,15 +1,15 @@
-import DragDropFileUpload from '@app/components/FileUpload/DragDropFileUpload';
 import { withBreadcrumb } from '@app/hocs';
 import EventoCargaRepository from '@domains/evento-carga/repository/evento-carga.repository';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import { EventoCargaBreadcrumb } from '../constants';
 import { useConfirmDialog } from '@app/hooks';
 import { Box, List, ListItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import { FiberManualRecordIcon } from '@assets/icons';
+import FormDragAndDropFileUpload from '@app/components/Form/FormInputs/FormDragAndDropFileUpload';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import Form from '@app/components/Form/Form';
 
 function EventoCarga() {
-  const [loadingFile, setLoadingFile] = useState(false);
-
   const confirmDialog = useConfirmDialog();
 
   const condicionesEventoCarga = [
@@ -17,9 +17,15 @@ function EventoCarga() {
     `Los eventos deben estar cargados en una hoja/solapa llamada "eventos" en minúsculas.`,
   ];
 
-  const onFileUpload = async (file: FileList) => {
-    setLoadingFile(true);
-    await EventoCargaRepository.uploadFile(file[0])
+  const { control, handleSubmit } = useForm<AnyValue>({
+    defaultValues: {
+      fileEventoCarga: null,
+    },
+  });
+
+  const onSubmit: SubmitHandler<AnyValue> = useCallback(async data => {
+    const { fileEventoCarga } = data;
+    await EventoCargaRepository.uploadFile(fileEventoCarga)
       .then(() => {
         confirmDialog.open({
           type: 'ok',
@@ -52,40 +58,37 @@ function EventoCarga() {
             },
           });
         }
-      })
-      .finally(() => {
-        setLoadingFile(false);
       });
-  };
+  }, []);
 
   return (
     <>
-      <Box my={3}>
-        <List>
-          {condicionesEventoCarga.map((condicion, index) => (
-            <ListItem key={index}>
-              <ListItemIcon>
-                <FiberManualRecordIcon fontSize='inherit' />
-              </ListItemIcon>
-              <ListItemText
-                primary={
-                  <Typography variant='h4' component='div'>
-                    {condicion}
-                  </Typography>
-                }
-              />
-            </ListItem>
-          ))}
-        </List>
-      </Box>
+      <Form onSubmit={handleSubmit(onSubmit)} label='send'>
+        <Box my={3}>
+          <List>
+            {condicionesEventoCarga.map((condicion, index) => (
+              <ListItem key={index}>
+                <ListItemIcon>
+                  <FiberManualRecordIcon fontSize='inherit' />
+                </ListItemIcon>
+                <ListItemText
+                  primary={
+                    <Typography variant='h4' component='div'>
+                      {condicion}
+                    </Typography>
+                  }
+                />
+              </ListItem>
+            ))}
+          </List>
+        </Box>
 
-      <DragDropFileUpload
-        name='eventos-carga'
-        onFileUpload={onFileUpload}
-        accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // solo archivos .xlsx
-        loading={loadingFile}
-        disabled={loadingFile}
-      />
+        <FormDragAndDropFileUpload
+          control={control}
+          name='fileEventoCarga'
+          accept='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' // solo archivos .xlsx
+        />
+      </Form>
     </>
   );
 }

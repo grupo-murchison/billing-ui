@@ -37,3 +37,13 @@ export type FormInputsCommonProps = {
   name: string;
   onChange?: any;
 };
+
+export type DragDropFileUploadProps = {
+  onChange: (file: FileList | null) => void;
+  accept?: string; // 'Ejemplo: image/*'
+  loading: boolean;
+  multiple?: boolean;
+  name: string;
+  disabled?: boolean;
+  autoclear?: boolean;
+};

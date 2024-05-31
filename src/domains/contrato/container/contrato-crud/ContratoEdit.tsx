@@ -8,12 +8,12 @@ import {
   Card,
   CardContent,
   CardHeader,
+  IconButton,
   List,
   ListItem,
   ListItemIcon,
   ListItemText,
   Stack,
-  TextField,
   Typography,
 } from '@mui/material';
 
@@ -51,9 +51,9 @@ import Toast from '@app/components/Toast/Toast';
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
-import { FiberManualRecordIcon } from '@assets/icons';
-import DragDropFileUpload from '@app/components/FileUpload/DragDropFileUpload';
-// import { downloadPdfAxios } from '@app/utils/axios.util';
+import { DeleteOutlineIcon, DownloadIcon, FiberManualRecordIcon } from '@assets/icons';
+import { downloadPdfAxios } from '@app/utils/axios.util';
+import FormDragAndDropFileUpload from '@app/components/Form/FormInputs/FormDragAndDropFileUpload';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -68,8 +68,7 @@ const ContratoEdit = () => {
   const [periodos, setPeriodos] = useState<AnyValue>(null);
   const [contratoVariables, setContratoVariables] = useState<AnyValue>([]);
   const [openToast, setOpenToast] = useState<boolean>(false);
-  const [loadingFile, setLoadingFile] = useState(false);
-  const [fileProforma, setFileProforma] = useState<AnyValue>(null);
+  const [filePlantillaProforma, setFilePlantillaProforma] = useState<AnyValue>(null);
   const [refreshProforma, setRefreshProforma] = useState<boolean>(false);
 
   const {
@@ -94,6 +93,7 @@ const ContratoEdit = () => {
       tipoContratoId: '',
       tipoPlanFacturacionId: '',
       contratoVariables: [{ id: 0, codigo: '', valor: '' }], // TODO Requeridas solo si tipoProcedimientoQ.codigo === BUILT_IN, esto se debe mirar desde modelo acuerdo. Si se cambia Modelo Acuerdo, se eliminarán las variables y si corresponde se generarán nuevas.
+      fileProforma: null,
     },
     resolver: zodResolver(
       ValidationSchemaContratoEdit.superRefine((fields, ctx) => {
@@ -118,6 +118,7 @@ const ContratoEdit = () => {
 
   const onSubmit: SubmitHandler<FormDataContratoEditType> = useCallback(
     async data => {
+      const { fileProforma } = data;
       const submitData = {
         ...data,
         diaPeriodo: data.diaPeriodo ? data.diaPeriodo : undefined,
@@ -133,6 +134,47 @@ const ContratoEdit = () => {
         listaVariables: data?.contratoVariables || undefined,
       };
 
+      if (contratoId && fileProforma) {
+        const curl = {
+          logoProforma: 'murchison-uy.png',
+        };
+        await ContratoRepository.uploadFileProforma(fileProforma, +contratoId, curl)
+          .then(() => {
+            confirmDialog.open({
+              type: 'ok',
+              title: 'Archivo Enviado Correctamente',
+              message: 'El archivo fue subido al servidor.',
+              onClickYes() {
+                confirmDialog.close();
+              },
+            });
+            mainDataGrid.reload();
+            _navigate('/contrato');
+          })
+          .catch(err => {
+            const error = JSON.parse(err.message);
+
+            if (error && error.statusCode === 400) {
+              confirmDialog.open({
+                type: 'reject',
+                title: 'No es posible cargar este archivo',
+                message: error?.message,
+                onClickYes() {
+                  confirmDialog.close();
+                },
+              });
+            } else {
+              confirmDialog.open({
+                type: 'reject',
+                title: 'No fue posible cargar el archivo',
+                message: error?.message || error || 'Error Desconocido',
+                onClickYes() {
+                  confirmDialog.close();
+                },
+              });
+            }
+          });
+      }
       await ContratoRepository.updateContrato(submitData);
 
       mainDataGrid.reload();
@@ -202,10 +244,10 @@ const ContratoEdit = () => {
   }, [formErrors?.contratoVariables]);
 
   useEffect(() => {
-    setFileProforma(null);
+    setFilePlantillaProforma(null);
     if (contratoId) {
       ContratoRepository.getFileProforma(+contratoId).then(({ data }) => {
-        setFileProforma(data);
+        setFilePlantillaProforma(data);
       });
     }
     setRefreshProforma(false);
@@ -213,7 +255,6 @@ const ContratoEdit = () => {
 
   const handleClickDeleteProforma = useCallback(
     (contratoId: number) => {
-      console.log('habdleClickDelete');
       confirmDialog.open({
         identifier: `${contratoId}`,
         entity: 'Proforma asociada al contrato',
@@ -401,106 +442,33 @@ const ContratoEdit = () => {
 
   const condicionesCargaProforma = [`El archivo debe ser en formato .jasper`];
 
-  const onFileUpload = async (file: FileList) => {
-    setLoadingFile(true);
-    const curl = {
-      rutaImagenes: '/home/assert/git/billing-reports/reports/billing/calculo/proforma/logos/murchison-uy.png',
-      rutaDatos:
-        'http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services/api/v1/calculos/report/conceptoByCalculoContrato/',
-    };
-
-    if (contratoId) {
-      await ContratoRepository.uploadFileProforma(file[0], +contratoId, curl)
-        .then(() => {
-          confirmDialog.open({
-            type: 'ok',
-            title: 'Archivo Enviado Correctamente',
-            message: 'El archivo fue subido al servidor.',
-            onClickYes() {
-              confirmDialog.close();
-            },
-          });
-        })
-        .catch(err => {
-          const error = JSON.parse(err.message);
-
-          if (error && error.statusCode === 400) {
-            confirmDialog.open({
-              type: 'reject',
-              title: 'No es posible cargar este archivo',
-              message: error?.message,
-              onClickYes() {
-                confirmDialog.close();
-              },
-            });
-          } else {
-            confirmDialog.open({
-              type: 'reject',
-              title: 'No fue posible cargar el archivo',
-              message: error?.message || error || 'Error Desconocido',
-              onClickYes() {
-                confirmDialog.close();
-              },
-            });
-          }
-        })
-        .finally(() => {
-          setRefreshProforma(true);
-          setLoadingFile(false);
-        });
-    }
-  };
-
   const downloadProforma = async () => {
-    // await ContratoRepository.downloadProforma(fileProforma.id).then(data => {
-    //   console.log('downloadProforma', data);
-    // });
-    // await downloadPdfAxios(fileProforma.data.data, `proforma.jasper`);
-    return
+    await ContratoRepository.downloadProforma(filePlantillaProforma.contratoId).then(data => {
+      const fileName = data.nombreTemplate || 'Plantilla-Proforma.jasper';
+      downloadPdfAxios(data.data, `${fileName}`);
+    });
+    return;
   };
 
-  const cargaProforma = (
+  const cargaPlantillaProforma = (
     <>
-      {fileProforma ? (
-        <Stack>
-          <Typography onClick={downloadProforma}>Descargar Proforma</Typography>
-          {/* <Button
+      {filePlantillaProforma ? (
+        <Stack direction={'row'} alignItems={'center'}>
+          <Typography>{filePlantillaProforma.nombreTemplate}</Typography>
+          <IconButton onClick={downloadProforma} component='span'>
+            <DownloadIcon />
+          </IconButton>
+          <IconButton
             onClick={() => {
-              handleClickDelete(fileProforma.contratoId);
+              handleClickDeleteProforma(filePlantillaProforma.contratoId);
             }}
+            component='span'
           >
             <DeleteOutlineIcon />
-          </Button> */}
-          <Typography
-            onClick={() => {
-              handleClickDeleteProforma(fileProforma.contratoId);
-            }}
-          >
-            Eliminar Proforma
-          </Typography>
+          </IconButton>
         </Stack>
       ) : (
         <Stack>
-          <Row>
-            <Col md={6}>
-              <TextField
-                label={'Ruta Imagenes'}
-                name='rutaImagenes'
-                value='/home/assert/git/billing-reports/reports/billing/calculo/proforma/logos/murchison-uy.png'
-                inputProps={{ readOnly: true }}
-                fullWidth
-              />
-            </Col>
-            <Col md={6}>
-              <TextField
-                label={'Ruta Datos'}
-                name='rutaDatos'
-                value='http://billing-services-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/billing-services/api/v1/calculos/report/conceptoByCalculoContrato/'
-                inputProps={{ readOnly: true }}
-                fullWidth
-              />
-            </Col>
-          </Row>
           <Box>
             <List>
               {condicionesCargaProforma.map((condicion, index) => (
@@ -519,14 +487,7 @@ const ContratoEdit = () => {
               ))}
             </List>
           </Box>
-
-          <DragDropFileUpload
-            name='carga-proforma'
-            onFileUpload={onFileUpload}
-            accept='application/jrxml'
-            loading={loadingFile}
-            disabled={loadingFile}
-          />
+          <FormDragAndDropFileUpload control={control} name='fileProforma' accept='application/jrxml' />
         </Stack>
       )}
     </>
@@ -547,7 +508,7 @@ const ContratoEdit = () => {
     { label: 'Resumen Posiciones/Concepto Acuerdo', renderelement: resumenPosicion },
     { label: 'Plan Facturación', renderelement: planFac, formFields: planFacturacionFields, formErrors: formErrors },
     { label: 'Variables Contrato', renderelement: varContr, formFields: ['contratoVariables'], formErrors: formErrors },
-    { label: 'Carga Proforma', renderelement: cargaProforma },
+    { label: 'Plantilla Proforma', renderelement: cargaPlantillaProforma },
     { label: 'Interlocutores', renderelement: interlocutores, disabled: true },
   ];
 
