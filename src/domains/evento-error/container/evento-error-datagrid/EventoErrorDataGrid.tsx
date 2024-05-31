@@ -2,7 +2,7 @@ import { Col, Row } from '@app/components';
 import { Paper } from '@mui/material';
 import Form from '@app/components/Form/Form';
 
-import { useCallback, useContext, useEffect } from 'react';
+import { useCallback, useContext, useEffect, useState } from 'react';
 
 import { Outlet, useNavigate } from 'react-router-dom';
 import { SubmitHandler, useForm } from 'react-hook-form';
@@ -20,11 +20,22 @@ import { EventosDropdownAutoComplete } from '@domains/evento-cliente/container/c
 import { DateLib } from '@libs';
 import { EventoErrorContext } from '@domains/evento-error/contexts';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
+import Toast from '@app/components/Toast/Toast';
 
 const EventoErrorDataGrid = () => {
   const _navigate = useNavigate();
 
   const { mainDataGrid } = useContext(EventoErrorContext);
+  const [openToast, setOpenToast] = useState(false);
+  const [toastMessage, setToastMessage] = useState('');
+  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
+
+  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenToast(false);
+  };
 
   useEffect(() => {
     mainDataGrid.load();
@@ -62,8 +73,14 @@ const EventoErrorDataGrid = () => {
 
   const handleClickView = useCallback(
     (id: number) => {
-      _navigate(`/evento-error/${id}`);
-    },
+      EventoErrorRepository.getEventoById(id + '').then(() => {
+        _navigate(`/evento-error/${id}`);
+    }).catch(async error => {
+        setErrorFromBackEnd(true);
+        console.log("🚀 ~ EventoErrorRepository.getEventoByIdasda ~ error:", error)
+        setToastMessage(error?.error || 'Ocurrió un error!');
+        setOpenToast(true);
+    })},
     [_navigate],
   );
 
@@ -126,6 +143,7 @@ const EventoErrorDataGrid = () => {
         ]}
         repositoryFunc={EventoErrorRepository.getAllEventoPaginated}
       />
+      <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
       <Outlet />
     </>
   );

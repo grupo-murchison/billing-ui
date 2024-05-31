@@ -34,7 +34,10 @@ const EventoErrorView = () => {
             reset(values);
             setIsDataFetched(true);
             setErrorsDataGrid(data?.errors)
-        });
+        })
+        .catch(async error => {
+            console.log("🚀 ~ EventoErrorRepository.getEventoById ~ error:", error)
+        })
     }, [eventoId]);
 
     const { control, reset } = useForm<any>({
@@ -119,6 +122,7 @@ const EventoErrorView = () => {
                     headerName: 'Descripcion'
                 }]} />
         </Modal>
+
     );
 };
 
