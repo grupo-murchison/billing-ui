@@ -75,9 +75,8 @@ const EventoErrorDataGrid = () => {
     (id: number) => {
       EventoErrorRepository.getEventoById(id + '').then(() => {
         _navigate(`/evento-error/${id}`);
-    }).catch(async error => {
+    }).catch( error => {
         setErrorFromBackEnd(true);
-        console.log("🚀 ~ EventoErrorRepository.getEventoByIdasda ~ error:", error)
         setToastMessage(error?.error || 'Ocurrió un error!');
         setOpenToast(true);
     })},
