@@ -444,7 +444,8 @@ const ContratoEdit = () => {
 
   const downloadProforma = async () => {
     await ContratoRepository.downloadProforma(filePlantillaProforma.contratoId).then(data => {
-      downloadPdfAxios(data.data, `plantilla_proforma.jasper`);
+      const fileName = data.nombreTemplate || 'Plantilla-Proforma.jasper';
+      downloadPdfAxios(data.data, `${fileName}`);
     });
     return;
   };
