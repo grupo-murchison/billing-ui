@@ -29,6 +29,7 @@ import {
   mapearParametros,
 } from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
+import { EventoCampoRepository } from '@domains/evento-campo/repository';
 
 const ProcedimientoCustomEdit = () => {
   const { id } = useParams();
@@ -36,6 +37,7 @@ const ProcedimientoCustomEdit = () => {
 
   const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
   const confirmDialog = useConfirmDialog();
+  const [datoDinamicoParentCode, setDatoDinamicoParentCode] = useState<string | undefined>(undefined);
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const {
@@ -183,6 +185,32 @@ const ProcedimientoCustomEdit = () => {
     [_navigate, mainDataGrid],
   );
 
+  useEffect(() => {
+    setValue('filtroValue', '');
+  }, [watch('filtroCampoCode')]);
+
+  useEffect(() => {
+    const fetchEventoCampo = async () => {
+      if (watch('eventoCode') && watch('filtroCampoCode')) {
+        const eventos = mapearParametros(
+          state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
+        );
+        const idEventoCampo = eventos.filter(({ value }) => value === watch('filtroCampoCode'))[0].code;
+
+        if (idEventoCampo) {
+          await EventoCampoRepository.getEventoCampoById(String(idEventoCampo)).then(res => {
+            const property = findPropertyById(state.tablaDinamica, res.data.tablaDinamicaId);
+            if (property) {
+              setDatoDinamicoParentCode(property.code);
+            }
+          });
+        }
+      }
+    };
+
+    fetchEventoCampo();
+  }, [watch('filtroCampoCode')]);
+
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-custom');
   }, [_navigate]);
@@ -304,7 +332,7 @@ const ProcedimientoCustomEdit = () => {
                   control={control}
                   disabled={isSubmitting || watch('accionCode') !== 'FIL'}
                   options={mapearParametros(
-                    state.datoDinamico.filter(({ parentCode }) => parentCode === watch('filtroCampoCode')),
+                    state.datoDinamico.filter(({ parentCode }) => parentCode === datoDinamicoParentCode),
                   )}
                 />
               ) : (
