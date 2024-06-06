@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useContext, forwardRef } from 'react';
+import { useEffect, useCallback, useContext, forwardRef, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
@@ -20,15 +20,21 @@ import Form from '@app/components/Form/Form';
 import FormSelect from '@app/components/Form/FormInputs/FormSelect';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 
-import { findEventoCampoByCode, findPropertyByCode, mapearParametros } from '@app/utils/formHelpers.util';
+import {
+  findEventoCampoByCode,
+  findPropertyByCode,
+  findPropertyById,
+  mapearParametros,
+} from '@app/utils/formHelpers.util';
 import { useConfirmDialog } from '@app/hooks';
+import { EventoCampoRepository } from '@domains/evento-campo/repository';
 
 const ProcedimientoCustomCreate = forwardRef(() => {
   const _navigate = useNavigate();
 
   const { mainDataGrid, state } = useContext(ProcedimientoCustomContext);
   const confirmDialog = useConfirmDialog();
-
+  const [datoDinamicoParentCode, setDatoDinamicoParentCode] = useState<string | undefined>(undefined);
   const {
     control,
     handleSubmit,
@@ -133,6 +139,32 @@ const ProcedimientoCustomCreate = forwardRef(() => {
 
     return () => subscription.unsubscribe();
   }, [watch]);
+
+  useEffect(() => {
+    setValue('filtroValue', '');
+  }, [watch('filtroCampoCode'), watch('eventoCode')]);
+
+  useEffect(() => {
+    const fetchEventoCampo = async () => {
+      if (watch('eventoCode') && watch('filtroCampoCode')) {
+        const eventos = mapearParametros(
+          state.eventosCampo.filter(({ parentCode }) => parentCode === watch('eventoCode')),
+        );
+        const idEventoCampo = eventos.filter(({ value }) => value === watch('filtroCampoCode'))[0].code;
+
+        if (idEventoCampo) {
+          await EventoCampoRepository.getEventoCampoById(String(idEventoCampo)).then(res => {
+            const property = findPropertyById(state.tablaDinamica, res.data.tablaDinamicaId);
+            if (property) {
+              setDatoDinamicoParentCode(property.code);
+            }
+          });
+        }
+      }
+    };
+
+    fetchEventoCampo();
+  }, [watch('filtroCampoCode')]);
 
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-custom');
@@ -251,7 +283,7 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                   control={control}
                   disabled={isSubmitting || watch('accionCode') !== 'FIL'}
                   options={mapearParametros(
-                    state.datoDinamico.filter(({ parentCode }) => parentCode === watch('filtroCampoCode')),
+                    state.datoDinamico.filter(({ parentCode }) => parentCode === datoDinamicoParentCode),
                   )}
                 />
               ) : (
@@ -260,9 +292,6 @@ const ProcedimientoCustomCreate = forwardRef(() => {
                   disabled={isSubmitting || watch('accionCode') !== 'FIL'}
                   label='Valor'
                   name='filtroValue'
-                  InputProps={{
-                    startAdornment: <InputAdornment position='start'>=</InputAdornment>,
-                  }}
                   fullWidth
                 />
               )}
