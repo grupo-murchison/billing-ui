@@ -187,7 +187,7 @@ const ProcedimientoCustomEdit = () => {
 
   useEffect(() => {
     setValue('filtroValue', '');
-  }, [watch('filtroCampoCode')]);
+  }, [watch('filtroCampoCode'), watch('eventoCode')]);
 
   useEffect(() => {
     const fetchEventoCampo = async () => {
@@ -341,9 +341,6 @@ const ProcedimientoCustomEdit = () => {
                   disabled={isSubmitting || watch('accionCode') !== 'FIL'}
                   label='Valor'
                   name='filtroValue'
-                  InputProps={{
-                    startAdornment: <InputAdornment position='start'>=</InputAdornment>,
-                  }}
                   fullWidth
                 />
               )}
