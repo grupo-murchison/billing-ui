@@ -85,6 +85,7 @@ const EventoClientes = () => {
         onClickNew={() => console.log('Click New')}
         columns={[
           { field: 'genEventoOrigenId', headerName: 'Evento Origen', minWidth: 115 },
+          { field: 'eventGateId', headerName: 'Evento TOS Id', minWidth: 115 },
           { field: 'genEventoTipoId', headerName: 'Tipo Evento', minWidth: 115 },
           {
             field: 'genEventoFechaCreacion',
@@ -94,7 +95,15 @@ const EventoClientes = () => {
           },
           { field: 'genCompania', headerName: 'Compania', minWidth: 100 },
           { field: 'genSistema', headerName: 'Sistema', minWidth: 80 },
-          { field: 'genClienteId', headerName: 'Cliente', minWidth: 80 },
+          {
+            field: 'clienteDescripcion',
+            headerName: 'Cliente',
+            minWidth: 180,
+            valueGetter: params => {
+              const { clienteCodigo, clienteDescripcion } = params.row;
+              return `${clienteCodigo} - ${clienteDescripcion}`;
+            },
+          },
           { field: 'genDestinoTipo', headerName: 'Tipo Destino', minWidth: 110 },
           { field: 'genDestinoId', headerName: 'Identificador Destino', minWidth: 160 },
           { field: 'genTerminalId', headerName: 'Terminal', minWidth: 100 },
@@ -113,7 +122,6 @@ const EventoClientes = () => {
           { field: 'evDUA', headerName: 'DUA', minWidth: 115 },
           { field: 'evTipoEmbarque', headerName: 'Tipo Embarque', minWidth: 130 },
           { field: 'evColor', headerName: 'Color', minWidth: 130 },
-          { field: 'eventoId', headerName: 'Identificador Evento', minWidth: 135 },
           {
             field: 'genEventoFechaEnvio',
             headerName: 'Fecha Envio Evento',
