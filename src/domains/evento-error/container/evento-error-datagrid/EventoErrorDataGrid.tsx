@@ -41,7 +41,6 @@ const EventoErrorDataGrid = () => {
     mainDataGrid.load();
   }, [mainDataGrid]);
 
-
   const {
     control,
     handleSubmit,
@@ -73,22 +72,22 @@ const EventoErrorDataGrid = () => {
 
   const handleClickView = useCallback(
     (id: number) => {
-      EventoErrorRepository.getEventoById(id + '').then(() => {
-        _navigate(`/evento-error/${id}`);
-    }).catch( error => {
-        setErrorFromBackEnd(true);
-        setToastMessage(error?.error || 'Ocurrió un error!');
-        setOpenToast(true);
-    })},
+      EventoErrorRepository.getEventoById(id + '')
+        .then(() => {
+          _navigate(`/evento-error/${id}`);
+        })
+        .catch(error => {
+          setErrorFromBackEnd(true);
+          setToastMessage(error?.error || 'Ocurrió un error!');
+          setOpenToast(true);
+        });
+    },
     [_navigate],
   );
 
-
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
-      <Form
-        onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}
-      >
+      <Form onSubmit={handleSubmit(onSubmit)} label='search' isSubmitting={isSubmitting}>
         <Row>
           <Col sm={12} md={6}>
             <ClienteDropdownAutoComplete control={control} disabled={isSubmitting} label='Cliente' name='clienteId' />
@@ -106,8 +105,6 @@ const EventoErrorDataGrid = () => {
     </Paper>
   );
 
-
-
   return (
     <>
       {toolbar}
@@ -115,7 +112,7 @@ const EventoErrorDataGrid = () => {
         hookRef={mainDataGrid.ref}
         columns={[
           { field: 'evento_revision_cabecera_id', headerName: 'Id' },
-          { field: 'eventoId', headerName: 'Evento TOS Id' },
+          { field: 'eventGateId', headerName: 'Evento TOS Id' },
           { field: 'sourceEventId', headerName: 'Evento Origen' },
           { field: 'type', headerName: 'Tipo Evento' },
           { field: 'FechaHoraEvento', headerName: 'Fecha Creacion' },
