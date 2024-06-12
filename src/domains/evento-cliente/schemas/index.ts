@@ -1,26 +1,37 @@
 import z from 'zod';
+import { autoCompleteFields, dateOrNullTuple } from '@app/utils/zod.util';
 
-export const EventosClientesCreateSchema = z.object({
-  clienteId: z.object(
-    {
-      value: z.number({ required_error: 'El campo es requerido.' }),
-      code: z.string({ required_error: 'El campo es requerido.' }),
-      label: z.string({ required_error: 'El campo es requerido.' }),
-    },
-    { required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' },
-  ).nullable(),
-  eventoId: z
-    .array(
-      z.object({
-        value: z.number(),
-        code: z.string(),
-        label: z.string(),
-      }),
-    )
-    .optional(),
-  rangoFechas: z
-    .array(z.date({ required_error: 'El campo es requerido.', invalid_type_error: 'El campo es requerido.' }))
-    .nullable(),
-});
+export type EventClientSearchFiltersFormDataType = {
+  clienteId: {
+    value: number;
+    code: string;
+    label: string;
+  } | null;
+  rangoFechas: [Date, Date] | [];
+  eventoId:
+    | {
+        value: number;
+        code: string;
+        label: string;
+      }[]
+    | [];
+};
 
-export type EventosClienteFormSchemaType = z.infer<typeof EventosClientesCreateSchema>;
+export const EventClientSearchFiltersValidationSchema = z
+  .object({
+    clienteId: z.union([autoCompleteFields, z.null()]),
+    rangoFechas: z.union([dateOrNullTuple, z.array(z.never())]),
+    eventoId: z.union([z.array(autoCompleteFields), z.array(z.null())]),
+  })
+  .superRefine((data, ctx) => {
+    const { rangoFechas } = data;
+    if (Array.isArray(rangoFechas) && rangoFechas[0] && rangoFechas[0] !== null && rangoFechas[1] === null) {
+      ctx.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'El segundo parámetro de fecha es requerido.',
+        path: ['rangoFechas', 1],
+      });
+    }
+  });
+
+export type EventosClienteFormSchemaType = z.infer<typeof EventClientSearchFiltersValidationSchema>;

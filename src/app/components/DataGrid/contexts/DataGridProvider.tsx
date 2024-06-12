@@ -13,7 +13,7 @@ const DataGridProvider = <T,>({
   ...props
 }: DataGridProviderProps<T>) => {
   const [rowsTotalCount, setRowsTotalCount] = useState<number>(initialContext.rowsTotalCount);
-  const [rows, setRows] = useState<GridRowsProp>([]);
+  const [rows, setRows] = useState<GridRowsProp>(initialContext.rows);
   const [loading, setLoading] = useState<boolean>(initialContext.loading);
   const [error, setError] = useState<AnyValue>(initialContext.error);
   const [paginationModel, setPaginationModel] = useState<GridPaginationModel>({ ...initialContext.paginationModel });
@@ -39,6 +39,8 @@ const DataGridProvider = <T,>({
         }
       })
       .catch(err => {
+        setRows(initialContext.rows);
+        setRowsTotalCount(initialContext.rowsTotalCount);
         setError(err);
       })
       .finally(() => setLoading(false));
