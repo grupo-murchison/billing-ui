@@ -102,19 +102,15 @@ const CalculoReporte = () => {
       });
   };
 
-
-
   const getContratoToShow = (contratos: Array<any>) => {
-    //*cuando facturo mas de un periodo existen varios contratos y el ultimo tiene la informacion correcta a mostrar   
-    if(!contratos || contratos === undefined || contratos.length === 0){
-      console.log(contratos)
-      return []
+    //*cuando facturo mas de un periodo existen varios contratos y el ultimo tiene la informacion correcta a mostrar
+    if (!contratos || contratos === undefined || contratos.length === 0) {
+      console.log(contratos);
+      return [];
     } else {
-      return contratos[contratos.length > 1 ? contratos.length -1 : 0]
-
+      return contratos[contratos.length > 1 ? contratos.length - 1 : 0];
     }
-  }
-
+  };
 
   const toolbar = (
     <Paper sx={{ px: 3, pt: 4, pb: 2, my: 2 }}>
@@ -150,8 +146,6 @@ const CalculoReporte = () => {
       </Form>
     </Paper>
   );
-
-
 
   return (
     <>
@@ -193,6 +187,12 @@ const CalculoReporte = () => {
             field: 'periodo',
             headerName: 'Período',
             valueGetter: params => getContratoToShow(params.row?.contratos)?.periodoNumero || '',
+            flex: 0.5,
+          },
+          {
+            field: 'estado',
+            headerName: 'Estado',
+            valueGetter: params => getContratoToShow(params.row?.contratos)?.estado || '',
             flex: 0.5,
           },
           {
