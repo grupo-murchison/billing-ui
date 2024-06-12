@@ -82,7 +82,7 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
             value={detalle ? currencyFormatter().format(Number(detalle[0]?.ccTotalCalculado)) : ''}
             inputProps={{
               readOnly: true,
-              style: { textAlign: 'right' }
+              style: { textAlign: 'right' },
             }}
             InputProps={{
               startAdornment: (
@@ -113,7 +113,17 @@ function DetalleFacturacion({ periodo, calculoContratoId }: { calculoContratoId?
           />
         </Col>
       </Row>
-
+      <Row>
+        <Col sm={12} md={3}>
+          <TextField
+            label={'Estado'}
+            name='estado'
+            value={periodo?.contratos[0]?.estado}
+            inputProps={{ readOnly: true }}
+            fullWidth
+          />
+        </Col>
+      </Row>
       <Box mt={4} mb={3}>
         <FormLabel component='legend'>
           <Typography variant='h6' component='div'>
