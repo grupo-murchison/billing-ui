@@ -14,7 +14,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { ClienteEventosBreadcrumb } from '@domains/calculo/constants';
 import { EventoClienteRepository } from '../repository';
 import { EventosDropdownAutoComplete } from './cliente-dropdown/EventosDropdown';
-import { EventosClientesCreateSchema } from '../schemas';
+import { EventClientSearchFiltersValidationSchema, EventClientSearchFiltersFormDataType } from '../schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
@@ -29,25 +29,26 @@ const EventoClientes = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<AnyValue>({
+  } = useForm<EventClientSearchFiltersFormDataType>({
     defaultValues: {
       clienteId: null,
       rangoFechas: [],
       eventoId: [],
     },
-    resolver: zodResolver(EventosClientesCreateSchema),
+    resolver: zodResolver(EventClientSearchFiltersValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<AnyValue> = useCallback(
+  const onSubmit: SubmitHandler<EventClientSearchFiltersFormDataType> = useCallback(
     async data => {
-      const eventosIds = data.eventoId.map((evento: AnyValue) => {
+      const eventosIds = data.eventoId.map(evento => {
         return evento.value;
       });
+
       const filters = {
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
         fechaDesde: data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
         fechaHasta: data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
-        eventoId: data.eventoId ? [...eventosIds] : undefined,
+        eventoId: data.eventoId.length > 0 ? [...eventosIds] : undefined,
       };
       mainDataGrid.load({ fixedFilters: { ...filters } });
     },
@@ -73,8 +74,6 @@ const EventoClientes = () => {
       </Form>
     </Paper>
   );
-
-  // const toolbarAdicionales = () => <>Custom Tollbar Cliente</>;
 
   return (
     <>
@@ -131,8 +130,6 @@ const EventoClientes = () => {
           },
         ]}
         repositoryFunc={EventoClienteRepository.getAllEventDetails}
-        // toolbar={toolbarAdicionales}
-        // getRows={rows => console.log('rows', rows) }
       />
     </>
   );

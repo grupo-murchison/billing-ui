@@ -40,4 +40,19 @@ export const zodLocale = {
   stringMax: (cant?: number) => `Ha superado el límite de ${cant || ''} caracteres`,
 };
 
-export const zodId = z.number({ required_error: zodLocale.required_error, invalid_type_error: zodLocale.required_error });
+export const zodId = z.number({
+  required_error: zodLocale.required_error,
+  invalid_type_error: zodLocale.required_error,
+});
+
+export const autoCompleteFields = z.object({
+  value: z.number(),
+  code: z.string(),
+  label: z.string(),
+});
+
+export const dateTuple = z.tuple([z.date(), z.date()]);
+
+export const dateOrNull = z.union([z.date(), z.null()]);
+
+export const dateOrNullTuple = z.tuple([dateOrNull, dateOrNull]);
