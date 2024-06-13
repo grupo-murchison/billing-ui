@@ -1,7 +1,9 @@
 import { Alert, Snackbar } from '@mui/material';
+import { memo } from 'react';
+import { ToastDeprecatedProps, ToastProps } from './types';
 
-function Toast({ open, message, error, onClose }: Toast) {
-  const handleCloseSnackbar = (event?: React.SyntheticEvent | Event, reason?: string) => {
+export function ToastDeprecated({ open, message, error, onClose }: ToastDeprecatedProps) {
+  const handleCloseSnackbar = (_event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') return;
     onClose();
   };
@@ -20,11 +22,19 @@ function Toast({ open, message, error, onClose }: Toast) {
   );
 }
 
-type Toast = {
-  open: boolean;
-  error?: boolean;
-  message: string;
-  onClose: () => void;
+const Toast = ({ duration, open, message, severity, onClose }: ToastProps) => {
+  return (
+    <Snackbar
+      open={open}
+      autoHideDuration={duration}
+      onClose={onClose}
+      anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
+    >
+      <Alert severity={severity} variant='filled' sx={{ width: '100%' }} onClose={onClose}>
+        {message}
+      </Alert>
+    </Snackbar>
+  );
 };
 
-export default Toast;
+export default memo(Toast);

@@ -14,7 +14,7 @@ import { Col, Modal, Row } from '@app/components';
 import DataGrid from '@app/components/DataGrid/DataGrid';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 import { withBreadcrumb } from '@app/hocs';
 
