@@ -24,7 +24,7 @@ import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repositor
 import { zodResolver } from '@hookform/resolvers/zod';
 import { downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 
 const CalculoReporte = () => {

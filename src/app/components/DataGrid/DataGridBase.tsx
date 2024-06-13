@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { DataGrid as MUIDataGrid, DataGridProps as DataGridPropsMUI } from '@mui/x-data-grid';
 import { Paper, SxProps, useTheme } from '@mui/material';
 import LinearProgress from '@mui/material/LinearProgress';
@@ -7,6 +8,7 @@ import ToolbarBase from './components/Toolbar';
 
 import { localeText } from './constants/dataGrid.config';
 import * as helperGrid from './helpers';
+import { useToastContext } from '@app/components/Toast/ToastProvider';
 
 const DataGridBase = ({
   rows = [],
@@ -16,6 +18,7 @@ const DataGridBase = ({
   onClickNew,
   toolbar,
   name,
+  error,
   ...props
 }: DataGridProps) => {
   const theme = useTheme();
@@ -70,7 +73,22 @@ const DataGridBase = ({
     '&.MuiDataGrid-root--densityComfortable .MuiDataGrid-cell': { py: '22px' },
   };
 
-  helperGrid.columnsFlexResolver(columns);
+  const { showToast } = useToastContext();
+
+  const mutableColumns = [...columns];
+  helperGrid.columnsFlexResolver(mutableColumns);
+
+  useEffect(() => {
+    if (error?.message) {
+      const err = JSON.parse(error?.message);
+
+      if (err?.statusCode < 500) {
+        showToast({ message: err.message || 'Error Inesperado' });
+      } else {
+        showToast({ message: err.message || 'Error Inesperado', severity: 'error' });
+      }
+    }
+  }, [error]);
 
   const Toolbar = () => <ToolbarBase fileName={name} onClickNew={onClickNew} subComponent={toolbar} />;
 
@@ -80,12 +98,12 @@ const DataGridBase = ({
         <MUIDataGrid
           {...props}
           rows={rows}
-          columns={columns}
+          columns={mutableColumns}
           initialState={{
             pagination: { paginationModel: { pageSize: helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSize } },
           }}
           getEstimatedRowHeight={() => 200}
-          getRowHeight={()=> 'auto'}
+          getRowHeight={() => 'auto'}
           pageSizeOptions={helperGrid.pageSizeOptionsResolver(pageSizeOptions).pageSizeOptions}
           autoHeight={rows?.length > 0 ? false : true}
           loading={loading}
@@ -134,4 +152,5 @@ interface DataGridProps extends DataGridPropsMUI {
   pageSizeOptions?: helperGrid.PageSizeOptions;
   toolbar?: AnyValue;
   name?: string;
+  error?: AnyValue;
 }

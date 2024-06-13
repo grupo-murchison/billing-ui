@@ -14,7 +14,7 @@ import { CalculoFacturacionMasivaBreadcrumb } from '@domains/calculo/constants';
 import Form from '@app/components/Form/Form';
 import FormDesktopDatePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDatePicker';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 import { DateLib } from '@libs';
 import { SociedadDropdown } from '@domains/sociedad/container/sociedad-dropdown';

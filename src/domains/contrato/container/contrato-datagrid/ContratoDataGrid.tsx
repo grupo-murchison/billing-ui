@@ -16,7 +16,7 @@ import { ContartoLabelAndPath } from '@domains/contrato/constants';
 import { DateLib } from '@libs';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 const ContratoDataGrid = () => {
   const _navigate = useNavigate();

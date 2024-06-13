@@ -20,7 +20,7 @@ import { EventosDropdownAutoComplete } from '@domains/evento-cliente/container/c
 import { DateLib } from '@libs';
 import { EventoErrorContext } from '@domains/evento-error/contexts';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 const EventoErrorDataGrid = () => {
   const _navigate = useNavigate();

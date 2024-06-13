@@ -6,7 +6,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 import { Col, Row } from '@app/components';
 import DataGridBase from '@app/components/DataGrid/DataGridBase';
 import Backdrop from '@app/components/Backdrop/Backdrop';
-import Toast from '@app/components/Toast/Toast';
+import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 import { ContratoRepository } from '@domains/contrato/repository';
 import { CalculoRepository } from '@domains/calculo/repository';
