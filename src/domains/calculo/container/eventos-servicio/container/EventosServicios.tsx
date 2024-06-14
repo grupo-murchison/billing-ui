@@ -14,7 +14,7 @@ import { withBreadcrumb } from '@app/hocs';
 import { EventosServiciosBreadcrumb } from '@domains/calculo/constants';
 import { CalculoRepository } from '@domains/calculo/repository';
 import { EventosServiciosContext } from '../contexts/eventos.servicios.context';
-import { ValidationSchemaEventosServicioFilters } from '../../../repository/schemas';
+import { EventosServicioFormDataType, EventosServicioValidationSchema } from '../../../repository/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 import { ConcepoAcuerdoAutoComplete } from '@domains/cliente/container/concepto-acuerdo-dropdown';
@@ -31,7 +31,7 @@ const EventoServicio = () => {
     control,
     handleSubmit,
     formState: { isSubmitting },
-  } = useForm<AnyValue>({
+  } = useForm<EventosServicioFormDataType>({
     defaultValues: {
       numeroSecuenciaCalculo: '',
       clienteId: null,
@@ -39,16 +39,17 @@ const EventoServicio = () => {
       conceptoAcuerdoId: null,
       rangoFechas: [],
     },
-    resolver: zodResolver(ValidationSchemaEventosServicioFilters),
+    resolver: zodResolver(EventosServicioValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<AnyValue> = useCallback(
+  const onSubmit: SubmitHandler<EventosServicioFormDataType> = useCallback(
     async data => {
       const filters = {
         numeroSecuenciaCalculo: data.numeroSecuenciaCalculo ? data.numeroSecuenciaCalculo : undefined,
         clienteId: data.clienteId?.value ? data.clienteId.value : undefined,
-        nroContato: data.contrato ? data.contrato : undefined,
-        conceptoAcuerdoId: data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
+        nroContrato: data.contrato ? data.contrato : undefined,
+        conceptoAcuerdoId:
+          data.conceptoAcuerdoId && data.conceptoAcuerdoId.value ? data.conceptoAcuerdoId.value : undefined,
         fechaDesde: data.rangoFechas && data.rangoFechas[0] ? DateLib.parseToDBString(data.rangoFechas[0]) : undefined,
         fechaHasta: data.rangoFechas && data.rangoFechas[1] ? DateLib.parseToDBString(data.rangoFechas[1]) : undefined,
       };
@@ -77,7 +78,13 @@ const EventoServicio = () => {
         </Row>
         <Row>
           <Col sm={12} md={6}>
-            <FormTextField control={control} disabled={isSubmitting} label='Número Contrato' name='contrato' />
+            <FormTextField
+              control={control}
+              disabled={isSubmitting}
+              label='Número Contrato'
+              name='contrato'
+              type='number'
+            />
           </Col>
           <Col sm={12} md={6}>
             <ConcepoAcuerdoAutoComplete

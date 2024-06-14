@@ -5,10 +5,8 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 import { RepositoryUtils } from '@app/utils';
 
 import { CalculoService } from './calculo.service';
-import {
-  FormDataTypeCalculoFacturacionMasiva,
-  getAllFacturasReportePaginatedSchema,
-} from './calculo.schemas';
+import { FormDataTypeCalculoFacturacionMasiva, getAllFacturasReportePaginatedSchema } from './calculo.schemas';
+import { AxiosResponse } from 'axios';
 
 class CalculoRepository {
   static getAllCalculosPaginated = async (params: RepositoryFuncParamsPaginated) => {
@@ -72,11 +70,7 @@ class CalculoRepository {
   };
 
   static getAllEventDetails = async (params: AnyValue) => {
-    if (!params.clienteId && !params.numeroSecuenciaCalculo && !params.fechaDesde && !params.fechaHasta) {
-      return;
-    }
-    const response$ = from(CalculoService.getAllEventDetails(params)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
+    const response = await RepositoryUtils.fromRxjs(CalculoService.getAllEventDetails(params));
     return extractEventsOfData(response);
   };
 
@@ -96,7 +90,7 @@ class CalculoRepository {
 
 export default CalculoRepository;
 
-function extractEventsOfData(response: AnyValue) {
+function extractEventsOfData(response: AxiosResponse<AnyValue, AnyValue>) {
   let a: Array<AnyValue> = [];
 
   const responseParsed = response?.data.data
