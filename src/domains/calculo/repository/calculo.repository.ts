@@ -1,14 +1,15 @@
-import { from, lastValueFrom } from 'rxjs';
+import { from, lastValueFrom, map } from 'rxjs';
 
 import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 
 import { RepositoryUtils } from '@app/utils';
 
 import { CalculoService } from './calculo.service';
-import {
-  FormDataTypeCalculoFacturacionMasiva,
-  getAllFacturasReportePaginatedSchema,
-} from './calculo.schemas';
+import { FormDataTypeCalculoFacturacionMasiva, getAllFacturasReportePaginatedSchema } from './calculo.schemas';
+import { AxiosResponse } from 'axios';
+import { fromRxjs } from '@app/utils/repository.util';
+import { CalculoContratoEvento } from './schemas/types';
+import { DataGridResponse } from '@app/components/DataGrid/contexts/types';
 
 class CalculoRepository {
   static getAllCalculosPaginated = async (params: RepositoryFuncParamsPaginated) => {
@@ -72,12 +73,7 @@ class CalculoRepository {
   };
 
   static getAllEventDetails = async (params: AnyValue) => {
-    if (!params.clienteId && !params.numeroSecuenciaCalculo && !params.fechaDesde && !params.fechaHasta) {
-      return;
-    }
-    const response$ = from(CalculoService.getAllEventDetails(params)).pipe(RepositoryUtils.PIPES.getResponse());
-    const response = await lastValueFrom(response$);
-    return extractEventsOfData(response);
+    return await fromRxjs(CalculoService.getAllEventDetails(params), extractEventsOfData);
   };
 
   static getCalculoLog = async (params: AnyValue) => {
@@ -96,29 +92,19 @@ class CalculoRepository {
 
 export default CalculoRepository;
 
-function extractEventsOfData(response: AnyValue) {
-  let a: Array<AnyValue> = [];
-
-  const responseParsed = response?.data.data
-    .map((eventosConDetalles: AnyValue) => {
-      eventosConDetalles.eventos[0].map((event: AnyValue) => {
+const extractEventsOfData = map((response: AxiosResponse<DataGridResponse<CalculoContratoEvento>>) => {
+  const responseParsed = response.data.data
+    .map(eventosConDetalles => {
+      return eventosConDetalles.eventos[0].map(event => {
         event._id = event.id;
         event.id = eventosConDetalles.id + '-' + event.id;
         return event;
       });
-      return eventosConDetalles.eventos[0];
     })
-    .map((evento: AnyValue) => {
-      return evento;
-    });
+    .reduce((acc: AnyValue[], curr: AnyValue[]) => acc.concat(curr), []);
 
-  for (let i = 0; i < responseParsed.length; i++) {
-    const element = responseParsed[i];
-    a = [...a, ...element];
-  }
-
-  response.data.data = a;
-  response.data.meta = { itemCount: a.length };
+  response.data.data = responseParsed;
+  response.data.meta = { itemCount: responseParsed.length };
 
   return response;
-}
+});

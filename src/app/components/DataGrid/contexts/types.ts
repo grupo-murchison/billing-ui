@@ -12,18 +12,18 @@ export interface DataGridProps<T> extends Omit<MUIDataGridProps, 'rows'> {
   }>;
   columns: GridColDef[];
   onClickNew?: () => void;
-  repositoryFunc: (params: Record<string, unknown>) => Promise<
-    AxiosResponse<{
-      data: T[];
-      meta: {
-        itemCount: number;
-      };
-    }>
-  >;
+  repositoryFunc: (params: Record<string, unknown>) => Promise<AxiosResponse<DataGridResponse<T>>>;
   toolbar?: JSXElementConstructor<AnyValue> | null | undefined;
   getRows?: (rows: AnyValue) => AnyValue;
   name?: string;
 }
+
+export type DataGridResponse<T> = {
+  data: T[];
+  meta: {
+    itemCount: number;
+  };
+};
 
 export type DataGridRepositoryFuncParams = RepositoryFuncParamsPaginated & {
   filters?: RepositoryParams;
