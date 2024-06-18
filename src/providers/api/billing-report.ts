@@ -28,6 +28,33 @@ class ApiProvider {
       });
     }
 
+    this.instance.interceptors.response.use(
+      response => response, // Manejo de respuestas exitosas
+      async error => {
+        // Verificar si el error es un Blob y contiene JSON
+        if (
+          error.response &&
+          error.response.data instanceof Blob &&
+          error.response.data.type &&
+          error.response.data.type.toLowerCase().includes('json')
+        ) {
+          try {
+            // responseData = await blobToJSON(error.response.data) o las siguientes lineas:
+            const reader = new FileReader();
+            const responseData = await new Promise((resolve, reject) => {
+              reader.onload = () => resolve(JSON.parse(reader.result as string));
+              reader.onerror = reject;
+              reader.readAsText(error.response.data);
+            });
+            error.response.data = responseData; // Sobrescribir data con JSON parseado
+          } catch (parseError) {
+            return Promise.reject(parseError);
+          }
+        }
+        return Promise.reject(error);
+      },
+    );
+
     return this.instance;
   }
 

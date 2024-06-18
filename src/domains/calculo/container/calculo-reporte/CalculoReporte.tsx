@@ -95,7 +95,8 @@ const CalculoReporte = () => {
       })
       .catch(async error => {
         setErrorFromBackEnd(true);
-        setToastMessage(error?.error || 'Ocurrió un error!');
+        const errorMessage = JSON.parse(error?.message).message;
+        setToastMessage(errorMessage || 'Ocurrió un error!');
       })
       .finally(() => {
         setOpenToast(true);
