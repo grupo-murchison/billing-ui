@@ -36,4 +36,56 @@ export type PlanFacturacion = {
   periodos: Periodo[];
 };
 
+export type CalculoContratoEvento = {
+  conceptosAcuerdoId: number[];
+  eventos: [Evento[]];
+  id: number;
+  numeroSecuenciaCalculo: string;
+  nroContrato: string;
+  modeloAcuerdoId: number;
+  clienteId: number;
+};
+
+export type Evento = {
+  _id: number | string;
+  id: number | string;
+  clienteId: number;
+  eventoId: number;
+  genEventoOrigenId: string;
+  genEventoTipoId: string;
+  genEventoFechaCreacion: string;
+  genEventoFechaModificacion: string;
+  genEventoFechaEnvio: string;
+  genCompania: string;
+  genSistema: string;
+  genClienteId: string;
+  genDestinoTipo: string;
+  genDestinoId: string;
+  genTerminalId: string | null;
+  genPatio: string | null;
+  genZona: string | null;
+  genTarea: string | null;
+  genOrdenCompra: string | null;
+  evCantidadLitros: string | null;
+  evTipoCombustible: string | null;
+  evConcesionario: string | null;
+  evModelo: string | null;
+  evColor: string | null;
+  evDaño: string | null;
+  evTipoDaño: string | null;
+  evCategorizacion: string | null;
+  evPieza: string | null;
+  evEstado: string | null;
+  evDUA: string | null;
+  evTipoEmbarque: string | null;
+  evDimension: string | null;
+  evDestino: string | null;
+  evCiudadDestino: string | null;
+  evTipoServicio: string | null;
+  evDocumentoSalida: string | null;
+  evDiaHabil: string | null;
+  evAlmacen: string | null;
+  evHallazgos: string | null;
+};
+
 export type ResponsePlanFacturacion = Record<'data', Array<PlanFacturacion>>;

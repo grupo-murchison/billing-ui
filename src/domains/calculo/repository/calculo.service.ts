@@ -5,6 +5,8 @@ import { RepositoryFuncParamsPaginated } from '@app/components/DataGrid';
 import { AxiosUtils } from '@app/utils';
 import type { HandlePromise } from '@app/utils/axios.util';
 import { FormDataTypeCalculoFacturacionMasiva } from './calculo.schemas';
+import { CalculoContratoEvento } from './schemas/types';
+import { DataGridResponse } from '@app/components/DataGrid/contexts/types';
 
 const BASE_PATH = 'v1/calculos';
 
@@ -59,16 +61,26 @@ class CalculoService {
     return [response, error];
   };
 
-  static getAllEventDetails = async (params: AnyValue): Promise<HandlePromise> => {
+  static getAllEventDetails = async (
+    params: AnyValue,
+  ): Promise<HandlePromise<DataGridResponse<CalculoContratoEvento>>> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProvider.get<AnyValue>(`${BASE_PATH}/eventosByFilter`, { params }),
+      ApiProvider.get<DataGridResponse<CalculoContratoEvento>>(`${BASE_PATH}/eventosByFilter`, { params }),
     );
     return [response, error];
   };
 
-  static calculoFacturacionManual = async (contratoId: number, planFacturacionId: number, periodoNumero: number): Promise<HandlePromise> => {
+  static calculoFacturacionManual = async (
+    contratoId: number,
+    planFacturacionId: number,
+    periodoNumero: number,
+  ): Promise<HandlePromise> => {
     const [response, error] = await AxiosUtils.handleResponse(
-      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/manual`, { contratoId, planFacturacionId, periodoNumero  }),
+      ApiProviderBilligProcessor.post<AnyValue>(`v1/main/calculo/manual`, {
+        contratoId,
+        planFacturacionId,
+        periodoNumero,
+      }),
     );
 
     return [response, error];
