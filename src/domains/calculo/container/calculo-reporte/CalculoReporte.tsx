@@ -18,32 +18,22 @@ import { DetalleCalculo } from '@domains/calculo/container/calculo';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { DateLib } from '@libs';
-// import IconMenu from '@app/components/DataGrid/components/MenuVertical';
 import { FileDownloadOutlinedIcon, ViewIcon } from '@assets/icons';
 import { ValidationSchemaCalculoReporteFilter } from '@domains/calculo/repository/schemas';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { downloadPdfAxios } from '@app/utils/axios.util';
 import { ClientePopUp } from '@domains/cliente/container/cliente-dropdown/ClienteDropdown';
-import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
+import { useToastContext } from '@app/components/Toast/ToastProvider';
 
 const CalculoReporte = () => {
-  // const _navigate = useNavigate();
 
   const [openModal, setOpenModal] = useState(false);
   const [calculoContratoId, setCalculoContratoId] = useState<AnyValue>(null);
   const [periodo, setPeriodo] = useState<AnyValue>();
   const { mainDataGrid } = useContext(CalculoReporteContext);
-  const [toastMessage, setToastMessage] = useState('Datos enviados');
-  const [errorFromBackEnd, setErrorFromBackEnd] = useState(false);
-  const [openToast, setOpenToast] = useState(false);
+  const { showToast } = useToastContext();
 
-  const handleCloseToast = (event?: React.SyntheticEvent | Event, reason?: string) => {
-    if (reason === 'clickaway') {
-      return;
-    }
-    setOpenToast(false);
-  };
 
   useEffect(() => {
     mainDataGrid.load();
@@ -94,12 +84,13 @@ const CalculoReporte = () => {
         downloadPdfAxios(res.data, `Facturacion-Proforma-${row.numeroSecuenciaCalculo}.pdf`);
       })
       .catch(async error => {
-        setErrorFromBackEnd(true);
-        setToastMessage(error?.error || 'Ocurrió un error!');
+        const errorMessage = JSON.parse(error?.message).message;
+        if (error?.statusCode < 500) {
+          showToast({ message: errorMessage || 'Error Inesperado', severity: 'error' });
+        } else {
+          showToast({ message: errorMessage || 'Error Inesperado', severity: 'warning' });
+        }
       })
-      .finally(() => {
-        setOpenToast(true);
-      });
   };
 
   const getContratoToShow = (contratos: Array<any>) => {
@@ -217,13 +208,6 @@ const CalculoReporte = () => {
                 onClick={() => handleVerProforma(params.row)}
                 showInMenu
               />,
-              // <IconMenu
-              //   key={4}
-              //   options={[
-              //     { label: 'Ver Soporte', icon: '', caption: '' },
-              //     { label: 'Ver Proforma', icon: '', caption: '' },
-              //   ]}
-              // />,
             ],
           },
         ]}
@@ -234,7 +218,6 @@ const CalculoReporte = () => {
         <DetalleCalculo periodo={periodo} calculoContratoId={calculoContratoId} />
       </Modal>
 
-      <Toast open={openToast} message={toastMessage} error={errorFromBackEnd} onClose={handleCloseToast} />
     </>
   );
 };
