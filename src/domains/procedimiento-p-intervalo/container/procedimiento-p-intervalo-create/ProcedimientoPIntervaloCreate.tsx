@@ -39,13 +39,13 @@ const ProcedimientoPIntervaloCreate = () => {
     async data => {
       await ProcedimientoPIntervaloRepository.createProcedimientoPIntervalo(data);
       mainDataGrid.reload();
-      _navigate(`/procedimiento-p/${procedimientoPId}`);
+      _navigate(`/procedimiento-p/${procedimientoPId}/edit`);
     },
     [_navigate, mainDataGrid, procedimientoPId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/procedimiento-p/${procedimientoPId}`);
+    _navigate(`/procedimiento-p/${procedimientoPId}/edit`);
   }, [_navigate, procedimientoPId]);
 
   return (

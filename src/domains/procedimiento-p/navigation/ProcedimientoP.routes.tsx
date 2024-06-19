@@ -18,7 +18,7 @@ const ProcedimientoPRoutes = () => {
         }
       >
         <Route path='/procedimiento-p/create' element={<ProcedimientoPCreate />} />
-        <Route path='/procedimiento-p/:procedimientoPId/edit' element={<ProcedimientoPEdit />} />
+        <Route path='/procedimiento-p/:procedimientoPId/edit/*' element={<ProcedimientoPEdit />} />
         <Route path='/procedimiento-p/:procedimientoPId/*' element={<ProcedimientoPView />} />
       </Route>
       <Route path='/procedimiento-p/*' element={<Navigate to='/' replace />} />

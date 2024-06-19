@@ -5,6 +5,7 @@ import { ProcedimientoPIntervaloCreate } from '@domains/procedimiento-p-interval
 import { ProcedimientoPIntervaloEdit } from '@domains/procedimiento-p-intervalo/container/procedimiento-p-intervalo-edit';
 
 import { ProcedimientoPIntervaloProvider } from '@domains/procedimiento-p-intervalo/contexts';
+import { ProcedimientoPIntervaloView } from '@domains/procedimiento-p-intervalo/container/procedimiento-p-intervalo-view';
 
 export const ProcedimientoPIntervaloWithinProcedimientoPRoutes = (codigo?: AnyValue) => {
   return (
@@ -21,6 +22,10 @@ export const ProcedimientoPIntervaloWithinProcedimientoPRoutes = (codigo?: AnyVa
         <Route
           path='/procedimiento-p-intervalo/:procedimientoPIntervaloId/edit'
           element={<ProcedimientoPIntervaloEdit />}
+        />
+        <Route
+          path='/procedimiento-p-intervalo/:procedimientoPIntervaloId/*'
+          element={<ProcedimientoPIntervaloView />}
         />
       </Route>
       <Route path='/procedimiento-p-intervalo/*' element={<Navigate to='/' replace />} />
