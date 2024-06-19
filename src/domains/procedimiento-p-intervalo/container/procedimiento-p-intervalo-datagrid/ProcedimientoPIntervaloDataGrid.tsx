@@ -146,7 +146,7 @@ const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
               },
             ]}
             repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
-            onClickNew={handleClickCreate}
+            onClickNew={canEdit ? handleClickCreate : undefined}
           />
         </Col>
       </Row>
