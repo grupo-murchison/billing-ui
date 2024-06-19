@@ -34,13 +34,7 @@ const EventoCampoView = () => {
     });
   }, [eventoCampoId]);
 
-  const {
-    control,
-    handleSubmit,
-    formState: { isSubmitting },
-    setError,
-    reset,
-  } = useForm<EventoCampoEditSchemaType>({
+  const { control, reset } = useForm<EventoCampoEditSchemaType>({
     defaultValues: {
       codigo: '',
       denominacion: '',

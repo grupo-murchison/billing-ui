@@ -19,6 +19,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { useConfirmDialog } from '@app/hooks';
+import { ProcedimientoPIntervaloWithinProcedimientoPRoutes } from '@domains/procedimiento-p-intervalo/navigation';
 
 const ProcedimientoPEdit = () => {
   const { procedimientoPId } = useParams();
@@ -35,6 +36,7 @@ const ProcedimientoPEdit = () => {
     handleSubmit,
     control,
     setError,
+    watch,
   } = useForm<ProcedimientoPEditSchemaType>({
     defaultValues: {
       codigo: '',
@@ -101,6 +103,7 @@ const ProcedimientoPEdit = () => {
           </Col>
         </Row>
       </Form>
+      <ProcedimientoPIntervaloWithinProcedimientoPRoutes codigo={watch('codigo')} />
     </Modal>
   );
 };

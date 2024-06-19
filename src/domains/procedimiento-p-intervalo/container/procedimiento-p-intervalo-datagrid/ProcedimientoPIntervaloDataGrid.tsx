@@ -1,6 +1,6 @@
 import { useCallback, useContext, useEffect } from 'react';
 
-import { useNavigate, useParams, Outlet } from 'react-router-dom';
+import { useNavigate, useParams, Outlet, useLocation } from 'react-router-dom';
 
 import { Col, Row } from '@app/components';
 
@@ -11,7 +11,7 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { ProcedimientoPIntervaloContext } from '@domains/procedimiento-p-intervalo/contexts';
 import { ProcedimientoPIntervaloRepository } from '@domains/procedimiento-p-intervalo/repository';
-import { EditOutlinedIcon, DeleteOutlineIcon } from '@assets/icons';
+import { EditOutlinedIcon, DeleteOutlineIcon, ViewIcon } from '@assets/icons';
 import { Box, FormLabel, Typography } from '@mui/material';
 import { currencyFormatter } from '@libs/number';
 
@@ -19,20 +19,33 @@ import { currencyFormatter } from '@libs/number';
 const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPId } = useParams();
+  const url = useLocation();
+  const canEdit = url?.pathname?.includes('edit') ? true : false;
 
   const { mainDataGrid } = useContext(ProcedimientoPIntervaloContext);
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-p/${procedimientoPId}/procedimiento-p-intervalo/create`);
+    _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/create`);
   }, [_navigate, procedimientoPId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-p/${procedimientoPId}/procedimiento-p-intervalo/${id}/edit`);
+      _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/${id}/edit`);
     },
     [_navigate, procedimientoPId],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/procedimiento-p/${procedimientoPId}/edit/procedimiento-p-intervalo/${id}`);
+      } else {
+        _navigate(`/procedimiento-p/${procedimientoPId}/procedimiento-p-intervalo/${id}`);
+      }
+    },
+    [_navigate],
   );
 
   const handleClickDelete = useCallback(
@@ -100,26 +113,40 @@ const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
                 headerAlign: 'center',
                 align: 'center',
                 flex: 0.5,
-                getActions: params => [
-                  <GridActionsCellItem
-                    key={2}
-                    icon={<EditOutlinedIcon />}
-                    label='Editar'
-                    onClick={() => handleClickEdit(params.row.id)}
-                    // showInMenu
-                  />,
-                  <GridActionsCellItem
-                    key={3}
-                    icon={<DeleteOutlineIcon />}
-                    label='Eliminar'
-                    onClick={() => handleClickDelete(params.row)}
-                    // showInMenu
-                  />,
-                ],
+                getActions: params => {
+                  return [
+                    <>
+                      <GridActionsCellItem
+                        key={1}
+                        icon={<ViewIcon />}
+                        label='Vista'
+                        onClick={() => handleClickView(params.row.id)}
+                      />
+                      {canEdit && (
+                        <>
+                          <GridActionsCellItem
+                            key={2}
+                            icon={<EditOutlinedIcon />}
+                            label='Editar'
+                            onClick={() => handleClickEdit(params.row.id)}
+                            // showInMenu
+                          />
+                          <GridActionsCellItem
+                            key={3}
+                            icon={<DeleteOutlineIcon />}
+                            label='Eliminar'
+                            onClick={() => handleClickDelete(params.row)}
+                            // showInMenu
+                          />
+                        </>
+                      )}
+                    </>,
+                  ];
+                },
               },
             ]}
             repositoryFunc={ProcedimientoPIntervaloRepository.getAllProcedimientoPIntervaloPaginated}
-            onClickNew={handleClickCreate}
+            onClickNew={canEdit ? handleClickCreate : undefined}
           />
         </Col>
       </Row>
