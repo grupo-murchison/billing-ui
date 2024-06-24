@@ -7,9 +7,9 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
-import { ProcedimientoPSIntervaloCreateSchema } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
+import { ProcedimientoPSIntervaloCreateValidationSchema } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
-import type { ProcedimientoPSIntervaloCreateSchemaType } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
+import type { ProcedimientoPSIntervaloCreateFormDataType } from '@domains/procedimiento-ps-intervalo/container/procedimiento-ps-intervalo-create/schemas';
 
 import { ProductoSoftlandDropdown } from '@domains/producto-softland/container/producto-softland-dropdown';
 
@@ -28,28 +28,28 @@ const ProcedimientoPSIntervaloCreate = () => {
     handleSubmit,
     control,
     formState: { isSubmitting },
-  } = useForm<ProcedimientoPSIntervaloCreateSchemaType>({
+  } = useForm<ProcedimientoPSIntervaloCreateFormDataType>({
     defaultValues: {
       procedimientoProductoSoftlandId: parseInt(procedimientoPSId || '-1'),
       valorInicial: 1,
       valorFinal: 9999999,
-      productoSoftlandId: '',
-      intervalo: '',
+      productoSoftlandId: undefined,
+      intervalo: undefined,
     },
-    resolver: zodResolver(ProcedimientoPSIntervaloCreateSchema),
+    resolver: zodResolver(ProcedimientoPSIntervaloCreateValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<ProcedimientoPSIntervaloCreateSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<ProcedimientoPSIntervaloCreateFormDataType> = useCallback(
     async data => {
       await ProcedimientoPSIntervaloRepository.createProcedimientoPSIntervalo(data);
       mainDataGrid.reload();
-      _navigate(`/procedimiento-ps/${procedimientoPSId}`);
+      _navigate(`/procedimiento-ps/${procedimientoPSId}/edit`);
     },
     [_navigate, mainDataGrid, procedimientoPSId],
   );
 
   const handleClose = useCallback(() => {
-    _navigate(`/procedimiento-ps/${procedimientoPSId}`);
+    _navigate(`/procedimiento-ps/${procedimientoPSId}/edit`);
   }, [_navigate, procedimientoPSId]);
 
   return (

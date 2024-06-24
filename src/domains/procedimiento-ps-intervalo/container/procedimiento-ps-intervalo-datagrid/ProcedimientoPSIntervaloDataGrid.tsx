@@ -6,32 +6,44 @@ import { GridActionsCellItem } from '@mui/x-data-grid';
 
 import { Col, Row } from '@app/components';
 
-import { useConfirmDialog } from '@app/hooks';
+import { useConfirmDialog, useLocationMode } from '@app/hooks';
 
 import { DataGrid } from '@app/components/DataGrid';
 
 import { ProcedimientoPSIntervaloContext } from '@domains/procedimiento-ps-intervalo/contexts';
 import { ProcedimientoPSIntervaloRepository } from '@domains/procedimiento-ps-intervalo/repository';
-import { DeleteOutlineIcon, EditOutlinedIcon } from '@assets/icons';
+import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
+const ProcedimientoPSIntervaloDataGrid = () => {
   const _navigate = useNavigate();
   const { procedimientoPSId } = useParams();
+  const { canEdit } = useLocationMode();
 
   const { mainDataGrid } = useContext(ProcedimientoPSIntervaloContext);
 
   const confirmDialog = useConfirmDialog();
 
   const handleClickCreate = useCallback(() => {
-    _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/create`);
+    _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/create`);
   }, [_navigate, procedimientoPSId]);
 
   const handleClickEdit = useCallback(
     (id: number) => {
-      _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/${id}/edit`);
+      _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/${id}/edit`);
     },
     [_navigate, procedimientoPSId],
+  );
+
+  const handleClickView = useCallback(
+    (id: number) => {
+      if (canEdit) {
+        _navigate(`/procedimiento-ps/${procedimientoPSId}/edit/procedimiento-ps-intervalo/${id}`);
+      } else {
+        _navigate(`/procedimiento-ps/${procedimientoPSId}/procedimiento-ps-intervalo/${id}`);
+      }
+    },
+    [_navigate],
   );
 
   const handleClickDelete = useCallback(
@@ -84,26 +96,38 @@ const ProcedimientoPSIntervaloDataGrid = (codigo?: AnyValue) => {
                 headerAlign: 'center',
                 align: 'center',
                 flex: 0.5,
-                getActions: params => [
-                  <GridActionsCellItem
-                    key={2}
-                    icon={<EditOutlinedIcon />}
-                    label='Editar'
-                    onClick={() => handleClickEdit(params.row.id)}
-                    // showInMenu
-                  />,
-                  <GridActionsCellItem
-                    key={3}
-                    icon={<DeleteOutlineIcon />}
-                    label='Eliminar'
-                    onClick={() => handleClickDelete(params.row)}
-                    // showInMenu
-                  />,
-                ],
+                getActions: params => {
+                  return [
+                    <>
+                      <GridActionsCellItem
+                        key={1}
+                        icon={<ViewIcon />}
+                        label='Vista'
+                        onClick={() => handleClickView(params.row.id)}
+                      />
+                      {canEdit && (
+                        <>
+                          <GridActionsCellItem
+                            key={2}
+                            icon={<EditOutlinedIcon />}
+                            label='Editar'
+                            onClick={() => handleClickEdit(params.row.id)}
+                          />
+                          <GridActionsCellItem
+                            key={3}
+                            icon={<DeleteOutlineIcon />}
+                            label='Eliminar'
+                            onClick={() => handleClickDelete(params.row)}
+                          />
+                        </>
+                      )}
+                    </>,
+                  ];
+                },
               },
             ]}
             repositoryFunc={ProcedimientoPSIntervaloRepository.getAllProcedimientoPSIntervaloPaginated}
-            onClickNew={handleClickCreate}
+            onClickNew={canEdit ? handleClickCreate : undefined}
           />
         </Col>
       </Row>

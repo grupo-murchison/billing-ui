@@ -7,9 +7,9 @@ import { useNavigate } from 'react-router-dom';
 import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
-import { ProcedimientoPSCreateSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
+import { ProcedimientoPSCreateValidationSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
-import type { ProcedimientoPSCreateSchemaType } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
+import type { ProcedimientoPSCreateFormDataType } from '@domains/procedimiento-ps/container/procedimiento-ps-create/schemas';
 
 import { zodResolver } from '@hookform/resolvers/zod';
 
@@ -28,15 +28,15 @@ const ProcedimientoPSCreate = () => {
     handleSubmit,
     formState: { isSubmitting },
     setError,
-  } = useForm<ProcedimientoPSCreateSchemaType>({
+  } = useForm<ProcedimientoPSCreateFormDataType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
     },
-    resolver: zodResolver(ProcedimientoPSCreateSchema),
+    resolver: zodResolver(ProcedimientoPSCreateValidationSchema),
   });
 
-  const onSubmit: SubmitHandler<ProcedimientoPSCreateSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<ProcedimientoPSCreateFormDataType> = useCallback(
     async data => {
       await ProcedimientoPSRepository.createProcedimientoPS(data)
         .then(() => {

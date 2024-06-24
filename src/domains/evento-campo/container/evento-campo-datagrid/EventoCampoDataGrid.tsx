@@ -1,10 +1,10 @@
 import { useCallback, useContext, useEffect } from 'react';
 
 import { EventoCampoRepository } from '@domains/evento-campo/repository';
-import { Outlet, useLocation, useNavigate, useParams } from 'react-router-dom';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
-import { useConfirmDialog } from '@app/hooks';
+import { useConfirmDialog, useLocationMode } from '@app/hooks';
 import { EventoCampoContext } from '@domains/evento-campo/contexts';
 import { DataGrid } from '@app/components/DataGrid';
 
@@ -13,8 +13,7 @@ const EventoCampoDataGrid = () => {
   const { mainDataGrid } = useContext(EventoCampoContext);
 
   const { eventoId } = useParams();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
 
   const confirmDialog = useConfirmDialog();
 

@@ -1,6 +1,6 @@
 import { Row, Col, Modal } from '@app/components';
 import Form from '@app/components/Form/Form';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -9,12 +9,12 @@ import { DatoDinamicoRepository } from '../../repository';
 import { DatoDinamicoEditSchema, DatoDinamicoEditSchemaType } from '../dato-dinamico-edit/schemas';
 import { TablaDinamicaDropdown } from '@domains/metadatos/tabla-dinamica/container/tabla-dinamica-dropdown';
 import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
+import { useLocationMode } from '@app/hooks';
 
 const DatoDinamicoView = () => {
   const { tablaDinamicaId, datoDinamicoId } = useParams();
   const _navigate = useNavigate();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 

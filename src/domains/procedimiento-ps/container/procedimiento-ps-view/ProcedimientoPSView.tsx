@@ -51,7 +51,7 @@ const ProcedimientoPSView = () => {
         </Row>
       </Form>
 
-      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes codigo={procedimientoPSData.codigo} />
+      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes />
     </Modal>
   );
 };
