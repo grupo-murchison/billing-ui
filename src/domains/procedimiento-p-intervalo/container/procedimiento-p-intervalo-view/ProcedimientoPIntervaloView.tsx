@@ -1,8 +1,8 @@
-import { useCallback, useContext, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 import { useForm } from 'react-hook-form';
 
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 
 import { Modal, Row, Col } from '@app/components';
 
@@ -14,11 +14,12 @@ import { zodResolver } from '@hookform/resolvers/zod';
 
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
+import { useLocationMode } from '@app/hooks';
 
 const ProcedimientoPIntervaloView = () => {
   const _navigate = useNavigate();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
+
   const { procedimientoPId, procedimientoPIntervaloId } = useParams();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);

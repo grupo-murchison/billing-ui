@@ -4,7 +4,7 @@ import { useNavigate, useParams, Outlet, useLocation } from 'react-router-dom';
 
 import { Col, Row } from '@app/components';
 
-import { useConfirmDialog } from '@app/hooks';
+import { useConfirmDialog, useLocationMode } from '@app/hooks';
 
 import { DataGrid } from '@app/components/DataGrid';
 import { GridActionsCellItem } from '@mui/x-data-grid';
@@ -19,8 +19,7 @@ import { currencyFormatter } from '@libs/number';
 const ProcedimientoPIntervaloDataGrid = (codigo?: AnyValue) => {
   const _navigate = useNavigate();
   const { procedimientoPId } = useParams();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
 
   const { mainDataGrid } = useContext(ProcedimientoPIntervaloContext);
 

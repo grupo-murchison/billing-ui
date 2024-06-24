@@ -1,8 +1,8 @@
 import { useCallback, useContext, useEffect } from 'react';
 
-import { useNavigate, Outlet, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, Outlet, useParams } from 'react-router-dom';
 
-import { useConfirmDialog } from '@app/hooks';
+import { useConfirmDialog, useLocationMode } from '@app/hooks';
 
 import DataGrid from '@app/components/DataGrid/DataGrid';
 
@@ -17,8 +17,7 @@ const DatoDinamicoDataGrid = () => {
 
   const { mainDataGrid } = useContext(DatoDinamicoContext);
   const { tablaDinamicaId } = useParams();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
 
   const confirmDialog = useConfirmDialog();
 

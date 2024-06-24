@@ -1,14 +1,15 @@
+import { zodLocale } from '@app/utils/zod.util';
 import z from 'zod';
 
-export const ProcedimientoPSCreateSchema = z.object({
+export const ProcedimientoPSCreateValidationSchema = z.object({
   codigo: z
-    .string({ required_error: 'El campo es requerido.' })
-    .min(1, { message: 'El campo es requerido.' })
-    .max(50, { message: 'Ha superado el límite de caracteres' }),
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(50, { message: zodLocale.stringMax(50) }),
   denominacion: z
-    .string({ required_error: 'El campo es requerido.' })
-    .min(1, { message: 'El campo es requerido.' })
-    .max(250, { message: 'Ha superado el límite de caracteres' }),
+    .string({ required_error: zodLocale.required_error })
+    .min(1, { message: zodLocale.required_error })
+    .max(250, { message: zodLocale.stringMax(250) }),
 });
 
-export type ProcedimientoPSCreateSchemaType = z.infer<typeof ProcedimientoPSCreateSchema>;
+export type ProcedimientoPSCreateFormDataType = z.infer<typeof ProcedimientoPSCreateValidationSchema>;

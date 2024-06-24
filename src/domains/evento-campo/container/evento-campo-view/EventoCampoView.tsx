@@ -1,6 +1,6 @@
 import { Row, Col, Modal } from '@app/components';
 import Form from '@app/components/Form/Form';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useCallback, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -10,12 +10,12 @@ import { EventoCampoRepository } from '@domains/evento-campo/repository';
 import { EventoDropdown } from '@domains/evento/container/evento-dropdown';
 import { TipoDatoDropdown } from '@domains/tipo-dato/container/tipo-dato-dropdown';
 import { TablaDinamicaDropdown } from '@domains/metadatos/tabla-dinamica/container/tabla-dinamica-dropdown';
+import { useLocationMode } from '@app/hooks';
 
 const EventoCampoView = () => {
   const { eventoId, eventoCampoId } = useParams();
   const _navigate = useNavigate();
-  const url = useLocation();
-  const canEdit = url?.pathname?.includes('edit') ? true : false;
+  const { canEdit } = useLocationMode();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
 

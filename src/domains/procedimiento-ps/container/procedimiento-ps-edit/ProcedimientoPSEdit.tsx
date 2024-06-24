@@ -7,8 +7,8 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Modal, Row, Col } from '@app/components';
 
 import { ProcedimientoPSRepository } from '@domains/procedimiento-ps/repository';
-import { ProcedimientoPSEditSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
-import type { ProcedimientoPSEditSchemaType } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
+import { ProcedimientoPSEditValidationSchema } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
+import type { ProcedimientoPSEditFormDataType } from '@domains/procedimiento-ps/container/procedimiento-ps-edit/schemas';
 
 import { ProcedimientoPSContext } from '@domains/procedimiento-ps/contexts';
 
@@ -17,6 +17,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import Form from '@app/components/Form/Form';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import { useConfirmDialog } from '@app/hooks';
+import { ProcedimientoPSIntervaloWithinProcedimientoPSRoutes } from '@domains/procedimiento-ps-intervalo/navigation';
 
 const ProcedimientoPSEdit = () => {
   const { procedimientoPSId } = useParams();
@@ -33,19 +34,19 @@ const ProcedimientoPSEdit = () => {
     handleSubmit,
     formState: { isSubmitting },
     setError,
-  } = useForm<ProcedimientoPSEditSchemaType>({
+  } = useForm<ProcedimientoPSEditFormDataType>({
     defaultValues: {
       codigo: '',
       denominacion: '',
     },
-    resolver: zodResolver(ProcedimientoPSEditSchema),
+    resolver: zodResolver(ProcedimientoPSEditValidationSchema),
   });
 
   const handleClose = useCallback(() => {
     _navigate('/procedimiento-ps');
   }, [_navigate]);
 
-  const onSubmit: SubmitHandler<ProcedimientoPSEditSchemaType> = useCallback(
+  const onSubmit: SubmitHandler<ProcedimientoPSEditFormDataType> = useCallback(
     async data => {
       await ProcedimientoPSRepository.updateProcedimientoPS({ ...data, id: Number(procedimientoPSId) })
         .then(() => {
@@ -99,6 +100,7 @@ const ProcedimientoPSEdit = () => {
           </Col>
         </Row>
       </Form>
+      <ProcedimientoPSIntervaloWithinProcedimientoPSRoutes />
     </Modal>
   );
 };
