@@ -37,6 +37,8 @@ const PrivateRoutes = () => {
     return <Navigate to='/auth/login' replace />;
   }
 
+  //filtrar las rutas disponible segun login service.
+
   return (
     <ComponentInjectorProvider>
       <MainLayout>

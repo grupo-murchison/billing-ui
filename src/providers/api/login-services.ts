@@ -4,6 +4,11 @@ import type { AxiosRequestHeaders, AxiosInstance, AxiosRequestConfig, AxiosPromi
 const BASE_URL: string = import.meta.env.VITE_LOGIN_SERVICE_HOST;
 const PREFIX_ENDPOINTS = 'api/auth';
 
+// ¿Como hago para que tenga un prefijo distinto?
+// http://login-service-tzevent-mgr-stg.apps.ocp.tzarate.com.ar/api/acl/getAllByUsername
+
+//Parece ser que cuando usamos estan instancia le pasamos el prefijo en auth.service.ts 
+
 class LoginProvider {
   private instance: Undefined<AxiosInstance>;
 

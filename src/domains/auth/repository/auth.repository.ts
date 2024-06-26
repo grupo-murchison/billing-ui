@@ -11,6 +11,13 @@ class AuthRepository {
   static validateToken = async (access_token: string) => {
     return await RepositoryUtils.fromRxjs(AuthService.validateToken(access_token));
   };
+
+
+  //Cuando esten hechas las modificiaciones de auth.service.ts implementar correctamenta para consumir la url que devuelve rutas
+  static getUserRoutes = async (access_token: string) => {
+    return await RepositoryUtils.fromRxjs(AuthService.getAllowedRoutes(access_token));
+  };
+
 }
 
 export default AuthRepository;

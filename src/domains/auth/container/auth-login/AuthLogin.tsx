@@ -53,6 +53,8 @@ const AuthLogin = () => {
           const accessToken = response.data.access_token;
 
           allowAccess(accessToken);
+
+          // obtener las url que puede visiar (¿aca es correcto o fuera del then es donde corresponde?)
           _navigate('/');
         })
         .catch(error => {
