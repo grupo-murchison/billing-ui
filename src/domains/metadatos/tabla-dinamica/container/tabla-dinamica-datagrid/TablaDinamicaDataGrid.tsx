@@ -12,6 +12,7 @@ import TablaDinamicaRepository from '../../repository/tabla-dinamica.repository'
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
 import { TablaDinamicaDataGridBreadcrumb, labelAndPath } from '../../constants';
+import { useToastContext } from '@app/components/Toast/ToastProvider';
 
 const TablaDinamicaDatagrid = () => {
   const _navigate = useNavigate();
@@ -19,6 +20,7 @@ const TablaDinamicaDatagrid = () => {
   const { mainDataGrid } = useContext(TablaDinamicaContext);
 
   const confirmDialog = useConfirmDialog();
+  const { showToast } = useToastContext();
 
   const handleClickCreate = useCallback(() => {
     _navigate('/tabla-dinamica/create');
@@ -45,9 +47,24 @@ const TablaDinamicaDatagrid = () => {
         identifier: `${row.codigo}`,
         type: 'delete',
         async onClickYes() {
-          await TablaDinamicaRepository.deleteTablaDinamicaById(row.id);
-          confirmDialog.close();
-          mainDataGrid.reload();
+          await TablaDinamicaRepository.deleteTablaDinamicaById(row.id)
+            .then(() => {
+              showToast({ message: 'Tabla dinámica eliminada correctamente' });
+              confirmDialog.close();
+              mainDataGrid.reload();
+            })
+            .catch(err => {
+              const error = JSON.parse(err.message);
+              if (error.statusCode === 400) {
+                confirmDialog.open({
+                  message: error.message,
+                  type: 'reject',
+                  async onClickYes() {
+                    confirmDialog.close();
+                  },
+                });
+              }
+            });
         },
       });
     },
