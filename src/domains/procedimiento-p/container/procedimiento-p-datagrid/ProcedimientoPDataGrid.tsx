@@ -12,6 +12,7 @@ import { ProcedimientoPDataGridBreadcrumb, labelAndPath } from '@domains/procedi
 import { ProcedimientoPContext } from '@domains/procedimiento-p/contexts';
 import { GridActionsCellItem } from '@mui/x-data-grid';
 import { DeleteOutlineIcon, EditOutlinedIcon, ViewIcon } from '@assets/icons';
+import { useToastContext } from '@app/components/Toast/ToastProvider';
 
 const ProcedimientoPDataGrid = () => {
   const _navigate = useNavigate();
@@ -19,6 +20,7 @@ const ProcedimientoPDataGrid = () => {
   const { mainDataGrid } = useContext(ProcedimientoPContext);
 
   const confirmDialog = useConfirmDialog();
+  const { showToast } = useToastContext();
 
   const handleClickCreate = useCallback(() => {
     _navigate('/procedimiento-p/create');
@@ -45,9 +47,24 @@ const ProcedimientoPDataGrid = () => {
         identifier: `${row.codigo}`,
         type: 'delete',
         async onClickYes() {
-          await ProcedimientoPRepository.deleteProcedimientoPById(row.id);
-          confirmDialog.close();
-          mainDataGrid.reload();
+          await ProcedimientoPRepository.deleteProcedimientoPById(row.id)
+            .then(() => {
+              showToast({ message: 'Procedimiento Precio eliminado correctamente' });
+              confirmDialog.close();
+              mainDataGrid.reload();
+            })
+            .catch(err => {
+              const error = JSON.parse(err.message);
+              if (error.statusCode === 400) {
+                confirmDialog.open({
+                  message: error.message,
+                  type: 'reject',
+                  async onClickYes() {
+                    confirmDialog.close();
+                  },
+                });
+              }
+            });
         },
       });
     },
