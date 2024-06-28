@@ -46,7 +46,6 @@ import FormCheckbox from '@app/components/Form/FormInputs/FormCheckbox';
 import FormTextField from '@app/components/Form/FormInputs/FormTextField';
 import FormDateRangePicker from '@app/components/Form/FormInputs/FormDatePicker/FormDateRangePicker';
 import TabLayout from '@app/components/Tabs/TabLayout';
-import { ToastDeprecated as Toast } from '@app/components/Toast/Toast';
 
 import { zodLocale } from '@app/utils/zod.util';
 import { findPropertyById } from '@app/utils/formHelpers.util';
@@ -54,6 +53,7 @@ import { useConfirmDialog } from '@app/hooks';
 import { DeleteOutlineIcon, DownloadIcon, FiberManualRecordIcon } from '@assets/icons';
 import { downloadPdfAxios } from '@app/utils/axios.util';
 import FormDragAndDropFileUpload from '@app/components/Form/FormInputs/FormDragAndDropFileUpload';
+import { useToastContext } from '@app/components/Toast/ToastProvider';
 
 const ContratoEdit = () => {
   const { contratoId } = useParams();
@@ -61,13 +61,13 @@ const ContratoEdit = () => {
 
   const { mainDataGrid } = useContext(ContratoContext);
   const confirmDialog = useConfirmDialog();
+  const { showToast } = useToastContext();
 
   const [isDataFetched, setIsDataFetched] = useState<boolean>(false);
   const [isDiaFijoPosteriorAlPeriodo, setIsDiaFijoPosteriorAlPeriodo] = useState<boolean>(false);
   const [originalModeloAcuerdo, setOriginalModeloAcuerdo] = useState<AnyValue>(null);
   const [periodos, setPeriodos] = useState<AnyValue>(null);
   const [contratoVariables, setContratoVariables] = useState<AnyValue>([]);
-  const [openToast, setOpenToast] = useState<boolean>(false);
   const [filePlantillaProforma, setFilePlantillaProforma] = useState<AnyValue>(null);
   const [refreshProforma, setRefreshProforma] = useState<boolean>(false);
 
@@ -175,10 +175,25 @@ const ContratoEdit = () => {
             }
           });
       }
-      await ContratoRepository.updateContrato(submitData);
-
-      mainDataGrid.reload();
-      _navigate('/contrato');
+      await ContratoRepository.updateContrato(submitData)
+        .then(() => {
+          showToast({ message: 'Contrato actualizado correctamente' });
+          mainDataGrid.reload();
+          _navigate('/contrato');
+        })
+        .catch(err => {
+          const error = JSON.parse(err.message);
+          resetField('modeloAcuerdoId');
+          if (error.statusCode === 400) {
+            confirmDialog.open({
+              message: error.message,
+              type: 'reject',
+              async onClickYes() {
+                confirmDialog.close();
+              },
+            });
+          }
+        });
     },
     [_navigate, mainDataGrid],
   );
@@ -240,7 +255,9 @@ const ContratoEdit = () => {
   }, [watch('modeloAcuerdoId')]);
 
   useEffect(() => {
-    if (formErrors?.contratoVariables) setOpenToast(true);
+    if (formErrors?.contratoVariables) {
+      showToast({ message: 'Debe cargar todos los valores de las Variables del Contrato', severity: 'error' });
+    }
   }, [formErrors?.contratoVariables]);
 
   useEffect(() => {
@@ -443,11 +460,13 @@ const ContratoEdit = () => {
   const condicionesCargaProforma = [`El archivo debe ser en formato .jasper`];
 
   const downloadProforma = async () => {
-    await ContratoRepository.downloadProforma(filePlantillaProforma.contratoId).then(data => {
+    try {
+      const { data } = await ContratoRepository.downloadProforma(filePlantillaProforma.contratoId);
       const fileName = data.nombreTemplate || 'Plantilla-Proforma.jasper';
-      downloadPdfAxios(data.data, `${fileName}`);
-    });
-    return;
+      downloadPdfAxios(data, `${fileName}`);
+    } catch (error) {
+      showToast({ message: 'Error al descargar proforma', severity: 'error' });
+    }
   };
 
   const cargaPlantillaProforma = (
@@ -526,13 +545,6 @@ const ContratoEdit = () => {
           <TabLayout options={tabLayoutOptions} />
         </Form>
       </Card>
-
-      <Toast
-        open={openToast}
-        onClose={() => setOpenToast(false)}
-        error
-        message='Debe cargar todos los valores de las Variables del Contrato'
-      />
     </>
   );
 };
